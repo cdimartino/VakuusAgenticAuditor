@@ -1,5 +1,7 @@
 # Build, test, release
 
+Before changing the manifest version, add a matching `## vX.Y.Z` section to [CHANGELOG.md](CHANGELOG.md), newest first. Write bullets describing what players will notice and how to use it. Packaging requires exactly one matching entry and uses it for both the GitHub Release and Steam Workshop change note. For Nexus Mods, paste the same entry into the version changelog: `python3 tools/release_notes.py vX.Y.Z`.
+
 Use .NET SDK 9 and the target game beta (v0.113.1). Run `sh tools/package.sh` on a standard Apple Silicon Steam install. Elsewhere, pass `-p:GameData="/path/to/directory/containing/sts2.dll"`. Output: the player ZIP and `WorkshopWorkspace.zip` under `dist/`.
 
 `dotnet run --project tests` runs the offline coaching, transition and placement scenarios. `sh tools/ci.sh` is the portable Linux/macOS pre-release check: it fetches checksum-pinned [compile-only game references](https://www.nuget.org/packages/Book.StS2.RefLib/0.113.1-beta), checks C# formatting against `.editorconfig`, treats build warnings as errors, runs scenarios, validates the ZIPs, and smoke-tests a fresh install and update in a temporary library. Requirements: .NET 9, Python 3, `curl`, `shasum`, `unzip`, `zip`. No game files are released.

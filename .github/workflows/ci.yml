@@ -27,7 +27,9 @@ jobs:
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: auditor-release
-          path: dist/*.zip
+          path: |
+            dist/*.zip
+            dist/release-notes.md
           if-no-files-found: error
   release:
     needs: verify
@@ -43,4 +45,4 @@ jobs:
           TAG: ${{ github.ref_name }}
         run: |
           sha256sum VakuusAgenticAuditor.zip WorkshopWorkspace.zip > SHA256SUMS
-          gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --verify-tag --title "$TAG" --generate-notes VakuusAgenticAuditor.zip WorkshopWorkspace.zip SHA256SUMS
+          gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --verify-tag --title "$TAG" --notes-file release-notes.md VakuusAgenticAuditor.zip WorkshopWorkspace.zip SHA256SUMS
