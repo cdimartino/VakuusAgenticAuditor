@@ -70,7 +70,10 @@ internal sealed class Display
     bool dragged;
     BubbleSpot? preview;
     readonly StyleBoxFlat corner;
-    readonly PopupMenu menu = new() { HideOnItemSelection = false };
+    readonly PanelContainer menu = new() { Name = "AuditorSettings", Visible = false, MouseFilter = Control.MouseFilterEnum.Stop, FocusMode = Control.FocusModeEnum.All };
+    readonly ColorRect settingsBackdrop = new() { Color = new Color(0.035f, 0.025f, 0.05f, 0.72f), Visible = false, MouseFilter = Control.MouseFilterEnum.Stop };
+    readonly VBoxContainer settingsRows = new() { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
+    readonly Button settingsDone = new() { Text = "Done", FocusMode = Control.FocusModeEnum.All, CustomMinimumSize = new Vector2(0, 44) };
     readonly AcceptDialog keyPrompt = new() { Title = "Auditor keyboard shortcuts", OkButtonText = "Cancel" };
     Action<Key>? bind;
     Key waitForRelease = Key.None;
@@ -91,9 +94,12 @@ internal sealed class Display
         // Window input is delivered even when both edges fall between frames.
         // Track all keys, including keys being rebound; echoes and duplicate
         // delivery through an embedded popup must never toggle a second time.
+        if (menu.Visible && !keyPrompt.Visible && !review.Visible && key.Pressed && !key.Echo && key.Keycode == Key.Escape)
+        {
+            menu.Hide(); source.SetInputAsHandled(); return;
+        }
         if (settingsShortcut.Key(key.Keycode, key.Pressed, key.Echo, P.SettingsKey, SettingsBlocked)
-            && SettingsPressed?.Invoke() == true)
-            source.SetInputAsHandled();
+            && SettingsPressed?.Invoke() == true) source.SetInputAsHandled();
     }
     public bool KeyboardBusy
     {
@@ -134,7 +140,9 @@ internal sealed class Display
     }
     void ShowReview()
     {
-        menu.Hide(); Hide();
+        // Keep the settings panel open underneath the review dialog; closing
+        // the child dialog returns the player to the same panel and scroll spot.
+        Hide();
         if (latest == null && File.Exists(ReviewPath)) latest = File.ReadAllText(ReviewPath);
         reviewText.Text = latest ?? "Finish a solo run with the Auditor enabled to see your review.";
         reviewText.ScrollVertical = 0;
@@ -148,7 +156,26 @@ internal sealed class Display
     {
         this.catalogStatus = catalogStatus;
         this.richerStatus = richerStatus;
-        tree.Root.AddChild(layer); layer.AddChild(note); layer.AddChild(menu); note.Hide();
+        tree.Root.AddChild(layer); layer.AddChild(note); layer.AddChild(settingsBackdrop); layer.AddChild(menu); note.Hide();
+        settingsBackdrop.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+        settingsBackdrop.GuiInput += e => { settingsBackdrop.AcceptEvent(); };
+        var frame = new VBoxContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill, SizeFlagsVertical = Control.SizeFlags.ExpandFill };
+        frame.AddChild(new Label { Text = "VAKUU  /  SETTINGS", HorizontalAlignment = HorizontalAlignment.Center });
+        frame.AddChild(new HSeparator());
+        var settingsScroll = new ScrollContainer { HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled, SizeFlagsVertical = Control.SizeFlags.ExpandFill };
+        settingsScroll.AddChild(settingsRows); frame.AddChild(settingsScroll); frame.AddChild(settingsDone);
+        menu.AddChild(frame);
+        menu.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.TopLeft);
+        menu.CustomMinimumSize = Vector2.Zero;
+        menu.AddThemeStyleboxOverride("panel", new StyleBoxFlat { BgColor = new Color("17131f"), BorderColor = new Color("a98bd4"), BorderWidthLeft = 2, BorderWidthRight = 2, BorderWidthTop = 2, BorderWidthBottom = 2, ContentMarginLeft = 14, ContentMarginRight = 14, ContentMarginTop = 12, ContentMarginBottom = 12 });
+        settingsDone.Pressed += () => menu.Hide();
+        menu.GuiInput += e => { if (e is InputEventMouseButton { Pressed: true } click && click.ButtonIndex == MouseButton.Left) menu.AcceptEvent(); };
+        void UpdateSettingsModal() => settingsBackdrop.Visible = menu.Visible || keyPrompt.Visible || review.Visible;
+        menu.VisibilityChanged += () =>
+        {
+            UpdateSettingsModal();
+            if (menu.Visible) { GD.Print("[VakuuAuditor] Settings popup visible"); settingsDone.GrabFocus(); }
+        };
         note.GetViewport().SizeChanged += () =>
         {
             if (fit == null) return;
@@ -171,35 +198,26 @@ internal sealed class Display
         };
         keyPrompt.VisibilityChanged += () =>
         {
+            UpdateSettingsModal();
             if (!keyPrompt.Visible && bind != null)
             {
                 bind = null;
-                Callable.From(() => { RefreshSettings(); menu.PopupCentered(); }).CallDeferred();
+                Callable.From(() => { RefreshSettings(); menu.Show(); menu.GrabFocus(); }).CallDeferred();
             }
         };
+        review.VisibilityChanged += UpdateSettingsModal;
+        menu.GetViewport().SizeChanged += RepositionSettings;
         // These are native Window signals: no custom Node/_Input registration.
         // Attach after the Display is fully initialized and its subscribers exist.
         Callable.From(() =>
         {
-            foreach (var window in new Window[] { tree.Root, menu, keyPrompt, review })
+            foreach (var window in new Window[] { tree.Root, keyPrompt, review })
                 window.WindowInput += input => SettingsInput(window, input);
             tree.Root.FocusExited += settingsShortcut.Reset;
         }).CallDeferred();
         corner = new StyleBoxFlat { BgColor = new Color(.07f, .055f, .09f, .93f), ContentMarginLeft = 12, ContentMarginRight = 12, ContentMarginTop = 8, ContentMarginBottom = 8 };
         note.AddThemeStyleboxOverride("normal", corner);
         MakeDismissible(note);
-        menu.IdPressed += id =>
-        {
-            actions[(int)id]();
-            if (!menu.Visible) return; // Done
-            P.Save();
-            Hide();
-            RefreshSettings();
-        };
-        menu.VisibilityChanged += () =>
-        {
-            if (menu.Visible) GD.Print("[VakuuAuditor] Settings popup visible");
-        };
     }
     public bool Visible => note.Visible || GodotObject.IsInstanceValid(speech);
     void MakeDismissible(Control surface, Sprite2D? art = null)
@@ -342,18 +360,53 @@ internal sealed class Display
     }
     public void Settings()
     {
-        if (menu.Visible) { menu.Hide(); return; }
+        if (menu.Visible)
+        {
+            if (!keyPrompt.Visible && !review.Visible) menu.Hide();
+            return;
+        }
         RefreshSettings();
-        menu.PopupCentered();
+        RepositionSettings();
+        settingsBackdrop.Visible = true;
+        menu.Show();
+        settingsDone.GrabFocus();
+    }
+    void RepositionSettings()
+    {
+        if (!GodotObject.IsInstanceValid(menu)) return;
+        var viewport = menu.GetViewportRect().Size;
+        menu.Size = new Vector2(Math.Max(1, Math.Min(560, viewport.X - 24)), Math.Max(1, Math.Min(620, viewport.Y - 24)));
+        menu.Position = (viewport - menu.Size) / 2;
     }
     void RefreshSettings()
     {
         actions.Clear();
+        foreach (var child in settingsRows.GetChildren())
+        {
+            settingsRows.RemoveChild((Node)child);
+            ((Node)child).QueueFree();
+        }
         void Item(string s, Action a)
         {
             int index = actions.Count;
-            if (index == menu.ItemCount) menu.AddItem(s, index);
-            else menu.SetItemText(index, s);
+            var button = new Button
+            {
+                Text = s,
+                Alignment = HorizontalAlignment.Left,
+                FocusMode = Control.FocusModeEnum.All,
+                CustomMinimumSize = new Vector2(0, 36),
+                SizeFlagsHorizontal = Control.SizeFlags.ExpandFill,
+                TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis
+            };
+            settingsRows.AddChild(button);
+            button.Pressed += () =>
+            {
+                actions[index]();
+                if (!menu.Visible) return;
+                P.Save();
+                RefreshSettings();
+                if (index < settingsRows.GetChildCount()) ((Control)settingsRows.GetChild(index)).GrabFocus();
+            };
             actions.Add(a);
         }
         void Toggle(string label, bool v, Action<bool> set) => Item((v ? "✓ " : "   ") + label, () => set(!v));
@@ -377,19 +430,12 @@ internal sealed class Display
         }
         Toggle("Curse Mode · unreliable advice (scales with Ascension)", P.CurseMode, v => P.CurseMode = v);
         Toggle("Unknown patch: use closest catalog (restart required)", P.AllowClosestCatalog, v => P.AllowClosestCatalog = v);
-        Item(catalogStatus, () => { });
-        menu.SetItemDisabled(actions.Count - 1, true);
-        if (!string.IsNullOrWhiteSpace(richerStatus))
-        {
-            Item(richerStatus, () => { }); menu.SetItemDisabled(actions.Count - 1, true);
-        }
-        Shortcut("Show / dismiss suggestion", P.SuggestionKey, k => P.SuggestionKey = k);
-        Shortcut("Open settings", P.SettingsKey, k => P.SettingsKey = k);
-        Shortcut("Mute / unmute", P.MuteKey, k => P.MuteKey = k);
+        Item(string.IsNullOrWhiteSpace(richerStatus) ? catalogStatus : richerStatus, () => { });
+        ((BaseButton)settingsRows.GetChild(settingsRows.GetChildCount() - 1)).Disabled = true;
         Item("Guidance: " + P.Mode, () => P.Mode = Next(P.Mode, "Off", "On demand", "Balanced", "Detailed"));
         Toggle("Quick mute", P.Muted, v => P.Muted = v);
-        Toggle("Record game-state snapshots locally for end-of-run analysis (not inputs)", P.RecordRun, v => P.RecordRun = v);
-        Toggle("Export playtest setup to local playtest-state.json (no gameplay control)", P.PlaytestBridge, v => P.PlaytestBridge = v);
+        Toggle("Record local game-state snapshots (not inputs)", P.RecordRun, v => P.RecordRun = v);
+        Toggle("Export playtest setup · off by default", P.PlaytestBridge, v => P.PlaytestBridge = v);
         Item(P.PlaytestPresetApplied.Count > 0 ? "Restore playtest preset (field-specific)" : "Apply Detailed playtest preset", () =>
         {
             var state = new Dictionary<string, string>
@@ -408,6 +454,9 @@ internal sealed class Display
             P.Save();
             if (conflicts.Count > 0) GD.PushWarning("Playtest preset left externally changed settings untouched: " + string.Join(", ", conflicts));
         });
+        Shortcut("Show / dismiss suggestion", P.SuggestionKey, k => P.SuggestionKey = k);
+        Shortcut("Open settings", P.SettingsKey, k => P.SettingsKey = k);
+        Shortcut("Mute / unmute", P.MuteKey, k => P.MuteKey = k);
         Toggle("Open review after a run", P.OpenRunReview, v => P.OpenRunReview = v);
         Item("Read latest run review", ShowReview);
         Toggle("Before card picks", P.Rewards, v => P.Rewards = v);
@@ -430,6 +479,6 @@ internal sealed class Display
         Item("Show for: " + P.Seconds + "s", () => P.Seconds = Next(P.Seconds, 5, 9, 15, 30));
         Item("Reset bubble positions", () => P.BubblePositions.Clear());
         Item("Reset defaults", () => P = new());
-        Item("Done", menu.Hide);
+        // The footer Done button remains visible regardless of scroll position.
     }
 }

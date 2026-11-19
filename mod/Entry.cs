@@ -98,16 +98,17 @@ public static class Entry
             if (!Solo() || Catalog.Profile == null)
             {
                 nextRecord = Time.GetTicksMsec() + 500;
-                bridge.Observe(new { loadedStatus, P.Mode, P.Muted, P.CurseMode, P.PlaytestBridge, profile = RuntimeRecording.Profile });
+                bridge.Observe(new { loadedStatus, P.Mode, P.Muted, P.CurseMode, P.RecordRun, P.PlaytestBridge, profile = RuntimeRecording.Profile });
                 bridge.Write(P.PlaytestBridge, RuntimeRecording.Profile, "", "", 0, false, false,
                     new
                     {
                         modVersion = loadedVersion,
                         gameBuild = Catalog.Profile?.Build,
-                        catalogMatch = loadedStatus.StartsWith("Audited") ? "Audited" : "Inactive",
+                        catalogMatch = Catalog.Profile == null ? "Inactive" : loadedStatus.StartsWith("Audited") ? "Audited" : "Approximate",
                         guidance = P.Mode,
                         mute = P.Muted,
-                        curse = P.CurseMode
+                        curse = P.CurseMode,
+                        recording = P.RecordRun
                     }, []);
                 return;
             }

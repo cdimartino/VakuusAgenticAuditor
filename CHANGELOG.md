@@ -3,6 +3,7 @@
 ## v0.1.21
 
 - Settings now responds to a delivered shortcut press instead of waiting for a frame to sample the held key. **Settings → General → Vakuu’s Agentic Auditor…** remains available without a keyboard shortcut.
+- Auditor settings now appears inside the game window, so the panel and its playtest controls can be captured alongside the game. The title-screen export also reports whether run recording is enabled.
 
 - Vakuu now records local game-state snapshots, delivered advice and completed card plays for end-of-run analysis. The review highlights observed HP drops, links them to recorded advice, and shows a per-floor history. Recording can be disabled in settings; gaps are identified rather than filled in.
 - Combat advice keeps lethal-risk warnings visible, distinguishes current damage from Strength/Illusion threats, stops at uncertain draw and hand-changing effects, and considers gaining block before Body Slam. Damage forecasts remain estimates.
