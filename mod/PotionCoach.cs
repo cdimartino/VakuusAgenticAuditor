@@ -48,7 +48,11 @@ internal static class PotionCoach
                 choices.Add((ends ? 110 : saved >= hp ? 100 : 65, $"Use {b.Name}{targetLabel} {timing} to {(ends ? "finish the fight" : hit.Length > 1 ? "finish multiple enemies" : "remove an attacker")}."));
             }
             if (ctx is not { } x || !Catalog.Potions.TryGetValue(b.Id, out var profile)) continue;
-            bool early = majorFight && x.Round <= 2;
+            // A normal encounter can be a long, dangerous fight too. Reevaluate
+            // against the current line rather than relying on room class alone.
+            bool extended = majorFight || foes.Any(f => f.Strength > 0 || f.Illusion)
+                || (line.EnemiesLeft > 0 && remaining.Sum() >= 40 && (gap >= 8 || x.MissingHp >= 15));
+            bool early = extended && (x.Round <= 2 || foes.Any(f => f.Strength > 0) || gap >= hp / 2);
             bool shortTurn = line.Steps.Count < 2 && !pivot;
             var target = Enumerable.Range(0, foes.Length).Where(i => b.Targets[i] && remaining[i] > 0 && foes[i].Status.Artifact == 0)
                 .OrderByDescending(i => foes[i].Intent).FirstOrDefault(-1);
@@ -84,14 +88,20 @@ internal static class PotionCoach
                 "clutter" => x.Clutter >= 2 && majorFight,
                 "upgrades" => early && x.Upgrades >= 3,
                 "repeat" or "big attack" => majorFight && line.Steps.Any(s => hand[s.Card].Damage.Any(d => d >= 15)),
-                "retain" => x.Expensive >= 2 && majorFight,
+                "retain" => x.Expensive >= 2 && extended && x.Draw + x.Discard > 0,
                 "joy" => x.Converts && x.Size <= 6 && majorFight,
                 _ => false
             };
             if (useful)
             {
                 bool aimed = target >= 0 && foes.Length > 1 && profile[0] is "debuff" or "debuff scaling" or "vulnerable";
-                choices.Add((profile[0] == "emergency" ? 85 : 25, $"{b.Name}{(aimed ? $" on {foes[target].Name}" : "")}: {profile[1]}"));
+                string timing = profile[0] switch
+                {
+                    "regen" => " Delayed healing over future turns; not immediate block.",
+                    "retain" => " Saves future hands; not immediate block.",
+                    _ => ""
+                };
+                choices.Add((profile[0] == "emergency" ? 85 : 25, $"{b.Name}{(aimed ? $" on {foes[target].Name}" : "")}: {profile[1]}{timing}"));
             }
         }
         return choices.OrderByDescending(c => c.priority).FirstOrDefault().hint;

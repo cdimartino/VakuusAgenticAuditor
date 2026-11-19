@@ -29,6 +29,13 @@ internal sealed class Preferences
     public bool AllowClosestCatalog { get; set; }
     public bool CurseMode { get; set; }
     public bool OpenRunReview { get; set; } = true;
+    // Local-only analysis capture. The host runtime owns the recorder itself.
+    public bool RecordRun { get; set; } = true;
+    // Opt-in local snapshot export; Entry owns writing the snapshot file.
+    public bool PlaytestBridge { get; set; }
+    // Serialized ownership record lets restoration remain safe across restarts.
+    public Dictionary<string, string> PlaytestPresetBefore { get; set; } = new();
+    public Dictionary<string, string> PlaytestPresetApplied { get; set; } = new();
     public Key SuggestionKey { get; set; } = Key.V;
     public Key SettingsKey { get; set; } = Key.F8;
     public Key MuteKey { get; set; } = Key.F6;
@@ -86,8 +93,22 @@ internal sealed class Display
         latest = report;
         try { Directory.CreateDirectory(Path.GetDirectoryName(ReviewPath)!); File.WriteAllText(ReviewPath + ".tmp", report); File.Move(ReviewPath + ".tmp", ReviewPath, true); }
         catch (IOException ex) { GD.PushWarning(ex.Message); }
-        var button = new Button { Text = "Vakuu’s run review", Position = new(20, 80) };
+        var button = new Button
+        {
+            Text = "Vakuu’s run review",
+            FocusMode = Control.FocusModeEnum.All,
+            AnchorLeft = 1,
+            AnchorRight = 1,
+            AnchorTop = 0,
+            AnchorBottom = 0,
+            OffsetLeft = -224,
+            OffsetRight = -20,
+            OffsetTop = 20,
+            OffsetBottom = 64
+        };
         screen.AddChild(button); button.Pressed += ShowReview;
+        button.ZIndex = 100;
+        button.GrabFocus();
         if (P.OpenRunReview && !P.Muted && P.Mode != "Off") Callable.From(ShowReview).CallDeferred();
     }
     void ShowReview()
@@ -100,9 +121,12 @@ internal sealed class Display
     }
     readonly CanvasLayer layer = new() { Layer = 80, Name = "VakuuAuditor" };
     readonly string catalogStatus;
-    public Display(SceneTree tree, string catalogStatus)
+    readonly string? richerStatus;
+    public Display(SceneTree tree, string catalogStatus) : this(tree, catalogStatus, null) { }
+    public Display(SceneTree tree, string catalogStatus, string? richerStatus)
     {
         this.catalogStatus = catalogStatus;
+        this.richerStatus = richerStatus;
         tree.Root.AddChild(layer); layer.AddChild(note); layer.AddChild(menu); note.Hide();
         note.GetViewport().SizeChanged += () =>
         {
@@ -322,11 +346,35 @@ internal sealed class Display
         Toggle("Unknown patch: use closest catalog (restart required)", P.AllowClosestCatalog, v => P.AllowClosestCatalog = v);
         Item(catalogStatus, () => { });
         menu.SetItemDisabled(actions.Count - 1, true);
+        if (!string.IsNullOrWhiteSpace(richerStatus))
+        {
+            Item(richerStatus, () => { }); menu.SetItemDisabled(actions.Count - 1, true);
+        }
         Shortcut("Show / dismiss suggestion", P.SuggestionKey, k => P.SuggestionKey = k);
         Shortcut("Open settings", P.SettingsKey, k => P.SettingsKey = k);
         Shortcut("Mute / unmute", P.MuteKey, k => P.MuteKey = k);
         Item("Guidance: " + P.Mode, () => P.Mode = Next(P.Mode, "Off", "On demand", "Balanced", "Detailed"));
         Toggle("Quick mute", P.Muted, v => P.Muted = v);
+        Toggle("Record game-state snapshots locally for end-of-run analysis (not inputs)", P.RecordRun, v => P.RecordRun = v);
+        Toggle("Export playtest setup to local playtest-state.json (no gameplay control)", P.PlaytestBridge, v => P.PlaytestBridge = v);
+        Item(P.PlaytestPresetApplied.Count > 0 ? "Restore playtest preset (field-specific)" : "Apply Detailed playtest preset", () =>
+        {
+            var state = new Dictionary<string, string>
+            {
+                [nameof(P.Mode)] = P.Mode,
+                [nameof(P.Muted)] = P.Muted.ToString(),
+                [nameof(P.CurseMode)] = P.CurseMode.ToString(),
+                [nameof(P.AllowClosestCatalog)] = P.AllowClosestCatalog.ToString(),
+            };
+            var preset = new PlaytestPreset(P.PlaytestPresetBefore, P.PlaytestPresetApplied);
+            var conflicts = preset.Active ? preset.Restore(state) : preset.Apply(state);
+            P.Mode = state[nameof(P.Mode)];
+            P.Muted = bool.Parse(state[nameof(P.Muted)]);
+            P.CurseMode = bool.Parse(state[nameof(P.CurseMode)]);
+            P.AllowClosestCatalog = bool.Parse(state[nameof(P.AllowClosestCatalog)]);
+            P.Save();
+            if (conflicts.Count > 0) GD.PushWarning("Playtest preset left externally changed settings untouched: " + string.Join(", ", conflicts));
+        });
         Toggle("Open review after a run", P.OpenRunReview, v => P.OpenRunReview = v);
         Item("Read latest run review", ShowReview);
         Toggle("Before card picks", P.Rewards, v => P.Rewards = v);

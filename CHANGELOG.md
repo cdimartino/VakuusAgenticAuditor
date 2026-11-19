@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.1.21
+
+- Vakuu now records local game-state snapshots, delivered advice and completed card plays for end-of-run analysis. The review highlights observed HP drops, links them to recorded advice, and shows a per-floor history. Recording can be disabled in settings; gaps are identified rather than filled in.
+- Combat advice keeps lethal-risk warnings visible, distinguishes current damage from Strength/Illusion threats, stops at uncertain draw and hand-changing effects, and considers gaining block before Body Slam. Damage forecasts remain estimates.
+- Added on-demand guidance on forced map routes, Potion Courier tradeoffs, accurate Ancient upgrade counts and remaining multi-upgrade priorities.
+- Settings now shows the coaching setup, offers a reversible Detailed playtest preset, and exposes an opt-in local advice snapshot for the guarded playtest runner. The results-screen review button is anchored at the top right.
+- Added a separate local playtest runner and a reproducible beta merchant-API patch for the optional STS2 MCP bridge. Neither is required for normal play or automatically installed.
+
 ## v0.1.20
 
 - On an unknown game patch, you can now opt into the closest audited catalog from Auditor settings. Restart to apply. Settings identifies approximate advice and shows which catalog is active. Exact-build matching remains the default.

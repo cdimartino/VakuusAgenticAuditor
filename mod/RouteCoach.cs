@@ -33,8 +33,10 @@ internal static class RouteCoach
         var next = node.Next.Select(n => Best(n, after)).OrderByDescending(n => n.Value).FirstOrDefault();
         return new(leg.Value + .78 * (next?.Value ?? 0), [leg, .. next?.Legs ?? []]);
     }
-    internal static RouteHint? Choose(RouteStop[] starts, RouteState state)
+    internal static RouteHint? Choose(RouteStop[] starts, RouteState state, bool manual = false)
     {
+        if (starts.Length == 1 && manual)
+            return new(0, $"Only route: {Best(starts[0], state).Legs[0].Room}. No branch to compare.");
         if (starts.Length < 2) return null;
         var ranked = starts.Select((n, i) => (path: Best(n, state), i)).OrderByDescending(x => x.path.Value).ToArray();
         var (best, index) = ranked[0]; var (alt, other) = ranked[1];

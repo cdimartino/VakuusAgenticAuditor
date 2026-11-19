@@ -138,4 +138,9 @@ Check(Curse.Chance(-1) == 10 && Curse.Chance(12) == 40 && decisionsToTest.Count(
 Check(Cursed(0, bitten).Contains("Take Middle.") && Cursed(5, bitten).Contains("Skip this reward."), "a triggered curse recommends a real weaker choice, then the weakest at A5");
 Check(Curse.Advice("Detailed", true, 0, bitten.ToString(), curseOffer) == Cursed(0, bitten), "reopening or asking for detail cannot reroll crooked counsel");
 Check(Curse.Advice("Truth", true, 0, bitten.ToString(), null).StartsWith("CURSE · Hint withheld") && Curse.Advice("Truth", true, 0, bitten.ToString(), [curseOffer[0], curseOffer[0]]).Contains("Hint withheld"), "without a clearly weaker alternative Vakuu withholds advice rather than inventing a choice");
+CombatRegression.Run(Check);
+RoomRegression.Run(Check);
+JournalRegression.Run(Check);
+PresetRegression.Run(Check);
+ExportRegression.Run(Check);
 Console.WriteLine($"{count} scenarios passed.");

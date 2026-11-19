@@ -1,0 +1,16 @@
+--- a/McpMod.Actions.cs
++++ b/McpMod.Actions.cs
+@@ -366 +366 @@
+-            inventory = merchantRoom.GetLocalInventory();
++            inventory = NMerchantRoom.Instance?.Inventory?.Inventory;
+@@ -416,2 +416,3 @@
+-        // Fire-and-forget purchase (same path as AutoSlay)
+-        _ = entry.OnTryPurchaseWrapper(inventory);
++        // Beta routes purchases through the run's merchant synchronizer.
++        // Inventory and entry come from the same visible list used by inspection.
++        _ = RunManager.Instance.MerchantSynchronizer.PurchaseLocalEntry(entry);
+--- a/McpMod.StateBuilder.cs
++++ b/McpMod.StateBuilder.cs
+@@ -1567 +1567 @@
+-        var inventory = merchantRoom.GetLocalInventory();
++        var inventory = NMerchantRoom.Instance?.Inventory?.Inventory;

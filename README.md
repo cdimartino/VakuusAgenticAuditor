@@ -52,6 +52,16 @@ At card rewards Vakuu can spot more than one way forward. If your Silent already
 
 After a solo victory or defeat, **Vakuu’s run review** summarizes your deck identity, progress by act, largest recorded HP loss, upgrades, removals, gold spent and potion use. A loss review separates the recorded killer from coaching hypotheses and suggests what to practice next. Reopen it from the results screen or **Auditor settings → Read latest run review**. Disable **Open review after a run** to keep it on demand. The latest review stays locally in `user://mod_configs/VakuusAgenticAuditor/latest-run.txt`.
 
+### A record of what actually happened
+
+Local recording is on by default. During a supported solo run, Vakuu samples changing game state up to ten times per second: hand and deck, HP/block/resources, enemies and visible powers/intents, current choices, delivered advice (including curses), and completed card plays reported by the game. It also records state transitions; those are not proof of which action caused an effect. Recording continues while advice is muted.
+
+The end review includes a per-floor history and bounded highlights from this evidence. It does not claim an unused potion would have saved you or compare a prediction against unrelated HP loss. Turn recording cannot reconstruct earlier, unrecorded play.
+
+Files stay on your computer under `user://mod_configs/VakuusAgenticAuditor/runs/` as JSONL. No API key or network service is needed. Vakuu keeps at most 12 journals, with a 32 MiB limit per journal; reaching that limit stops recording for that run. Toggle **Record game-state snapshots locally** in Auditor settings to disable it. Recording gaps and storage failures limit the assessment rather than interrupting gameplay. Close the game before deleting journals you no longer want.
+
+**For playtest agents:** the separate, default-off **Export playtest setup** option exposes fresh advice to a [guarded local runner](docs/PLAYTESTING.md). It refreshes advice after changed combat state for that opt-in test; ordinary once-per-turn guidance is unchanged. The exporter does not play the game itself. The runner requires an explicitly approved profile/run and permission to send game actions.
+
 ## Troubleshooting
 
 - **I don’t see the mod in Steam.** The ZIP is a local installation. Look in the **game’s Mods list**, not Steam’s Subscribed Items. A Workshop listing has not been published.
