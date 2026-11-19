@@ -2,6 +2,8 @@
 
 **Question:** Can Luna follow the advice a player actually sees, at speed, and produce a review traceable to observed game state? A natural defeat is a valid outcome. The previous run reached floor 25 in 7,153 seconds on the game timer; it did not certify Detailed guidance.
 
+**Current gate: do not start the run.** On local candidate `a6486e5`, both F8 and clicking the visible **Vakuu’s Agentic Auditor…** button under General produced a new popup-visible log entry. Neither produced a settings panel Luna could read in the captures. Repeating the same two inputs does not resolve this blocker. First demonstrate a readable, operable panel in the actual game capture; then verify the preset and fresh export below. Separately, the downloaded Workshop item was v0.1.20, not this v0.1.21 candidate. Local smoke results do not clear either gate for Workshop certification.
+
 ### 1. Prove settings access without starting a run
 
 - With permission for the installation being tested, verify the loaded DLL hash and source against the new package, not just its version string. Earlier candidates also say v0.1.21. Keep only one Auditor source enabled. Save original settings, including the bound shortcut and export/recording toggles.
