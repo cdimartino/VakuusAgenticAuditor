@@ -6,6 +6,10 @@ Ever hover over three cards and wish someone would make a case for **Skip**? Vak
 
 For **solo runs on Slay the Spire 2 public-beta v0.113.1**. Works offline, from the first floor. No relic, API key, BaseLib or other mod required.
 
+![Tezcatara offers three gifts. Vakuu recommends Yummy Cookie for permanent upgrades without adding Soot.](docs/images/ancient-gift.jpg)
+
+*Four upgrades now, or four removals with Soot on every shuffle? Here the deck has enough useful upgrade targets for Vakuu to recommend the Cookie.*
+
 ## Install and meet Vakuu
 
 1. Quit the game. Download **VakuusAgenticAuditor.zip** above and extract the whole ZIP.
@@ -26,17 +30,13 @@ For **solo runs on Slay the Spire 2 public-beta v0.113.1**. Works offline, from 
 
 On some Mac keyboards, hold **Fn** for F6 or F8. Changes save immediately.
 
-### At an event
+### Which way at the fork?
 
-![Vakuu speaking beside the Sunken Statue choices during a Fool run](docs/images/event.jpg)
+![The Fool is at a fork. The left path reaches a campfire; the right offers a chance at an elite relic. Vakuu explains why it favors the campfire.](docs/images/route-fork.jpg)
 
-Vakuu weighs the cost against your current health. The same trade that makes sense at full HP can be a poor one before a boss. The screenshots here are from an earlier beta playtest; the wording and default placement have since changed.
+*The first fight on the left leads to a campfire upgrade. The right branch keeps an elite relic in reach. Vakuu looks ahead so you can decide whether the trade is worth it.*
 
-### Before the next fight
-
-![Potion belt open with Block Potion and Strength Potion on the reward screen](docs/images/potion-rewards.jpg)
-
-For example, if your belt is full before Waterfall Giant, Vakuu can recommend replacing an Explosive Ampoule with Block Potion and saving it for Explode. In combat, potion suggestions take your hand and incoming damage into account.
+These two documentation examples are staged from gameplay captures with the game's native speech bubble and the v0.1.16 coach's output.
 
 ## Find a direction, then learn from the run
 
