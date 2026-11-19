@@ -55,7 +55,10 @@ Both inventory reads use NMerchantRoom.Instance.Inventory.Inventory, so read and
 share AllEntries ordering. Beta removed OnTryPurchaseWrapper; purchase now uses
 RunManager.Instance.MerchantSynchronizer.PurchaseLocalEntry(entry). This remains a
 fire-and-forget ordinary bridge action: acknowledgement is not completed-purchase proof.
-Do not retry it blindly. No bridge binary has been installed.
+Do not retry it blindly. Building the patch does not install the bridge.
+The zero-context patch also repairs Instant Mode HoverTip initialization: beta Id
+is getter-only, so construct the tip through the verified beta constructor instead
+of assigning Id. See BRIDGE_PROVENANCE.md for metadata evidence and licensing.
 
 Build in a fresh temporary directory containing only McpMod*.cs and STS2_MCP.csproj,
 then `dotnet build TEMP/STS2_MCP.csproj -p:STS2GameDir='OWNED GAME DIR' -o TEMP_OUTPUT`.
@@ -70,7 +73,7 @@ waiting and no mutation retry on timeout. Isolated bridge build passes
 (exit 0). Earlier direct-tree isolated-obj builds failed duplicate assembly attributes;
 one attempted semicolon exclude argument failed MSBuild parsing. First isolated-source
 build exposed missing OnTryPurchaseWrapper, now corrected and rebuilt successfully.
-No game action, install, restart, save/profile access or upload occurred.
+The offline tests do not perform game actions, installations, restarts, save/profile access or uploads.
 
 Not implemented: multi-select upgrade counts, Instant Mode setting/restore verification,
 automatic one-option transitions, UI checkpoint capture, live game readiness validation,
