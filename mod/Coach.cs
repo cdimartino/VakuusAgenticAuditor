@@ -25,7 +25,7 @@ internal static class Catalog
         return new(id, name, cost, up, attack, vanilla && roles != null, roles?[0] ?? [], roles?[1] ?? []);
     }
 }
-internal record Deck(Card[] Cards, int Hp, int MaxHp, int Act, bool EliteOnly, string[] Relics);
+internal record Deck(Card[] Cards, int Hp, int MaxHp, int Act, bool EliteOnly, string[] Relics, string Character = "");
 internal record Verdict(string Id, string Name, double Score, string Reason, string? Caution);
 internal static class Coach
 {
@@ -58,6 +58,7 @@ internal static class Coach
         var pros = new List<(double w, string text)>();
         var cons = new List<(double w, string text)>();
         var cards = d.Cards;
+        var opportunity = Archetypes.Opportunity(d, c);
         var guards = cards.Count(x => x.Has("guard"));
         var nonBasicHits = cards.Count(x => x.Attack && !x.Id.StartsWith("STRIKE_"));
         if (c.Cost == 1 && c.Has("hit") && c.Has("guard") && c.Has("draw"))
@@ -96,8 +97,8 @@ internal static class Coach
         if (cards.Length >= 20 && !c.Has("draw")) cons.Add((.7, $"Adding it dilutes your {cards.Length}-card deck."));
         var best = pros.OrderByDescending(x => x.w).FirstOrDefault().text;
         var risk = cons.OrderByDescending(x => x.w).FirstOrDefault().text;
-        return new(c.Id, c.Name, .35 + pros.Sum(x => x.w) - cons.Sum(x => x.w),
-            best ?? risk ?? "No strong interaction stands out in this deck.", risk);
+        return new(c.Id, c.Name, .35 + pros.Sum(x => x.w) - cons.Sum(x => x.w) + (opportunity != null && !opportunity.StartsWith("Possible ") ? 1 : 0),
+            opportunity ?? best ?? risk ?? "No strong interaction stands out in this deck.", risk);
     }
     internal static Verdict[] Rank(IEnumerable<Card> choices, Deck deck, bool skip)
     {

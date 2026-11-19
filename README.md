@@ -38,7 +38,13 @@ Vakuu weighs the cost against your current health. The same trade that makes sen
 
 For example, if your belt is full before Waterfall Giant, Vakuu can recommend replacing an Explosive Ampoule with Block Potion and saving it for Explode. In combat, potion suggestions take your hand and incoming damage into account.
 
-## If something feels off
+## Find a direction, then learn from the run
+
+At card rewards Vakuu can spot more than one way forward. If your Silent already has Blade Dance, Accuracy is a **Shiv engine** opportunity; owning a payoff alone doesn’t mean the engine is online. The coach looks for supported lines across all six characters without locking your deck into a single build.
+
+After a solo victory or defeat, **Vakuu’s run review** summarizes your deck identity, progress by act, largest recorded HP loss, upgrades, removals, gold spent and potion use. A loss review separates the recorded killer from coaching hypotheses and suggests what to practice next. Reopen it from the results screen or **Auditor settings → Read latest run review**. Disable **Open review after a run** to keep it on demand. The latest review stays locally in `user://mod_configs/VakuusAgenticAuditor/latest-run.txt`.
+
+## Troubleshooting
 
 - **I don’t see the mod in Steam.** The ZIP is a local installation. Look in the **game’s Mods list**, not Steam’s Subscribed Items. A Workshop listing has not been published.
 - **Nothing appeared.** Try **V** at a card reward. Check mute, the advice category, and Guidance under Settings. On demand waits for you; **Only show clear leads** filters close automatic picks.

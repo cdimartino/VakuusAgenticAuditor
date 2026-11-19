@@ -110,4 +110,17 @@ var savedSpots = new Dictionary<string, BubbleSpot> { { "map", BubbleSpot.From(7
 var roundtrip = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, BubbleSpot>>(System.Text.Json.JsonSerializer.Serialize(savedSpots))!;
 Check(roundtrip["map"].Restore(200, 100, 800, 500).Left == 594 && roundtrip["fight"].Restore(200, 100, 800, 500).Left == 6, "drag positions persist independently and stay on screen after resize");
 Check(!BubbleSpot.Moved(2, 2) && BubbleSpot.Moved(6, 0), "click jitter dismisses; deliberate movement drags");
+foreach (var (who, source, payoff, name) in new[]{
+    ("IRONCLAD","TRUE_GRIT","FEEL_NO_PAIN","Exhaust engine"),("SILENT","BLADE_DANCE","ACCURACY","Shiv engine"),
+    ("DEFECT","COLD_SNAP","BARRAGE","Orb engine"),("REGENT","BULWARK","CONQUEROR","Sovereign Blade"),
+    ("NECROBINDER","AFTERLIFE","PROTECTOR","Osty scaling"),("FOOL","VITRIOL","PUNCH_OF_JOY","Sadness conversion")})
+{
+    var baseDeck = deck with { Character = who, Cards = [C(source)] };
+    Check(Coach.Assess(C(payoff), baseDeck).Reason.Contains(name) && Archetypes.Analyze(baseDeck with { Cards = [C(source), C(payoff)] }).Any(x => x.Online), who + " sees the offered path and recognizes the completed engine");
+}
+FloorResult[] history = [new(1, 1, "Small enemy", 2, 0, 0, 0, 1, 0, 0, 2), new(1, 2, "Elite", 21, 0, 0, 0, 0, 0, 0, 5)];
+var loss = RunReview.Write(deck with { Character = "FOOL", Cards = [C("VITRIOL"), C("PUNCH_OF_JOY")] }, history, false, false, "Elite", 2, 42, ["Block Potion"]);
+Check(loss.Contains("floor 2, Elite (21") && loss.Contains("Recorded cause: Elite") && loss.Contains("cannot establish whether") && loss.Contains("Sadness conversion"), "loss review ties coaching to history without claiming potion would save the run");
+Check(RunReview.Write(deck, history, true, false, null, 0, 0, []).Contains("WHAT TO REPEAT"), "victory review uses winning analysis");
+Check(!RunReview.Write(deck, [], false, true, null, 0, 0, []).Contains("LOSS ANALYSIS"), "abandoned run is not misclassified as a death");
 Console.WriteLine($"{count} scenarios passed.");

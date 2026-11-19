@@ -26,6 +26,7 @@ internal sealed class Preferences
     public bool ClearLeadOnly { get; set; }
     public bool OncePerTurn { get; set; } = true;
     public bool Muted { get; set; }
+    public bool OpenRunReview { get; set; } = true;
     public Key SuggestionKey { get; set; } = Key.V;
     public Key SettingsKey { get; set; } = Key.F8;
     public Key MuteKey { get; set; } = Key.F6;
@@ -69,13 +70,35 @@ internal sealed class Display
             return keyPrompt.Visible || waitForRelease != Key.None;
         }
     }
-    public bool InSettings => menu.Visible || keyPrompt.Visible;
+    public bool InSettings => menu.Visible || keyPrompt.Visible || review.Visible;
     readonly List<Action> actions = new();
+    readonly AcceptDialog review = new() { Title = "Vakuu’s run review", OkButtonText = "Done" };
+    readonly TextEdit reviewText = new() { Editable = false, WrapMode = TextEdit.LineWrappingMode.Boundary, CustomMinimumSize = new(360, 220) };
+    string? latest;
+    static string ReviewPath => ProjectSettings.GlobalizePath("user://mod_configs/VakuusAgenticAuditor/latest-run.txt");
+    internal void AttachReview(Control screen, string report)
+    {
+        latest = report;
+        try { Directory.CreateDirectory(Path.GetDirectoryName(ReviewPath)!); File.WriteAllText(ReviewPath + ".tmp", report); File.Move(ReviewPath + ".tmp", ReviewPath, true); }
+        catch (IOException ex) { GD.PushWarning(ex.Message); }
+        var button = new Button { Text = "Vakuu’s run review", Position = new(20, 80) };
+        screen.AddChild(button); button.Pressed += ShowReview;
+        if (P.OpenRunReview && !P.Muted && P.Mode != "Off") Callable.From(ShowReview).CallDeferred();
+    }
+    void ShowReview()
+    {
+        menu.Hide(); Hide();
+        if (latest == null && File.Exists(ReviewPath)) latest = File.ReadAllText(ReviewPath);
+        reviewText.Text = latest ?? "Finish a solo run with the Auditor enabled to see your review.";
+        reviewText.ScrollVertical = 0;
+        review.PopupCenteredRatio(.72f);
+    }
     readonly CanvasLayer layer = new() { Layer = 80, Name = "VakuuAuditor" };
     public Display(SceneTree tree)
     {
         tree.Root.AddChild(layer); layer.AddChild(note); layer.AddChild(menu); note.Hide();
         layer.AddChild(keyPrompt);
+        layer.AddChild(review); review.AddChild(reviewText);
         keyPrompt.WindowInput += e =>
         {
             if (e is not InputEventKey { Pressed: true, Echo: false } k || bind == null) return;
@@ -273,6 +296,8 @@ internal sealed class Display
         Shortcut("Mute / unmute", P.MuteKey, k => P.MuteKey = k);
         Item("Guidance: " + P.Mode, () => P.Mode = Next(P.Mode, "Off", "On demand", "Balanced", "Detailed"));
         Toggle("Quick mute", P.Muted, v => P.Muted = v);
+        Toggle("Open review after a run", P.OpenRunReview, v => P.OpenRunReview = v);
+        Item("Read latest run review", ShowReview);
         Toggle("Before card picks", P.Rewards, v => P.Rewards = v);
         Toggle("Speech bubbles at choices", P.RewardBubble, v => P.RewardBubble = v);
         Toggle("Event choices", P.Events, v => P.Events = v);

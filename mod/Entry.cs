@@ -52,6 +52,37 @@ public static class Entry
         Callable.From(() => { ui = new Display(tree); tree.ProcessFrame += Frame; GD.Print("[VakuuAuditor] Ready"); }).CallDeferred();
     }
     static bool Solo() => RunManager.Instance.IsInProgress && !RunManager.Instance.NetService.Type.IsMultiplayer();
+    [HarmonyPatch(typeof(MegaCrit.Sts2.Core.Nodes.Screens.GameOverScreen.NGameOverScreen), "_Ready")]
+    static class FinishedRun
+    {
+        static void Postfix(MegaCrit.Sts2.Core.Nodes.Screens.GameOverScreen.NGameOverScreen __instance,
+            RunState ____runState, RunHistory ____history) => Safe(() =>
+            {
+                if (ui == null || RunManager.Instance.NetService.Type.IsMultiplayer() || ____runState.Players.Count != 1) return;
+                var p = ____runState.Players[0];
+                var deck = new Deck(p.Deck.Cards.Select(c => Catalog.Get(c.Id.Entry, c.Title, c.EnergyCost.Canonical, c.IsUpgraded, c.Type == CardType.Attack,
+                    c.GetType().Assembly == typeof(CardModel).Assembly)).ToArray(), p.Creature.CurrentHp, p.Creature.MaxHp, ____runState.CurrentActIndex + 1, false,
+                    p.Relics.Select(x => x.Id.Entry).ToArray(), p.Character.Id.Entry);
+                static string Label(string id) => System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(id.Replace('_', ' ').ToLowerInvariant());
+                var path = new List<FloorResult>(); int act = 0, floor = 0;
+                foreach (var floors in ____runState.MapPointHistory)
+                {
+                    act++;
+                    foreach (var f in floors)
+                    {
+                        floor++;
+                        var stats = f.PlayerStats.FirstOrDefault(); if (stats == null) continue;
+                        var room = f.Rooms.LastOrDefault();
+                        path.Add(new(act, floor, Label(room?.ModelId?.Entry ?? f.MapPointType.ToString()), stats.DamageTaken, stats.HpHealed,
+                            stats.PotionUsed.Count, stats.GoldSpent, stats.CardsGained.Count, stats.CardsRemoved.Count, stats.UpgradedCards.Count, f.Rooms.Sum(x => x.TurnsTaken)));
+                    }
+                }
+                var cause = ____history.KilledByEncounter?.Entry ?? ____history.KilledByEvent?.Entry;
+                var report = RunReview.Write(deck, path.ToArray(), ____history.Win, ____history.WasAbandoned, cause == null ? null : Label(cause),
+                    ____runState.AscensionLevel, p.Gold, p.Potions.Select(x => x.Title.GetFormattedText()).ToArray());
+                ui.AttachReview(__instance, report);
+            });
+    }
     [HarmonyPatch(typeof(NSettingsScreen), "_Ready")]
     static class GeneralSettings
     {
@@ -86,7 +117,7 @@ public static class Entry
     {
         var routes = r.CurrentMapPoint?.Children;
         return new(p.Deck.Cards.Select(Read).ToArray(), p.Creature.CurrentHp, p.Creature.MaxHp, r.CurrentActIndex + 1,
-            routes?.Count > 0 && routes.All(n => n.PointType.ToString() == "Elite"), p.Relics.Select(v => v.Id.Entry).ToArray());
+            routes?.Count > 0 && routes.All(n => n.PointType.ToString() == "Elite"), p.Relics.Select(v => v.Id.Entry).ToArray(), p.Character.Id.Entry);
     }
 
     [HarmonyPatch(typeof(NCardRewardSelectionScreen), "RefreshOptions")]
