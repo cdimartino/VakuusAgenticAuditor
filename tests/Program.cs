@@ -123,4 +123,13 @@ var loss = RunReview.Write(deck with { Character = "FOOL", Cards = [C("VITRIOL")
 Check(loss.Contains("floor 2, Elite (21") && loss.Contains("Recorded cause: Elite") && loss.Contains("cannot establish whether") && loss.Contains("Sadness conversion"), "loss review ties coaching to history without claiming potion would save the run");
 Check(RunReview.Write(deck, history, true, false, null, 0, 0, []).Contains("WHAT TO REPEAT"), "victory review uses winning analysis");
 Check(!RunReview.Write(deck, [], false, true, null, 0, 0, []).Contains("LOSS ANALYSIS"), "abandoned run is not misclassified as a death");
+var curseOffer = new[] { new Verdict("best", "Best", 5, "", null), new Verdict("middle", "Middle", 2, "", null), new Verdict("~skip", "Skip", 0, "", null) };
+string Cursed(int a, int i, bool on = true) => Curse.Advice("Honest", on, a, i.ToString(), curseOffer);
+var decisionsToTest = Enumerable.Range(0, 1000).ToArray();
+var bitten = decisionsToTest.First(i => Cursed(0, i) != "Honest");
+Check(decisionsToTest.All(i => Cursed(10, i, false) == "Honest"), "curse opt-out preserves every hint");
+Check(Curse.Chance(-1) == 10 && Curse.Chance(12) == 40 && decisionsToTest.Count(i => Cursed(10, i) != "Honest") > decisionsToTest.Count(i => Cursed(0, i) != "Honest"), "higher ascension recruits more decisions without exceeding the cap");
+Check(Cursed(0, bitten).Contains("Take Middle.") && Cursed(5, bitten).Contains("Skip this reward."), "a triggered curse recommends a real weaker choice, then the weakest at A5");
+Check(Curse.Advice("Detailed", true, 0, bitten.ToString(), curseOffer) == Cursed(0, bitten), "reopening or asking for detail cannot reroll crooked counsel");
+Check(Curse.Advice("Truth", true, 0, bitten.ToString(), null).StartsWith("CURSE · Hint withheld") && Curse.Advice("Truth", true, 0, bitten.ToString(), [curseOffer[0], curseOffer[0]]).Contains("Hint withheld"), "without a clearly weaker alternative Vakuu withholds advice rather than inventing a choice");
 Console.WriteLine($"{count} scenarios passed.");

@@ -306,7 +306,7 @@ public static class Entry
             NChooseABundleSelectionScreen => "bundles",
             _ => r.CurrentRoom switch { CombatRoom => "fight", RestSiteRoom => "camp", MerchantRoom => "shop", EventRoom => "event", TreasureRoom => "treasure", _ => "other" }
         };
-        var key = $"{r.CurrentActIndex}:{r.ActFloor}:{ui.ViewType}:{P.RewardBubble}:{text}";
+        var key = $"{r.CurrentActIndex}:{r.ActFloor}:{ui.ViewType}:{P.RewardBubble}:{P.CurseMode}:{text}";
         object? decision = NMapScreen.Instance?.IsOpen == true ? NMapScreen.Instance : (object?)overlay ?? r.CurrentRoom;
         if (battleKey == null && !decisions.Ready(decision, text, now, why)) { ui.Hide(); last = ""; return; }
         if (text == null) { ui.Hide(); last = ""; return; }
@@ -315,7 +315,15 @@ public static class Entry
         if ((why || (changed && fresh && P.Mode != "On demand" && (battleKey == null || !P.OncePerTurn || turn != battleKey)))
             && (!reacting || decisions.MayDeliver(overlay!)))
         {
-            ui.Show(text, anchor); until = now + (ulong)Math.Clamp(P.Seconds, 2, 60) * 1000;
+            string spoken = text;
+            if (!reacting && P.CurseMode)
+            {
+                var cards = overlay is NCardRewardSelectionScreen && ui.ViewType == "card rewards" ? ranking : null;
+                var identity = $"{r.Rng.StringSeed}:{r.CurrentActIndex}:{r.ActFloor}:{ui.ViewType}:{overlay?.GetType().Name}:{battleKey}";
+                if (cards != null) identity += ":" + string.Join(",", cards.Select(x => x.Id).Order(StringComparer.Ordinal));
+                spoken = Curse.Advice(text, true, r.AscensionLevel, identity, cards);
+            }
+            ui.Show(spoken, anchor); until = now + (ulong)Math.Clamp(P.Seconds, 2, 60) * 1000;
             if (reacting) decisions.Delivered(overlay!);
             if (battleKey != null) { turn = battleKey; decisions.MarkTurnHint(text); }
         }

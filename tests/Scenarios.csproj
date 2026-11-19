@@ -2,6 +2,7 @@
   <PropertyGroup><TargetFramework>net9.0</TargetFramework><Nullable>enable</Nullable><OutputType>Exe</OutputType><ImplicitUsings>enable</ImplicitUsings></PropertyGroup>
   <ItemGroup><Compile Include="../mod/RewardLayout.cs" /></ItemGroup>
   <ItemGroup><Compile Include="../mod/DecisionGate.cs" /></ItemGroup>
+  <ItemGroup><Compile Include="../mod/Curse.cs" /></ItemGroup>
   <ItemGroup><Compile Include="../mod/BubbleSpot.cs" /></ItemGroup>
   <ItemGroup><Compile Include="../mod/Archetypes.cs;../mod/RunReview.cs" /></ItemGroup>
   <ItemGroup><EmbeddedResource Include="../mod/relics.tsv;../mod/relic-fit.tsv;../mod/bosses.tsv;../mod/potions.tsv" /></ItemGroup>

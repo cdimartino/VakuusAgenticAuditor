@@ -26,6 +26,7 @@ internal sealed class Preferences
     public bool ClearLeadOnly { get; set; }
     public bool OncePerTurn { get; set; } = true;
     public bool Muted { get; set; }
+    public bool CurseMode { get; set; }
     public bool OpenRunReview { get; set; } = true;
     public Key SuggestionKey { get; set; } = Key.V;
     public Key SettingsKey { get; set; } = Key.F8;
@@ -314,6 +315,7 @@ internal sealed class Display
                 keyPrompt.PopupCentered();
             });
         }
+        Toggle("Curse Mode · unreliable advice (scales with Ascension)", P.CurseMode, v => P.CurseMode = v);
         Shortcut("Show / dismiss suggestion", P.SuggestionKey, k => P.SuggestionKey = k);
         Shortcut("Open settings", P.SettingsKey, k => P.SettingsKey = k);
         Shortcut("Mute / unmute", P.MuteKey, k => P.MuteKey = k);

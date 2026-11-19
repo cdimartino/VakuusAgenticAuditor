@@ -20,6 +20,10 @@ For **solo runs on Slay the Spire 2 public-beta v0.113.1**. Works offline, from 
 
 ## Make the coach yours
 
+**Optional challenge: Curse Mode.** Press **F8** and turn on the first toggle to make Vakuu an unreliable coach. It starts **off**. At Ascension 0, each advice decision has a **10%** curse chance; add **3 percentage points per level**, up to **40% at A10**. A cursed card reward points to a weaker available choice; from **A5** it points to the weakest. If there’s no clearly weaker reward, or you’re asking about another kind of decision, Vakuu withholds the hint instead.
+
+Watch for **CURSE · Crooked counsel** or **CURSE · Hint withheld**, followed by Vakuu’s remark. Asking again won’t reroll the curse. Post-pick feedback and run reviews stay honest. The curse affects advice only; it doesn’t add cards to your deck.
+
 | When you want to… | Do this |
 |---|---|
 | Ask for advice, or dismiss it | Press **V**, click the bubble to dismiss, or use controller **Back + right shoulder** |
