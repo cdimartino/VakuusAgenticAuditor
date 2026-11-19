@@ -26,6 +26,7 @@ internal sealed class Preferences
     public bool ClearLeadOnly { get; set; }
     public bool OncePerTurn { get; set; } = true;
     public bool Muted { get; set; }
+    public bool AllowClosestCatalog { get; set; }
     public bool CurseMode { get; set; }
     public bool OpenRunReview { get; set; } = true;
     public Key SuggestionKey { get; set; } = Key.V;
@@ -98,8 +99,10 @@ internal sealed class Display
         review.PopupCenteredRatio(.72f);
     }
     readonly CanvasLayer layer = new() { Layer = 80, Name = "VakuuAuditor" };
-    public Display(SceneTree tree)
+    readonly string catalogStatus;
+    public Display(SceneTree tree, string catalogStatus)
     {
+        this.catalogStatus = catalogStatus;
         tree.Root.AddChild(layer); layer.AddChild(note); layer.AddChild(menu); note.Hide();
         note.GetViewport().SizeChanged += () =>
         {
@@ -316,6 +319,9 @@ internal sealed class Display
             });
         }
         Toggle("Curse Mode · unreliable advice (scales with Ascension)", P.CurseMode, v => P.CurseMode = v);
+        Toggle("Unknown patch: use closest catalog (restart required)", P.AllowClosestCatalog, v => P.AllowClosestCatalog = v);
+        Item(catalogStatus, () => { });
+        menu.SetItemDisabled(actions.Count - 1, true);
         Shortcut("Show / dismiss suggestion", P.SuggestionKey, k => P.SuggestionKey = k);
         Shortcut("Open settings", P.SettingsKey, k => P.SettingsKey = k);
         Shortcut("Mute / unmute", P.MuteKey, k => P.MuteKey = k);

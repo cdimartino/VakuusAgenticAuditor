@@ -49,15 +49,26 @@ public static class Entry
     {
         var info = MegaCrit.Sts2.Core.Debug.ReleaseInfoManager.Instance.ReleaseInfo;
         var profile = CatalogProfile.Find(info?.Version, info?.Commit, info?.MainAssemblyHash);
+        var exact = profile != null;
+        if (!exact && Preferences.Load().AllowClosestCatalog)
+            profile = CatalogProfile.Find(info?.Version, info?.Commit, info?.MainAssemblyHash, true);
+        var status = profile == null ? $"Coaching inactive: no audited catalog for {info?.Version ?? "unknown"}"
+            : $"{(exact ? "Audited" : "Approximate")} catalog: {profile.Version} ({profile.Build}) · game {info?.Version}";
+        var harmony = new Harmony("vakuus.agentic.auditor");
         if (profile == null)
+            harmony.CreateClassProcessor(typeof(GeneralSettings)).Patch();
+        else
         {
-            GD.PushWarning($"[VakuuAuditor] No audited catalog for {info?.Version} ({info?.Commit}); coaching disabled.");
-            return;
+            Catalog.Profile = profile;
+            harmony.PatchAll(typeof(Entry).Assembly);
         }
-        Catalog.Profile = profile;
-        new Harmony("vakuus.agentic.auditor").PatchAll(typeof(Entry).Assembly);
         var tree = (SceneTree)Engine.GetMainLoop();
-        Callable.From(() => { ui = new Display(tree); tree.ProcessFrame += Frame; GD.Print("[VakuuAuditor] Ready"); }).CallDeferred();
+        Callable.From(() =>
+        {
+            ui = new Display(tree, status);
+            if (profile != null) tree.ProcessFrame += Frame;
+            GD.Print("[VakuuAuditor] " + status);
+        }).CallDeferred();
     }
     static bool Solo() => RunManager.Instance.IsInProgress && !RunManager.Instance.NetService.Type.IsMultiplayer();
     [HarmonyPatch(typeof(MegaCrit.Sts2.Core.Nodes.Screens.GameOverScreen.NGameOverScreen), "_Ready")]

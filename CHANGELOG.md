@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.20
+
+- On an unknown game patch, you can now opt into the closest audited catalog from Auditor settings. Restart to apply. Settings identifies approximate advice and shows which catalog is active. Exact-build matching remains the default.
+
 ## v0.1.19
 
 - Coaching now checks the game’s version, commit and assembly identity before loading its card list and effect rules. An unreviewed update no longer inherits advice from another build.
