@@ -74,6 +74,27 @@ internal sealed class Display
     readonly AcceptDialog keyPrompt = new() { Title = "Auditor keyboard shortcuts", OkButtonText = "Cancel" };
     Action<Key>? bind;
     Key waitForRelease = Key.None;
+    internal event Func<bool>? SettingsPressed;
+    readonly SettingsShortcut<Key> settingsShortcut = new();
+    bool SettingsBlocked => KeyboardBusy || review.Visible;
+    internal void SettingsController(bool pressed)
+    {
+        if (settingsShortcut.Controller(pressed, SettingsBlocked)) SettingsPressed?.Invoke();
+    }
+    void SettingsInput(Window source, InputEvent input)
+    {
+        if (input is not InputEventKey key) return;
+        if (!key.Pressed)
+        {
+            if (waitForRelease == key.Keycode) waitForRelease = Key.None;
+        }
+        // Window input is delivered even when both edges fall between frames.
+        // Track all keys, including keys being rebound; echoes and duplicate
+        // delivery through an embedded popup must never toggle a second time.
+        if (settingsShortcut.Key(key.Keycode, key.Pressed, key.Echo, P.SettingsKey, SettingsBlocked)
+            && SettingsPressed?.Invoke() == true)
+            source.SetInputAsHandled();
+    }
     public bool KeyboardBusy
     {
         get
@@ -156,6 +177,14 @@ internal sealed class Display
                 Callable.From(() => { RefreshSettings(); menu.PopupCentered(); }).CallDeferred();
             }
         };
+        // These are native Window signals: no custom Node/_Input registration.
+        // Attach after the Display is fully initialized and its subscribers exist.
+        Callable.From(() =>
+        {
+            foreach (var window in new Window[] { tree.Root, menu, keyPrompt, review })
+                window.WindowInput += input => SettingsInput(window, input);
+            tree.Root.FocusExited += settingsShortcut.Reset;
+        }).CallDeferred();
         corner = new StyleBoxFlat { BgColor = new Color(.07f, .055f, .09f, .93f), ContentMarginLeft = 12, ContentMarginRight = 12, ContentMarginTop = 8, ContentMarginBottom = 8 };
         note.AddThemeStyleboxOverride("normal", corner);
         MakeDismissible(note);
@@ -166,6 +195,10 @@ internal sealed class Display
             P.Save();
             Hide();
             RefreshSettings();
+        };
+        menu.VisibilityChanged += () =>
+        {
+            if (menu.Visible) GD.Print("[VakuuAuditor] Settings popup visible");
         };
     }
     public bool Visible => note.Visible || GodotObject.IsInstanceValid(speech);

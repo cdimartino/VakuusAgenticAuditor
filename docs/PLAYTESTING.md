@@ -2,6 +2,8 @@
 
 Normal users do not need the MCP bridge or this runner. These are local QA tools, not part of the Workshop payload. The v0.1.21 candidate adds recorded state and structured advice; the previously uploaded v0.1.20 cannot export this protocol.
 
+For the next baseline, use [Luna’s run brief](NEXT-RUN.md). It starts with a no-run settings check and a click-through fallback, then checks the first recorded card play before measuring throughput.
+
 ## What changed after the first full run
 
 The Ironclad A0 run on seed `26J0YKBB13FM` reached a natural defeat at Act 2/F25. Native history records 7,153 seconds and 47 combat turns. Artifact timestamps span roughly 2h49m from setup through the final report. During that broader window, 408 Code Mode requests mentioned game-state reads and 356 mentioned visual inspection; these counts overlap and are not a latency breakdown. The original report remains unchanged.

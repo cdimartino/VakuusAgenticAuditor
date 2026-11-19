@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup><TargetFramework>net9.0</TargetFramework><Nullable>enable</Nullable><OutputType>Exe</OutputType><ImplicitUsings>enable</ImplicitUsings></PropertyGroup>
   <ItemGroup>
+    <Compile Include="../mod/SettingsShortcut.cs" />
     <Compile Include="../mod/RewardLayout.cs" />
     <Compile Include="../mod/CombatGuidance.cs;../mod/RunJournal.cs;../mod/JournalAnalysis.cs;../mod/PlaytestPreset.cs;../mod/PlaytestExport.cs" />
   </ItemGroup>

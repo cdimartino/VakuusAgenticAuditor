@@ -2,6 +2,18 @@ using Auditor;
 Catalog.Profile = CatalogProfile.Find("v0.113.1", "d09d48e5", -1414792094) ?? throw new Exception("Missing audited beta catalog");
 int count = 0;
 void Check(bool v, string name) { if (!v) throw new Exception(name); Console.WriteLine("PASS " + name); count++; }
+var shortcut = new SettingsShortcut<int>();
+Check(shortcut.Key(8, true, false, 8, false) && !shortcut.Key(8, false, false, 8, false), "settings press and release between process frames delivers once");
+Check(shortcut.Key(8, true, false, 8, false) && !shortcut.Key(8, true, false, 8, false) && !shortcut.Key(8, true, true, 8, false), "held settings key ignores duplicate delivery and echo");
+shortcut.Key(8, false, false, 8, false);
+Check(!shortcut.Key(9, true, false, 8, true) && !shortcut.Key(9, true, false, 9, false), "modal key capture and rebinding cannot replay held press");
+shortcut.Key(9, false, false, 9, false);
+Check(!shortcut.Key(8, true, false, 9, false) && shortcut.Key(9, true, false, 9, false), "rebound settings uses new key only");
+shortcut.Reset();
+Check(shortcut.Key(9, true, false, 9, false), "focus loss rearms settings after missing release");
+Check(!shortcut.Controller(true, true) && !shortcut.Controller(true, false) && !shortcut.Controller(false, false) && shortcut.Controller(true, false) && !shortcut.Controller(true, false), "controller settings respects modal and requires fresh chord edge");
+shortcut.Reset();
+Check(shortcut.Controller(true, false), "focus loss rearms controller settings chord");
 Card C(string id, int cost = 1) => Catalog.Get(id, id, cost, false, id.StartsWith("STRIKE_"));
 Check(CatalogProfile.Find("v0.113.1", "different", -1414792094) == null && CatalogProfile.Find("v0.113.1", "d09d48e5", 0) == null && CatalogProfile.Find(null, null, null) == null, "unverified rebuilds never inherit a matching version's card rules");
 var profiles = new[] { Catalog.Profile with { Version = "v0.113.9", Build = "9" }, Catalog.Profile with { Version = "v0.113.11", Build = "11" }, Catalog.Profile with { Version = "v0.113.10", Rules = "unsupported" } };

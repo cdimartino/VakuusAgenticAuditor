@@ -34,7 +34,7 @@ public static class Entry
     static Display ui = null!;
     static Preferences P => ui.P;
     static ulong next, until, postUntil, detailUntil;
-    static bool settingsKey, whyKey, muteKey;
+    static bool whyKey, muteKey;
     static string last = "", turn = "", post = "";
     static Verdict[] ranking = [];
     static string[] alternatives = [];
@@ -78,6 +78,13 @@ public static class Entry
         Callable.From(() =>
         {
             ui = new Display(tree, status, $"Mod {loadedVersion} · {status}");
+            ui.SettingsPressed += () =>
+            {
+                if (MegaCrit.Sts2.Core.Nodes.NGame.Instance?.Transition?.InTransition == true) return false;
+                Safe(ui.Settings);
+                return true;
+            };
+            tree.ProcessFrame += SettingsControllerFrame;
             tree.ProcessFrame += RecordFrame;
             if (profile != null) tree.ProcessFrame += Frame;
             GD.Print("[VakuuAuditor] " + status);
@@ -267,6 +274,11 @@ public static class Entry
         post = Coach.After(picked, ranking[0]); postUntil = Time.GetTicksMsec() + (ulong)Math.Clamp(P.Seconds, 2, 60) * 1000;
     }
     static bool Edge(bool now, ref bool before) { bool edge = now && !before; before = now; return edge; }
+    static void SettingsControllerFrame() => Safe(() =>
+    {
+        // Keep the controller chord independent of catalog availability, too.
+        ui.SettingsController(Input.IsJoyButtonPressed(0, JoyButton.Back) && Input.IsJoyButtonPressed(0, JoyButton.LeftShoulder));
+    });
     static void Frame() => Safe(Tick);
     static void Tick()
     {
@@ -276,7 +288,6 @@ public static class Entry
             decisions.Transition(); ui.Hide(); postUntil = 0; return;
         }
         if (ui.KeyboardBusy) return;
-        if (Edge(Input.IsKeyPressed(P.SettingsKey) || (Input.IsJoyButtonPressed(0, JoyButton.Back) && Input.IsJoyButtonPressed(0, JoyButton.LeftShoulder)), ref settingsKey)) ui.Settings();
         if (ui.InSettings) return;
         if (Edge(Input.IsKeyPressed(P.MuteKey), ref muteKey)) { P.Muted = !P.Muted; P.Save(); postUntil = 0; last = ""; }
         bool why = Edge(Input.IsKeyPressed(P.SuggestionKey) || (Input.IsJoyButtonPressed(0, JoyButton.Back) && Input.IsJoyButtonPressed(0, JoyButton.RightShoulder)), ref whyKey);
