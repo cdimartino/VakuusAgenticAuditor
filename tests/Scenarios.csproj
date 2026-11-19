@@ -5,6 +5,9 @@
   <ItemGroup><Compile Include="../mod/Curse.cs" /></ItemGroup>
   <ItemGroup><Compile Include="../mod/BubbleSpot.cs" /></ItemGroup>
   <ItemGroup><Compile Include="../mod/Archetypes.cs;../mod/RunReview.cs" /></ItemGroup>
-  <ItemGroup><EmbeddedResource Include="../mod/relics.tsv;../mod/relic-fit.tsv;../mod/bosses.tsv;../mod/potions.tsv" /></ItemGroup>
-  <ItemGroup><Compile Include="../mod/RouteCoach.cs" /><Compile Include="../mod/Coach.cs" /><Compile Include="../mod/EventCoach.cs" /><Compile Include="../mod/PotionCoach.cs" /><Compile Include="../mod/TurnCoach.cs" /><EmbeddedResource Include="../mod/roles.tsv" /></ItemGroup>
+  <ItemGroup><Compile Include="../mod/CatalogProfile.cs" />
+    <EmbeddedResource Include="../mod/catalogs/index.json" LogicalName="auditor/catalogs/index.json" />
+    <EmbeddedResource Include="../mod/catalogs/**/*.tsv" LogicalName="auditor/catalogs/%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+  <ItemGroup><Compile Include="../mod/RouteCoach.cs" /><Compile Include="../mod/Coach.cs" /><Compile Include="../mod/EventCoach.cs" /><Compile Include="../mod/PotionCoach.cs" /><Compile Include="../mod/TurnCoach.cs" /></ItemGroup>
 </Project>

@@ -47,6 +47,14 @@ public static class Entry
     static readonly HashSet<string> errors = [];
     public static void Initialize()
     {
+        var info = MegaCrit.Sts2.Core.Debug.ReleaseInfoManager.Instance.ReleaseInfo;
+        var profile = CatalogProfile.Find(info?.Version, info?.Commit, info?.MainAssemblyHash);
+        if (profile == null)
+        {
+            GD.PushWarning($"[VakuuAuditor] No audited catalog for {info?.Version} ({info?.Commit}); coaching disabled.");
+            return;
+        }
+        Catalog.Profile = profile;
         new Harmony("vakuus.agentic.auditor").PatchAll(typeof(Entry).Assembly);
         var tree = (SceneTree)Engine.GetMainLoop();
         Callable.From(() => { ui = new Display(tree); tree.ProcessFrame += Frame; GD.Print("[VakuuAuditor] Ready"); }).CallDeferred();
@@ -493,6 +501,7 @@ public static class Entry
         foreach (var c in hand)
         {
             var card = Read(c); if (!card.Known) continue;
+            var effect = Catalog.Effect(card.Id);
             bool area = c.TargetType == TargetType.AllEnemies, single = c.TargetType == TargetType.AnyEnemy;
             var hits = Enumerable.Repeat(-1, enemies.Length).ToArray();
             int guard = 0;
@@ -500,7 +509,7 @@ public static class Entry
             for (int j = 0; j < (single || area ? enemies.Length : 1); j++)
             {
                 var enemy = enemies[j];
-                if (single && (!c.CanPlayTargeting(enemy) || card.Id == "NAIL" && Power(enemy, "IMPALED_POWER") == 0)) continue;
+                if (single && (!c.CanPlayTargeting(enemy) || effect == "requires-impale" && Power(enemy, "IMPALED_POWER") == 0)) continue;
                 c.UpdateDynamicVarPreview(CardPreviewMode.Normal, single || area ? enemy : null, vars);
                 int Value(string name) => vars.TryGetValue(name, out var v) ? Math.Max(0, (int)v.PreviewValue) : 0;
                 if (card.Has("guard")) guard = Value("Block");
@@ -515,12 +524,12 @@ public static class Entry
             int Base(string name) => vars.TryGetValue(name, out var v) ? Math.Max(0, (int)v.BaseValue) : 0;
             int weak = card.Has("weak") ? Math.Max(Base("WeakPower"), Base("Power")) : 0;
             int vuln = card.Has("vulnerable") ? Math.Max(Base("VulnerablePower"), Base("Power")) : 0;
-            int sad = card.Id switch { "VITRIOL" => 1, "JEST" or "SORROWFUL_STRIKE" => Base("Cards"), _ => 0 };
+            int sad = effect switch { "sadness-one" => 1, "sadness-cards" => Base("Cards"), _ => 0 };
             if (guard == 0 && hits.All(n => n <= 0) && !pivot && weak + vuln + sad == 0) continue;
             plays.Add(new(c.Title, c.EnergyCost.CostsX ? 0 : Math.Max(0, c.EnergyCost.GetAmountToSpend()),
                 c.HasStarCostX ? 0 : Math.Max(0, c.GetStarCostWithModifiers()), card.Has("shots") ? 1 : 0, guard, hits, area, pivot,
-                c.Type == CardType.Power, c.EnergyCost.CostsX, c.HasStarCostX, weak, vuln, sad, card.Id == "PUNCH_OF_JOY",
-                c.Type == CardType.Skill, card.Id switch { "FINISHER" => "attacks", "LUNAR_BLAST" => "skills", _ => "" }, card.Attack,
+                c.Type == CardType.Power, c.EnergyCost.CostsX, c.HasStarCostX, weak, vuln, sad, effect == "convert-sadness",
+                c.Type == CardType.Skill, effect switch { "repeat-attacks" => "attacks", "repeat-skills" => "skills", _ => "" }, card.Attack,
                 card.Has("hp loss") ? Base("HpLoss") : 0));
         }
         var key = $"{session?.CurrentActIndex}:{session?.ActFloor}:{state.RoundNumber}";

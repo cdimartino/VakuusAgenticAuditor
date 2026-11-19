@@ -6,6 +6,8 @@ Ever hover over three cards and wish someone would make a case for **Skip**? Vak
 
 For **solo runs on Slay the Spire 2 public-beta v0.113.1**. Works offline, from the first floor. No relic, API key, BaseLib or other mod required.
 
+**Game updates:** Vakuu selects coaching data for the exact game release. The audited snapshot is public-beta v0.113.1 (Steam build `26660232`). On an unrecognized build the coach stays inactive rather than using stale card effects. Both main and public-beta are [monitored for changes](https://github.com/cdimartino/VakuusAgenticAuditor/actions/workflows/watch-game.yml); monitoring a branch does not mean its latest build has passed review.
+
 ![Tezcatara offers three gifts. Vakuu recommends Yummy Cookie for permanent upgrades without adding Soot.](docs/images/ancient-gift.jpg)
 
 *Four upgrades now, or four removals with Soot on every shuffle? Here the deck has enough useful upgrade targets for Vakuu to recommend the Cookie.*

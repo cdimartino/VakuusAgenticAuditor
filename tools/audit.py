@@ -4,6 +4,7 @@ Default: check committed inventory and exit nonzero on drift."""
 
 import csv
 import io
+import json
 import re
 import sys
 from collections import Counter
@@ -13,9 +14,12 @@ from catalog import english_cards
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def table(name):
+def table(build, name):
     rows = list(
-        csv.reader((ROOT / "mod" / name).read_text().splitlines(), delimiter="\t")
+        csv.reader(
+            (ROOT / "mod/catalogs" / build / name).read_text().splitlines(),
+            delimiter="\t",
+        )
     )
     entries = dict((row[0], row[1:]) for row in rows)
     if len(entries) != len(rows):
@@ -27,13 +31,16 @@ def norm(value):
     return re.sub("[^a-z0-9]", "", value.lower())
 
 
-def audit(pack):
-    roles, relics, bosses = [table(n + ".tsv") for n in ("roles", "relics", "bosses")]
-    potions = table("potions.tsv")
-    fit = table("relic-fit.tsv")
+def audit(pack, build):
+    roles, relics, bosses = [
+        table(build, n + ".tsv") for n in ("roles", "relics", "bosses")
+    ]
+    potions = table(build, "potions.tsv")
+    fit = table(build, "relic-fit.tsv")
     wiki = list(
         csv.DictReader(
-            (ROOT / "audit/wiki.tsv").read_text().splitlines(), delimiter="\t"
+            (ROOT / "audit" / build / "wiki.tsv").read_text().splitlines(),
+            delimiter="\t",
         )
     )
     pages = dict(
@@ -139,8 +146,17 @@ def audit(pack):
 
 
 if __name__ == "__main__":
-    out, rows = audit(Path(sys.argv[1]))
-    path = ROOT / "audit/inventory.tsv"
+    pack = Path(sys.argv[1])
+    info = json.loads((pack.parent / "release_info.json").read_text())
+    profiles = json.loads((ROOT / "mod/catalogs/index.json").read_text())
+    (build,) = [
+        p["build"]
+        for p in profiles
+        if (p["version"], p["commit"], p["assemblyHash"])
+        == (info["version"], info["commit"], info["main_assembly_hash"])
+    ]
+    out, rows = audit(pack, build)
+    path = ROOT / "audit" / build / "inventory.tsv"
     if "--write" in sys.argv:
         path.write_text(out)
     elif not path.exists() or path.read_text() != out:

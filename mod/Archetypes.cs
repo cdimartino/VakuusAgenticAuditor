@@ -16,7 +16,7 @@ internal static class Archetypes
         ["NECROBINDER"] = [new("summon", "Osty scaling"), new("doom", "Doom"), new("souls", "Soul engine")],
         ["FOOL"] = [new("sadness", "Sadness conversion"), new("shots", "Arrow engine"), new("impale", "Impale payoff"), new("aim", "Aim scaling")],
     };
-    static bool Payoff(Card c, string role) => c.Needs.Contains(role) || (role == "sadness" && c.Id == "PUNCH_OF_JOY");
+    static bool Payoff(Card c, string role) => c.Needs.Contains(role) || (role == "sadness" && Catalog.Effect(c.Id) == "convert-sadness");
     internal static LineEvidence[] Analyze(Deck d) => Profiles.GetValueOrDefault(d.Character, []).Select(line =>
         new LineEvidence(line, d.Cards.Where(c => c.Known && c.Has(line.Role)).ToArray(), d.Cards.Where(c => c.Known && Payoff(c, line.Role)).ToArray()))
         .Where(x => x.Sources.Length + x.Payoffs.Length > 0)

@@ -1,7 +1,9 @@
 using Auditor;
+Catalog.Profile = CatalogProfile.Find("v0.113.1", "d09d48e5", -1414792094) ?? throw new Exception("Missing audited beta catalog");
 int count = 0;
 void Check(bool v, string name) { if (!v) throw new Exception(name); Console.WriteLine("PASS " + name); count++; }
 Card C(string id, int cost = 1) => Catalog.Get(id, id, cost, false, id.StartsWith("STRIKE_"));
+Check(CatalogProfile.Find("v0.113.1", "different", -1414792094) == null && CatalogProfile.Find("v0.113.1", "d09d48e5", 0) == null && CatalogProfile.Find(null, null, null) == null, "unverified rebuilds never inherit a matching version's card rules");
 var deck = new Deck(Enumerable.Repeat(C("STRIKE_IRONCLAD"), 6).Concat(Enumerable.Repeat(C("DEFEND_IRONCLAD"), 4)).ToArray(), 70, 80, 1, false, []);
 foreach (var (who, enabler, payoff) in new[]{
     ("Ironclad","TRUE_GRIT","FEEL_NO_PAIN"),("Silent","BLADE_DANCE","ACCURACY"),

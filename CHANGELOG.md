@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.1.19
+
+- Coaching now checks the game’s version, commit and assembly identity before loading its card list and effect rules. An unreviewed update no longer inherits advice from another build.
+- Main and public-beta Steam builds are monitored independently. The first audited catalog is public-beta v0.113.1, build 26660232.
+
 ## v0.1.18
 
 - Added **Curse Mode**, an optional challenge at the top of Vakuu’s settings (F8). It’s off by default.

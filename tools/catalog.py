@@ -2,6 +2,7 @@
 Only card identifiers and our classifications are emitted, never game text/art."""
 
 import json
+import hashlib
 import re
 import struct
 import sys
@@ -88,7 +89,40 @@ consumers = {
     "guard": "BODY_SLAM ENTRENCH",
 }
 if __name__ == "__main__":
-    data = english_cards(Path(sys.argv[1]))
+    pack = Path(sys.argv[1])
+    release = json.loads((pack.parent / "release_info.json").read_text())
+    if not sys.argv[2].isdecimal():
+        raise SystemExit("Supply the installed Steam build ID as the second argument")
+    # Generate in a fresh staging directory, never over a shipped snapshot.
+    out = Path(__file__).resolve().parents[1] / "dist/catalog-candidates" / sys.argv[2]
+    out.mkdir(parents=True, exist_ok=False)
+    (out / "release_info.json").write_text(json.dumps(release, indent=2) + "\n")
+    data = english_cards(pack)
+    # Store digests, not game text. Include upgrade text and other per-card
+    # localization keys; assembly-only numeric changes still require review.
+    records = {}
+    for key, value in data.items():
+        card, _, field = key.partition(".")
+        records.setdefault(card, {})[field] = value
+    fingerprints = {
+        card: hashlib.sha256(json.dumps(fields, sort_keys=True).encode()).hexdigest()
+        for card, fields in sorted(records.items())
+    }
+    (out / "card-text-hashes.json").write_text(
+        json.dumps(fingerprints, indent=2) + "\n"
+    )
+    if len(sys.argv) > 3:
+        previous = json.loads(Path(sys.argv[3]).read_text())
+        changes = {
+            "added": sorted(fingerprints.keys() - previous.keys()),
+            "removed": sorted(previous.keys() - fingerprints.keys()),
+            "changed_text": sorted(
+                k
+                for k in previous.keys() & fingerprints.keys()
+                if previous[k] != fingerprints[k]
+            ),
+        }
+        (out / "card-changes.json").write_text(json.dumps(changes, indent=2) + "\n")
     lines = []
     for key, value in sorted(data.items()):
         if not key.endswith(".description"):
@@ -99,9 +133,7 @@ if __name__ == "__main__":
         tags = [k for k, pattern in providers.items() if re.search(pattern, text, re.M)]
         needs = [k for k, ids in consumers.items() if name in ids.split()]
         lines.append("\t".join([name, ",".join(tags), ",".join(needs)]))
-    (Path(__file__).resolve().parents[1] / "mod/roles.tsv").write_text(
-        "\n".join(lines) + "\n"
-    )
+    (out / "roles.tsv").write_text("\n".join(lines) + "\n")
     # Require whole-clause matches. "Heal ... You can no longer ..." is
     # materially different from a free heal and must not be scored as one.
     patterns = {
@@ -129,6 +161,4 @@ if __name__ == "__main__":
                 (tag for tag, pat in patterns.items() if re.fullmatch(pat, text)), ""
             )
         )
-    (Path(__file__).resolve().parents[1] / "mod/relic-fit.tsv").write_text(
-        "\n".join(lines) + "\n"
-    )
+    (out / "relic-fit.tsv").write_text("\n".join(lines) + "\n")

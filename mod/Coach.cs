@@ -6,22 +6,31 @@ internal record Card(string Id, string Name, int Cost, bool Up, bool Attack, boo
 }
 internal static class Catalog
 {
-    static readonly Dictionary<string, string[][]> Roles = Table("roles.tsv").ToDictionary(a => a[0], a => a.Skip(1)
-        .Select(s => s.Split(',', StringSplitOptions.RemoveEmptyEntries)).ToArray());
-    internal static readonly Dictionary<string, string[]> Relics = Table("relics.tsv").ToDictionary(a => a[0], a => a[1..]);
-    internal static readonly Dictionary<string, string> Bosses = Table("bosses.tsv").ToDictionary(a => a[0], a => a[1]);
-    internal static readonly Dictionary<string, string[]> Potions = Table("potions.tsv").ToDictionary(a => a[0], a => a[1..]);
-    internal static readonly Dictionary<string, string> RelicFit = Table("relic-fit.tsv").ToDictionary(a => a[0], a => a[1]);
+    internal static CatalogProfile Profile { get; set; } = null!;
+    static class Tables
+    {
+        internal static readonly Dictionary<string, string[][]> Roles = Table("roles.tsv").ToDictionary(a => a[0], a => a.Skip(1)
+            .Select(s => s.Split(',', StringSplitOptions.RemoveEmptyEntries)).ToArray());
+        internal static readonly Dictionary<string, string[]> Relics = Table("relics.tsv").ToDictionary(a => a[0], a => a[1..]);
+        internal static readonly Dictionary<string, string> Bosses = Table("bosses.tsv").ToDictionary(a => a[0], a => a[1]);
+        internal static readonly Dictionary<string, string[]> Potions = Table("potions.tsv").ToDictionary(a => a[0], a => a[1..]);
+        internal static readonly Dictionary<string, string> RelicFit = Table("relic-fit.tsv").ToDictionary(a => a[0], a => a[1]);
+        internal static readonly Dictionary<string, string> Effects = Table("effects.tsv").ToDictionary(a => a[0], a => a[1]);
+    }
+    internal static Dictionary<string, string[]> Relics => Tables.Relics;
+    internal static Dictionary<string, string> Bosses => Tables.Bosses;
+    internal static Dictionary<string, string[]> Potions => Tables.Potions;
+    internal static Dictionary<string, string> RelicFit => Tables.RelicFit;
+    internal static string? Effect(string id) => Tables.Effects.GetValueOrDefault(id);
     static string[][] Table(string name)
     {
-        var asm = typeof(Catalog).Assembly;
-        using var reader = new StreamReader(asm.GetManifestResourceStream(asm.GetManifestResourceNames().Single(n => n.EndsWith(name)))!);
+        using var reader = new StreamReader(CatalogProfile.Open($"{Profile.Build}/{name}"));
         return reader.ReadToEnd().Split('\n', StringSplitOptions.RemoveEmptyEntries)
             .Select(l => l.TrimEnd('\r').Split('\t')).ToArray();
     }
     internal static Card Get(string id, string name, int cost, bool up, bool attack, bool vanilla = true)
     {
-        var roles = Roles.GetValueOrDefault(id);
+        var roles = Tables.Roles.GetValueOrDefault(id);
         return new(id, name, cost, up, attack, vanilla && roles != null, roles?[0] ?? [], roles?[1] ?? []);
     }
 }
