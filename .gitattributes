@@ -1,0 +1,4 @@
+* text=auto eol=lf
+*.tsv whitespace=-blank-at-eol
+*.jpg binary
+*.png binary

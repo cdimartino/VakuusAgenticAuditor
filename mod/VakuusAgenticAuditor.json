@@ -1,0 +1,12 @@
+{
+  "id": "VakuusAgenticAuditor",
+  "name": "Vakuu's Agentic Auditor",
+  "author": "Chris",
+  "description": "An offline solo-run coach for card rewards, combat and route decisions.",
+  "version": "v0.1.15",
+  "min_game_version": "0.113.1",
+  "has_pck": false,
+  "has_dll": true,
+  "affects_gameplay": false,
+  "dependencies": []
+}

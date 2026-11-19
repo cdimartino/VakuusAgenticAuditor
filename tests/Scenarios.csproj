@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net9.0</TargetFramework><Nullable>enable</Nullable><OutputType>Exe</OutputType><ImplicitUsings>enable</ImplicitUsings></PropertyGroup>
+  <ItemGroup><Compile Include="../mod/RewardLayout.cs" /></ItemGroup>
+  <ItemGroup><Compile Include="../mod/DecisionGate.cs" /></ItemGroup>
+  <ItemGroup><Compile Include="../mod/BubbleSpot.cs" /></ItemGroup>
+  <ItemGroup><EmbeddedResource Include="../mod/relics.tsv;../mod/relic-fit.tsv;../mod/bosses.tsv;../mod/potions.tsv" /></ItemGroup>
+  <ItemGroup><Compile Include="../mod/RouteCoach.cs" /><Compile Include="../mod/Coach.cs" /><Compile Include="../mod/EventCoach.cs" /><Compile Include="../mod/PotionCoach.cs" /><Compile Include="../mod/TurnCoach.cs" /><EmbeddedResource Include="../mod/roles.tsv" /></ItemGroup>
+</Project>

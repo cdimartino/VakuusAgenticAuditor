@@ -1,0 +1,11 @@
+# Build, test, release
+
+Use .NET SDK 9 and the target game beta (v0.113.1). Run `sh tools/package.sh` on a standard Apple Silicon Steam install. Elsewhere, pass `-p:GameData="/path/to/directory/containing/sts2.dll"`. Output: the player ZIP and `WorkshopWorkspace.zip` under `dist/`.
+
+`dotnet run --project tests` runs the offline coaching, transition and placement scenarios. `sh tools/ci.sh` is the portable Linux/macOS pre-release check: it fetches checksum-pinned [compile-only game references](https://www.nuget.org/packages/Book.StS2.RefLib/0.113.1-beta), checks C# formatting against `.editorconfig`, treats build warnings as errors, runs scenarios, validates the ZIPs, and smoke-tests a fresh install and update in a temporary library. Requirements: .NET 9, Python 3, `curl`, `shasum`, `unzip`, `zip`. No game files are released.
+
+Public pull requests use GitHub-hosted CI. Trusted main/tag pushes and manual runs use the disposable Linux homelab lane when `AUDITOR_CI_POOL=homelab`; unset the variable to fall back to hosted. A `v*` tag matching `mod/VakuusAgenticAuditor.json` publishes the verified ZIPs and checksums as a GitHub Release. Publishing to Steam is a separate manual step.
+
+Before tagging, test a real run: drag a bubble on the map, use a different spot in combat, click to dismiss, press V to recall, change resolution and restart. Confirm the two spots survive, reward choices still receive their clicks, and **Reset bubble positions** restores defaults.
+
+Community conventions used here: [BaseLib](https://github.com/Alchyr/BaseLib-StS2/releases) ships versioned downloads; [Minty Spire 2](https://github.com/erasels/Minty-Spire-2) documents manual installation and makes intrusive UI optional. Workshop staging follows [Mega Crit’s official uploader](https://github.com/megacrit/sts2-mod-uploader). None of these mods is a runtime dependency.

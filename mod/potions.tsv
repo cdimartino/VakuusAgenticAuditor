@@ -1,0 +1,67 @@
+AMBERGRIS	emergency	Heal and take the extra combat turn before the enemy acts.
+ASHWATER	clutter	Exhaust the dead cards, keeping this turn's useful plays.
+ATTACK_POTION	free cards	Pick a free attack before ending an otherwise weak turn.
+BEETLE_JUICE	debuff	Reduce the attacker's damage before it acts.
+BLESSING_OF_THE_FORGE	upgrades	Upgrade the hand before playing the cards you plan to keep using.
+BLOCK_POTION	special	Immediate block.
+BLOOD_POTION	heal	Recover missing HP before taking the hit.
+BONE_BREW	summon	Summon before spending your Osty attacks.
+BOTTLED_POTENTIAL	redraw	Redraw this stalled hand while you can still spend energy.
+BOTTLED_SONG	free cards	Make space, then use the free song cards this turn.
+CLARITY	draw	Draw now while you can still use the extra cards.
+COLORLESS_POTION	free cards	Choose a free card to improve a weak turn.
+COSMIC_CONCOCTION	draw	Make space for the upgraded Colorless cards before drinking.
+CRYSTALLINE_EUPHORIA	joy	Make Joy before transforming the new Sadness; this fills your hand.
+CUNNING_POTION	free cards	Use the upgraded Shivs this turn.
+CURE_ALL	refuel	Refill energy and draw before committing your remaining plays.
+DEXTERITY_POTION	defense	Drink before your block cards so their Dexterity bonus counts.
+DISTILLED_CHAOS	desperate draw	Play from the draw pile as a last resort; the outcome is uncertain.
+DROPLET_OF_PRECOGNITION	draw	Fetch the defense or finisher you need from the draw pile.
+DUPLICATOR	repeat	Double the most valuable card; play it immediately after drinking.
+ENERGY_POTION	energy	Use the extra energy to play a card otherwise stranded in hand.
+ENTROPIC_BREW	refill	Fill the empty potion slots before the fight's critical turn.
+ESSENCE_OF_DARKNESS	orbs	Channel Dark before a long fight's payoff turn.
+EXPLOSIVE_AMPOULE	special	Area damage.
+FAIRY_IN_A_BOTTLE	automatic	Keep it for automatic revival; do not drink it.
+FIRE_POTION	special	Single-target damage.
+FLEX_POTION	special	Temporary Strength.
+FOCUS_POTION	orbs	Gain Focus before your orbs trigger.
+FORTIFIER	triple block	Play your block cards first, then triple your block.
+FOUL_POTION	splash	Use only if the splash leaves you alive and finishes the enemies.
+FRUIT_JUICE	permanent	Gain max HP and free the potion slot.
+FYSH_OIL	buff	Gain Strength and Dexterity before attacking or blocking.
+GAMBLERS_BREW	redraw	Trade low-impact cards for a fresh draw before spending energy.
+GHOST_IN_A_JAR	special	Intangible.
+GIGANTIFICATION_POTION	big attack	Drink just before your largest attack, not before a small hit.
+GLOWWATER_POTION	redraw	Exhaust the stalled hand for a new draw; don't sacrifice needed cards.
+HEART_OF_IRON	early defense	Build Plating early enough to protect several turns.
+KINGS_COURAGE	forge	Forge before swinging the Sovereign Blade.
+LIQUID_BRONZE	early defense	Gain Thorns before taking repeated attacks.
+LIQUID_MEMORIES	recall	Return a useful discarded card and play it for free.
+LUCKY_TONIC	emergency	Gain Buffer before an otherwise dangerous hit.
+MAZALETHS_GIFT	scaling	Start Ritual early so Strength can accumulate.
+OROBIC_ACID	free cards	Make room for the three free cards before drinking.
+POISON_POTION	debuff scaling	Apply Poison early so it has time to tick.
+POTION_OF_BINDING	group debuff	Weaken and expose the enemies before playing your attacks.
+POTION_OF_CAPACITY	orbs	Expand orb capacity while there is time to fill the new slots.
+POTION_OF_DOOM	debuff scaling	Apply Doom early against a target that can receive it.
+POTION_SHAPED_ROCK	special	Single-target damage.
+POT_OF_GHOULS	draw	Use Souls to find the next useful card.
+POWDERED_DEMISE	debuff scaling	Apply Demise early enough for its repeated HP loss to matter.
+POWER_POTION	scaling	Pick a free Power early in the long fight.
+PRECISION_POTION	shots	Gain Aim before shooting your arrows.
+RADIANT_TINCTURE	energy	Gain energy now with more to come on subsequent turns.
+REGEN_POTION	regen	Start healing while several turns remain.
+SHACKLING_POTION	group debuff	Reduce enemy Strength on the exposed attack turn.
+SHIP_IN_A_BOTTLE	special	Block now and again next turn.
+SKILL_POTION	free cards	Look for a free skill when the current hand falls short.
+SNECKO_OIL	redraw	Redraw and reroll costs only if the current hand isn't working.
+SOLDIERS_STEW	strikes	Grant Replay before playing your Strikes.
+SPEED_POTION	defense	Drink before blocking; the extra Dexterity expires this turn.
+STABLE_SERUM	retain	Keep strong cards that you cannot afford this turn.
+STAR_POTION	stars	Refill stars before playing your star-cost cards.
+STRENGTH_POTION	special	Persistent Strength.
+SWIFT_POTION	draw	Draw while there is hand space and energy to use the cards.
+TOUCH_OF_INSANITY	energy	Make an expensive card in hand free for the rest of combat.
+VULNERABLE_POTION	vulnerable	Apply Vulnerable before concentrating attacks on the target.
+WEAK_POTION	debuff	Weaken the attacker before the hit lands.

@@ -1,0 +1,1817 @@
+category	beta_id	beta_label	wiki_match	evidence
+cards	ABRASIVE	Abrasive	Abrasive	roles: dexterity,thorns
+cards	ABUNDANCE	Abundance	Abundance	ID only; no inferred role
+cards	ACCELERANT	Accelerant	Accelerant	roles: poison
+cards	ACCURACY	Accuracy	Accuracy	roles: shivs
+cards	ACROBATICS	Acrobatics	Acrobatics	roles: draw,discard
+cards	ADAPTIVE_STRIKE	Adaptive Strike	Adaptive Strike	roles: hit
+cards	ADRENALINE	Adrenaline	Adrenaline	roles: draw,energy
+cards	AFTERIMAGE	Afterimage	Afterimage	ID only; no inferred role
+cards	AFTERLIFE	Afterlife	Afterlife	roles: summon
+cards	AGGRESSION	Aggression	Aggression	ID only; no inferred role
+cards	ALCHEMIZE	Alchemize	Alchemize	ID only; no inferred role
+cards	ALIGNMENT	Alignment	Alignment	roles: energy
+cards	ALL_FOR_ONE	All for One	All for One	roles: hit
+cards	ALL_IS_WELL	All Is Well	All Is Well	roles: sadness
+cards	AMNESIA	Amnesia	Amnesia	ID only; no inferred role
+cards	ANGER	Anger	Anger	roles: hit
+cards	ANGUISH	Anguish	Anguish	roles: hit, sadness
+cards	ANOINTED	Anointed	Anointed	ID only; no inferred role
+cards	ANTICIPATE	Anticipate	Anticipate	roles: dexterity
+cards	APOTHEOSIS	Apotheosis	Apotheosis	ID only; no inferred role
+cards	APPARITION	Apparition	Apparition	ID only; no inferred role
+cards	ARCHERY	Archery	Archery	ID only; no inferred role
+cards	ARMAMENTS	Armaments	Armaments	roles: guard
+cards	ARROW_STAB	Arrow Stab	Arrow Stab	roles: hit
+cards	ARSENAL	Arsenal	Arsenal	roles: strength
+cards	ASCENDERS_BANE	Ascender's Bane	Ascender's Bane	ID only; no inferred role
+cards	ASHEN_STRIKE	Ashen Strike	Ashen Strike	roles: hit, exhaust
+cards	ASSASSINATE	Assassinate	Assassinate	roles: hit,vulnerable
+cards	ASTRAL_PULSE	Astral Pulse	Astral Pulse	roles: hit,multiple hits,area damage
+cards	AUTOMATION	Automation	Automation	ID only; no inferred role
+cards	BACKFLIP	Backflip	Backflip	roles: guard,draw
+cards	BACKSTAB	Backstab	Backstab	roles: hit
+cards	BAD_LUCK	Bad Luck	Bad Luck	ID only; no inferred role
+cards	BALL_LIGHTNING	Ball Lightning	Ball Lightning	roles: hit,orbs,lightning
+cards	BANSHEES_CRY	Banshee's Cry	Banshee's Cry	roles: hit,area damage
+cards	BARRAGE	Barrage	Barrage	roles: hit, orbs
+cards	BARRICADE	Barricade	Barricade	ID only; no inferred role
+cards	BASH	Bash	Bash	roles: hit,vulnerable
+cards	BATTLE_TRANCE	Battle Trance	Battle Trance	roles: draw
+cards	BEACON_OF_HOPE	Beacon of Hope	Beacon of Hope	ID only; no inferred role
+cards	BEAM_CELL	Beam Cell	Beam Cell	roles: hit,vulnerable
+cards	BEAT_DOWN	Beat Down	Beat Down	ID only; no inferred role
+cards	BEAT_INTO_SHAPE	Beat into Shape	Beat into Shape	roles: hit,forge
+cards	BECKON	Beckon	Beckon	ID only; no inferred role
+cards	BEGONE	BEGONE!	BEGONE!	ID only; no inferred role
+cards	BELIEVE_IN_YOU	Believe in You	Believe in You	ID only; no inferred role
+cards	BIASED_COGNITION	Biased Cognition	Biased Cognition	roles: focus
+cards	BIG_BANG	Big Bang	Big Bang	roles: draw,energy,forge,stars
+cards	BLACK_HOLE	Black Hole	Black Hole	ID only; no inferred role
+cards	BLADE_DANCE	Blade Dance	Blade Dance	roles: shivs
+cards	BLADE_OF_INK	Blade of Ink	Blade of Ink	roles: shivs
+cards	BLADE_SYMPHONY	Blade Symphony	Blade Symphony	roles: shivs
+cards	BLAZE	Blaze	Blaze	ID only; no inferred role
+cards	BLIGHT_STRIKE	Blight Strike	Blight Strike	roles: hit
+cards	BLOODLETTING	Bloodletting	Bloodletting	roles: energy,hp loss
+cards	BLOOD_WALL	Blood Wall	Blood Wall	roles: guard,hp loss
+cards	BLOSSOM_SHOT	Blossom Shot	Blossom Shot	roles: hit,shots,impale
+cards	BLOT_OUT_THE_SKY	Blot out the Sky	Blot out the Sky	ID only; no inferred role
+cards	BLUDGEON	Bludgeon	Bludgeon	roles: hit
+cards	BLUR	Blur	Blur	roles: guard
+cards	BODYGUARD	Bodyguard	Bodyguard	roles: summon
+cards	BODY_SLAM	Body Slam	Body Slam	roles: hit, guard
+cards	BOLAS	Bolas	Bolas	roles: hit
+cards	BOMBARDMENT	Bombardment	Bombardment	roles: hit
+cards	BONE_SHARDS	Bone Shards	Bone Shards	ID only; no inferred role
+cards	BOOST_AWAY	Boost Away	Boost Away	roles: guard
+cards	BOOT_SEQUENCE	Boot Sequence	Boot Sequence	roles: guard
+cards	BORROWED_TIME	Borrowed Time	Borrowed Time	roles: energy
+cards	BOUNCE	Bounce	Bounce	roles: stretch
+cards	BOUNCING_FLASK	Bouncing Flask	Bouncing Flask	roles: poison
+cards	BOW_SMACK	Bow Smack	Bow Smack	roles: hit
+cards	BRACE	Brace	Brace	roles: aim
+cards	BRAND	Brand	Brand	roles: exhaust,strength,hp loss
+cards	BREAK	Break	Break	roles: hit,vulnerable
+cards	BREAKTHROUGH	Breakthrough	Breakthrough	roles: hit,hp loss,area damage
+cards	BRIGHTEN_UP	Brighten Up	Brighten Up	roles: sadness
+cards	BRIGHTEST_FLAME	Brightest Flame	Brightest Flame	roles: draw,energy
+cards	BUBBLE_BUBBLE	Bubble Bubble	Bubble Bubble	roles: poison
+cards	BUFFER	Buffer	Buffer	ID only; no inferred role
+cards	BULK_UP	Bulk Up	Bulk Up	roles: strength,dexterity
+cards	BULLET_TIME	Bullet Time	Bullet Time	ID only; no inferred role
+cards	BULLY	Bully	Bully	roles: hit, vulnerable
+cards	BULWARK	Bulwark	Bulwark	roles: guard,forge
+cards	BUNDLE_OF_JOY	Bundle of Joy	Bundle of Joy	ID only; no inferred role
+cards	BURN	Burn	Burn	ID only; no inferred role
+cards	BURNING_PACT	Burning Pact	Burning Pact	roles: draw,exhaust
+cards	BURST	Burst	Burst	ID only; no inferred role
+cards	BURY	Bury	Bury	roles: hit
+cards	BYRDONIS_EGG	Byrdonis Egg	Byrdonis Egg	ID only; no inferred role
+cards	BYRD_SWOOP	Byrd Swoop	Byrd Swoop	roles: hit
+cards	CACOPHONY	Cacophony	Cacophony	ID only; no inferred role
+cards	CALAMITY	Calamity	Calamity	ID only; no inferred role
+cards	CALCIFY	Calcify	Calcify	roles: summon
+cards	CALCULATED_GAMBLE	Calculated Gamble	Calculated Gamble	roles: discard
+cards	CALL_OF_THE_VOID	Call of the Void	Call of the Void	ID only; no inferred role
+cards	CALTROPS	Caltrops	Caltrops	ID only; no inferred role
+cards	CAPACITOR	Capacitor	Capacitor	roles: orbs
+cards	CAPTURE_SPIRIT	Capture Spirit	Capture Spirit	roles: souls
+cards	CASCADE	Cascade	Cascade	ID only; no inferred role
+cards	CATASTROPHE	Catastrophe	Catastrophe	ID only; no inferred role
+cards	CELESTIAL_MIGHT	Celestial Might	Celestial Might	roles: hit,multiple hits
+cards	CHAOS	Chaos	Chaos	roles: orbs
+cards	CHARGE	CHARGE!!	CHARGE!!	ID only; no inferred role
+cards	CHARGE_BATTERY	Charge Battery	Charge Battery	roles: guard
+cards	CHILD_OF_THE_STARS	Child of the Stars	Child of the Stars	ID only; no inferred role
+cards	CHILL	Chill	Chill	roles: orbs,frost
+cards	CHO_BARBS	Cho Barbs	Cho Barbs	roles: guard,thorns
+cards	CHO_CHORUS	Cho Chorus	Cho Chorus	roles: guard
+cards	CHO_FIRM	Cho Firm	Cho Firm	roles: guard
+cards	CHO_KI	Cho Ki	Cho Ki	roles: guard
+cards	CHO_LIMBS	Cho Limbs	Cho Limbs	roles: guard
+cards	CHO_READY	Cho Ready	Cho Ready	roles: guard
+cards	CHRYSALIS	Chrysalis		ID only; no inferred role
+cards	CINDER	Cinder	Cinder	roles: hit,exhaust
+cards	CLASH	Clash	Clash	roles: hit
+cards	CLAW	Claw	Claw	roles: hit
+cards	CLEANSE	Cleanse	Cleanse	roles: exhaust,summon
+cards	CLOAK_AND_DAGGER	Cloak and Dagger	Cloak and Dagger	roles: guard,shivs
+cards	CLOAK_OF_STARS	Cloak of Stars	Cloak of Stars	roles: guard
+cards	CLUMSY	Clumsy	Clumsy	ID only; no inferred role
+cards	CODA	Coda	Coda	roles: hit
+cards	COLD_SNAP	Cold Snap	Cold Snap	roles: hit,orbs,frost
+cards	COLLISION_COURSE	Collision Course	Collision Course	roles: hit
+cards	COLOSSUS	Colossus	Colossus	roles: guard
+cards	COMET	Comet	Comet	roles: hit,weak,vulnerable
+cards	COMPACT	Compact	Compact	roles: guard
+cards	COMPILE_DRIVER	Compile Driver	Compile Driver	roles: hit,draw
+cards	COMPOST	Compost	Compost	ID only; no inferred role
+cards	CONCOCT	Concoct	Concoct	roles: poison
+cards	CONFLAGRATION	Conflagration	Conflagration	roles: hit,multiple hits,area damage
+cards	CONQUEROR	Conqueror	Conqueror	roles: forge, forge
+cards	CONSTELLATION	Constellation	Constellation	ID only; no inferred role
+cards	CONSUMING_SHADOW	Consuming Shadow	Consuming Shadow	roles: orbs
+cards	CONVERGENCE	Convergence	Convergence	roles: energy,retain hand
+cards	COOLANT	Coolant	Coolant	ID only; no inferred role
+cards	COOLHEADED	Coolheaded	Coolheaded	roles: draw,orbs,frost
+cards	COORDINATE	Coordinate	Coordinate	ID only; no inferred role
+cards	CORROSIVE_WAVE	Corrosive Wave	Corrosive Wave	roles: poison
+cards	CORRUPTION	Corruption	Corruption	roles: exhaust
+cards	COSMIC_INDIFFERENCE	Cosmic Indifference	Cosmic Indifference	roles: guard
+cards	COUNTDOWN	Countdown	Countdown	roles: doom
+cards	COVERING_FIRE	Covering Fire	Covering Fire	ID only; no inferred role
+cards	CRASH_LANDING	Crash Landing	Crash Landing	roles: hit,area damage
+cards	CREATIVE_AI	Creative AI	Creative AI	ID only; no inferred role
+cards	CRESCENT_SPEAR	Crescent Spear	Crescent Spear	roles: hit
+cards	CRIMSON_MANTLE	Crimson Mantle	Crimson Mantle	ID only; no inferred role
+cards	CRUELTY	Cruelty	Cruelty	ID only; no inferred role
+cards	CRUSH_UNDER	Crush Under	Crush Under	roles: hit,area damage
+cards	CURSE_OF_THE_BELL	Curse of the Bell	Curse of the Bell	ID only; no inferred role
+cards	DAGGER_SPRAY	Dagger Spray	Dagger Spray	roles: hit,multiple hits,area damage
+cards	DAGGER_THROW	Dagger Throw	Dagger Throw	roles: hit,draw,discard
+cards	DANSE_MACABRE	Danse Macabre	Danse Macabre	ID only; no inferred role
+cards	DARKNESS	Darkness	Darkness	roles: orbs
+cards	DARK_EMBRACE	Dark Embrace	Dark Embrace	roles: draw, exhaust
+cards	DARK_SHACKLES	Dark Shackles	Dark Shackles	ID only; no inferred role
+cards	DASH	Dash	Dash	roles: guard,hit
+cards	DAZED	Dazed	Dazed	ID only; no inferred role
+cards	DEADLY_POISON	Deadly Poison	Deadly Poison	roles: poison
+cards	DEATH	Death	Death	roles: doom
+cards	DEATHBRINGER	Deathbringer	Deathbringer	roles: doom
+cards	DEATHS_DOOR	Death's Door	Death's Door	roles: guard, doom
+cards	DEATH_MARCH	Death March	Death March	roles: hit
+cards	DEBILITATE	Debilitate	Debilitate	roles: hit
+cards	DEBRIS	Debris	Debris	ID only; no inferred role
+cards	DEBT	Debt	Debt	ID only; no inferred role
+cards	DECAY	Decay	Decay	ID only; no inferred role
+cards	DECISIONS_DECISIONS	Decisions, Decisions	Decisions, Decisions	roles: draw
+cards	DEEP_STRETCH	Deep Stretch	Deep Stretch	roles: draw,stretch
+cards	DEFEND_DEFECT	Defend	Defend (Defect)	roles: guard
+cards	DEFEND_FOOL	Defend	Defend (Fool)	roles: guard
+cards	DEFEND_IRONCLAD	Defend	Defend (Ironclad)	roles: guard
+cards	DEFEND_NECROBINDER	Defend	Defend (Necrobinder)	roles: guard
+cards	DEFEND_REGENT	Defend	Defend (Regent)	roles: guard
+cards	DEFEND_SILENT	Defend	Defend (Silent)	roles: guard
+cards	DEFILE	Defile	Defile	roles: hit
+cards	DEFLECT	Deflect	Deflect	roles: guard
+cards	DEFRAGMENT	Defragment	Defragment	roles: focus, orbs
+cards	DEFY	Defy	Defy	roles: guard,weak
+cards	DELAY	Delay	Delay	roles: guard,energy
+cards	DEMESNE	Demesne	Demesne	ID only; no inferred role
+cards	DEMONIC_SHIELD	Demonic Shield	Demonic Shield	roles: hp loss
+cards	DEMON_FORM	Demon Form	Demon Form	roles: strength
+cards	DEPRECATED_CARD	Deprecated Card		roles: draw
+cards	DESPAIR	Despair		ID only; no inferred role
+cards	DEVASTATE	Devastate	Devastate	roles: hit
+cards	DEVOUR_LIFE	Devour Life	Devour Life	roles: summon
+cards	DINGY_DAGGER	Dingy Dagger	Dingy Dagger	roles: hit
+cards	DIRGE	Dirge	Dirge	roles: summon
+cards	DISCOVERY	Discovery	Discovery	ID only; no inferred role
+cards	DISINTEGRATION	Disintegration	Disintegration	ID only; no inferred role
+cards	DISLIKE_YOU	Dislike You	Dislike You	roles: hit
+cards	DISMANTLE	Dismantle	Dismantle	roles: hit, vulnerable
+cards	DISTRACTION	Distraction	Distraction	ID only; no inferred role
+cards	DIVINE_SHOT	Divine Shot	Divine Shot	roles: hit,shots,impale
+cards	DODGE_AND_ROLL	Dodge and Roll	Dodge and Roll	roles: guard
+cards	DOMINATE	Dominate	Dominate	roles: strength,vulnerable
+cards	DOUBLE_ENERGY	Double Energy	Double Energy	ID only; no inferred role
+cards	DOUBT	Doubt	Doubt	ID only; no inferred role
+cards	DOWSING	Dowsing	Dowsing	ID only; no inferred role
+cards	DRAIN_POWER	Drain Power	Drain Power	roles: hit
+cards	DRAMATIC_ENTRANCE	Dramatic Entrance	Dramatic Entrance	roles: hit,area damage
+cards	DREDGE	Dredge	Dredge	ID only; no inferred role
+cards	DRUM_OF_BATTLE	Drum of Battle	Drum of Battle	roles: draw
+cards	DUALCAST	Dualcast	Dualcast	ID only; no inferred role
+cards	DUAL_WIELD	Dual Wield	Dual Wield	ID only; no inferred role
+cards	DYING_STAR	Dying Star	Dying Star	roles: hit,area damage
+cards	ECHOING_SLASH	Echoing Slash	Echoing Slash	roles: hit,area damage
+cards	ECHO_FORM	Echo Form	Echo Form	ID only; no inferred role
+cards	ECSTASY	Ecstasy	Ecstasy	roles: sadness
+cards	EIDOLON	Eidolon	Eidolon	ID only; no inferred role
+cards	ENCORE	Encore	Encore	roles: draw,energy
+cards	END_OF_DAYS	End of Days	End of Days	roles: doom
+cards	ENERGY_SURGE	Energy Surge	Energy Surge	ID only; no inferred role
+cards	ENFEEBLING_TOUCH	Enfeebling Touch	Enfeebling Touch	ID only; no inferred role
+cards	ENLIGHTENMENT	Enlightenment	Enlightenment	ID only; no inferred role
+cards	ENNUI	Ennui	Ennui	roles: sadness
+cards	ENRAPTURE	Enrapture	Enrapture	ID only; no inferred role
+cards	ENSEMBLE	Ensemble	Ensemble	ID only; no inferred role
+cards	ENTHRALLED	Enthralled	Enthralled	ID only; no inferred role
+cards	ENTRENCH	Entrench	Entrench	roles: guard
+cards	ENTROPY	Entropy	Entropy	ID only; no inferred role
+cards	ENVENOM	Envenom	Envenom	roles: poison
+cards	EPIC_RETRIEVAL	Epic Retrieval	Epic Retrieval	roles: hit
+cards	EQUILIBRIUM	Equilibrium	Equilibrium	roles: guard,retain hand
+cards	ERADICATE	Eradicate	Eradicate	roles: hit
+cards	ESCAPE_PLAN	Escape Plan	Escape Plan	roles: draw
+cards	ETERNAL_ARMOR	Eternal Armor	Eternal Armor	roles: plating
+cards	EVIL_EYE	Evil Eye	Evil Eye	roles: guard, exhaust
+cards	EXPECT_A_FIGHT	Expect a Fight	Expect a Fight	roles: guard
+cards	EXPERTISE	Expertise	Expertise	roles: draw,retain hand
+cards	EXPLOSIVE_ARROWS	Explosive Arrows	Explosive Arrows	ID only; no inferred role
+cards	EXPOSE	Expose	Expose	roles: vulnerable
+cards	EXTERMINATE	Exterminate	Exterminate	roles: hit,multiple hits,area damage
+cards	FADE	Fade	Fade	ID only; no inferred role
+cards	FALLING_STAR	Falling Star	Falling Star	roles: hit,weak,vulnerable
+cards	FAN_OF_KNIVES	Fan of Knives	Fan of Knives	roles: shivs
+cards	FASTEN	Fasten	Fasten	roles: guard
+cards	FEAR	Fear	Fear	roles: hit,vulnerable
+cards	FEED	Feed	Feed	roles: hit
+cards	FEEDING_FRENZY	Feeding Frenzy	Feeding Frenzy	roles: strength
+cards	FEEL_NO_PAIN	Feel No Pain	Feel No Pain	roles: exhaust
+cards	FERAL	Feral	Feral	ID only; no inferred role
+cards	FETCH	Fetch	Fetch	roles: hit,Osty attacks
+cards	FIEND_FIRE	Fiend Fire	Fiend Fire	roles: hit,exhaust
+cards	FIGHT_ME	Fight Me!	Fight Me!	roles: hit,strength,multiple hits
+cards	FIGHT_THROUGH	Fight Through	Fight Through	roles: guard
+cards	FINESSE	Finesse	Finesse	roles: guard,draw
+cards	FINISHER	Finisher	Finisher	roles: hit
+cards	FISTICUFFS	Fisticuffs	Fisticuffs	roles: hit
+cards	FLAK_CANNON	Flak Cannon	Flak Cannon	roles: hit,exhaust
+cards	FLAME_BARRIER	Flame Barrier	Flame Barrier	roles: guard
+cards	FLAME_IN_THE_DARK	Flame in the Dark		roles: draw,energy
+cards	FLANKING	Flanking	Flanking	ID only; no inferred role
+cards	FLASH_OF_STEEL	Flash of Steel	Flash of Steel	roles: hit,draw
+cards	FLATTEN	Flatten	Flatten	roles: hit,Osty attacks
+cards	FLECHETTES	Flechettes	Flechettes	roles: hit
+cards	FLICK_FLACK	Flick-Flack	Flick-Flack	roles: hit,area damage
+cards	FLORESCENCE	Florescence	Florescence	roles: exhaust
+cards	FOCUSED_STRIKE	Focused Strike	Focused Strike	roles: hit,focus
+cards	FOLLY	Folly	Folly	ID only; no inferred role
+cards	FOOLISH_SHOT	Foolish Shot	Foolish Shot	roles: hit,shots,impale
+cards	FOOTWORK	Footwork	Footwork	roles: dexterity
+cards	FORBIDDEN_GRIMOIRE	Forbidden Grimoire	Forbidden Grimoire	ID only; no inferred role
+cards	FOREGONE_CONCLUSION	Foregone Conclusion	Foregone Conclusion	ID only; no inferred role
+cards	FORGOTTEN_RITUAL	Forgotten Ritual	Forgotten Ritual	ID only; no inferred role
+cards	FRANTIC_ESCAPE	Frantic Escape	Frantic Escape	ID only; no inferred role
+cards	FRIENDSHIP	Friendship	Friendship	roles: energy
+cards	FTL	FTL	FTL	roles: hit
+cards	FUEL	Fuel	Fuel	roles: energy
+cards	FURNACE	Furnace	Furnace	roles: forge
+cards	FUSION	Fusion	Fusion	roles: orbs
+cards	GAMMA_BLAST	Gamma Blast	Gamma Blast	roles: hit,weak,vulnerable
+cards	GANG_UP	Gang Up	Gang Up	roles: hit
+cards	GATHER_LIGHT	Gather Light	Gather Light	roles: guard,stars
+cards	GENESIS	Genesis	Genesis	ID only; no inferred role
+cards	GENETIC_ALGORITHM	Genetic Algorithm	Genetic Algorithm	roles: guard
+cards	GHOST_EATER	Ghost Eater		roles: energy
+cards	GIANT_ROCK	Giant Rock	Giant Rock	roles: hit
+cards	GLACIER	Glacier	Glacier	roles: guard,orbs,frost
+cards	GLASSWORK	Glasswork	Glasswork	roles: guard,orbs
+cards	GLIMMER	Glimmer	Glimmer	roles: draw
+cards	GLIMPSE_BEYOND	Glimpse Beyond	Glimpse Beyond	roles: souls
+cards	GLITTERSTREAM	Glitterstream	Glitterstream	roles: guard
+cards	GLOW	Glow	Glow	roles: draw,stars
+cards	GOD_BYRD	God Byrd	God Byrd	ID only; no inferred role
+cards	GOLD_AXE	Gold Axe	Gold Axe	roles: hit
+cards	GOOD_INSTINCTS	Good Instincts		roles: guard
+cards	GO_FOR_THE_EYES	Go for the Eyes	Go for the Eyes	roles: hit
+cards	GRAND_FINALE	Grand Finale	Grand Finale	ID only; no inferred role
+cards	GRAVEBLAST	Graveblast	Graveblast	roles: hit
+cards	GRAVE_WARDEN	Grave Warden	Grave Warden	roles: guard,souls
+cards	GREED	Greed	Greed	ID only; no inferred role
+cards	GROWTH	Growth	Growth	roles: exhaust,stretch, sadness
+cards	GUARDS	GUARDS!!!	GUARDS!!!	ID only; no inferred role
+cards	GUIDING_STAR	Guiding Star	Guiding Star	roles: hit
+cards	GUILTY	Guilty	Guilty	ID only; no inferred role
+cards	GUNK_UP	Gunk Up	Gunk Up	roles: hit,multiple hits
+cards	HAILSTORM	Hailstorm	Hailstorm	roles: frost
+cards	HAMMER_TIME	Hammer Time	Hammer Time	ID only; no inferred role
+cards	HAND_OF_GREED	Hand of Greed	Hand of Greed	roles: hit
+cards	HAND_TRICK	Hand Trick	Hand Trick	roles: guard
+cards	HANG	Hang	Hang	roles: hit
+cards	HARMONIC_SHIELD	Harmonic Shield	Harmonic Shield	roles: guard
+cards	HAUNT	Haunt	Haunt	ID only; no inferred role
+cards	HAVOC	Havoc	Havoc	roles: exhaust
+cards	HAZE	Haze	Haze	roles: poison
+cards	HEADBUTT	Headbutt	Headbutt	roles: hit
+cards	HEAVENLY_DRILL	Heavenly Drill	Heavenly Drill	roles: hit
+cards	HEAVY_SHOT	Heavy Shot	Heavy Shot	roles: hit,shots,impale, aim
+cards	HEGEMONY	Hegemony	Hegemony	roles: hit
+cards	HEIRLOOM_HAMMER	Heirloom Hammer	Heirloom Hammer	roles: hit
+cards	HELIX_DRILL	Helix Drill	Helix Drill	roles: hit
+cards	HELLO_WORLD	Hello World	Hello World	ID only; no inferred role
+cards	HELLRAISER	Hellraiser	Hellraiser	ID only; no inferred role
+cards	HEMOKINESIS	Hemokinesis	Hemokinesis	roles: hit,hp loss
+cards	HIBERNATE	Hibernate	Hibernate	roles: orbs,frost
+cards	HIDDEN_CACHE	Hidden Cache	Hidden Cache	roles: stars
+cards	HIDDEN_DAGGERS	Hidden Daggers	Hidden Daggers	roles: discard
+cards	HIDDEN_GEM	Hidden Gem	Hidden Gem	ID only; no inferred role
+cards	HIDDEN_ROOTS	Hidden Roots	Hidden Roots	ID only; no inferred role
+cards	HIGH_FIVE	High Five	High Five	roles: hit,Osty attacks
+cards	HOBBLING_SHOT	Hobbling Shot	Hobbling Shot	roles: hit,shots,impale
+cards	HOLOGRAM	Hologram	Hologram	roles: guard
+cards	HONING	Honing	Honing	roles: shots
+cards	HOTFIX	Hotfix	Hotfix	roles: focus
+cards	HOWL_FROM_BEYOND	Howl from Beyond	Howl from Beyond	roles: hit,area damage
+cards	HUDDLE_UP	Huddle Up	Huddle Up	ID only; no inferred role
+cards	HYPERBEAM	Hyperbeam	Hyperbeam	roles: hit,area damage
+cards	ICE_LANCE	Ice Lance	Ice Lance	roles: hit,orbs,frost
+cards	IGNITION	Ignition	Ignition	ID only; no inferred role
+cards	IMITATION_LEARNING	Imitation Learning	Imitation Learning	ID only; no inferred role
+cards	IMMORTALITY	Immortality		roles: hp loss
+cards	IMPALE	Impale		roles: hit,poison
+cards	IMPATIENCE	Impatience	Impatience	ID only; no inferred role
+cards	IMPERVIOUS	Impervious	Impervious	roles: guard
+cards	INFECTION	Infection	Infection	ID only; no inferred role
+cards	INFERNAL_BLADE	Infernal Blade	Infernal Blade	ID only; no inferred role
+cards	INFERNO	Inferno	Inferno	ID only; no inferred role
+cards	INFINITE_BLADES	Infinite Blades	Infinite Blades	roles: shivs
+cards	INFLAME	Inflame	Inflame	roles: strength
+cards	INJURY	Injury	Injury	ID only; no inferred role
+cards	INTERCEPT	Intercept	Intercept	roles: guard
+cards	INVOKE	Invoke	Invoke	roles: summon
+cards	IRON_WAVE	Iron Wave	Iron Wave	roles: guard,hit
+cards	ITERATION	Iteration	Iteration	ID only; no inferred role
+cards	I_AM_INVINCIBLE	I Am Invincible	I Am Invincible	roles: guard
+cards	JACKPOT	Jackpot	Jackpot	roles: hit
+cards	JACK_OF_ALL_TRADES	Jack of All Trades	Jack of All Trades	ID only; no inferred role
+cards	JEST	Jest	Jest	roles: guard,sadness
+cards	JOY	Joy	Joy	roles: draw,energy
+cards	JUDGEMENT	Judgement	Judgement	ID only; no inferred role
+cards	JUGGERNAUT	Juggernaut	Juggernaut	ID only; no inferred role
+cards	JUGGLING	Juggling	Juggling	ID only; no inferred role
+cards	JUSTICE	Justice	Justice	roles: hit
+cards	KINGLY_KICK	Kingly Kick	Kingly Kick	roles: hit
+cards	KINGLY_PUNCH	Kingly Punch	Kingly Punch	roles: hit
+cards	KI_CHANT	Ki Chant	Ki Chant	ID only; no inferred role
+cards	KI_HOP	Ki Hop	Ki Hop	roles: hit
+cards	KI_REST	Ki Rest	Ki Rest	ID only; no inferred role
+cards	KI_VERSE	Ki Verse	Ki Verse	ID only; no inferred role
+cards	KI_WHIP	Ki Whip	Ki Whip	roles: hit
+cards	KNIFE_TRAP	Knife Trap	Knife Trap	ID only; no inferred role
+cards	KNOCKDOWN	Knockdown	Knockdown	roles: hit
+cards	KNOCKOUT_BLOW	Knockout Blow	Knockout Blow	roles: hit,stars
+cards	KNOW_THY_PLACE	Know Thy Place	Know Thy Place	roles: weak,vulnerable
+cards	LANTERN_KEY	Lantern Key	Lantern Key	ID only; no inferred role
+cards	LARGESSE	Largesse	Largesse	ID only; no inferred role
+cards	LEADING_STRIKE	Leading Strike	Leading Strike	roles: hit,shivs
+cards	LEAP	Leap	Leap	roles: guard
+cards	LEGION_OF_BONE	Legion of Bone	Legion of Bone	roles: summon
+cards	LEG_SWEEP	Leg Sweep	Leg Sweep	roles: guard,weak
+cards	LETHALITY	Lethality	Lethality	ID only; no inferred role
+cards	LIFT	Lift	Lift	ID only; no inferred role
+cards	LIGHTNING_ROD	Lightning Rod	Lightning Rod	roles: guard,orbs
+cards	LOCKED_IN	Locked In	Locked In	ID only; no inferred role
+cards	LOOP	Loop	Loop	ID only; no inferred role
+cards	LOST_LUTE	Lost Lute	Lost Lute	ID only; no inferred role
+cards	LULLABY	Lullaby	Lullaby	ID only; no inferred role
+cards	LUMINESCE	Luminesce	Luminesce	roles: energy
+cards	LUNAR_BLAST	Lunar Blast	Lunar Blast	roles: hit
+cards	MACHINE_LEARNING	Machine Learning	Machine Learning	ID only; no inferred role
+cards	MAD_SCIENCE	Mad Science	Mad Science	roles: draw,strength,dexterity
+cards	MAKE_IT_SO	Make It So	Make It So	roles: hit
+cards	MALAISE	Malaise	Malaise	ID only; no inferred role
+cards	MANGLE	Mangle	Mangle	roles: hit
+cards	MANIFEST_AUTHORITY	Manifest Authority	Manifest Authority	roles: guard
+cards	MASTER_OF_STRATEGY	Master of Strategy	Master of Strategy	roles: draw
+cards	MASTER_PLANNER	Master Planner	Master Planner	ID only; no inferred role
+cards	MAUL	Maul	Maul	roles: hit,multiple hits
+cards	MAYHEM	Mayhem	Mayhem	ID only; no inferred role
+cards	MELANCHOLY	Melancholy	Melancholy	roles: guard
+cards	MELODIC_SHOT	Melodic Shot	Melodic Shot	roles: hit,shots,impale
+cards	MEMENTO_MORI	Memento Mori	Memento Mori	roles: hit
+cards	METAMORPHOSIS	Metamorphosis	Metamorphosis	ID only; no inferred role
+cards	METEOR_SHOWER	Meteor Shower	Meteor Shower	roles: hit,weak,area damage
+cards	METEOR_STRIKE	Meteor Strike	Meteor Strike	roles: hit,orbs
+cards	MIDNIGHT	Midnight	Midnight	roles: hit, exhaust
+cards	MIGHTY_SHIELD	Mighty Shield	Mighty Shield	roles: guard
+cards	MIGHTY_WEAPON	Mighty Weapon	Mighty Weapon	roles: hit,area damage
+cards	MIMIC	Mimic	Mimic	roles: guard
+cards	MIND_BLAST	Mind Blast	Mind Blast	roles: hit
+cards	MIND_ROT	Mind Rot	Mind Rot	roles: draw
+cards	MINION_DIVE_BOMB	Minion Dive Bomb	Minion Dive Bomb	roles: hit
+cards	MINION_SACRIFICE	Minion Sacrifice	Minion Sacrifice	roles: guard
+cards	MINION_STRIKE	Minion Strike	Minion Strike	roles: hit,draw
+cards	MIRAGE	Mirage	Mirage	ID only; no inferred role
+cards	MISERY	Misery	Misery	roles: hit
+cards	MOCK_ATTACK_CARD	Mock Attack Card		ID only; no inferred role
+cards	MOCK_CURSE_CARD	Mock Curse Card		ID only; no inferred role
+cards	MOCK_POWER_CARD	Mock Power Card		ID only; no inferred role
+cards	MOCK_QUEST_CARD	Mock Quest Card		ID only; no inferred role
+cards	MOCK_SKILL_CARD	Mock Skill Card		ID only; no inferred role
+cards	MOCK_STATUS_CARD	Mock Status Card		ID only; no inferred role
+cards	MODDED	Modded	Modded	roles: draw
+cards	MOLTEN_FIST	Molten Fist	Molten Fist	roles: hit
+cards	MOMENTUM_STRIKE	Momentum Strike	Momentum Strike	roles: hit
+cards	MONARCHS_GAZE	Monarch's Gaze	Monarch's Gaze	ID only; no inferred role
+cards	MONOLOGUE	Monologue	Monologue	roles: strength
+cards	MOTIF	Motif	Motif	ID only; no inferred role
+cards	MOURNING_BLOW	Mourning Blow	Mourning Blow	roles: hit,sadness
+cards	MULTI_CAST	Multi-Cast	Multi-Cast	ID only; no inferred role
+cards	MURDER	Murder	Murder	roles: hit
+cards	MYTHIC_FORM	Mythic Form	Mythic Form	ID only; no inferred role
+cards	MY_SHINIES	My Shinies	My Shinies	roles: hit
+cards	NAIL	Nail	Nail	roles: impale
+cards	NECRO_MASTERY	Necro Mastery	Necro Mastery	roles: summon, summon
+cards	NEGATIVE_PULSE	Negative Pulse	Negative Pulse	roles: guard,doom
+cards	NEOWS_FURY	Neow's Fury	Neow's Fury	roles: hit
+cards	NEUROSURGE	Neurosurge	Neurosurge	roles: draw,energy,doom
+cards	NEUTRALIZE	Neutralize	Neutralize	roles: hit,weak
+cards	NEUTRON_AEGIS	Neutron Aegis	Neutron Aegis	roles: plating
+cards	NIGHTMARE	Nightmare	Nightmare	ID only; no inferred role
+cards	NOCK	Nock	Nock	roles: aim
+cards	NORMALITY	Normality	Normality	ID only; no inferred role
+cards	NOSTALGIA	Nostalgia	Nostalgia	ID only; no inferred role
+cards	NOT_YET	Not Yet	Not Yet	roles: healing
+cards	NOXIOUS_FUMES	Noxious Fumes	Noxious Fumes	roles: poison
+cards	NO_ESCAPE	No Escape	No Escape	roles: doom, doom
+cards	NULL	Null	Null	roles: hit,orbs,weak
+cards	OBLIVION	Oblivion	Oblivion	roles: doom
+cards	OFFERING	Offering	Offering	roles: draw,energy,hp loss
+cards	OFF_BY_ONE	Off by One		ID only; no inferred role
+cards	OMNISLICE	Omnislice	Omnislice	roles: hit
+cards	ONE_FOR_ALL	One for All	One for All	ID only; no inferred role
+cards	ONE_TWO_PUNCH	One-Two Punch	One-Two Punch	ID only; no inferred role
+cards	ORBIT	Orbit	Orbit	roles: energy
+cards	OUTBREAK	Outbreak	Outbreak	roles: poison
+cards	OUTMANEUVER	Outmaneuver	Outmaneuver	ID only; no inferred role
+cards	OUTRAGE	Outrage	Outrage	roles: hit
+cards	OVERCLOCK	Overclock	Overclock	roles: draw
+cards	PACTS_END	Pact's End	Pact's End	roles: hit,area damage
+cards	PAELS_STRIKE	Pael's Strike		roles: hit
+cards	PAGESTORM	Pagestorm	Pagestorm	ID only; no inferred role
+cards	PALE_BLUE_DOT	Pale Blue Dot	Pale Blue Dot	ID only; no inferred role
+cards	PANACHE	Panache	Panache	ID only; no inferred role
+cards	PANIC_BUTTON	Panic Button	Panic Button	roles: guard
+cards	PARRY	Parry	Parry	ID only; no inferred role
+cards	PARSE	Parse	Parse	roles: draw
+cards	PARTICLE_WALL	Particle Wall	Particle Wall	roles: guard
+cards	PATTER	Patter	Patter	roles: guard
+cards	PECK	Peck	Peck	roles: hit,multiple hits
+cards	PERFECTED_STRIKE	Perfected Strike	Perfected Strike	roles: hit
+cards	PHANTOM_BLADES	Phantom Blades	Phantom Blades	ID only; no inferred role
+cards	PHOTON_CUT	Photon Cut	Photon Cut	roles: hit,draw
+cards	PIERCING_WAIL	Piercing Wail	Piercing Wail	ID only; no inferred role
+cards	PILLAGE	Pillage	Pillage	roles: hit
+cards	PILLAR_OF_CREATION	Pillar of Creation	Pillar of Creation	ID only; no inferred role
+cards	PINPOINT	Pinpoint	Pinpoint	roles: hit
+cards	PITY	Pity		ID only; no inferred role
+cards	PLOT	Plot	Plot	ID only; no inferred role
+cards	POISONED_STAB	Poisoned Stab	Poisoned Stab	roles: hit,poison
+cards	POKE	Poke	Poke	roles: hit,Osty attacks
+cards	POMMEL_STRIKE	Pommel Strike	Pommel Strike	roles: hit,draw
+cards	POOR_SLEEP	Poor Sleep	Poor Sleep	ID only; no inferred role
+cards	POUNCE	Pounce	Pounce	roles: hit
+cards	PRECISE_CUT	Precise Cut	Precise Cut	roles: hit
+cards	PREDATOR	Predator	Predator	roles: hit
+cards	PREPARED	Prepared	Prepared	roles: draw,discard
+cards	PREP_TIME	Prep Time	Prep Time	ID only; no inferred role
+cards	PRIMAL_FORCE	Primal Force	Primal Force	ID only; no inferred role
+cards	PRODUCTION	Production	Production	roles: energy
+cards	PROLONG	Prolong	Prolong	ID only; no inferred role
+cards	PROPHESIZE	Prophesize	Prophesize	roles: draw
+cards	PROTECTOR	Protector	Protector	roles: hit,Osty attacks, summon
+cards	PROWESS	Prowess	Prowess	roles: strength,dexterity
+cards	PULL_AGGRO	Pull Aggro	Pull Aggro	roles: guard,summon
+cards	PULL_FROM_BELOW	Pull from Below	Pull from Below	roles: hit
+cards	PUNCH_OF_JOY	Punch of Joy	Punch of Joy	roles: hit
+cards	PURITY	Purity	Purity	ID only; no inferred role
+cards	PUTREFY	Putrefy	Putrefy	roles: weak,vulnerable
+cards	PYRE	Pyre	Pyre	roles: energy
+cards	QUADCAST	Quadcast	Quadcast	ID only; no inferred role
+cards	QUASAR	Quasar	Quasar	ID only; no inferred role
+cards	QUICK_SHOT	Quick Shot	Quick Shot	roles: hit,shots,impale
+cards	QUICK_SLASH	Quick Slash		roles: hit,draw
+cards	QUIETUS	Quietus	Quietus	roles: shots
+cards	QUIVER	Quiver	Quiver	ID only; no inferred role
+cards	RADIATE	Radiate	Radiate	roles: hit,area damage, stars
+cards	RAGE	Rage	Rage	ID only; no inferred role
+cards	RAINBOW	Rainbow	Rainbow	roles: orbs,frost,lightning
+cards	RAIN_SHOT	Rain Shot	Rain Shot	roles: hit,shots,impale
+cards	RALLY	Rally	Rally	ID only; no inferred role
+cards	RAMPAGE	Rampage	Rampage	roles: hit
+cards	RAPID_SHOT	Rapid Shot	Rapid Shot	roles: hit,shots,impale
+cards	RATTLE	Rattle	Rattle	roles: hit,Osty attacks
+cards	REANIMATE	Reanimate	Reanimate	roles: summon
+cards	REAP	Reap	Reap	roles: hit
+cards	REAPER_FORM	Reaper Form	Reaper Form	roles: doom
+cards	REAVE	Reave	Reave	roles: hit
+cards	REBOOT	Reboot	Reboot	roles: draw
+cards	REBOUND	Rebound	Rebound	roles: hit
+cards	RECALL	Recall	Recall	ID only; no inferred role
+cards	REFINE_BLADE	Refine Blade	Refine Blade	roles: forge
+cards	REFLECT	Reflect	Reflect	roles: guard
+cards	REFLEX	Reflex	Reflex	roles: draw, discard
+cards	REFRACT	Refract	Refract	roles: hit,orbs,multiple hits
+cards	REGRET	Regret	Regret	ID only; no inferred role
+cards	RELAX	Relax	Relax	roles: guard
+cards	REND	Rend	Rend	roles: hit
+cards	REPEAT_SHOT	Repeat Shot	Repeat Shot	roles: hit,shots,impale
+cards	RESERVES	Reserves		ID only; no inferred role
+cards	RESONANCE	Resonance	Resonance	roles: strength
+cards	RESTLESSNESS	Restlessness	Restlessness	ID only; no inferred role
+cards	RHYTHM_STRIKE	Rhythm Strike	Rhythm Strike	roles: hit
+cards	RICOCHET	Ricochet	Ricochet	roles: hit
+cards	RIGHT_HAND_HAND	Right Hand Hand	Right Hand Hand	roles: hit,Osty attacks
+cards	RIP_AND_TEAR	Rip and Tear	Rip and Tear	roles: hit
+cards	ROCKET_PUNCH	Rocket Punch	Rocket Punch	roles: hit,draw
+cards	ROLLING_BOULDER	Rolling Boulder	Rolling Boulder	ID only; no inferred role
+cards	ROYALTIES	Royalties	Royalties	ID only; no inferred role
+cards	ROYAL_GAMBLE	Royal Gamble	Royal Gamble	ID only; no inferred role
+cards	RUMMAGE	Rummage	Rummage	roles: draw,sadness
+cards	RUPTURE	Rupture	Rupture	roles: strength, hp loss
+cards	SACRIFICE	Sacrifice	Sacrifice	ID only; no inferred role
+cards	SADNESS	Sadness	Sadness	ID only; no inferred role
+cards	SALVO	Salvo	Salvo	roles: hit,retain hand
+cards	SCAVENGE	Scavenge	Scavenge	roles: exhaust
+cards	SCOURGE	Scourge	Scourge	roles: draw,doom
+cards	SCRAPE	Scrape	Scrape	roles: hit,draw
+cards	SCRAWL	Scrawl	Scrawl	ID only; no inferred role
+cards	SCULPTING_STRIKE	Sculpting Strike	Sculpting Strike	roles: hit
+cards	SEANCE	Seance	Seance	ID only; no inferred role
+cards	SECOND_WIND	Second Wind	Second Wind	roles: exhaust
+cards	SECRET_TECHNIQUE	Secret Technique	Secret Technique	ID only; no inferred role
+cards	SECRET_WEAPON	Secret Weapon	Secret Weapon	ID only; no inferred role
+cards	SEEKER_STRIKE	Seeker Strike	Seeker Strike	roles: hit
+cards	SEEKING_EDGE	Seeking Edge	Seeking Edge	roles: forge
+cards	SELF_DEPRECATE	Self Deprecate	Self Deprecate	roles: sadness
+cards	SENTRY_MODE	Sentry Mode	Sentry Mode	ID only; no inferred role
+cards	SERPENT_FORM	Serpent Form	Serpent Form	ID only; no inferred role
+cards	SERRATED_ARROWS	Serrated Arrows	Serrated Arrows	roles: impale
+cards	SETUP_STRIKE	Setup Strike	Setup Strike	roles: hit,strength
+cards	SEVEN_STARS	Seven Stars	Seven Stars	roles: hit,multiple hits,area damage
+cards	SEVERANCE	Severance	Severance	roles: hit,souls
+cards	SHADOWMELD	Shadowmeld	Shadowmeld	ID only; no inferred role
+cards	SHADOW_SHIELD	Shadow Shield	Shadow Shield	roles: guard,orbs
+cards	SHADOW_STEP	Shadow Step	Shadow Step	roles: discard
+cards	SHAME	Shame	Shame	ID only; no inferred role
+cards	SHARED_FATE	Shared Fate	Shared Fate	ID only; no inferred role
+cards	SHARP_EDGE	Sharp Edge		ID only; no inferred role
+cards	SHATTER	Shatter	Shatter	roles: hit,area damage
+cards	SHINING_STRIKE	Shining Strike	Shining Strike	roles: hit,stars
+cards	SHIV	Shiv	Shiv	roles: hit
+cards	SHOCKWAVE	Shockwave	Shockwave	roles: weak
+cards	SHOW_OFF	Show Off	Show Off	roles: aim
+cards	SHROUD	Shroud	Shroud	roles: doom
+cards	SHRUG_IT_OFF	Shrug It Off	Shrug It Off	roles: guard,draw
+cards	SIC_EM	Sic 'Em	Sic 'Em	roles: hit,summon,Osty attacks
+cards	SIDESTEP	Sidestep	Sidestep	ID only; no inferred role
+cards	SIGNAL_BOOST	Signal Boost	Signal Boost	ID only; no inferred role
+cards	SIMPLETON	Simpleton	Simpleton	ID only; no inferred role
+cards	SKEWER	Skewer	Skewer	roles: hit
+cards	SKIM	Skim	Skim	roles: draw
+cards	SKY_SHOT	Sky Shot	Sky Shot	roles: hit,shots,impale
+cards	SLEIGHT_OF_FLESH	Sleight of Flesh	Sleight of Flesh	ID only; no inferred role
+cards	SLICE	Slice	Slice	roles: hit
+cards	SLIMED	Slimed	Slimed	roles: draw
+cards	SLOTH	Sloth	Sloth	ID only; no inferred role
+cards	SMOKESTACK	Smokestack	Smokestack	ID only; no inferred role
+cards	SNAKEBITE	Snakebite	Snakebite	roles: poison
+cards	SNAP	Snap	Snap	roles: hit,Osty attacks
+cards	SNEAKY	Sneaky	Sneaky	ID only; no inferred role
+cards	SOLAR_STRIKE	Solar Strike	Solar Strike	roles: hit,stars
+cards	SONG_PATH	Song Path	Song Path	ID only; no inferred role
+cards	SOOT	Soot	Soot	ID only; no inferred role
+cards	SORROWFUL_STRIKE	Sorrowful Strike	Sorrowful Strike	roles: hit,sadness
+cards	SOUL	Soul	Soul	roles: draw
+cards	SOULBOUND	Soulbound	Soulbound	roles: souls
+cards	SOUL_STORM	Soul Storm	Soul Storm	roles: hit, souls
+cards	SOVEREIGN_BLADE	Sovereign Blade	Sovereign Blade	roles: guard,hit
+cards	SOW	Sow	Sow	roles: hit,area damage
+cards	SPECTRUM_SHIFT	Spectrum Shift	Spectrum Shift	ID only; no inferred role
+cards	SPEEDSTER	Speedster	Speedster	ID only; no inferred role
+cards	SPIKED	Spiked		ID only; no inferred role
+cards	SPINNER	Spinner	Spinner	roles: orbs
+cards	SPIRIT_OF_ASH	Spirit of Ash	Spirit of Ash	ID only; no inferred role
+cards	SPITE	Spite	Spite	roles: hit
+cards	SPLASH	Splash	Splash	ID only; no inferred role
+cards	SPOILS_MAP	Spoils Map	Spoils Map	ID only; no inferred role
+cards	SPOILS_OF_BATTLE	Spoils of Battle	Spoils of Battle	roles: draw,forge
+cards	SPORE_MIND	Spore Mind	Spore Mind	ID only; no inferred role
+cards	SPUR	Spur	Spur	roles: summon
+cards	SQUASH	Squash	Squash	roles: hit,vulnerable
+cards	SQUEEZE	Squeeze	Squeeze	roles: hit,Osty attacks
+cards	STACK	Stack	Stack	ID only; no inferred role
+cards	STAMPEDE	Stampede	Stampede	ID only; no inferred role
+cards	STARDUST	Stardust	Stardust	roles: hit
+cards	STAR_BLAST	Star Blast		roles: guard,hit
+cards	STAR_SHIELD	Star Shield		roles: guard,draw
+cards	STEADY_CADENCE	Steady Cadence	Steady Cadence	roles: hit,draw
+cards	STOKE	Stoke	Stoke	roles: exhaust
+cards	STOMP	Stomp	Stomp	roles: hit,area damage
+cards	STONE_ARMOR	Stone Armor	Stone Armor	roles: plating
+cards	STORM	Storm	Storm	roles: orbs
+cards	STORM_OF_STEEL	Storm of Steel	Storm of Steel	roles: discard
+cards	STRANGLE	Strangle	Strangle	roles: hit
+cards	STRATAGEM	Stratagem	Stratagem	ID only; no inferred role
+cards	STRENGTH	Strength	Strength	roles: strength
+cards	STRIKE_DEFECT	Strike	Strike (Defect)	roles: hit
+cards	STRIKE_FOOL	Strike	Strike (Fool)	roles: hit
+cards	STRIKE_IRONCLAD	Strike	Strike (Ironclad)	roles: hit
+cards	STRIKE_NECROBINDER	Strike	Strike (Necrobinder)	roles: hit
+cards	STRIKE_REGENT	Strike	Strike (Regent)	roles: hit
+cards	STRIKE_SILENT	Strike	Strike (Silent)	roles: hit
+cards	SUBROUTINE	Subroutine	Subroutine	ID only; no inferred role
+cards	SUCKER_PUNCH	Sucker Punch	Sucker Punch	roles: hit,weak
+cards	SUMMON_FORTH	Summon Forth	Summon Forth	roles: forge
+cards	SUNDER	Sunder	Sunder	roles: hit
+cards	SUPERCRITICAL	Supercritical	Supercritical	roles: energy
+cards	SUPERMASSIVE	Supermassive	Supermassive	roles: hit
+cards	SUPPRESS	Suppress	Suppress	roles: hit,weak
+cards	SURVIVOR	Survivor	Survivor	roles: guard,discard
+cards	SWEEPING_BEAM	Sweeping Beam	Sweeping Beam	roles: hit,draw,area damage
+cards	SWEEPING_GAZE	Sweeping Gaze	Sweeping Gaze	roles: hit,Osty attacks
+cards	SWIFT_STRIKE	Swift Strike		roles: hit
+cards	SWORD_BOOMERANG	Sword Boomerang	Sword Boomerang	roles: hit, strength
+cards	SWORD_SAGE	Sword Sage	Sword Sage	ID only; no inferred role
+cards	SYNCHRONIZE	Synchronize	Synchronize	roles: focus
+cards	SYNTHESIS	Synthesis	Synthesis	roles: hit
+cards	TACTICIAN	Tactician	Tactician	roles: energy, discard
+cards	TAG_TEAM	Tag Team	Tag Team	roles: hit
+cards	TANK	Tank	Tank	ID only; no inferred role
+cards	TAUNT	Taunt	Taunt	roles: guard,vulnerable
+cards	TEAR_ASUNDER	Tear Asunder	Tear Asunder	roles: hit
+cards	TEMPERANCE	Temperance	Temperance	roles: guard
+cards	TEMPEST	Tempest	Tempest	roles: orbs,lightning
+cards	TERRAFORMING	Terraforming	Terraforming	ID only; no inferred role
+cards	TESLA_COIL	Tesla Coil	Tesla Coil	roles: hit
+cards	TEZCATARAS_MIGHT	Tezcatara's Might		roles: strength
+cards	THE_BALL	The Ball	The Ball	roles: hit
+cards	THE_BOMB	The Bomb	The Bomb	ID only; no inferred role
+cards	THE_CHARIOT	The Chariot	The Chariot	roles: hit,area damage
+cards	THE_DEVIL	The Devil	The Devil	roles: exhaust
+cards	THE_EMPEROR	The Emperor	The Emperor	roles: energy
+cards	THE_EMPRESS	The Empress	The Empress	roles: weak,vulnerable
+cards	THE_FOOL	The Fool	The Fool	ID only; no inferred role
+cards	THE_GAMBIT	The Gambit	The Gambit	roles: guard
+cards	THE_HANGED_MAN	The Hanged Man	The Hanged Man	roles: hp loss
+cards	THE_HERMIT	The Hermit	The Hermit	roles: draw,discard
+cards	THE_HIEROPHANT	The Hierophant	The Hierophant	ID only; no inferred role
+cards	THE_HIGH_PRIESTESS	The High Priestess	The High Priestess	roles: draw
+cards	THE_HUNT	The Hunt	The Hunt	roles: hit
+cards	THE_LOVERS	The Lovers	The Lovers	ID only; no inferred role
+cards	THE_MAGICIAN	The Magician	The Magician	roles: orbs
+cards	THE_MOON	The Moon	The Moon	ID only; no inferred role
+cards	THE_SCYTHE	The Scythe	The Scythe	roles: hit
+cards	THE_SEALED_THRONE	The Sealed Throne	The Sealed Throne	ID only; no inferred role
+cards	THE_SHOT	The Shot	The Shot	roles: hit,shots,impale
+cards	THE_SMITH	The Smith	The Smith	roles: forge
+cards	THE_STAR	The Star	The Star	ID only; no inferred role
+cards	THE_SUN	The Sun	The Sun	roles: draw,energy
+cards	THE_TOWER	The Tower	The Tower	roles: hit
+cards	THE_WORLD	The World	The World	ID only; no inferred role
+cards	THINKING_AHEAD	Thinking Ahead	Thinking Ahead	roles: draw
+cards	THRASH	Thrash	Thrash	roles: hit,multiple hits
+cards	THRUMMING_HATCHET	Thrumming Hatchet	Thrumming Hatchet	roles: hit
+cards	THUNDER	Thunder	Thunder	ID only; no inferred role
+cards	THUNDERCLAP	Thunderclap	Thunderclap	roles: hit
+cards	TIMBER	Timber	Timber	roles: hit
+cards	TIMES_UP	Time's Up	Time's Up	roles: hit
+cards	TOOLS_OF_THE_TRADE	Tools of the Trade	Tools of the Trade	roles: discard
+cards	TORIC_TOUGHNESS	Toric Toughness	Toric Toughness	roles: guard
+cards	TOXIC	Toxic	Toxic	ID only; no inferred role
+cards	TRACKING	Tracking	Tracking	roles: weak
+cards	TRAINING_STRIKE	Training Strike		roles: hit
+cards	TRANSFIGURE	Transfigure	Transfigure	ID only; no inferred role
+cards	TRASH_TO_TREASURE	Trash to Treasure	Trash to Treasure	roles: orbs
+cards	TREMBLE	Tremble	Tremble	roles: vulnerable
+cards	TRICK_SHOT	Trick Shot	Trick Shot	roles: hit,shots,impale
+cards	TRUE_GRIT	True Grit	True Grit	roles: guard,exhaust
+cards	TUNE	Tune	Tune	ID only; no inferred role
+cards	TURBO	TURBO	TURBO	roles: energy
+cards	TUTOR	Tutor	Tutor	ID only; no inferred role
+cards	TWIN_STRIKE	Twin Strike	Twin Strike	roles: hit,multiple hits
+cards	TYRANNY	Tyranny	Tyranny	roles: exhaust
+cards	ULTIMATE_DEFEND	Ultimate Defend	Ultimate Defend	roles: guard
+cards	ULTIMATE_STRIKE	Ultimate Strike	Ultimate Strike	roles: hit
+cards	UNDEATH	Undeath	Undeath	roles: guard
+cards	UNDERWORLD	Underworld	Underworld	roles: doom
+cards	UNLEASH	Unleash	Unleash	roles: hit,Osty attacks, summon
+cards	UNMOVABLE	Unmovable	Unmovable	ID only; no inferred role
+cards	UNRELENTING	Unrelenting	Unrelenting	roles: hit
+cards	UNTOUCHABLE	Untouchable	Untouchable	roles: guard
+cards	UPPERCUT	Uppercut	Uppercut	roles: hit,weak,vulnerable
+cards	UPROAR	Uproar	Uproar	roles: hit,multiple hits
+cards	UPROOT	Uproot	Uproot	ID only; no inferred role
+cards	UP_MY_SLEEVE	Up My Sleeve	Up My Sleeve	roles: shivs
+cards	VEILPIERCER	Veilpiercer	Veilpiercer	roles: hit
+cards	VENERATE	Venerate	Venerate	roles: stars
+cards	VETERAN	Veteran		roles: guard,strength
+cards	VICIOUS	Vicious	Vicious	roles: vulnerable
+cards	VIOLENT_CHORD	Violent Chord	Violent Chord	ID only; no inferred role
+cards	VISIONS_OF_GRANDEUR	Visions of Grandeur		ID only; no inferred role
+cards	VITRIOL	Vitriol	Vitriol	roles: sadness,weak
+cards	VOID	Void	Void	ID only; no inferred role
+cards	VOID_FORM	Void Form	Void Form	ID only; no inferred role
+cards	VOLLEY	Volley	Volley	roles: hit
+cards	VOLTAIC	Voltaic	Voltaic	roles: orbs,lightning, lightning
+cards	WAH_BLAST	Wah Blast	Wah Blast	roles: hit,area damage
+cards	WAH_CHO	Wah Cho	Wah Cho	roles: guard,hit
+cards	WAH_CHO_KI	Wah Cho Ki	Wah Cho Ki	roles: guard,hit,draw
+cards	WAH_HAMMER	Wah Hammer	Wah Hammer	roles: hit, impale
+cards	WAH_KI	Wah Ki	Wah Ki	roles: hit,multiple hits
+cards	WAH_SWEEP	Wah Sweep	Wah Sweep	roles: hit,area damage
+cards	WAH_SYMPHONY	Wah Symphony	Wah Symphony	roles: hit,area damage
+cards	WAH_TOUCH	Wah Touch	Wah Touch	roles: hit,vulnerable
+cards	WARP_SPACE	Warp Space		ID only; no inferred role
+cards	WASTE_AWAY	Waste Away	Waste Away	ID only; no inferred role
+cards	WELL_LAID_PLANS	Well-Laid Plans	Well-Laid Plans	roles: discard
+cards	WHEEL_OF_FORTUNE	Wheel of Fortune	Wheel of Fortune	roles: draw,discard
+cards	WHIRLWIND	Whirlwind	Whirlwind	roles: hit,area damage, strength
+cards	WHISTLE	Whistle	Whistle	roles: hit
+cards	WHISTLING_ARROWS	Whistling Arrows	Whistling Arrows	roles: guard,shots,impale, shots
+cards	WHITE_NOISE	White Noise	White Noise	ID only; no inferred role
+cards	WISH	Wish	Wish	ID only; no inferred role
+cards	WISP	Wisp	Wisp	roles: energy
+cards	WITHER	Wither	Wither	ID only; no inferred role
+cards	WOUND	Wound	Wound	ID only; no inferred role
+cards	WRAITH_FORM	Wraith Form	Wraith Form	ID only; no inferred role
+cards	WREST	Wrest	Wrest	ID only; no inferred role
+cards	WRITHE	Writhe	Writhe	ID only; no inferred role
+cards	WROUGHT_IN_WAR	Wrought in War	Wrought in War	roles: hit,forge
+cards	YAH	Yah!	Yah!	ID only; no inferred role
+cards	YOGA	Yoga	Yoga	ID only; no inferred role
+cards	ZAP	Zap	Zap	roles: orbs,lightning
+relics	AKABEKO	Akabeko	Akabeko	trigger: multiple hits
+relics	ALCHEMICAL_COFFER	Alchemical Coffer	Alchemical Coffer	fit: slots
+relics	AMETHYST_AUBERGINE	Amethyst Aubergine	Amethyst Aubergine	ID only; no fit profile
+relics	ANCHOR	Anchor	Anchor	fit: opening block
+relics	ARCANE_SCROLL	Arcane Scroll	Arcane Scroll	ID only; no fit profile
+relics	ARCHAIC_TOOTH	Archaic Tooth	Archaic Tooth	ID only; no fit profile
+relics	ART_OF_WAR	Art of War	Art of War	ID only; no fit profile
+relics	ASTROLABE	Astrolabe	Astrolabe	ID only; no fit profile
+relics	BAG_OF_MARBLES	Bag of Marbles	Bag of Marbles	ID only; no fit profile
+relics	BAG_OF_PREPARATION	Bag of Preparation	Bag of Preparation	fit: opening draw
+relics	BATH_ROBES	Bath Robes	Bath Robes	ID only; no fit profile
+relics	BATH_TOWEL	Bath Towel	Bath Towel	fit: sustain
+relics	BEATING_REMNANT	Beating Remnant	Beating Remnant	ID only; no fit profile
+relics	BEAUTIFUL_BRACELET	Beautiful Bracelet	Beautiful Bracelet	ID only; no fit profile
+relics	BELLOWS	Bellows	Bellows	ID only; no fit profile
+relics	BELT_BUCKLE	Belt Buckle	Belt Buckle	ID only; no fit profile
+relics	BIG_HAT	Big Hat	Big Hat	ID only; no fit profile
+relics	BIG_MUSHROOM	Big Mushroom	Big Mushroom	ID only; no fit profile
+relics	BIIIG_HUG	Biiig Hug	Biiig Hug	ID only; no fit profile
+relics	BING_BONG	Bing Bong	Bing Bong	ID only; no fit profile
+relics	BIZARRE_LAMP	Bizarre Lamp	Bizarre Lamp	ID only; no fit profile
+relics	BLACK_BLOOD	Black Blood	Black Blood	fit: sustain
+relics	BLACK_STAR	Black Star	Black Star	ID only; no fit profile
+relics	BLESSED_ANTLER	Blessed Antler	Blessed Antler	ID only; no fit profile
+relics	BLOOD_SOAKED_ROSE	Blood-Soaked Rose	Blood-Soaked Rose	ID only; no fit profile
+relics	BLOOD_VIAL	Blood Vial	Blood Vial	fit: sustain
+relics	BONE_FLUTE	Bone Flute	Bone Flute	trigger: Osty attacks
+relics	BONE_TEA	Bone Tea	Bone Tea	ID only; no fit profile
+relics	BOOKMARK	Bookmark	Bookmark	ID only; no fit profile
+relics	BOOK_OF_FIVE_RINGS	Book of Five Rings	Book of Five Rings	ID only; no fit profile
+relics	BOOK_REPAIR_KNIFE	Book Repair Knife	Book Repair Knife	ID only; no fit profile
+relics	BOOMING_CONCH	Booming Conch	Booming Conch	ID only; no fit profile
+relics	BOUND_PHYLACTERY	Bound Phylactery	Bound Phylactery	ID only; no fit profile
+relics	BOWLER_HAT	Bowler Hat	Bowler Hat	ID only; no fit profile
+relics	BREAD	Bread	Bread	ID only; no fit profile
+relics	BRILLIANT_SCARF	Brilliant Scarf	Brilliant Scarf	ID only; no fit profile
+relics	BRIMSTONE	Brimstone	Brimstone	ID only; no fit profile
+relics	BRONZE_SCALES	Bronze Scales	Bronze Scales	trigger: guard
+relics	BURNING_BLOOD	Burning Blood	Burning Blood	fit: sustain
+relics	BURNING_STICKS	Burning Sticks	Burning Sticks	ID only; no fit profile
+relics	BYRDINE	Byrdine	Byrdine	ID only; no fit profile
+relics	BYRDPIP	Byrdpip	Byrdpip	ID only; no fit profile
+relics	CALLING_BELL	Calling Bell	Calling Bell	ID only; no fit profile
+relics	CANDELABRA	Candelabra	Candelabra	ID only; no fit profile
+relics	CAPTAINS_WHEEL	Captain's Wheel	Captain's Wheel	ID only; no fit profile
+relics	CAULDRON	Cauldron	Cauldron	ID only; no fit profile
+relics	CENTENNIAL_PUZZLE	Centennial Puzzle	Centennial Puzzle	ID only; no fit profile
+relics	CHANDELIER	Chandelier	Chandelier	ID only; no fit profile
+relics	CHARONS_ASHES	Charon's Ashes	Charon's Ashes	trigger: exhaust
+relics	CHEMICAL_X	Chemical X	Chemical X	ID only; no fit profile
+relics	CHOICES_PARADOX	Choices Paradox	Choices Paradox	ID only; no fit profile
+relics	CHOSEN_CHEESE	The Chosen Cheese	The Chosen Cheese	ID only; no fit profile
+relics	CIRCLET	Circlet	Circlet	ID only; no fit profile
+relics	CLAWS	Claws	Claws	ID only; no fit profile
+relics	CLOAK_CLASP	Cloak Clasp	Cloak Clasp	ID only; no fit profile
+relics	CONDUCTORS_BATON	Conductor's Baton	Conductor's Baton	ID only; no fit profile
+relics	CRACKED_CORE	Cracked Core	Cracked Core	trigger: orbs
+relics	CROSSBOW	Crossbow	Crossbow	ID only; no fit profile
+relics	CURSED_KETTLE	Cursed Kettle		ID only; no fit profile
+relics	CURSED_PEARL	Cursed Pearl	Cursed Pearl	ID only; no fit profile
+relics	DARKSTONE_PERIAPT	Darkstone Periapt	Darkstone Periapt	ID only; no fit profile
+relics	DATA_DISK	Data Disk	Data Disk	trigger: orbs
+relics	DAUGHTER_OF_THE_WIND	Daughter of the Wind	Daughter of the Wind	ID only; no fit profile
+relics	DELICATE_FROND	Delicate Frond	Delicate Frond	ID only; no fit profile
+relics	DEMON_TONGUE	Demon Tongue	Demon Tongue	ID only; no fit profile
+relics	DEPRECATED_RELIC	Deprecated Relic		ID only; no fit profile
+relics	DIAMOND_DIADEM	Diamond Diadem	Diamond Diadem	ID only; no fit profile
+relics	DINGY_RUG	Dingy Rug	Dingy Rug	ID only; no fit profile
+relics	DISTINGUISHED_CAPE	Distinguished Cape	Distinguished Cape	ID only; no fit profile
+relics	DIVINE_DESTINY	Divine Destiny	Divine Destiny	ID only; no fit profile
+relics	DIVINE_RIGHT	Divine Right	Divine Right	ID only; no fit profile
+relics	DOLLYS_MIRROR	Dolly's Mirror	Dolly's Mirror	ID only; no fit profile
+relics	DOWSING_ROD	Dowsing Rod	Dowsing Rod	ID only; no fit profile
+relics	DRAGON_FRUIT	Dragon Fruit	Dragon Fruit	ID only; no fit profile
+relics	DREAM_CATCHER	Dream Catcher	Dream Catcher	ID only; no fit profile
+relics	DRIFTWOOD	Driftwood	Driftwood	ID only; no fit profile
+relics	DUSTY_TOME	Dusty Tome	Dusty Tome	ID only; no fit profile
+relics	ECTOPLASM	Ectoplasm	Ectoplasm	ID only; no fit profile
+relics	ELECTRIC_SHRYMP	Electric Shrymp	Electric Shrymp	ID only; no fit profile
+relics	EMBER_TEA	Ember Tea	Ember Tea	ID only; no fit profile
+relics	EMOTION_CHIP	Emotion Chip	Emotion Chip	ID only; no fit profile
+relics	EMPTY_CAGE	Empty Cage	Empty Cage	ID only; no fit profile
+relics	ENDLESS_APPETITE	Endless Appetite		ID only; no fit profile
+relics	ETERNAL_FEATHER	Eternal Feather	Eternal Feather	ID only; no fit profile
+relics	EXERCISE_MAT	Exercise Mat	Exercise Mat	ID only; no fit profile
+relics	FAKE_ANCHOR	Anchor???	Anchor???	fit: opening block
+relics	FAKE_BLOOD_VIAL	Blood Vial???	Blood Vial???	fit: sustain
+relics	FAKE_HAPPY_FLOWER	Happy Flower???	Happy Flower???	fit: energy
+relics	FAKE_LEES_WAFFLE	Lee's Waffle???	Lee's Waffle???	ID only; no fit profile
+relics	FAKE_MANGO	Mango???	Mango???	fit: max hp
+relics	FAKE_MERCHANTS_RUG	The Merchant's Rug???	The Merchant's Rug???	ID only; no fit profile
+relics	FAKE_ORICHALCUM	Orichalcum???	Orichalcum???	ID only; no fit profile
+relics	FAKE_SNECKO_EYE	Snecko Eye???	Snecko Eye???	ID only; no fit profile
+relics	FAKE_STRIKE_DUMMY	Strike Dummy???	Strike Dummy???	ID only; no fit profile
+relics	FAKE_VENERABLE_TEA_SET	Venerable Tea Set???	Venerable Tea Set???	ID only; no fit profile
+relics	FENCING_MANUAL	Fencing Manual	Fencing Manual	trigger: forge
+relics	FERTILIZER	Fertilizer	Fertilizer	ID only; no fit profile
+relics	FESTIVE_POPPER	Festive Popper	Festive Popper	ID only; no fit profile
+relics	FIDDLE	Fiddle	Fiddle	ID only; no fit profile
+relics	FISHING_ROD	Fishing Rod	Fishing Rod	ID only; no fit profile
+relics	FORGOTTEN_SOUL	Forgotten Soul	Forgotten Soul	ID only; no fit profile
+relics	FRAGRANT_MUSHROOM	Fragrant Mushroom	Fragrant Mushroom	ID only; no fit profile
+relics	FRESNEL_LENS	Fresnel Lens	Fresnel Lens	ID only; no fit profile
+relics	FROZEN_EGG	Frozen Egg	Frozen Egg	ID only; no fit profile
+relics	FUNERARY_MASK	Funerary Mask	Funerary Mask	ID only; no fit profile
+relics	FUR_COAT	Fur Coat	Fur Coat	ID only; no fit profile
+relics	GALACTIC_DUST	Galactic Dust	Galactic Dust	ID only; no fit profile
+relics	GAMBLING_CHIP	Gambling Chip	Gambling Chip	ID only; no fit profile
+relics	GAME_PIECE	Game Piece	Game Piece	ID only; no fit profile
+relics	GHOST_SEED	Ghost Seed	Ghost Seed	ID only; no fit profile
+relics	GIRYA	Girya	Girya	ID only; no fit profile
+relics	GLASS_EYE	Glass Eye	Glass Eye	ID only; no fit profile
+relics	GLITTER	Glitter	Glitter	ID only; no fit profile
+relics	GLOWING_ORB	Glowing Orb		ID only; no fit profile
+relics	GNARLED_HAMMER	Gnarled Hammer	Gnarled Hammer	ID only; no fit profile
+relics	GOLDEN_COMPASS	Golden Compass	Golden Compass	ID only; no fit profile
+relics	GOLDEN_PEARL	Golden Pearl	Golden Pearl	fit: gold
+relics	GOLD_PLATED_CABLES	Gold-Plated Cables	Gold-Plated Cables	ID only; no fit profile
+relics	GORGET	Gorget	Gorget	ID only; no fit profile
+relics	GREMLIN_HORN	Gremlin Horn	Gremlin Horn	ID only; no fit profile
+relics	HAND_DRILL	Hand Drill	Hand Drill	ID only; no fit profile
+relics	HAPPY_FLOWER	Happy Flower	Happy Flower	fit: energy
+relics	HEFTY_TABLET	Hefty Tablet	Hefty Tablet	ID only; no fit profile
+relics	HELICAL_DART	Helical Dart	Helical Dart	ID only; no fit profile
+relics	HISTORY_COURSE	History Course	History Course	ID only; no fit profile
+relics	HORN_CLEAT	Horn Cleat	Horn Cleat	ID only; no fit profile
+relics	ICE_CREAM	Ice Cream	Ice Cream	ID only; no fit profile
+relics	INFUSED_CORE	Infused Core	Infused Core	ID only; no fit profile
+relics	INK_BOTTLE	Ink Bottle		ID only; no fit profile
+relics	INTIMIDATING_HELMET	Intimidating Helmet	Intimidating Helmet	ID only; no fit profile
+relics	IRON_CLUB	Iron Club	Iron Club	ID only; no fit profile
+relics	IVORY_TILE	Ivory Tile	Ivory Tile	ID only; no fit profile
+relics	JEWELED_MASK	Jeweled Mask	Jeweled Mask	ID only; no fit profile
+relics	JEWELRY_BOX	Jewelry Box	Jewelry Box	ID only; no fit profile
+relics	JOSS_PAPER	Joss Paper	Joss Paper	trigger: exhaust
+relics	JUZU_BRACELET	Juzu Bracelet	Juzu Bracelet	ID only; no fit profile
+relics	KALEIDOSCOPE	Kaleidoscope	Kaleidoscope	ID only; no fit profile
+relics	KIFUDA	Kifuda	Kifuda	ID only; no fit profile
+relics	KUNAI	Kunai	Kunai	trigger: shivs
+relics	KUSARIGAMA	Kusarigama	Kusarigama	ID only; no fit profile
+relics	LANTERN	Lantern	Lantern	fit: opening energy
+relics	LARGE_CAPSULE	Large Capsule	Large Capsule	ID only; no fit profile
+relics	LASTING_CANDY	Lasting Candy	Lasting Candy	ID only; no fit profile
+relics	LAVA_LAMP	Lava Lamp	Lava Lamp	ID only; no fit profile
+relics	LAVA_ROCK	Lava Rock	Lava Rock	ID only; no fit profile
+relics	LEAD_PAPERWEIGHT	Lead Paperweight	Lead Paperweight	ID only; no fit profile
+relics	LEAFY_POULTICE	Leafy Poultice	Leafy Poultice	ID only; no fit profile
+relics	LEES_WAFFLE	Lee's Waffle	Lee's Waffle	ID only; no fit profile
+relics	LETTER_OPENER	Letter Opener	Letter Opener	ID only; no fit profile
+relics	LIZARD_TAIL	Lizard Tail	Lizard Tail	ID only; no fit profile
+relics	LOOMING_FRUIT	Looming Fruit	Looming Fruit	fit: max hp
+relics	LORDS_PARASOL	Lord's Parasol	Lord's Parasol	ID only; no fit profile
+relics	LOST_COFFER	Lost Coffer	Lost Coffer	ID only; no fit profile
+relics	LOST_WISP	Lost Wisp	Lost Wisp	ID only; no fit profile
+relics	LUCKY_FYSH	Lucky Fysh	Lucky Fysh	ID only; no fit profile
+relics	LUNAR_PASTRY	Lunar Pastry	Lunar Pastry	ID only; no fit profile
+relics	MANGO	Mango	Mango	fit: max hp
+relics	MASSIVE_SCROLL	Massive Scroll	Massive Scroll	ID only; no fit profile
+relics	MAW_BANK	Maw Bank	Maw Bank	ID only; no fit profile
+relics	MEAL_TICKET	Meal Ticket	Meal Ticket	ID only; no fit profile
+relics	MEAT_CLEAVER	Meat Cleaver	Meat Cleaver	ID only; no fit profile
+relics	MEAT_ON_THE_BONE	Meat on the Bone	Meat on the Bone	ID only; no fit profile
+relics	MEMBERSHIP_CARD	Membership Card	Membership Card	ID only; no fit profile
+relics	MERCURY_HOURGLASS	Mercury Hourglass	Mercury Hourglass	ID only; no fit profile
+relics	METRONOME	Metronome	Metronome	ID only; no fit profile
+relics	MIGHTY_WINGS	Mighty Wings	Mighty Wings	ID only; no fit profile
+relics	MINIATURE_CANNON	Miniature Cannon	Miniature Cannon	ID only; no fit profile
+relics	MINIATURE_TENT	Miniature Tent	Miniature Tent	ID only; no fit profile
+relics	MINI_REGENT	Mini Regent	Mini Regent	ID only; no fit profile
+relics	MOLTEN_EGG	Molten Egg	Molten Egg	ID only; no fit profile
+relics	MR_STRUGGLES	Mr. Struggles	Mr. Struggles	ID only; no fit profile
+relics	MUMMIFIED_HAND	Mummified Hand	Mummified Hand	ID only; no fit profile
+relics	MUSIC_BOX	Music Box	Music Box	ID only; no fit profile
+relics	MYSTERIOUS_COCOON	Mysterious Cocoon		ID only; no fit profile
+relics	MYSTIC_LIGHTER	Mystic Lighter	Mystic Lighter	ID only; no fit profile
+relics	NEOWS_BONES	Neow's Bones	Neow's Bones	ID only; no fit profile
+relics	NEOWS_SACRIFICE	Neow's Sacrifice	Neow's Sacrifice	ID only; no fit profile
+relics	NEOWS_TALISMAN	Neow's Talisman	Neow's Talisman	ID only; no fit profile
+relics	NEOWS_TORMENT	Neow's Torment	Neow's Torment	ID only; no fit profile
+relics	NEW_LEAF	New Leaf	New Leaf	ID only; no fit profile
+relics	NINJA_SCROLL	Ninja Scroll	Ninja Scroll	ID only; no fit profile
+relics	NUNCHAKU	Nunchaku	Nunchaku	trigger: shivs
+relics	NUTRITIOUS_OYSTER	Nutritious Oyster	Nutritious Oyster	fit: max hp
+relics	NUTRITIOUS_SOUP	Nutritious Soup	Nutritious Soup	ID only; no fit profile
+relics	OBSIDIAN_VICE	Obsidian Vice	Obsidian Vice	ID only; no fit profile
+relics	OCARINA	Ocarina	Ocarina	ID only; no fit profile
+relics	ODDLY_SMOOTH_STONE	Oddly Smooth Stone	Oddly Smooth Stone	trigger: guard
+relics	OLD_COIN	Old Coin	Old Coin	fit: gold
+relics	ORANGE_DOUGH	Orange Dough	Orange Dough	ID only; no fit profile
+relics	ORICHALCUM	Orichalcum	Orichalcum	ID only; no fit profile
+relics	ORNAMENTAL_FAN	Ornamental Fan	Ornamental Fan	trigger: shivs
+relics	ORRERY	Orrery	Orrery	ID only; no fit profile
+relics	PAELS_BLOOD	Pael's Blood	Pael's Blood	ID only; no fit profile
+relics	PAELS_CLAW	Pael's Claw	Pael's Claw	ID only; no fit profile
+relics	PAELS_EYE	Pael's Eye	Pael's Eye	ID only; no fit profile
+relics	PAELS_FLESH	Pael's Flesh	Pael's Flesh	ID only; no fit profile
+relics	PAELS_GROWTH	Pael's Growth	Pael's Growth	ID only; no fit profile
+relics	PAELS_HORN	Pael's Horn	Pael's Horn	ID only; no fit profile
+relics	PAELS_LEGION	Pael's Legion	Pael's Legion	ID only; no fit profile
+relics	PAELS_TEARS	Pael's Tears	Pael's Tears	ID only; no fit profile
+relics	PAELS_TOOTH	Pael's Tooth	Pael's Tooth	ID only; no fit profile
+relics	PAELS_WING	Pael's Wing	Pael's Wing	ID only; no fit profile
+relics	PANDORAS_BOX	Pandora's Box	Pandora's Box	ID only; no fit profile
+relics	PANTOGRAPH	Pantograph	Pantograph	ID only; no fit profile
+relics	PAPER_KRANE	Paper Krane	Paper Krane	ID only; no fit profile
+relics	PAPER_PHROG	Paper Phrog	Paper Phrog	ID only; no fit profile
+relics	PARRYING_SHIELD	Parrying Shield	Parrying Shield	ID only; no fit profile
+relics	PEAR	Pear	Pear	fit: max hp
+relics	PENDULUM	Pendulum	Pendulum	ID only; no fit profile
+relics	PEN_NIB	Pen Nib	Pen Nib	trigger: shivs
+relics	PERMAFROST	Permafrost	Permafrost	ID only; no fit profile
+relics	PETRIFIED_TOAD	Petrified Toad	Petrified Toad	ID only; no fit profile
+relics	PHIAL_HOLSTER	Phial Holster	Phial Holster	fit: slots
+relics	PHILOSOPHERS_STONE	Philosopher's Stone	Philosopher's Stone	ID only; no fit profile
+relics	PHYLACTERY_UNBOUND	Phylactery Unbound	Phylactery Unbound	ID only; no fit profile
+relics	PLANISPHERE	Planisphere	Planisphere	ID only; no fit profile
+relics	POCKETWATCH	Pocketwatch	Pocketwatch	ID only; no fit profile
+relics	POLLINOUS_CORE	Pollinous Core	Pollinous Core	ID only; no fit profile
+relics	POMANDER	Pomander	Pomander	ID only; no fit profile
+relics	POTION_BELT	Potion Belt	Potion Belt	fit: slots
+relics	POWER_CELL	Power Cell	Power Cell	ID only; no fit profile
+relics	PRAYER_WHEEL	Prayer Wheel	Prayer Wheel	ID only; no fit profile
+relics	PRECARIOUS_SHEARS	Precarious Shears	Precarious Shears	ID only; no fit profile
+relics	PRECISE_SCISSORS	Precise Scissors	Precise Scissors	ID only; no fit profile
+relics	PRESERVED_FOG	Preserved Fog	Preserved Fog	ID only; no fit profile
+relics	PRISMATIC_GEM	Prismatic Gem	Prismatic Gem	ID only; no fit profile
+relics	PUMPKIN_CANDLE	Pumpkin Candle	Pumpkin Candle	ID only; no fit profile
+relics	PUNCH_DAGGER	Punch Dagger	Punch Dagger	ID only; no fit profile
+relics	RADIANT_PEARL	Radiant Pearl	Radiant Pearl	ID only; no fit profile
+relics	RAINBOW_RING	Rainbow Ring	Rainbow Ring	ID only; no fit profile
+relics	RAZOR_TOOTH	Razor Tooth	Razor Tooth	ID only; no fit profile
+relics	RED_MASK	Red Mask	Red Mask	ID only; no fit profile
+relics	RED_SKULL	Red Skull	Red Skull	ID only; no fit profile
+relics	RED_VINE_TEA	Red Vine Tea		ID only; no fit profile
+relics	REGALITE	Regalite	Regalite	ID only; no fit profile
+relics	REGAL_PILLOW	Regal Pillow	Regal Pillow	fit: rest heal
+relics	REPTILE_TRINKET	Reptile Trinket	Reptile Trinket	ID only; no fit profile
+relics	RINGING_TRIANGLE	Ringing Triangle	Ringing Triangle	ID only; no fit profile
+relics	RING_OF_THE_DRAKE	Ring of the Drake	Ring of the Drake	ID only; no fit profile
+relics	RING_OF_THE_SNAKE	Ring of the Snake	Ring of the Snake	fit: opening draw
+relics	RIPPLE_BASIN	Ripple Basin	Ripple Basin	ID only; no fit profile
+relics	ROYAL_POISON	Royal Poison	Royal Poison	ID only; no fit profile
+relics	ROYAL_STAMP	Royal Stamp	Royal Stamp	ID only; no fit profile
+relics	RUINED_HELMET	Ruined Helmet	Ruined Helmet	ID only; no fit profile
+relics	RUNIC_CAPACITOR	Runic Capacitor	Runic Capacitor	ID only; no fit profile
+relics	RUNIC_PYRAMID	Runic Pyramid	Runic Pyramid	ID only; no fit profile
+relics	SAI	Sai	Sai	ID only; no fit profile
+relics	SAND_CASTLE	Sand Castle	Sand Castle	ID only; no fit profile
+relics	SCREAMING_FLAGON	Screaming Flagon	Screaming Flagon	ID only; no fit profile
+relics	SCROLL_BOXES	Scroll Boxes	Scroll Boxes	ID only; no fit profile
+relics	SEAL_OF_GOLD	Seal of Gold	Seal of Gold	ID only; no fit profile
+relics	SEA_GLASS	Sea Glass	Sea Glass	ID only; no fit profile
+relics	SELF_FORMING_CLAY	Self-Forming Clay	Self-Forming Clay	ID only; no fit profile
+relics	SERE_TALON	Sere Talon	Sere Talon	ID only; no fit profile
+relics	SHOVEL	Shovel	Shovel	ID only; no fit profile
+relics	SHURIKEN	Shuriken	Shuriken	trigger: shivs
+relics	SIGNET_RING	Signet Ring	Signet Ring	fit: gold
+relics	SILKEN_TRESS	Silken Tress	Silken Tress	ID only; no fit profile
+relics	SILVER_CRUCIBLE	Silver Crucible	Silver Crucible	ID only; no fit profile
+relics	SLING_OF_COURAGE	Sling of Courage	Sling of Courage	ID only; no fit profile
+relics	SMALL_CAPSULE	Small Capsule	Small Capsule	ID only; no fit profile
+relics	SNECKO_EYE	Snecko Eye	Snecko Eye	ID only; no fit profile
+relics	SNECKO_SKULL	Snecko Skull	Snecko Skull	trigger: poison
+relics	SONG_BOW	Song Bow	Song Bow	ID only; no fit profile
+relics	SOZU	Sozu	Sozu	ID only; no fit profile
+relics	SPARKLING_ROUGE	Sparkling Rouge	Sparkling Rouge	ID only; no fit profile
+relics	SPIKED_GAUNTLETS	Spiked Gauntlets	Spiked Gauntlets	ID only; no fit profile
+relics	STONE_CALENDAR	Stone Calendar	Stone Calendar	ID only; no fit profile
+relics	STONE_CRACKER	Stone Cracker	Stone Cracker	ID only; no fit profile
+relics	STONE_HUMIDIFIER	Stone Humidifier	Stone Humidifier	ID only; no fit profile
+relics	STORYBOOK	Storybook	Storybook	ID only; no fit profile
+relics	STORYTELLER	Storyteller	Storyteller	ID only; no fit profile
+relics	STRAWBERRY	Strawberry	Strawberry	fit: max hp
+relics	STRIKE_DUMMY	Strike Dummy	Strike Dummy	ID only; no fit profile
+relics	STURDY_CLAMP	Sturdy Clamp	Sturdy Clamp	ID only; no fit profile
+relics	SWORD_OF_JADE	Sword of Jade	Sword of Jade	fit: strength
+relics	SWORD_OF_STONE	Sword of Stone	Sword of Stone	ID only; no fit profile
+relics	SYMBIOTIC_VIRUS	Symbiotic Virus	Symbiotic Virus	ID only; no fit profile
+relics	TANXS_WHISTLE	Tanx's Whistle	Tanx's Whistle	ID only; no fit profile
+relics	TEA_OF_DISCOURTESY	Tea of Discourtesy	Tea of Discourtesy	ID only; no fit profile
+relics	THE_ABACUS	The Abacus	The Abacus	ID only; no fit profile
+relics	THE_BOOT	The Boot	The Boot	ID only; no fit profile
+relics	THE_COURIER	The Courier	The Courier	ID only; no fit profile
+relics	THROWING_AXE	Throwing Axe	Throwing Axe	ID only; no fit profile
+relics	THUMBSCREW	Thumbscrew	Thumbscrew	ID only; no fit profile
+relics	TINGSHA	Tingsha	Tingsha	ID only; no fit profile
+relics	TINY_MAILBOX	Tiny Mailbox	Tiny Mailbox	ID only; no fit profile
+relics	TOASTY_MITTENS	Toasty Mittens	Toasty Mittens	ID only; no fit profile
+relics	TOOLBOX	Toolbox	Toolbox	ID only; no fit profile
+relics	TORMENTOUS_COLLAR	Tormentous Collar	Tormentous Collar	ID only; no fit profile
+relics	TOUCH_OF_OROBAS	Touch of Orobas	Touch of Orobas	ID only; no fit profile
+relics	TOUGH_BANDAGES	Tough Bandages	Tough Bandages	trigger: discard
+relics	TOXIC_EGG	Toxic Egg	Toxic Egg	ID only; no fit profile
+relics	TOY_BOX	Toy Box	Toy Box	ID only; no fit profile
+relics	TRI_BOOMERANG	Tri-Boomerang	Tri-Boomerang	ID only; no fit profile
+relics	TUNGSTEN_ROD	Tungsten Rod	Tungsten Rod	ID only; no fit profile
+relics	TUNING_FORK	Tuning Fork	Tuning Fork	ID only; no fit profile
+relics	TWINE	Twine	Twine	ID only; no fit profile
+relics	TWISTED_FUNNEL	Twisted Funnel	Twisted Funnel	ID only; no fit profile
+relics	UNCEASING_TOP	Unceasing Top	Unceasing Top	ID only; no fit profile
+relics	UNDYING_SIGIL	Undying Sigil	Undying Sigil	ID only; no fit profile
+relics	UNSETTLING_LAMP	Unsettling Lamp	Unsettling Lamp	ID only; no fit profile
+relics	VAJRA	Vajra	Vajra	trigger: multiple hits
+relics	VAMBRACE	Vambrace	Vambrace	ID only; no fit profile
+relics	VELVET_CHOKER	Velvet Choker	Velvet Choker	ID only; no fit profile
+relics	VENERABLE_TEA_SET	Venerable Tea Set	Venerable Tea Set	ID only; no fit profile
+relics	VERY_HOT_COCOA	Very Hot Cocoa	Very Hot Cocoa	fit: opening energy
+relics	VEXING_PUZZLEBOX	Vexing Puzzlebox	Vexing Puzzlebox	ID only; no fit profile
+relics	VINE_BRACELET	Vine Bracelet		fit: max hp
+relics	VITRUVIAN_MINION	Vitruvian Minion	Vitruvian Minion	ID only; no fit profile
+relics	WAR_HAMMER	War Hammer	War Hammer	ID only; no fit profile
+relics	WAR_PAINT	War Paint	War Paint	ID only; no fit profile
+relics	WHETSTONE	Whetstone	Whetstone	ID only; no fit profile
+relics	WHISPERING_EARRING	Whispering Earring	Whispering Earring	ID only; no fit profile
+relics	WHITE_BEAST_STATUE	White Beast Statue	White Beast Statue	ID only; no fit profile
+relics	WHITE_STAR	White Star	White Star	ID only; no fit profile
+relics	WHITTLING_KNIFE	Whittling Knife	Whittling Knife	ID only; no fit profile
+relics	WINGED_BOOTS	Winged Boots	Winged Boots	ID only; no fit profile
+relics	WING_CHARM	Wing Charm	Wing Charm	ID only; no fit profile
+relics	WONGOS_MYSTERY_TICKET	Wongo's Mystery Ticket	Wongo's Mystery Ticket	ID only; no fit profile
+relics	WONGO_CUSTOMER_APPRECIATION_BADGE	Wongo Customer Appreciation Badge	Wongo Customer Appreciation Badge	ID only; no fit profile
+relics	WUPPY	Wuppy	Wuppy	ID only; no fit profile
+relics	WUPPY_STRONG	Strong Wuppy		ID only; no fit profile
+relics	YUMMY_COOKIE	Yummy Cookie	Yummy Cookie	ID only; no fit profile
+potions	AMBERGRIS	Ambergris	Ambergris	policy: emergency
+potions	ASHWATER	Ashwater	Ashwater	policy: clutter
+potions	ATTACK_POTION	Attack Potion	Attack Potion	policy: free cards
+potions	BEETLE_JUICE	Beetle Juice	Beetle Juice	policy: debuff
+potions	BLESSING_OF_THE_FORGE	Blessing of the Forge	Blessing of the Forge	policy: upgrades
+potions	BLOCK_POTION	Block Potion	Block Potion	policy: special
+potions	BLOOD_POTION	Blood Potion	Blood Potion	policy: heal
+potions	BONE_BREW	Bone Brew	Bone Brew	policy: summon
+potions	BOTTLED_POTENTIAL	Bottled Potential	Bottled Potential	policy: redraw
+potions	BOTTLED_SONG	Bottled Song	Bottled Song	policy: free cards
+potions	CLARITY	Clarity Extract	Clarity Extract	policy: draw
+potions	COLORLESS_POTION	Colorless Potion	Colorless Potion	policy: free cards
+potions	COSMIC_CONCOCTION	Cosmic Concoction	Cosmic Concoction	policy: draw
+potions	CRYSTALLINE_EUPHORIA	Crystalline Euphoria	Crystalline Euphoria	policy: joy
+potions	CUNNING_POTION	Cunning Potion	Cunning Potion	policy: free cards
+potions	CURE_ALL	Cure All	Cure All	policy: refuel
+potions	DEPRECATED_POTION	Deprecated Potion		no timing rule
+potions	DEXTERITY_POTION	Dexterity Potion	Dexterity Potion	policy: defense
+potions	DISTILLED_CHAOS	Distilled Chaos	Distilled Chaos	policy: desperate draw
+potions	DROPLET_OF_PRECOGNITION	Droplet of Precognition	Droplet of Precognition	policy: draw
+potions	DUPLICATOR	Duplicator	Duplicator	policy: repeat
+potions	ENERGY_POTION	Energy Potion	Energy Potion	policy: energy
+potions	ENTROPIC_BREW	Entropic Brew	Entropic Brew	policy: refill
+potions	ESSENCE_OF_DARKNESS	Essence of Darkness	Essence of Darkness	policy: orbs
+potions	EXPLOSIVE_AMPOULE	Explosive Ampoule	Explosive Ampoule	policy: special
+potions	FAIRY_IN_A_BOTTLE	Fairy in a Bottle	Fairy in a Bottle	policy: automatic
+potions	FIRE_POTION	Fire Potion	Fire Potion	policy: special
+potions	FLEX_POTION	Flex Potion	Flex Potion	policy: special
+potions	FOCUS_POTION	Focus Potion	Focus Potion	policy: orbs
+potions	FORTIFIER	Fortifier	Fortifier	policy: triple block
+potions	FOUL_POTION	Foul Potion	Foul Potion	policy: splash
+potions	FRUIT_JUICE	Fruit Juice	Fruit Juice	policy: permanent
+potions	FYSH_OIL	Fysh Oil	Fysh Oil	policy: buff
+potions	GAMBLERS_BREW	Gambler's Brew	Gambler's Brew	policy: redraw
+potions	GHOST_IN_A_JAR	Ghost in a Jar	Ghost in a Jar	policy: special
+potions	GIGANTIFICATION_POTION	Gigantification Potion	Gigantification Potion	policy: big attack
+potions	GLOWWATER_POTION	Glowwater Potion	Glowwater Potion	policy: redraw
+potions	HEART_OF_IRON	Heart of Iron	Heart of Iron	policy: early defense
+potions	KINGS_COURAGE	King's Courage	King's Courage	policy: forge
+potions	LIQUID_BRONZE	Liquid Bronze	Liquid Bronze	policy: early defense
+potions	LIQUID_MEMORIES	Liquid Memories	Liquid Memories	policy: recall
+potions	LUCKY_TONIC	Lucky Tonic	Lucky Tonic	policy: emergency
+potions	MAZALETHS_GIFT	Mazaleth's Gift	Mazaleth's Gift	policy: scaling
+potions	MOCK_DISCARD_AND_ADD_SHIVS_POTION	Mock Discard and Add Shivs Potion		no timing rule
+potions	OROBIC_ACID	Orobic Acid	Orobic Acid	policy: free cards
+potions	POISON_POTION	Poison Potion	Poison Potion	policy: debuff scaling
+potions	POTION_OF_BINDING	Potion of Binding	Potion of Binding	policy: group debuff
+potions	POTION_OF_CAPACITY	Potion of Capacity	Potion of Capacity	policy: orbs
+potions	POTION_OF_DOOM	Potion of Doom	Potion of Doom	policy: debuff scaling
+potions	POTION_SHAPED_ROCK	Potion-Shaped Rock	Potion-Shaped Rock	policy: special
+potions	POT_OF_GHOULS	Pot of Ghouls	Pot of Ghouls	policy: draw
+potions	POWDERED_DEMISE	Powdered Demise	Powdered Demise	policy: debuff scaling
+potions	POWER_POTION	Power Potion	Power Potion	policy: scaling
+potions	PRECISION_POTION	Precision Potion	Precision Potion	policy: shots
+potions	RADIANT_TINCTURE	Radiant Tincture	Radiant Tincture	policy: energy
+potions	REGEN_POTION	Regen Potion	Regen Potion	policy: regen
+potions	SHACKLING_POTION	Shackling Potion	Shackling Potion	policy: group debuff
+potions	SHIP_IN_A_BOTTLE	Ship in a Bottle	Ship in a Bottle	policy: special
+potions	SKILL_POTION	Skill Potion	Skill Potion	policy: free cards
+potions	SNECKO_OIL	Snecko Oil	Snecko Oil	policy: redraw
+potions	SOLDIERS_STEW	Soldier's Stew	Soldier's Stew	policy: strikes
+potions	SPEED_POTION	Speed Potion	Speed Potion	policy: defense
+potions	STABLE_SERUM	Stable Serum	Stable Serum	policy: retain
+potions	STAR_POTION	Star Potion	Star Potion	policy: stars
+potions	STRENGTH_POTION	Strength Potion	Strength Potion	policy: special
+potions	SWIFT_POTION	Swift Potion	Swift Potion	policy: draw
+potions	TOUCH_OF_INSANITY	Touch of Insanity	Touch of Insanity	policy: energy
+potions	VULNERABLE_POTION	Vulnerable Potion	Vulnerable Potion	policy: vulnerable
+potions	WEAK_POTION	Weak Potion	Weak Potion	policy: debuff
+characters	DEFECT	The Defect		solo coach
+characters	DEPRECATED_CHARACTER	Deprecated Character		nonstandard / placeholder
+characters	DEPRIVED	Deprived		nonstandard / placeholder
+characters	FOOL	The Fool		solo coach
+characters	IRONCLAD	The Ironclad		solo coach
+characters	LOCKED	???		nonstandard / placeholder
+characters	NECROBINDER	The Necrobinder		solo coach
+characters	RANDOM_CHARACTER	Random		nonstandard / placeholder
+characters	REGENT	The Regent		solo coach
+characters	ROTATING_CHARACTER	Rotating		nonstandard / placeholder
+characters	SILENT	The Silent		solo coach
+encounters	AEONGLASS_BOSS	Aeonglass		boss tactic
+encounters	AXEBOTS_NORMAL	Axebot		live intent path
+encounters	BATTLEWORN_DUMMY_EVENT_V1_ENCOUNTER	Battleworn Dummy		live intent path
+encounters	BATTLEWORN_DUMMY_EVENT_V2_ENCOUNTER	Battleworn Dummy		live intent path
+encounters	BATTLEWORN_DUMMY_EVENT_V3_ENCOUNTER	Battleworn Dummy		live intent path
+encounters	BOWLBUGS_NORMAL	Bowlbug Swarm		live intent path
+encounters	BOWLBUGS_WEAK	Bowlbugs		live intent path
+encounters	BYGONE_EFFIGY_ELITE	Bygone Effigy		live intent path
+encounters	BYRDONIS_ELITE	Byrdonis		live intent path
+encounters	CEREMONIAL_BEAST_BOSS	Ceremonial Beast		boss tactic
+encounters	CHOMPERS_NORMAL	An Automaton Pair		live intent path
+encounters	CONSTRUCT_MENAGERIE_NORMAL	Construct Menagerie		live intent path
+encounters	CORPSE_SLUGS_NORMAL	Many Corpse Slugs		live intent path
+encounters	CORPSE_SLUGS_WEAK	Corpse Slugs		live intent path
+encounters	CUBEX_CONSTRUCT_NORMAL	Cubex Construct		live intent path
+encounters	CULTISTS_NORMAL	Cultists		live intent path
+encounters	DECIMILLIPEDE_ELITE	The Decimillipede		live intent path
+encounters	DENSE_VEGETATION_EVENT_ENCOUNTER	Wrigglers		live intent path
+encounters	DEPRECATED_ENCOUNTER	Deprecated Encounter		live intent path
+encounters	DEVOTED_SCULPTOR_WEAK	Devoted Sculptor		live intent path
+encounters	ENTOMANCER_ELITE	Entomancer		live intent path
+encounters	EXOSKELETONS_NORMAL	Many Exoskeletons		live intent path
+encounters	EXOSKELETONS_WEAK	Exoskeletons		live intent path
+encounters	FABRICATOR_NORMAL	Fabricator		live intent path
+encounters	FAKE_MERCHANT_EVENT_ENCOUNTER	The Merchant???		live intent path
+encounters	FLYCONID_NORMAL	Shroom and Slime		live intent path
+encounters	FLYCONID_WEAK	Flyconid		live intent path
+encounters	FOGMOG_NORMAL	Fogmog		live intent path
+encounters	FOSSIL_STALKER_NORMAL	Fossil Stalker		live intent path
+encounters	FROG_KNIGHT_NORMAL	Frog Knight		live intent path
+encounters	FUZZY_WURM_CRAWLER_WEAK	Fuzzy Wurm Crawler		live intent path
+encounters	GLOBE_HEAD_NORMAL	A Lone Globe Head		live intent path
+encounters	GREMLIN_MERC_NORMAL	Two Gremlins in a Trenchcoat		live intent path
+encounters	HAUNTED_SHIP_NORMAL	Haunted Ship		live intent path
+encounters	HUNTER_KILLER_NORMAL	Hunter Killer		live intent path
+encounters	INFESTED_PRISMS_ELITE	Infested Prism		live intent path
+encounters	INKLETS_NORMAL	Inklets		live intent path
+encounters	KAISER_CRAB_BOSS	Kaiser Crab		boss tactic
+encounters	KNIGHTS_ELITE	Knight Gang		live intent path
+encounters	KNOWLEDGE_DEMON_BOSS	Knowledge Demon		boss tactic
+encounters	LAGAVULIN_MATRIARCH_BOSS	Lagavulin Matriarch		boss tactic
+encounters	LIVING_FOG_NORMAL	Living Fog		live intent path
+encounters	LOUSE_PROGENITOR_NORMAL	Louse Progenitor		live intent path
+encounters	MAWLER_NORMAL	Mawler		live intent path
+encounters	MECHA_KNIGHT_ELITE	Mecha Knight		live intent path
+encounters	MYSTERIOUS_KNIGHT_EVENT_ENCOUNTER	Mysterious Knight		live intent path
+encounters	MYTES_NORMAL	Mass of Mytes		live intent path
+encounters	NIBBITS_NORMAL	A Pair of Nibbits		live intent path
+encounters	NIBBITS_WEAK	A Lone Nibbit		live intent path
+encounters	OVERGROWTH_CRAWLERS	Overgrowth Crawlers		live intent path
+encounters	OVERGROWTH_WILDLIFE	Overgrowth Wildlife		live intent path
+encounters	OVICOPTER_NORMAL	Ovicopter		live intent path
+encounters	OWL_MAGISTRATE_NORMAL	Owl Magistrate		live intent path
+encounters	PHANTASMAL_GARDENERS_ELITE	Phantasmal Gardeners		live intent path
+encounters	PHROG_PARASITE_ELITE	Phrog Parasite		live intent path
+encounters	PUNCH_CONSTRUCT_NORMAL	Punch Construct		live intent path
+encounters	PUNCH_OFF_EVENT_ENCOUNTER	Punch Constructs		live intent path
+encounters	QUEEN_BOSS	Queen		boss tactic
+encounters	RUBY_RAIDERS_NORMAL	Ruby Raiders		live intent path
+encounters	SCROLLS_OF_BITING_NORMAL	Many Scrolls of Biting		live intent path
+encounters	SCROLLS_OF_BITING_WEAK	Scrolls of Biting		live intent path
+encounters	SEAPUNK_NORMAL	Underdocks Wildlife		live intent path
+encounters	SEAPUNK_WEAK	Seapunk		live intent path
+encounters	SEWER_CLAM_NORMAL	Sewer Clam		live intent path
+encounters	SHRINKER_BEETLE_WEAK	Shrinker Beetle		live intent path
+encounters	SKULKING_COLONY_ELITE	Skulking Colony		live intent path
+encounters	SLIMED_BERSERKER_NORMAL	Slimed Berserker		live intent path
+encounters	SLIMES_NORMAL	Swarm of Slimes		live intent path
+encounters	SLIMES_WEAK	Group of Slimes		live intent path
+encounters	SLITHERING_STRANGLER_NORMAL	Strangler and Friend		live intent path
+encounters	SLUDGE_SPINNER_WEAK	Sludge Spinner		live intent path
+encounters	SLUMBERING_BEETLE_NORMAL	Slumber Party		live intent path
+encounters	SNAPPING_JAXFRUIT_NORMAL	Overgrowth Flora		live intent path
+encounters	SOUL_FYSH_BOSS	Soul Fysh		boss tactic
+encounters	SOUL_NEXUS_ELITE	Soul Nexus		live intent path
+encounters	SPINY_TOAD_NORMAL	Spiny Toad		live intent path
+encounters	TERROR_EEL_ELITE	Terror Eel		live intent path
+encounters	TEST_SUBJECT_BOSS	Test Subject		boss tactic
+encounters	THE_ARCHITECT_EVENT_ENCOUNTER	The Architect		live intent path
+encounters	THE_INSATIABLE_BOSS	The Insatiable		boss tactic
+encounters	THE_KIN_BOSS	The Kin		boss tactic
+encounters	THE_LOST_AND_FORGOTTEN_NORMAL	Lost and Forgotten		live intent path
+encounters	THE_OBSCURA_NORMAL	The Obscura		live intent path
+encounters	THIEVING_HOPPER_WEAK	Thieving Hopper		live intent path
+encounters	TOADPOLES_WEAK	Toadpoles		live intent path
+encounters	TUNNELER_NORMAL	Tunneling Twosome		live intent path
+encounters	TUNNELER_WEAK	Tunneler		live intent path
+encounters	TURRET_OPERATOR_WEAK	Turret Operator		live intent path
+encounters	TWO_TAILED_RATS_NORMAL	Two-Tailed Rats		live intent path
+encounters	VANTOM_BOSS	Vantom		boss tactic
+encounters	VINE_SHAMBLER_NORMAL	Vine Shambler		live intent path
+encounters	WATERFALL_GIANT_BOSS	Waterfall Giant		boss tactic
+monsters	AEONGLASS	Aeonglass		live intent path; no individual fight verification
+monsters	ARCHITECT	The Architect		live intent path; no individual fight verification
+monsters	ASSASSIN_RUBY_RAIDER	Assassin Raider		live intent path; no individual fight verification
+monsters	ATTACK_MOVE_MONSTER	Attack Move Monster		live intent path; no individual fight verification
+monsters	AXEBOT	Axebot		live intent path; no individual fight verification
+monsters	AXE_RUBY_RAIDER	Axe Raider		live intent path; no individual fight verification
+monsters	BATTLE_FRIEND_V1	Battle Friend V1.0		live intent path; no individual fight verification
+monsters	BATTLE_FRIEND_V2	Battle Friend V2.0		live intent path; no individual fight verification
+monsters	BATTLE_FRIEND_V3	Battle Friend V3.0		live intent path; no individual fight verification
+monsters	BIG_DUMMY	Big Dummy		live intent path; no individual fight verification
+monsters	BOWLBUG_EGG	Bowlbug (Egg)		live intent path; no individual fight verification
+monsters	BOWLBUG_NECTAR	Bowlbug (Nectar)		live intent path; no individual fight verification
+monsters	BOWLBUG_ROCK	Bowlbug (Rock)		live intent path; no individual fight verification
+monsters	BOWLBUG_SILK	Bowlbug (Silk)		live intent path; no individual fight verification
+monsters	BRUTE_RUBY_RAIDER	Brute Raider		live intent path; no individual fight verification
+monsters	BYGONE_EFFIGY	Bygone Effigy		live intent path; no individual fight verification
+monsters	BYRDINE_MONSTER	Byrdine		live intent path; no individual fight verification
+monsters	BYRDONIS	Byrdonis		live intent path; no individual fight verification
+monsters	BYRDONIS_NEST	Nest		live intent path; no individual fight verification
+monsters	BYRDPIP	Byrdpip		live intent path; no individual fight verification
+monsters	CALCIFIED_CULTIST	Calcified Cultist		live intent path; no individual fight verification
+monsters	CEREMONIAL_BEAST	Ceremonial Beast		live intent path; no individual fight verification
+monsters	CHOMPER	Chomper		live intent path; no individual fight verification
+monsters	COCOON	Cocoon		live intent path; no individual fight verification
+monsters	CORPSE_SLUG	Corpse Slug		live intent path; no individual fight verification
+monsters	CROSSBOW_RUBY_RAIDER	Crossbow Raider		live intent path; no individual fight verification
+monsters	CRUSHER	Crusher		live intent path; no individual fight verification
+monsters	CUBEX_CONSTRUCT	Cubex Construct		live intent path; no individual fight verification
+monsters	DAMP_CULTIST	Damp Cultist		live intent path; no individual fight verification
+monsters	DECIMILLIPEDE_SEGMENT	Decimillipede		live intent path; no individual fight verification
+monsters	DEPRECATED_MONSTER	Deprecated Monster		live intent path; no individual fight verification
+monsters	DEVOTED_SCULPTOR	Devoted Sculptor		live intent path; no individual fight verification
+monsters	ENTOMANCER	Entomancer		live intent path; no individual fight verification
+monsters	EXOSKELETON	Exoskeleton		live intent path; no individual fight verification
+monsters	EYE_WITH_TEETH	Eye with Teeth		live intent path; no individual fight verification
+monsters	FABRICATOR	Fabricator		live intent path; no individual fight verification
+monsters	FAKE_MERCHANT_MONSTER	The Merchant???		live intent path; no individual fight verification
+monsters	FAT_GREMLIN	Fat Gremlin		live intent path; no individual fight verification
+monsters	FLAIL_KNIGHT	Flail Knight		live intent path; no individual fight verification
+monsters	FLYCONID	Flyconid		live intent path; no individual fight verification
+monsters	FOGMOG	Fogmog		live intent path; no individual fight verification
+monsters	FOSSIL_STALKER	Fossil Stalker		live intent path; no individual fight verification
+monsters	FROG_KNIGHT	Frog Knight		live intent path; no individual fight verification
+monsters	FUZZY_WURM_CRAWLER	Fuzzy Wurm Crawler		live intent path; no individual fight verification
+monsters	GAS_BOMB	Gas Bomb		live intent path; no individual fight verification
+monsters	GAZING_MOTH	Gazing Moth		live intent path; no individual fight verification
+monsters	GEM_EATER	Gem Eater		live intent path; no individual fight verification
+monsters	GLOBE_HEAD	Globe Head		live intent path; no individual fight verification
+monsters	GREMLIN_MERC	Gremlin Merc		live intent path; no individual fight verification
+monsters	GUARDBOT	Guardbot		live intent path; no individual fight verification
+monsters	HATCHLING	Hatchling		live intent path; no individual fight verification
+monsters	HAUNTED_SHIP	Haunted Ship		live intent path; no individual fight verification
+monsters	HUNTER_KILLER	Hunter Killer		live intent path; no individual fight verification
+monsters	INFESTED_PRISM	Infested Prism		live intent path; no individual fight verification
+monsters	INKLET	Inklet		live intent path; no individual fight verification
+monsters	KIN_FOLLOWER	Kin Follower		live intent path; no individual fight verification
+monsters	KIN_PRIEST	Kin Priest		live intent path; no individual fight verification
+monsters	KNOWLEDGE_DEMON	Knowledge Demon		live intent path; no individual fight verification
+monsters	LAGAVULIN_MATRIARCH	Lagavulin Matriarch		live intent path; no individual fight verification
+monsters	LEAF_SLIME_M	Leaf Slime (M)		live intent path; no individual fight verification
+monsters	LEAF_SLIME_S	Leaf Slime (S)		live intent path; no individual fight verification
+monsters	LIVING_FOG	Living Fog		live intent path; no individual fight verification
+monsters	LIVING_SHIELD	Living Shield		live intent path; no individual fight verification
+monsters	LOUSE_PROGENITOR	Louse Progenitor		live intent path; no individual fight verification
+monsters	MAGI_KNIGHT	Magi Knight		live intent path; no individual fight verification
+monsters	MAWLER	Mawler		live intent path; no individual fight verification
+monsters	MECHA_KNIGHT	Mecha Knight		live intent path; no individual fight verification
+monsters	MOCK_ATTACK_AND_SUMMON_MINION_MONSTER	Attack and Summon Minion Monster		live intent path; no individual fight verification
+monsters	MOCK_ATTACK_MONSTER	Attack Monster		live intent path; no individual fight verification
+monsters	MYSTERIOUS_KNIGHT	Mysterious Knight		live intent path; no individual fight verification
+monsters	MYTE	Myte		live intent path; no individual fight verification
+monsters	NIBBIT	Nibbit		live intent path; no individual fight verification
+monsters	NOISEBOT	Noisebot		live intent path; no individual fight verification
+monsters	OSTY	Osty		live intent path; no individual fight verification
+monsters	OVICOPTER	Ovicopter		live intent path; no individual fight verification
+monsters	OWL_MAGISTRATE	Owl Magistrate		live intent path; no individual fight verification
+monsters	PAELS_LEGION	Pael's Legion		live intent path; no individual fight verification
+monsters	PARAFRIGHT	Parafright		live intent path; no individual fight verification
+monsters	PHANTASMAL_GARDENER	Phantasmal Gardener		live intent path; no individual fight verification
+monsters	PHROG_PARASITE	Phrog Parasite		live intent path; no individual fight verification
+monsters	PUNCH_CONSTRUCT	Punch Construct		live intent path; no individual fight verification
+monsters	QUEEN	Queen		live intent path; no individual fight verification
+monsters	ROCKET	Rocket		live intent path; no individual fight verification
+monsters	SCROLL_OF_BITING	Scroll of Biting		live intent path; no individual fight verification
+monsters	SEAPUNK	Seapunk		live intent path; no individual fight verification
+monsters	SEWER_CLAM	Sewer Clam		live intent path; no individual fight verification
+monsters	SHRINKER_BEETLE	Shrinker Beetle		live intent path; no individual fight verification
+monsters	SKULKING_COLONY	Skulking Colony		live intent path; no individual fight verification
+monsters	SLIMED_BERSERKER	Slimed Berserker		live intent path; no individual fight verification
+monsters	SLITHERING_STRANGLER	Slithering Strangler		live intent path; no individual fight verification
+monsters	SLUDGE_SPINNER	Sludge Spinner		live intent path; no individual fight verification
+monsters	SLUMBERING_BEETLE	Slumbering Beetle		live intent path; no individual fight verification
+monsters	SNAPPING_JAXFRUIT	Snapping Jaxfruit		live intent path; no individual fight verification
+monsters	SNEAKY_GREMLIN	Sneaky Gremlin		live intent path; no individual fight verification
+monsters	SOUL_FYSH	Soul Fysh		live intent path; no individual fight verification
+monsters	SOUL_NEXUS	Soul Nexus		live intent path; no individual fight verification
+monsters	SPECTRAL_KNIGHT	Spectral Knight		live intent path; no individual fight verification
+monsters	SPINY_TOAD	Spiny Toad		live intent path; no individual fight verification
+monsters	STABBOT	Stabbot		live intent path; no individual fight verification
+monsters	TERROR_EEL	Terror Eel		live intent path; no individual fight verification
+monsters	TEST_SUBJECT	Test Subject #C{Count}		live intent path; no individual fight verification
+monsters	THE_ADVERSARY_MK_ONE	The Adversary Mk 1		live intent path; no individual fight verification
+monsters	THE_ADVERSARY_MK_THREE	The Adversary Mk 3		live intent path; no individual fight verification
+monsters	THE_ADVERSARY_MK_TWO	The Adversary Mk 2		live intent path; no individual fight verification
+monsters	THE_ARM	The Arm		live intent path; no individual fight verification
+monsters	THE_BELL	The Bell		live intent path; no individual fight verification
+monsters	THE_DREAMER	The Dreamer		live intent path; no individual fight verification
+monsters	THE_FORGOTTEN	The Forgotten		live intent path; no individual fight verification
+monsters	THE_INSATIABLE	The Insatiable		live intent path; no individual fight verification
+monsters	THE_LOST	The Lost		live intent path; no individual fight verification
+monsters	THE_OBSCURA	The Obscura		live intent path; no individual fight verification
+monsters	THIEVING_HOPPER	Thieving Hopper		live intent path; no individual fight verification
+monsters	TOADPOLE	Toadpole		live intent path; no individual fight verification
+monsters	TORCH_HEAD_AMALGAM	Torch Head Amalgam		live intent path; no individual fight verification
+monsters	TOUGH_EGG	Tough Egg		live intent path; no individual fight verification
+monsters	TRACKER_RUBY_RAIDER	Tracker Raider		live intent path; no individual fight verification
+monsters	TUNNELER	Tunneler		live intent path; no individual fight verification
+monsters	TURRET_OPERATOR	Turret Operator		live intent path; no individual fight verification
+monsters	TWIG_SLIME_M	Twig Slime (M)		live intent path; no individual fight verification
+monsters	TWIG_SLIME_S	Twig Slime (S)		live intent path; no individual fight verification
+monsters	TWO_TAILED_RAT	Two-Tailed Rat		live intent path; no individual fight verification
+monsters	VANTOM	Vantom		live intent path; no individual fight verification
+monsters	VINE_SHAMBLER	Vine Shambler		live intent path; no individual fight verification
+monsters	WATERFALL_GIANT	Waterfall Giant		live intent path; no individual fight verification
+monsters	WRIGGLER	Wriggler		live intent path; no individual fight verification
+monsters	WUPPY	Wuppy		live intent path; no individual fight verification
+monsters	ZAPBOT	Zapbot		live intent path; no individual fight verification
+events	ABYSSAL_BATHS	Abyssal Baths	Abyssal Baths	inventory; no per-entry behavior certification
+events	AMALGAMATOR	Amalgamator	Amalgamator	inventory; no per-entry behavior certification
+events	AROMA_OF_CHAOS	Aroma of Chaos	Aroma of Chaos	inventory; no per-entry behavior certification
+events	BATTLEWORN_DUMMY	Battleworn Dummy	Battleworn Dummy	inventory; no per-entry behavior certification
+events	BRAIN_LEECH	Brain Leech	Brain Leech	inventory; no per-entry behavior certification
+events	BUGSLAYER	Bugslayer	Bugslayer	inventory; no per-entry behavior certification
+events	BYRDONIS_NEST	Byrdonis Nest	Byrdonis Nest	inventory; no per-entry behavior certification
+events	COLORFUL_PHILOSOPHERS	Colorful Philosophers	Colorful Philosophers	inventory; no per-entry behavior certification
+events	COLOSSAL_FLOWER	Colossal Flower	Colossal Flower	inventory; no per-entry behavior certification
+events	CRYSTAL_SPHERE	Crystal Sphere	Crystal Sphere	inventory; no per-entry behavior certification
+events	DENSE_VEGETATION	Dense Vegetation	Dense Vegetation	inventory; no per-entry behavior certification
+events	DEPRECATED_EVENT	Deprecated Event		inventory; no per-entry behavior certification
+events	DOLL_ROOM	Doll Room	Doll Room	inventory; no per-entry behavior certification
+events	DOORS_OF_LIGHT_AND_DARK	Doors of Light and Dark	Doors of Light and Dark	inventory; no per-entry behavior certification
+events	DROWNING_BEACON	Drowning Beacon	Drowning Beacon	inventory; no per-entry behavior certification
+events	ENDLESS_CONVEYOR	Endless Conveyor	Endless Conveyor	inventory; no per-entry behavior certification
+events	ERROR	Locked		inventory; no per-entry behavior certification
+events	FAKE_MERCHANT	The Merchant???	The Merchant???	inventory; no per-entry behavior certification
+events	FIELD_OF_MAN_SIZED_HOLES	Field of Man-Sized Holes	Field of Man-Sized Holes	inventory; no per-entry behavior certification
+events	GRAVE_OF_THE_FORGOTTEN	Grave of the Forgotten	Grave of the Forgotten	inventory; no per-entry behavior certification
+events	HUNGRY_FOR_MUSHROOMS	Hungry for Mushrooms	Hungry for Mushrooms	inventory; no per-entry behavior certification
+events	INFESTED_AUTOMATON	Infested Automaton	Infested Automaton	inventory; no per-entry behavior certification
+events	JUNGLE_MAZE_ADVENTURE	Jungle Maze Adventure	Jungle Maze Adventure	inventory; no per-entry behavior certification
+events	LOST_WISP	The Lost Wisp	The Lost Wisp	inventory; no per-entry behavior certification
+events	LUMINOUS_CHOIR	Luminous Choir	Luminous Choir	inventory; no per-entry behavior certification
+events	MOCK_EVENT_MODEL	Mock Event		inventory; no per-entry behavior certification
+events	MORPHIC_GROVE	Morphic Grove	Morphic Grove	inventory; no per-entry behavior certification
+events	MUSEUM_OF_TORTURE	Museum of Torture	Museum of Torture	inventory; no per-entry behavior certification
+events	POTION_COURIER	Potion Courier	Potion Courier	inventory; no per-entry behavior certification
+events	PROCEED	Proceed		inventory; no per-entry behavior certification
+events	PUNCH_OFF	Punch Off	Punch Off	inventory; no per-entry behavior certification
+events	RANWID_THE_ELDER	Ranwid the Elder	Ranwid the Elder	inventory; no per-entry behavior certification
+events	REFLECTIONS	Reflections snoitcelfeR	Reflections snoitcelfeR	inventory; no per-entry behavior certification
+events	RELIC_TRADER	Relic Trader	Relic Trader	inventory; no per-entry behavior certification
+events	ROOM_FULL_OF_CHEESE	Room Full of Cheese	Room Full of Cheese	inventory; no per-entry behavior certification
+events	ROUND_TEA_PARTY	The Round Tea Party	The Round Tea Party	inventory; no per-entry behavior certification
+events	SAPPHIRE_SEED	Sapphire Seed	Sapphire Seed	inventory; no per-entry behavior certification
+events	SELF_HELP_BOOK	Self-Help Book	Self-Help Book	inventory; no per-entry behavior certification
+events	SHRINE_OF_THE_WARLORD	Shrine of the Warlord	Shrine of the Warlord	inventory; no per-entry behavior certification
+events	SLIPPERY_BRIDGE	Slippery Bridge	Slippery Bridge	inventory; no per-entry behavior certification
+events	SPIRALING_WHIRLPOOL	Spiraling Whirlpool	Spiraling Whirlpool	inventory; no per-entry behavior certification
+events	SPIRIT_GRAFTER	Spirit Grafter	Spirit Grafter	inventory; no per-entry behavior certification
+events	STONE_OF_ALL_TIME	Stone of All Time	Stone of All Time	inventory; no per-entry behavior certification
+events	SUNKEN_STATUE	The Sunken Statue	The Sunken Statue	inventory; no per-entry behavior certification
+events	SUNKEN_TREASURY	Sunken Treasury	Sunken Treasury	inventory; no per-entry behavior certification
+events	SYMBIOTE	Symbiote	Symbiote	inventory; no per-entry behavior certification
+events	TABLET_OF_TRUTH	Tablet of Truth	Tablet of Truth	inventory; no per-entry behavior certification
+events	TEA_MASTER	Tea Master	Tea Master	inventory; no per-entry behavior certification
+events	THERMAE_NONUPEIPE	Thermae Nonupeipe	Thermae Nonupeipe	inventory; no per-entry behavior certification
+events	THE_FUTURE_OF_POTIONS	The Future of Potions?	The Future of Potions?	inventory; no per-entry behavior certification
+events	THE_LANTERN_KEY	The Lantern Key	The Lantern Key	inventory; no per-entry behavior certification
+events	THE_LEGENDS_WERE_TRUE	The Legends Were True	The Legends Were True	inventory; no per-entry behavior certification
+events	THIS_OR_THAT	This or That?	This or That?	inventory; no per-entry behavior certification
+events	TINKER_TIME	Tinker Time	Tinker Time	inventory; no per-entry behavior certification
+events	TRASH_HEAP	Trash Heap	Trash Heap	inventory; no per-entry behavior certification
+events	TRIAL	The Trial	The Trial	inventory; no per-entry behavior certification
+events	UNREST_SITE	Unrest Site	Unrest Site	inventory; no per-entry behavior certification
+events	WAR_HISTORIAN_REPY	War Historian, Repy	War Historian, Repy	inventory; no per-entry behavior certification
+events	WATERFALL_OF_OBVIOUS_SECRETS	Waterfall of Obvious Secrets	Waterfall of Obvious Secrets	inventory; no per-entry behavior certification
+events	WATERLOGGED_SCRIPTORIUM	Waterlogged Scriptorium	Waterlogged Scriptorium	inventory; no per-entry behavior certification
+events	WELCOME_TO_WONGOS	Welcome to Wongo's	Welcome to Wongo's	inventory; no per-entry behavior certification
+events	WELLSPRING	Wellspring	Wellspring	inventory; no per-entry behavior certification
+events	WHISPERING_HOLLOW	Whispering Hollow	Whispering Hollow	inventory; no per-entry behavior certification
+events	WOOD_CARVINGS	Wood Carvings	Wood Carvings	inventory; no per-entry behavior certification
+events	WUPPY_IN_TROUBLE	Wuppy in Trouble	Wuppy in Trouble	inventory; no per-entry behavior certification
+events	ZEN_WEAVER	Zen Weaver	Zen Weaver	inventory; no per-entry behavior certification
+ancients	DARV	The Hoarder		inventory; no per-entry behavior certification
+ancients	NEOW	Mother of Resurrection (Exiled)		inventory; no per-entry behavior certification
+ancients	NONUPEIPE	Serendipity Incarnate		inventory; no per-entry behavior certification
+ancients	OROBAS	Living Rainbow		inventory; no per-entry behavior certification
+ancients	PAEL	Melting Dragon		inventory; no per-entry behavior certification
+ancients	TANX	Khimera King		inventory; no per-entry behavior certification
+ancients	TEZCATARA	It Which Feeds the Fire		inventory; no per-entry behavior certification
+ancients	THE_ARCHITECT			inventory; no per-entry behavior certification
+ancients	VAKUU	The First Demon		inventory; no per-entry behavior certification
+powers	ACCELERANT_POWER	Accelerant		inventory; no per-entry behavior certification
+powers	ACCURACY_POWER	Accuracy		inventory; no per-entry behavior certification
+powers	ADAPTABLE_POWER	Adaptable		inventory; no per-entry behavior certification
+powers	ADAPTATION_POWER	Adaptation		inventory; no per-entry behavior certification
+powers	AEONGLASS_DOMINION_POWER	Aeonglass Dominion		inventory; no per-entry behavior certification
+powers	AFTERIMAGE_POWER	Afterimage		inventory; no per-entry behavior certification
+powers	AGGRESSION_POWER	Aggression		inventory; no per-entry behavior certification
+powers	AIM_POWER	Aim		inventory; no per-entry behavior certification
+powers	ALL_IS_WELL_POWER	All Is Well		inventory; no per-entry behavior certification
+powers	AMNESIA_POWER	Amnesia		inventory; no per-entry behavior certification
+powers	ARCHERY_POWER	Archery		inventory; no per-entry behavior certification
+powers	ARSENAL_POWER	Arsenal		inventory; no per-entry behavior certification
+powers	ARTIFACT_POWER	Artifact		inventory; no per-entry behavior certification
+powers	ASLEEP_POWER	Asleep		inventory; no per-entry behavior certification
+powers	AUTOMATION_POWER	Automation		inventory; no per-entry behavior certification
+powers	A_THOUSAND_CUTS_POWER	A Thousand Cuts		inventory; no per-entry behavior certification
+powers	BACK_ATTACK_LEFT_POWER	Back Attack		inventory; no per-entry behavior certification
+powers	BACK_ATTACK_RIGHT_POWER	Back Attack		inventory; no per-entry behavior certification
+powers	BARRICADE_POWER	Barricade		inventory; no per-entry behavior certification
+powers	BATTLEWORN_DUMMY_TIME_LIMIT_POWER	Time Limit		inventory; no per-entry behavior certification
+powers	BEACON_OF_HOPE_POWER	Beacon of Hope		inventory; no per-entry behavior certification
+powers	BIASED_COGNITION_POWER	Biased Cognition		inventory; no per-entry behavior certification
+powers	BLACK_HOLE_POWER	Black Hole		inventory; no per-entry behavior certification
+powers	BLOCK_NEXT_TURN_POWER	Block Next Turn		inventory; no per-entry behavior certification
+powers	BLUR_POWER	Blur		inventory; no per-entry behavior certification
+powers	BORROWED_TIME_POWER	Borrowed Time		inventory; no per-entry behavior certification
+powers	BUFFER_POWER	Buffer		inventory; no per-entry behavior certification
+powers	BURROWED_POWER	Burrowed		inventory; no per-entry behavior certification
+powers	BURST_POWER	Burst		inventory; no per-entry behavior certification
+powers	CACOPHONY_POWER	Cacophony		inventory; no per-entry behavior certification
+powers	CALAMITY_POWER	Calamity		inventory; no per-entry behavior certification
+powers	CALCIFY_POWER	Calcify		inventory; no per-entry behavior certification
+powers	CALL_OF_THE_VOID_POWER	Call of the Void		inventory; no per-entry behavior certification
+powers	CHAINS_OF_BINDING_POWER	Chains of Binding		inventory; no per-entry behavior certification
+powers	CHILD_OF_THE_STARS_POWER	Child of the Stars		inventory; no per-entry behavior certification
+powers	CLARITY_POWER	Clarity		inventory; no per-entry behavior certification
+powers	COLOSSUS_POWER	Colossus		inventory; no per-entry behavior certification
+powers	COMPOST_POWER	Compost		inventory; no per-entry behavior certification
+powers	CONCOCT_POWER	Concoct		inventory; no per-entry behavior certification
+powers	CONDUCTORS_BATON_POWER	Conductor's Baton		inventory; no per-entry behavior certification
+powers	CONFUSED_POWER	Confused		inventory; no per-entry behavior certification
+powers	CONQUEROR_POWER	Conqueror		inventory; no per-entry behavior certification
+powers	CONSTRICT_POWER	Constrict		inventory; no per-entry behavior certification
+powers	CONSUMING_SHADOW_POWER	Consuming Shadow		inventory; no per-entry behavior certification
+powers	CONTRACTILITY_POWER	Contractility		inventory; no per-entry behavior certification
+powers	COOLANT_POWER	Coolant		inventory; no per-entry behavior certification
+powers	CORROSIVE_WAVE_POWER	Corrosive Wave		inventory; no per-entry behavior certification
+powers	CORRUPTION_POWER	Corruption		inventory; no per-entry behavior certification
+powers	COUNTDOWN_POWER	Countdown		inventory; no per-entry behavior certification
+powers	COVERED_POWER	Covered		inventory; no per-entry behavior certification
+powers	COVERING_FIRE_POWER	Covering Fire		inventory; no per-entry behavior certification
+powers	CRAB_RAGE_POWER	Crab Rage		inventory; no per-entry behavior certification
+powers	CREATIVE_AI_POWER	Creative AI		inventory; no per-entry behavior certification
+powers	CRIMSON_MANTLE_POWER	Crimson Mantle		inventory; no per-entry behavior certification
+powers	CRUELTY_POWER	Cruelty		inventory; no per-entry behavior certification
+powers	CURIOUS_POWER	Curious		inventory; no per-entry behavior certification
+powers	CURL_UP_POWER	Curl Up		inventory; no per-entry behavior certification
+powers	DAMPEN_POWER	Dampen		inventory; no per-entry behavior certification
+powers	DANSE_MACABRE_POWER	Danse Macabre		inventory; no per-entry behavior certification
+powers	DARK_EMBRACE_POWER	Dark Embrace		inventory; no per-entry behavior certification
+powers	DEBILITATE_POWER	Debilitate		inventory; no per-entry behavior certification
+powers	DECREE_OF_ENTROPY_POWER	Decree of Entropy		inventory; no per-entry behavior certification
+powers	DECREE_OF_UNMAKING_POWER	Decree of Unmaking		inventory; no per-entry behavior certification
+powers	DEMESNE_POWER	Demesne		inventory; no per-entry behavior certification
+powers	DEMISE_POWER	Demise		inventory; no per-entry behavior certification
+powers	DEMON_FORM_POWER	Demon Form		inventory; no per-entry behavior certification
+powers	DESPAIR_POWER	Despair		inventory; no per-entry behavior certification
+powers	DEVOUR_LIFE_POWER	Devour Life		inventory; no per-entry behavior certification
+powers	DEXTERITY_DOWN_POWER	Dexterity Down		inventory; no per-entry behavior certification
+powers	DEXTERITY_POWER	Dexterity		inventory; no per-entry behavior certification
+powers	DIE_FOR_YOU_POWER	Die for You		inventory; no per-entry behavior certification
+powers	DISINTEGRATION_POWER	Disintegration		inventory; no per-entry behavior certification
+powers	DISLIKE_YOU_POWER	Dislike You		inventory; no per-entry behavior certification
+powers	DOOM_POWER	Doom		inventory; no per-entry behavior certification
+powers	DOUBLE_DAMAGE_POWER	Double Damage		inventory; no per-entry behavior certification
+powers	DRAW_CARDS_NEXT_TURN_POWER	Draw Cards Next Turn		inventory; no per-entry behavior certification
+powers	DUPLICATION_POWER	Duplication		inventory; no per-entry behavior certification
+powers	ECHO_FORM_POWER	Echo Form		inventory; no per-entry behavior certification
+powers	ECSTASY_POWER	Ecstasy		inventory; no per-entry behavior certification
+powers	ENCORE_POWER	Encore		inventory; no per-entry behavior certification
+powers	ENERGY_NEXT_TURN_POWER	Energy Next Turn		inventory; no per-entry behavior certification
+powers	ENNUI_POWER	Ennui		inventory; no per-entry behavior certification
+powers	ENRAGE_POWER	Enrage		inventory; no per-entry behavior certification
+powers	ENSEMBLE_POWER	Ensemble		inventory; no per-entry behavior certification
+powers	ENTROPY_POWER	Entropy		inventory; no per-entry behavior certification
+powers	ENVENOM_POWER	Envenom		inventory; no per-entry behavior certification
+powers	ESCAPE_ARTIST_POWER	Escape Artist		inventory; no per-entry behavior certification
+powers	EXPLOSIVE_ARROWS_POWER	Explosive Arrows		inventory; no per-entry behavior certification
+powers	EXPLOSIVE_POWER	Explosive		inventory; no per-entry behavior certification
+powers	EXTRA_TURN_POWER	Extra Turn		inventory; no per-entry behavior certification
+powers	FAN_OF_KNIVES_POWER	Fan of Knives		inventory; no per-entry behavior certification
+powers	FASTEN_POWER	Fasten		inventory; no per-entry behavior certification
+powers	FEEL_NO_PAIN_POWER	Feel No Pain		inventory; no per-entry behavior certification
+powers	FERAL_POWER	Feral		inventory; no per-entry behavior certification
+powers	FLAME_BARRIER_POWER	Flame Barrier		inventory; no per-entry behavior certification
+powers	FLANKING_POWER	Flanking		inventory; no per-entry behavior certification
+powers	FLUTTER_POWER	Flutter		inventory; no per-entry behavior certification
+powers	FOCUS_DOWN	Focus Down		inventory; no per-entry behavior certification
+powers	FOCUS_POWER	Focus		inventory; no per-entry behavior certification
+powers	FORBIDDEN_GRIMOIRE_POWER	Forbidden Grimoire		inventory; no per-entry behavior certification
+powers	FOREGONE_CONCLUSION_POWER	Foregone Conclusion		inventory; no per-entry behavior certification
+powers	FRAIL_POWER	Frail		inventory; no per-entry behavior certification
+powers	FREE_ATTACK_POWER	Free Attack		inventory; no per-entry behavior certification
+powers	FREE_CARD_POWER	Free Card		inventory; no per-entry behavior certification
+powers	FREE_POWER_POWER	Free Power		inventory; no per-entry behavior certification
+powers	FREE_SKILL_POWER	Free Skill		inventory; no per-entry behavior certification
+powers	FRIENDSHIP_POWER	Friendship		inventory; no per-entry behavior certification
+powers	FURNACE_POWER	Furnace		inventory; no per-entry behavior certification
+powers	GALVANIC_POWER	Galvanic		inventory; no per-entry behavior certification
+powers	GENESIS_POWER	Genesis		inventory; no per-entry behavior certification
+powers	GIGANTIFICATION_POWER	Gigantification		inventory; no per-entry behavior certification
+powers	GOD_BYRD_POWER	God Byrd		inventory; no per-entry behavior certification
+powers	GRABBED	Grabbed		inventory; no per-entry behavior certification
+powers	GRAVITY_POWER	Gravity		inventory; no per-entry behavior certification
+powers	GUARDED_POWER	Guarded		inventory; no per-entry behavior certification
+powers	HAILSTORM_POWER	Hailstorm		inventory; no per-entry behavior certification
+powers	HAMMER_TIME_POWER	Hammer Time		inventory; no per-entry behavior certification
+powers	HANG_POWER	Hang		inventory; no per-entry behavior certification
+powers	HARDENED_SHELL_POWER	Hardened Shell		inventory; no per-entry behavior certification
+powers	HARD_TO_KILL_POWER	Hard to Kill		inventory; no per-entry behavior certification
+powers	HATCH_POWER	Hatch		inventory; no per-entry behavior certification
+powers	HAUNT_POWER	Haunt		inventory; no per-entry behavior certification
+powers	HEATSINKS_POWER	Heatsink		inventory; no per-entry behavior certification
+powers	HEIST_POWER	Heist		inventory; no per-entry behavior certification
+powers	HELLO_WORLD_POWER	Hello World		inventory; no per-entry behavior certification
+powers	HELLRAISER_POWER	Hellraiser		inventory; no per-entry behavior certification
+powers	HEX_POWER	Hex		inventory; no per-entry behavior certification
+powers	HIBERNATE_POWER	Hibernate		inventory; no per-entry behavior certification
+powers	HIDDEN_ROOTS_POWER	Hidden Roots		inventory; no per-entry behavior certification
+powers	HIGH_VOLTAGE_POWER	High Voltage		inventory; no per-entry behavior certification
+powers	HONING_POWER	Honing		inventory; no per-entry behavior certification
+powers	ILLUSION_POWER	Illusion		inventory; no per-entry behavior certification
+powers	IMBALANCED_POWER	Imbalanced		inventory; no per-entry behavior certification
+powers	IMITATION_LEARNING_POWER	Imitation Learning		inventory; no per-entry behavior certification
+powers	IMPALED_POWER	Impaled		inventory; no per-entry behavior certification
+powers	IMPROVEMENT_POWER	Improvement		inventory; no per-entry behavior certification
+powers	INFERNO_POWER	Inferno		inventory; no per-entry behavior certification
+powers	INFESTED_POWER	Infested		inventory; no per-entry behavior certification
+powers	INFINITE_BLADES_POWER	Infinite Blades		inventory; no per-entry behavior certification
+powers	INSATIABLE_DOMINION_POWER	Insatiable Dominion		inventory; no per-entry behavior certification
+powers	INTANGIBLE_POWER	Intangible		inventory; no per-entry behavior certification
+powers	INTERCEPT_POWER	Intercept		inventory; no per-entry behavior certification
+powers	ITERATION_POWER	Iteration		inventory; no per-entry behavior certification
+powers	JUGGERNAUT_POWER	Juggernaut		inventory; no per-entry behavior certification
+powers	JUGGLING_POWER	Juggling		inventory; no per-entry behavior certification
+powers	KI_VERSE_POWER	Ki Verse		inventory; no per-entry behavior certification
+powers	KNOCKDOWN_POWER	Knockdown		inventory; no per-entry behavior certification
+powers	LAGAVULIN_MATRIARCH_DOMINION_POWER	Lagavulin Matriarch Dominion		inventory; no per-entry behavior certification
+powers	LEADERSHIP_POWER	Leadership		inventory; no per-entry behavior certification
+powers	LETHALITY_POWER	Lethality		inventory; no per-entry behavior certification
+powers	LIGHTNING_ROD_POWER	Lightning Rod		inventory; no per-entry behavior certification
+powers	LOOP_POWER	Loop		inventory; no per-entry behavior certification
+powers	LOST_LUTE_POWER	Lost Lute		inventory; no per-entry behavior certification
+powers	LULLABY_POWER	Lullaby		inventory; no per-entry behavior certification
+powers	MACHINE_LEARNING_POWER	Machine Learning		inventory; no per-entry behavior certification
+powers	MAGIC_BOMB_POWER	Magic Bomb		inventory; no per-entry behavior certification
+powers	MASTER_PLANNER_POWER	Master Planner		inventory; no per-entry behavior certification
+powers	MAYHEM_POWER	Mayhem		inventory; no per-entry behavior certification
+powers	MELANCHOLY_POWER	Melancholy		inventory; no per-entry behavior certification
+powers	MIND_ROT_POWER	Mind Rot		inventory; no per-entry behavior certification
+powers	MINION_POWER	Minion		inventory; no per-entry behavior certification
+powers	MOCK_CLONE_CARDS_ON_PLAY_POWER	Mock Clone Cards on Play		inventory; no per-entry behavior certification
+powers	MOCK_DO_NOT_SCALE_IN_MULTIPLAYER_POWER	Mock Do Not Scale in Multiplayer		inventory; no per-entry behavior certification
+powers	MOCK_EXTRA_TURN_POWER	Mock Extra Turn		inventory; no per-entry behavior certification
+powers	MOCK_FREE_CARDS_POWER	Mock Free Cards		inventory; no per-entry behavior certification
+powers	MOCK_GAIN_BLOCK_ON_ATTACK_POWER	Mock Gain Block on Attack		inventory; no per-entry behavior certification
+powers	MOCK_INVINCIBLE_ON_DEATH_POWER	Mock Invincible on Death		inventory; no per-entry behavior certification
+powers	MOCK_MODIFY_ENERGY_COST_POWER	Mock Modify Energy Cost		inventory; no per-entry behavior certification
+powers	MOCK_MODIFY_STAR_COST_POWER	Mock Modify Star Cost		inventory; no per-entry behavior certification
+powers	MOCK_PHASE_OBSERVER_POWER	Mock Phase Observer		inventory; no per-entry behavior certification
+powers	MOCK_PREVENT_DEATH_POWER	Mock Prevent Death		inventory; no per-entry behavior certification
+powers	MOCK_REMOVE_DRAWN_CARDS_FROM_COMBAT_POWER	Mock Remove Drawn Cards from Combat		inventory; no per-entry behavior certification
+powers	MOCK_RESET_COMBAT_ON_SHUFFLE_POWER	Mock Reset Combat on Shuffle		inventory; no per-entry behavior certification
+powers	MOCK_REVIVE_POWER	Mock Revive		inventory; no per-entry behavior certification
+powers	MOCK_SCALE_IN_MULTIPLAYER_POWER	Mock Scale in Multiplayer		inventory; no per-entry behavior certification
+powers	MOCK_TEMPORARY_STRENGTH_LOSS	Mock Temporary Strength Loss		inventory; no per-entry behavior certification
+powers	MOCK_UNHITTABLE_POWER	Mock Unhittable		inventory; no per-entry behavior certification
+powers	MONARCHS_GAZE_POWER	Monarch's Gaze		inventory; no per-entry behavior certification
+powers	MONOLOGUE_POWER	Monologue		inventory; no per-entry behavior certification
+powers	MOTIF_POWER	Motif		inventory; no per-entry behavior certification
+powers	MYTHIC_FORM_POWER	Mythic Form		inventory; no per-entry behavior certification
+powers	NECRO_MASTERY_POWER	Necro Mastery		inventory; no per-entry behavior certification
+powers	NEMESIS_POWER	Nemesis		inventory; no per-entry behavior certification
+powers	NEUROSURGE_POWER	Neurosurge		inventory; no per-entry behavior certification
+powers	NIGHTMARE_POWER	Nightmare		inventory; no per-entry behavior certification
+powers	NOSTALGIA_POWER	Nostalgia		inventory; no per-entry behavior certification
+powers	NOXIOUS_FUMES_POWER	Noxious Fumes		inventory; no per-entry behavior certification
+powers	NO_BLOCK_POWER	No Block		inventory; no per-entry behavior certification
+powers	NO_DRAW_POWER	No Draw		inventory; no per-entry behavior certification
+powers	NO_ENERGY_GAIN_POWER	No Energy Gain		inventory; no per-entry behavior certification
+powers	NO_ESCAPE_POWER	No Escape		inventory; no per-entry behavior certification
+powers	OBLIVION_POWER	Oblivion		inventory; no per-entry behavior certification
+powers	ONE_FOR_ALL_POWER	One for All		inventory; no per-entry behavior certification
+powers	ONE_TWO_PUNCH_POWER	One-Two Punch		inventory; no per-entry behavior certification
+powers	ORBIT_POWER	Orbit		inventory; no per-entry behavior certification
+powers	ORB_GENERATOR	Orb Generator		inventory; no per-entry behavior certification
+powers	PAGESTORM_POWER	Pagestorm		inventory; no per-entry behavior certification
+powers	PAINFUL_STABS_POWER	Painful Stabs		inventory; no per-entry behavior certification
+powers	PALE_BLUE_DOT_POWER	Pale Blue Dot		inventory; no per-entry behavior certification
+powers	PANACHE_POWER	Panache		inventory; no per-entry behavior certification
+powers	PAPER_CUTS_POWER	Paper Cuts		inventory; no per-entry behavior certification
+powers	PARRY_POWER	Parry		inventory; no per-entry behavior certification
+powers	PERSONAL_HIVE_POWER	Personal Hive		inventory; no per-entry behavior certification
+powers	PHANTOM_BLADES_POWER	Phantom Blades		inventory; no per-entry behavior certification
+powers	PILLAR_OF_CREATION_POWER	Pillar of Creation		inventory; no per-entry behavior certification
+powers	PLATING_POWER	Plating		inventory; no per-entry behavior certification
+powers	PLOW_POWER	Plow		inventory; no per-entry behavior certification
+powers	POISON_POWER	Poison		inventory; no per-entry behavior certification
+powers	POSSESS_SPEED_POWER	Possess Speed		inventory; no per-entry behavior certification
+powers	POSSESS_STRENGTH_POWER	Possess Strength		inventory; no per-entry behavior certification
+powers	PREP_TIME_POWER	Prep Time		inventory; no per-entry behavior certification
+powers	PYRE_POWER	Pyre		inventory; no per-entry behavior certification
+powers	QUIETUS_POWER	Quietus		inventory; no per-entry behavior certification
+powers	RADIANCE_POWER	Radiance		inventory; no per-entry behavior certification
+powers	RAGE_POWER	Rage		inventory; no per-entry behavior certification
+powers	RAMPART_POWER	Rampart		inventory; no per-entry behavior certification
+powers	RAVENOUS_POWER	Ravenous		inventory; no per-entry behavior certification
+powers	READ_THE_BONES_POWER	Read the Bones		inventory; no per-entry behavior certification
+powers	REAPER_FORM_POWER	Reaper Form		inventory; no per-entry behavior certification
+powers	REATTACH_POWER	Reattach		inventory; no per-entry behavior certification
+powers	REBOUND_POWER	Rebound		inventory; no per-entry behavior certification
+powers	REFLECTIVE_FORTRESS_POWER	Reflective Fortress		inventory; no per-entry behavior certification
+powers	REFLECT_POWER	Reflect		inventory; no per-entry behavior certification
+powers	REGEN_POWER	Regen		inventory; no per-entry behavior certification
+powers	RESERVES_POWER	Reserves		inventory; no per-entry behavior certification
+powers	RESTORE_DEXTERITY	Restore Dexterity		inventory; no per-entry behavior certification
+powers	RESTORE_FOCUS	Restore Focus		inventory; no per-entry behavior certification
+powers	RETAIN_HAND_POWER	Retain Hand		inventory; no per-entry behavior certification
+powers	RINGING_POWER	Ringing		inventory; no per-entry behavior certification
+powers	RITUAL_POWER	Ritual		inventory; no per-entry behavior certification
+powers	ROLLING_BOULDER_POWER	Rolling Boulder		inventory; no per-entry behavior certification
+powers	ROYALTIES_POWER	Royalties		inventory; no per-entry behavior certification
+powers	RUPTURE_POWER	Rupture		inventory; no per-entry behavior certification
+powers	SANDPIT_POWER	Sandpit		inventory; no per-entry behavior certification
+powers	SEEKING_EDGE_POWER	Seeking Edge		inventory; no per-entry behavior certification
+powers	SELF_FORMING_CLAY_POWER	Self-Forming Clay		inventory; no per-entry behavior certification
+powers	SENTRY_MODE_POWER	Sentry Mode		inventory; no per-entry behavior certification
+powers	SERPENT_FORM_POWER	Serpent Form		inventory; no per-entry behavior certification
+powers	SERRATED_ARROWS_POWER	Serrated Arrows		inventory; no per-entry behavior certification
+powers	SHADOWMELD_POWER	Shadowmeld		inventory; no per-entry behavior certification
+powers	SHADOW_STEP_POWER	Shadow Step		inventory; no per-entry behavior certification
+powers	SHARP_EDGE_POWER	Sharp Edge		inventory; no per-entry behavior certification
+powers	SHOW_OFF_POWER	Show Off		inventory; no per-entry behavior certification
+powers	SHRIEK_POWER	Shriek		inventory; no per-entry behavior certification
+powers	SHRINK_POWER	Shrink		inventory; no per-entry behavior certification
+powers	SHROUD_POWER	Shroud		inventory; no per-entry behavior certification
+powers	SIC_EM_POWER	Sic 'Em		inventory; no per-entry behavior certification
+powers	SIGNAL_BOOST_POWER	Signal Boost		inventory; no per-entry behavior certification
+powers	SIMPLETON_POWER	Simpleton		inventory; no per-entry behavior certification
+powers	SKITTISH_POWER	Skittish		inventory; no per-entry behavior certification
+powers	SLEIGHT_OF_FLESH_POWER	Sleight of Flesh		inventory; no per-entry behavior certification
+powers	SLIPPERY_POWER	Slippery		inventory; no per-entry behavior certification
+powers	SLOTH_POWER	Sloth		inventory; no per-entry behavior certification
+powers	SLOW_POWER	Slow		inventory; no per-entry behavior certification
+powers	SLUMBER_POWER	Slumber		inventory; no per-entry behavior certification
+powers	SMOGGY_POWER	Smoggy		inventory; no per-entry behavior certification
+powers	SMOKESTACK_POWER	Smokestack		inventory; no per-entry behavior certification
+powers	SNEAKY_POWER	Sneaky		inventory; no per-entry behavior certification
+powers	SOAR_POWER	Soar		inventory; no per-entry behavior certification
+powers	SONG_PATH_POWER	Song Path		inventory; no per-entry behavior certification
+powers	SOULBOUND_POWER	Soulbound		inventory; no per-entry behavior certification
+powers	SOUL_WITHER	Soul Wither		inventory; no per-entry behavior certification
+powers	SOW_POWER	Sow		inventory; no per-entry behavior certification
+powers	SPECTRUM_SHIFT_POWER	Spectrum Shift		inventory; no per-entry behavior certification
+powers	SPEEDSTER_POWER	Speedster		inventory; no per-entry behavior certification
+powers	SPINNER_POWER	Spinner		inventory; no per-entry behavior certification
+powers	SPIRIT_OF_ASH_POWER	Spirit of Ash		inventory; no per-entry behavior certification
+powers	STAMPEDE_POWER	Stampede		inventory; no per-entry behavior certification
+powers	STAR_NEXT_TURN_POWER	Star Next Turn		inventory; no per-entry behavior certification
+powers	STEAM_ERUPTION_POWER	Steam Eruption		inventory; no per-entry behavior certification
+powers	STOCK_POWER	Stock		inventory; no per-entry behavior certification
+powers	STORM_POWER	Storm		inventory; no per-entry behavior certification
+powers	STRANGLE_POWER	Strangle		inventory; no per-entry behavior certification
+powers	STRATAGEM_POWER	Stratagem		inventory; no per-entry behavior certification
+powers	STRENGTH_POWER	Strength		inventory; no per-entry behavior certification
+powers	STRETCH_POWER	Stretch		inventory; no per-entry behavior certification
+powers	SUBROUTINE_POWER	Subroutine		inventory; no per-entry behavior certification
+powers	SUCK_POWER	Suck		inventory; no per-entry behavior certification
+powers	SUMMON_NEXT_TURN_POWER	Summon Next Turn		inventory; no per-entry behavior certification
+powers	SURPRISE_POWER	Surprise		inventory; no per-entry behavior certification
+powers	SURROUNDED_POWER	Surrounded		inventory; no per-entry behavior certification
+powers	SWIPE_POWER	Swipe		inventory; no per-entry behavior certification
+powers	SWORD_SAGE_POWER	Sword Sage		inventory; no per-entry behavior certification
+powers	TAG_TEAM_POWER	Tag Team		inventory; no per-entry behavior certification
+powers	TAINTED_POWER	Tainted		inventory; no per-entry behavior certification
+powers	TANGLED_POWER	Tangled		inventory; no per-entry behavior certification
+powers	TANK_POWER	Tank		inventory; no per-entry behavior certification
+powers	TAUNT_POWER	Taunt		inventory; no per-entry behavior certification
+powers	TENDER_POWER	Tender		inventory; no per-entry behavior certification
+powers	TERRITORIAL_POWER	Territorial		inventory; no per-entry behavior certification
+powers	TEZCATARAS_BLIGHT	Tezcatara's Blight		inventory; no per-entry behavior certification
+powers	THE_BOMB_POWER	The Bomb		inventory; no per-entry behavior certification
+powers	THE_GAMBIT_POWER	The Gambit		inventory; no per-entry behavior certification
+powers	THE_HUNT_POWER	The Hunt		inventory; no per-entry behavior certification
+powers	THE_SEALED_THRONE_POWER	The Sealed Throne		inventory; no per-entry behavior certification
+powers	THIEVERY_POWER	Thievery		inventory; no per-entry behavior certification
+powers	THORNS_POWER	Thorns		inventory; no per-entry behavior certification
+powers	THUNDER_POWER	Thunder		inventory; no per-entry behavior certification
+powers	TOOLS_OF_THE_TRADE_POWER	Tools of the Trade		inventory; no per-entry behavior certification
+powers	TORIC_TOUGHNESS_POWER	Toric Toughness		inventory; no per-entry behavior certification
+powers	TORN	Torn		inventory; no per-entry behavior certification
+powers	TRACKING_POWER	Tracking		inventory; no per-entry behavior certification
+powers	TRASH_TO_TREASURE_POWER	Trash to Treasure		inventory; no per-entry behavior certification
+powers	TUNE_POWER	Tune		inventory; no per-entry behavior certification
+powers	TYRANNY_POWER	Tyranny		inventory; no per-entry behavior certification
+powers	UNDERWORLD_POWER	Underworld		inventory; no per-entry behavior certification
+powers	UNMOVABLE_POWER	Unmovable		inventory; no per-entry behavior certification
+powers	UNSTABLE	Unstable		inventory; no per-entry behavior certification
+powers	UNSTEADY	Unsteady		inventory; no per-entry behavior certification
+powers	VEILPIERCER_POWER	Veilpiercer		inventory; no per-entry behavior certification
+powers	VICIOUS_POWER	Vicious		inventory; no per-entry behavior certification
+powers	VIGOR_POWER	Vigor		inventory; no per-entry behavior certification
+powers	VIOLENT_CHORD_POWER	Violent Chord		inventory; no per-entry behavior certification
+powers	VISUAL_ONLY	Visual Only		inventory; no per-entry behavior certification
+powers	VITAL_SPARK_POWER	Vital Spark		inventory; no per-entry behavior certification
+powers	VOID_FORM_POWER	Void Form		inventory; no per-entry behavior certification
+powers	VULNERABLE_POWER	Vulnerable		inventory; no per-entry behavior certification
+powers	WASTE_AWAY_POWER	Waste Away		inventory; no per-entry behavior certification
+powers	WEAK_POWER	Weak		inventory; no per-entry behavior certification
+powers	WELL_LAID_PLANS_POWER	Well-Laid Plans		inventory; no per-entry behavior certification
+powers	WINGED_JUMP_POWER	Winged Jump		inventory; no per-entry behavior certification
+powers	WITHERING_PRESENCE_POWER	Withering Presence		inventory; no per-entry behavior certification
+powers	WRAITH_FORM_POWER	Wraith Form		inventory; no per-entry behavior certification
+powers	WUPPYS_LOYALTY_POWER	Wuppy's Loyalty		inventory; no per-entry behavior certification
+powers	YAH_POWER	Yah!		inventory; no per-entry behavior certification
+powers	YOU_ARE_MINE_POWER	You Are Mine		inventory; no per-entry behavior certification
+enchantments	ADROIT	Adroit		inventory; no per-entry behavior certification
+enchantments	CLONE	Clone		inventory; no per-entry behavior certification
+enchantments	CORRUPTED	Corrupted		inventory; no per-entry behavior certification
+enchantments	DEPRECATED_ENCHANTMENT	Deprecated		inventory; no per-entry behavior certification
+enchantments	GLAM	Glam		inventory; no per-entry behavior certification
+enchantments	GOOPY	Goopy		inventory; no per-entry behavior certification
+enchantments	IMBUED	Imbued		inventory; no per-entry behavior certification
+enchantments	INKY	Inky		inventory; no per-entry behavior certification
+enchantments	INSTINCT	Instinct		inventory; no per-entry behavior certification
+enchantments	MOCK_FREE_ENCHANTMENT	Mock Free Enchantment		inventory; no per-entry behavior certification
+enchantments	MOMENTUM	Momentum		inventory; no per-entry behavior certification
+enchantments	NIMBLE	Nimble		inventory; no per-entry behavior certification
+enchantments	PERFECT_FIT	Perfect Fit		inventory; no per-entry behavior certification
+enchantments	ROYALLY_APPROVED	Royally Approved		inventory; no per-entry behavior certification
+enchantments	SHARP	Sharp		inventory; no per-entry behavior certification
+enchantments	SLITHER	Slither		inventory; no per-entry behavior certification
+enchantments	SLUMBERING_ESSENCE	Slumbering Essence		inventory; no per-entry behavior certification
+enchantments	SOULS_POWER	Soul's Power		inventory; no per-entry behavior certification
+enchantments	SOWN	Sown		inventory; no per-entry behavior certification
+enchantments	SPIRAL	Spiral		inventory; no per-entry behavior certification
+enchantments	STEADY	Steady		inventory; no per-entry behavior certification
+enchantments	SWIFT	Swift		inventory; no per-entry behavior certification
+enchantments	TEZCATARAS_EMBER	Tezcatara's Ember		inventory; no per-entry behavior certification
+enchantments	VIGOROUS	Vigorous		inventory; no per-entry behavior certification
+afflictions	BOUND	Bound		inventory; no per-entry behavior certification
+afflictions	ENTANGLED	Entangled		inventory; no per-entry behavior certification
+afflictions	GALVANIZED	Galvanized		inventory; no per-entry behavior certification
+afflictions	HEXED	Hexed		inventory; no per-entry behavior certification
+afflictions	MOCK_NO_UNPLAYABLE_AFFLICTION	Mock No Unplayable Affliction		inventory; no per-entry behavior certification
+afflictions	MOCK_SELF_DAMAGE_AFFLICTION	Mock Self Damage Affliction		inventory; no per-entry behavior certification
+afflictions	MOCK_USELESS_AFFLICTION	Mock Useless Affliction		inventory; no per-entry behavior certification
+afflictions	RINGING	Ringing		inventory; no per-entry behavior certification
+afflictions	SMOG	Smog		inventory; no per-entry behavior certification
+afflictions	TAINTED	Tainted		inventory; no per-entry behavior certification
+orbs	DARK_ORB	Dark		inventory; no per-entry behavior certification
+orbs	EMPTY_SLOT	Orb Slot		inventory; no per-entry behavior certification
+orbs	FROST_ORB	Frost		inventory; no per-entry behavior certification
+orbs	GLASS_ORB	Glass		inventory; no per-entry behavior certification
+orbs	LIGHTNING_ORB	Lightning		inventory; no per-entry behavior certification
+orbs	MOCK_COMBAT_CLEANUP_ORB	Mock Combat Cleanup		inventory; no per-entry behavior certification
+orbs	PLASMA_ORB	Plasma		inventory; no per-entry behavior certification
+acts	DEPRECATED_ACT	Deprecated Act		inventory; no per-entry behavior certification
+acts	FACTORY	Factory		inventory; no per-entry behavior certification
+acts	GLORY	Glory		inventory; no per-entry behavior certification
+acts	HIVE	Hive		inventory; no per-entry behavior certification
+acts	OVERGROWTH	Overgrowth		inventory; no per-entry behavior certification
+acts	UNDERDOCKS	Underdocks		inventory; no per-entry behavior certification

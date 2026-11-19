@@ -1,0 +1,41 @@
+name: Build and check
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ${{ fromJSON(github.event_name != 'pull_request' && vars.AUDITOR_CI_POOL == 'homelab' && '["self-hosted","Linux","X64","homelab-linux-x64"]' || '["ubuntu-latest"]') }}
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with: {persist-credentials: false}
+      - uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v5
+        with: {dotnet-version: '9.0.123'}
+        env:
+          DOTNET_INSTALL_DIR: ${{ runner.temp }}/dotnet
+      - run: sh tools/ci.sh
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: auditor-release
+          path: dist/*.zip
+          if-no-files-found: error
+  release:
+    needs: verify
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions: {contents: write}
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with: {name: auditor-release}
+      - name: Publish verified download
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          sha256sum VakuusAgenticAuditor.zip WorkshopWorkspace.zip > SHA256SUMS
+          gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --verify-tag --title "$TAG" --generate-notes VakuusAgenticAuditor.zip WorkshopWorkspace.zip SHA256SUMS

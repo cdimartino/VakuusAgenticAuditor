@@ -1,0 +1,745 @@
+ABRASIVE	dexterity,thorns	
+ABUNDANCE		
+ACCELERANT		poison
+ACCURACY		shivs
+ACROBATICS	draw,discard	
+ADAPTIVE_STRIKE	hit	
+ADRENALINE	draw,energy	
+AFTERIMAGE		
+AFTERLIFE	summon	
+AGGRESSION		
+ALCHEMIZE		
+ALIGNMENT	energy	
+ALL_FOR_ONE	hit	
+ALL_IS_WELL		sadness
+AMNESIA		
+ANGER	hit	
+ANGUISH	hit	sadness
+ANOINTED		
+ANTICIPATE	dexterity	
+APOTHEOSIS		
+APPARITION		
+ARCHERY		
+ARMAMENTS	guard	
+ARROW_STAB	hit	
+ARSENAL	strength	
+ASCENDERS_BANE		
+ASHEN_STRIKE	hit	exhaust
+ASSASSINATE	hit,vulnerable	
+ASTRAL_PULSE	hit,multiple hits,area damage	
+AUTOMATION		
+BACKFLIP	guard,draw	
+BACKSTAB	hit	
+BAD_LUCK		
+BALL_LIGHTNING	hit,orbs,lightning	
+BANSHEES_CRY	hit,area damage	
+BARRAGE	hit	orbs
+BARRICADE		
+BASH	hit,vulnerable	
+BATTLE_TRANCE	draw	
+BEACON_OF_HOPE		
+BEAM_CELL	hit,vulnerable	
+BEAT_DOWN		
+BEAT_INTO_SHAPE	hit,forge	
+BECKON		
+BEGONE		
+BELIEVE_IN_YOU		
+BIASED_COGNITION	focus	
+BIG_BANG	draw,energy,forge,stars	
+BLACK_HOLE		
+BLADE_DANCE	shivs	
+BLADE_OF_INK	shivs	
+BLADE_SYMPHONY	shivs	
+BLAZE		
+BLIGHT_STRIKE	hit	
+BLOODLETTING	energy,hp loss	
+BLOOD_WALL	guard,hp loss	
+BLOSSOM_SHOT	hit,shots,impale	
+BLOT_OUT_THE_SKY		
+BLUDGEON	hit	
+BLUR	guard	
+BODYGUARD	summon	
+BODY_SLAM	hit	guard
+BOLAS	hit	
+BOMBARDMENT	hit	
+BONE_SHARDS		
+BOOST_AWAY	guard	
+BOOT_SEQUENCE	guard	
+BORROWED_TIME	energy	
+BOUNCE	stretch	
+BOUNCING_FLASK	poison	
+BOW_SMACK	hit	
+BRACE	aim	
+BRAND	exhaust,strength,hp loss	
+BREAK	hit,vulnerable	
+BREAKTHROUGH	hit,hp loss,area damage	
+BRIGHTEN_UP	sadness	
+BRIGHTEST_FLAME	draw,energy	
+BUBBLE_BUBBLE	poison	
+BUFFER		
+BULK_UP	strength,dexterity	
+BULLET_TIME		
+BULLY	hit	vulnerable
+BULWARK	guard,forge	
+BUNDLE_OF_JOY		
+BURN		
+BURNING_PACT	draw,exhaust	
+BURST		
+BURY	hit	
+BYRDONIS_EGG		
+BYRD_SWOOP	hit	
+CACOPHONY		
+CALAMITY		
+CALCIFY		summon
+CALCULATED_GAMBLE	discard	
+CALL_OF_THE_VOID		
+CALTROPS		
+CAPACITOR		orbs
+CAPTURE_SPIRIT	souls	
+CASCADE		
+CATASTROPHE		
+CELESTIAL_MIGHT	hit,multiple hits	
+CHAOS	orbs	
+CHARGE		
+CHARGE_BATTERY	guard	
+CHILD_OF_THE_STARS		
+CHILL	orbs,frost	
+CHO_BARBS	guard,thorns	
+CHO_CHORUS	guard	
+CHO_FIRM	guard	
+CHO_KI	guard	
+CHO_LIMBS	guard	
+CHO_READY	guard	
+CHRYSALIS		
+CINDER	hit,exhaust	
+CLASH	hit	
+CLAW	hit	
+CLEANSE	exhaust,summon	
+CLOAK_AND_DAGGER	guard,shivs	
+CLOAK_OF_STARS	guard	
+CLUMSY		
+CODA	hit	
+COLD_SNAP	hit,orbs,frost	
+COLLISION_COURSE	hit	
+COLOSSUS	guard	
+COMET	hit,weak,vulnerable	
+COMPACT	guard	
+COMPILE_DRIVER	hit,draw	
+COMPOST		
+CONCOCT	poison	
+CONFLAGRATION	hit,multiple hits,area damage	
+CONQUEROR	forge	forge
+CONSTELLATION		
+CONSUMING_SHADOW	orbs	
+CONVERGENCE	energy,retain hand	
+COOLANT		
+COOLHEADED	draw,orbs,frost	
+COORDINATE		
+CORROSIVE_WAVE	poison	
+CORRUPTION	exhaust	
+COSMIC_INDIFFERENCE	guard	
+COUNTDOWN	doom	
+COVERING_FIRE		
+CRASH_LANDING	hit,area damage	
+CREATIVE_AI		
+CRESCENT_SPEAR	hit	
+CRIMSON_MANTLE		
+CRUELTY		
+CRUSH_UNDER	hit,area damage	
+CURSE_OF_THE_BELL		
+DAGGER_SPRAY	hit,multiple hits,area damage	
+DAGGER_THROW	hit,draw,discard	
+DANSE_MACABRE		
+DARKNESS	orbs	
+DARK_EMBRACE	draw	exhaust
+DARK_SHACKLES		
+DASH	guard,hit	
+DAZED		
+DEADLY_POISON	poison	
+DEATH	doom	
+DEATHBRINGER	doom	
+DEATHS_DOOR	guard	doom
+DEATH_MARCH	hit	
+DEBILITATE	hit	
+DEBRIS		
+DEBT		
+DECAY		
+DECISIONS_DECISIONS	draw	
+DEEP_STRETCH	draw,stretch	
+DEFEND_DEFECT	guard	
+DEFEND_FOOL	guard	
+DEFEND_IRONCLAD	guard	
+DEFEND_NECROBINDER	guard	
+DEFEND_REGENT	guard	
+DEFEND_SILENT	guard	
+DEFILE	hit	
+DEFLECT	guard	
+DEFRAGMENT	focus	orbs
+DEFY	guard,weak	
+DELAY	guard,energy	
+DEMESNE		
+DEMONIC_SHIELD	hp loss	
+DEMON_FORM	strength	
+DEPRECATED_CARD	draw	
+DESPAIR		
+DEVASTATE	hit	
+DEVOUR_LIFE	summon	
+DINGY_DAGGER	hit	
+DIRGE	summon	
+DISCOVERY		
+DISINTEGRATION		
+DISLIKE_YOU	hit	
+DISMANTLE	hit	vulnerable
+DISTRACTION		
+DIVINE_SHOT	hit,shots,impale	
+DODGE_AND_ROLL	guard	
+DOMINATE	strength,vulnerable	
+DOUBLE_ENERGY		
+DOUBT		
+DOWSING		
+DRAIN_POWER	hit	
+DRAMATIC_ENTRANCE	hit,area damage	
+DREDGE		
+DRUM_OF_BATTLE	draw	
+DUALCAST		
+DUAL_WIELD		
+DYING_STAR	hit,area damage	
+ECHOING_SLASH	hit,area damage	
+ECHO_FORM		
+ECSTASY		sadness
+EIDOLON		
+ENCORE	draw,energy	
+END_OF_DAYS	doom	
+ENERGY_SURGE		
+ENFEEBLING_TOUCH		
+ENLIGHTENMENT		
+ENNUI	sadness	
+ENRAPTURE		
+ENSEMBLE		
+ENTHRALLED		
+ENTRENCH		guard
+ENTROPY		
+ENVENOM	poison	
+EPIC_RETRIEVAL	hit	
+EQUILIBRIUM	guard,retain hand	
+ERADICATE	hit	
+ESCAPE_PLAN	draw	
+ETERNAL_ARMOR	plating	
+EVIL_EYE	guard	exhaust
+EXPECT_A_FIGHT	guard	
+EXPERTISE	draw,retain hand	
+EXPLOSIVE_ARROWS		
+EXPOSE	vulnerable	
+EXTERMINATE	hit,multiple hits,area damage	
+FADE		
+FALLING_STAR	hit,weak,vulnerable	
+FAN_OF_KNIVES	shivs	
+FASTEN	guard	
+FEAR	hit,vulnerable	
+FEED	hit	
+FEEDING_FRENZY	strength	
+FEEL_NO_PAIN		exhaust
+FERAL		
+FETCH	hit,Osty attacks	
+FIEND_FIRE	hit,exhaust	
+FIGHT_ME	hit,strength,multiple hits	
+FIGHT_THROUGH	guard	
+FINESSE	guard,draw	
+FINISHER	hit	
+FISTICUFFS	hit	
+FLAK_CANNON	hit,exhaust	
+FLAME_BARRIER	guard	
+FLAME_IN_THE_DARK	draw,energy	
+FLANKING		
+FLASH_OF_STEEL	hit,draw	
+FLATTEN	hit,Osty attacks	
+FLECHETTES	hit	
+FLICK_FLACK	hit,area damage	
+FLORESCENCE	exhaust	
+FOCUSED_STRIKE	hit,focus	
+FOLLY		
+FOOLISH_SHOT	hit,shots,impale	
+FOOTWORK	dexterity	
+FORBIDDEN_GRIMOIRE		
+FOREGONE_CONCLUSION		
+FORGOTTEN_RITUAL		
+FRANTIC_ESCAPE		
+FRIENDSHIP	energy	
+FTL	hit	
+FUEL	energy	
+FURNACE	forge	
+FUSION	orbs	
+GAMMA_BLAST	hit,weak,vulnerable	
+GANG_UP	hit	
+GATHER_LIGHT	guard,stars	
+GENESIS		
+GENETIC_ALGORITHM	guard	
+GHOST_EATER	energy	
+GIANT_ROCK	hit	
+GLACIER	guard,orbs,frost	
+GLASSWORK	guard,orbs	
+GLIMMER	draw	
+GLIMPSE_BEYOND	souls	
+GLITTERSTREAM	guard	
+GLOW	draw,stars	
+GOD_BYRD		
+GOLD_AXE	hit	
+GOOD_INSTINCTS	guard	
+GO_FOR_THE_EYES	hit	
+GRAND_FINALE		
+GRAVEBLAST	hit	
+GRAVE_WARDEN	guard,souls	
+GREED		
+GROWTH	exhaust,stretch	sadness
+GUARDS		
+GUIDING_STAR	hit	
+GUILTY		
+GUNK_UP	hit,multiple hits	
+HAILSTORM		frost
+HAMMER_TIME		
+HAND_OF_GREED	hit	
+HAND_TRICK	guard	
+HANG	hit	
+HARMONIC_SHIELD	guard	
+HAUNT		
+HAVOC	exhaust	
+HAZE	poison	
+HEADBUTT	hit	
+HEAVENLY_DRILL	hit	
+HEAVY_SHOT	hit,shots,impale	aim
+HEGEMONY	hit	
+HEIRLOOM_HAMMER	hit	
+HELIX_DRILL	hit	
+HELLO_WORLD		
+HELLRAISER		
+HEMOKINESIS	hit,hp loss	
+HIBERNATE	orbs,frost	
+HIDDEN_CACHE	stars	
+HIDDEN_DAGGERS	discard	
+HIDDEN_GEM		
+HIDDEN_ROOTS		
+HIGH_FIVE	hit,Osty attacks	
+HOBBLING_SHOT	hit,shots,impale	
+HOLOGRAM	guard	
+HONING		shots
+HOTFIX	focus	
+HOWL_FROM_BEYOND	hit,area damage	
+HUDDLE_UP		
+HYPERBEAM	hit,area damage	
+ICE_LANCE	hit,orbs,frost	
+IGNITION		
+IMITATION_LEARNING		
+IMMORTALITY	hp loss	
+IMPALE	hit,poison	
+IMPATIENCE		
+IMPERVIOUS	guard	
+INFECTION		
+INFERNAL_BLADE		
+INFERNO		
+INFINITE_BLADES	shivs	
+INFLAME	strength	
+INJURY		
+INTERCEPT	guard	
+INVOKE	summon	
+IRON_WAVE	guard,hit	
+ITERATION		
+I_AM_INVINCIBLE	guard	
+JACKPOT	hit	
+JACK_OF_ALL_TRADES		
+JEST	guard,sadness	
+JOY	draw,energy	
+JUDGEMENT		
+JUGGERNAUT		
+JUGGLING		
+JUSTICE	hit	
+KINGLY_KICK	hit	
+KINGLY_PUNCH	hit	
+KI_CHANT		
+KI_HOP	hit	
+KI_REST		
+KI_VERSE		
+KI_WHIP	hit	
+KNIFE_TRAP		
+KNOCKDOWN	hit	
+KNOCKOUT_BLOW	hit,stars	
+KNOW_THY_PLACE	weak,vulnerable	
+LANTERN_KEY		
+LARGESSE		
+LEADING_STRIKE	hit,shivs	
+LEAP	guard	
+LEGION_OF_BONE	summon	
+LEG_SWEEP	guard,weak	
+LETHALITY		
+LIFT		
+LIGHTNING_ROD	guard,orbs	
+LOCKED_IN		
+LOOP		
+LOST_LUTE		
+LULLABY		
+LUMINESCE	energy	
+LUNAR_BLAST	hit	
+MACHINE_LEARNING		
+MAD_SCIENCE	draw,strength,dexterity	
+MAKE_IT_SO	hit	
+MALAISE		
+MANGLE	hit	
+MANIFEST_AUTHORITY	guard	
+MASTER_OF_STRATEGY	draw	
+MASTER_PLANNER		
+MAUL	hit,multiple hits	
+MAYHEM		
+MELANCHOLY	guard	
+MELODIC_SHOT	hit,shots,impale	
+MEMENTO_MORI	hit	
+METAMORPHOSIS		
+METEOR_SHOWER	hit,weak,area damage	
+METEOR_STRIKE	hit,orbs	
+MIDNIGHT	hit	exhaust
+MIGHTY_SHIELD	guard	
+MIGHTY_WEAPON	hit,area damage	
+MIMIC	guard	
+MIND_BLAST	hit	
+MIND_ROT	draw	
+MINION_DIVE_BOMB	hit	
+MINION_SACRIFICE	guard	
+MINION_STRIKE	hit,draw	
+MIRAGE		
+MISERY	hit	
+MOCK_ATTACK_CARD		
+MOCK_CURSE_CARD		
+MOCK_POWER_CARD		
+MOCK_QUEST_CARD		
+MOCK_SKILL_CARD		
+MOCK_STATUS_CARD		
+MODDED	draw	
+MOLTEN_FIST	hit	
+MOMENTUM_STRIKE	hit	
+MONARCHS_GAZE		
+MONOLOGUE	strength	
+MOTIF		
+MOURNING_BLOW	hit,sadness	
+MULTI_CAST		
+MURDER	hit	
+MYTHIC_FORM		
+MY_SHINIES	hit	
+NAIL		impale
+NECRO_MASTERY	summon	summon
+NEGATIVE_PULSE	guard,doom	
+NEOWS_FURY	hit	
+NEUROSURGE	draw,energy,doom	
+NEUTRALIZE	hit,weak	
+NEUTRON_AEGIS	plating	
+NIGHTMARE		
+NOCK	aim	
+NORMALITY		
+NOSTALGIA		
+NOT_YET	healing	
+NOXIOUS_FUMES	poison	
+NO_ESCAPE	doom	doom
+NULL	hit,orbs,weak	
+OBLIVION	doom	
+OFFERING	draw,energy,hp loss	
+OFF_BY_ONE		
+OMNISLICE	hit	
+ONE_FOR_ALL		
+ONE_TWO_PUNCH		
+ORBIT	energy	
+OUTBREAK	poison	
+OUTMANEUVER		
+OUTRAGE	hit	
+OVERCLOCK	draw	
+PACTS_END	hit,area damage	
+PAELS_STRIKE	hit	
+PAGESTORM		
+PALE_BLUE_DOT		
+PANACHE		
+PANIC_BUTTON	guard	
+PARRY		
+PARSE	draw	
+PARTICLE_WALL	guard	
+PATTER	guard	
+PECK	hit,multiple hits	
+PERFECTED_STRIKE	hit	
+PHANTOM_BLADES		
+PHOTON_CUT	hit,draw	
+PIERCING_WAIL		
+PILLAGE	hit	
+PILLAR_OF_CREATION		
+PINPOINT	hit	
+PITY		
+PLOT		
+POISONED_STAB	hit,poison	
+POKE	hit,Osty attacks	
+POMMEL_STRIKE	hit,draw	
+POOR_SLEEP		
+POUNCE	hit	
+PRECISE_CUT	hit	
+PREDATOR	hit	
+PREPARED	draw,discard	
+PREP_TIME		
+PRIMAL_FORCE		
+PRODUCTION	energy	
+PROLONG		
+PROPHESIZE	draw	
+PROTECTOR	hit,Osty attacks	summon
+PROWESS	strength,dexterity	
+PULL_AGGRO	guard,summon	
+PULL_FROM_BELOW	hit	
+PUNCH_OF_JOY	hit	
+PURITY		
+PUTREFY	weak,vulnerable	
+PYRE	energy	
+QUADCAST		
+QUASAR		
+QUICK_SHOT	hit,shots,impale	
+QUICK_SLASH	hit,draw	
+QUIETUS		shots
+QUIVER		
+RADIATE	hit,area damage	stars
+RAGE		
+RAINBOW	orbs,frost,lightning	
+RAIN_SHOT	hit,shots,impale	
+RALLY		
+RAMPAGE	hit	
+RAPID_SHOT	hit,shots,impale	
+RATTLE	hit,Osty attacks	
+REANIMATE	summon	
+REAP	hit	
+REAPER_FORM	doom	
+REAVE	hit	
+REBOOT	draw	
+REBOUND	hit	
+RECALL		
+REFINE_BLADE	forge	
+REFLECT	guard	
+REFLEX	draw	discard
+REFRACT	hit,orbs,multiple hits	
+REGRET		
+RELAX	guard	
+REND	hit	
+REPEAT_SHOT	hit,shots,impale	
+RESERVES		
+RESONANCE	strength	
+RESTLESSNESS		
+RHYTHM_STRIKE	hit	
+RICOCHET	hit	
+RIGHT_HAND_HAND	hit,Osty attacks	
+RIP_AND_TEAR	hit	
+ROCKET_PUNCH	hit,draw	
+ROLLING_BOULDER		
+ROYALTIES		
+ROYAL_GAMBLE		
+RUMMAGE	draw,sadness	
+RUPTURE	strength	hp loss
+SACRIFICE		
+SADNESS		
+SALVO	hit,retain hand	
+SCAVENGE	exhaust	
+SCOURGE	draw,doom	
+SCRAPE	hit,draw	
+SCRAWL		
+SCULPTING_STRIKE	hit	
+SEANCE		
+SECOND_WIND	exhaust	
+SECRET_TECHNIQUE		
+SECRET_WEAPON		
+SEEKER_STRIKE	hit	
+SEEKING_EDGE	forge	
+SELF_DEPRECATE	sadness	
+SENTRY_MODE		
+SERPENT_FORM		
+SERRATED_ARROWS		impale
+SETUP_STRIKE	hit,strength	
+SEVEN_STARS	hit,multiple hits,area damage	
+SEVERANCE	hit,souls	
+SHADOWMELD		
+SHADOW_SHIELD	guard,orbs	
+SHADOW_STEP	discard	
+SHAME		
+SHARED_FATE		
+SHARP_EDGE		
+SHATTER	hit,area damage	
+SHINING_STRIKE	hit,stars	
+SHIV	hit	
+SHOCKWAVE	weak	
+SHOW_OFF	aim	
+SHROUD		doom
+SHRUG_IT_OFF	guard,draw	
+SIC_EM	hit,summon,Osty attacks	
+SIDESTEP		
+SIGNAL_BOOST		
+SIMPLETON		
+SKEWER	hit	
+SKIM	draw	
+SKY_SHOT	hit,shots,impale	
+SLEIGHT_OF_FLESH		
+SLICE	hit	
+SLIMED	draw	
+SLOTH		
+SMOKESTACK		
+SNAKEBITE	poison	
+SNAP	hit,Osty attacks	
+SNEAKY		
+SOLAR_STRIKE	hit,stars	
+SONG_PATH		
+SOOT		
+SORROWFUL_STRIKE	hit,sadness	
+SOUL	draw	
+SOULBOUND	souls	
+SOUL_STORM	hit	souls
+SOVEREIGN_BLADE	guard,hit	
+SOW	hit,area damage	
+SPECTRUM_SHIFT		
+SPEEDSTER		
+SPIKED		
+SPINNER	orbs	
+SPIRIT_OF_ASH		
+SPITE	hit	
+SPLASH		
+SPOILS_MAP		
+SPOILS_OF_BATTLE	draw,forge	
+SPORE_MIND		
+SPUR	summon	
+SQUASH	hit,vulnerable	
+SQUEEZE	hit,Osty attacks	
+STACK		
+STAMPEDE		
+STARDUST	hit	
+STAR_BLAST	guard,hit	
+STAR_SHIELD	guard,draw	
+STEADY_CADENCE	hit,draw	
+STOKE	exhaust	
+STOMP	hit,area damage	
+STONE_ARMOR	plating	
+STORM	orbs	
+STORM_OF_STEEL	discard	
+STRANGLE	hit	
+STRATAGEM		
+STRENGTH	strength	
+STRIKE_DEFECT	hit	
+STRIKE_FOOL	hit	
+STRIKE_IRONCLAD	hit	
+STRIKE_NECROBINDER	hit	
+STRIKE_REGENT	hit	
+STRIKE_SILENT	hit	
+SUBROUTINE		
+SUCKER_PUNCH	hit,weak	
+SUMMON_FORTH	forge	
+SUNDER	hit	
+SUPERCRITICAL	energy	
+SUPERMASSIVE	hit	
+SUPPRESS	hit,weak	
+SURVIVOR	guard,discard	
+SWEEPING_BEAM	hit,draw,area damage	
+SWEEPING_GAZE	hit,Osty attacks	
+SWIFT_STRIKE	hit	
+SWORD_BOOMERANG	hit	strength
+SWORD_SAGE		
+SYNCHRONIZE	focus	
+SYNTHESIS	hit	
+TACTICIAN	energy	discard
+TAG_TEAM	hit	
+TANK		
+TAUNT	guard,vulnerable	
+TEAR_ASUNDER	hit	
+TEMPERANCE	guard	
+TEMPEST	orbs,lightning	
+TERRAFORMING		
+TESLA_COIL	hit	
+TEZCATARAS_MIGHT	strength	
+THE_BALL	hit	
+THE_BOMB		
+THE_CHARIOT	hit,area damage	
+THE_DEVIL	exhaust	
+THE_EMPEROR	energy	
+THE_EMPRESS	weak,vulnerable	
+THE_FOOL		
+THE_GAMBIT	guard	
+THE_HANGED_MAN	hp loss	
+THE_HERMIT	draw,discard	
+THE_HIEROPHANT		
+THE_HIGH_PRIESTESS	draw	
+THE_HUNT	hit	
+THE_LOVERS		
+THE_MAGICIAN	orbs	
+THE_MOON		
+THE_SCYTHE	hit	
+THE_SEALED_THRONE		
+THE_SHOT	hit,shots,impale	
+THE_SMITH	forge	
+THE_STAR		
+THE_SUN	draw,energy	
+THE_TOWER	hit	
+THE_WORLD		
+THINKING_AHEAD	draw	
+THRASH	hit,multiple hits	
+THRUMMING_HATCHET	hit	
+THUNDER		
+THUNDERCLAP	hit	
+TIMBER	hit	
+TIMES_UP	hit	
+TOOLS_OF_THE_TRADE	discard	
+TORIC_TOUGHNESS	guard	
+TOXIC		
+TRACKING		weak
+TRAINING_STRIKE	hit	
+TRANSFIGURE		
+TRASH_TO_TREASURE	orbs	
+TREMBLE	vulnerable	
+TRICK_SHOT	hit,shots,impale	
+TRUE_GRIT	guard,exhaust	
+TUNE		
+TURBO	energy	
+TUTOR		
+TWIN_STRIKE	hit,multiple hits	
+TYRANNY	exhaust	
+ULTIMATE_DEFEND	guard	
+ULTIMATE_STRIKE	hit	
+UNDEATH	guard	
+UNDERWORLD	doom	
+UNLEASH	hit,Osty attacks	summon
+UNMOVABLE		
+UNRELENTING	hit	
+UNTOUCHABLE	guard	
+UPPERCUT	hit,weak,vulnerable	
+UPROAR	hit,multiple hits	
+UPROOT		
+UP_MY_SLEEVE	shivs	
+VEILPIERCER	hit	
+VENERATE	stars	
+VETERAN	guard,strength	
+VICIOUS		vulnerable
+VIOLENT_CHORD		
+VISIONS_OF_GRANDEUR		
+VITRIOL	sadness,weak	
+VOID		
+VOID_FORM		
+VOLLEY	hit	
+VOLTAIC	orbs,lightning	lightning
+WAH_BLAST	hit,area damage	
+WAH_CHO	guard,hit	
+WAH_CHO_KI	guard,hit,draw	
+WAH_HAMMER	hit	impale
+WAH_KI	hit,multiple hits	
+WAH_SWEEP	hit,area damage	
+WAH_SYMPHONY	hit,area damage	
+WAH_TOUCH	hit,vulnerable	
+WARP_SPACE		
+WASTE_AWAY		
+WELL_LAID_PLANS	discard	
+WHEEL_OF_FORTUNE	draw,discard	
+WHIRLWIND	hit,area damage	strength
+WHISTLE	hit	
+WHISTLING_ARROWS	guard,shots,impale	shots
+WHITE_NOISE		
+WISH		
+WISP	energy	
+WITHER		
+WOUND		
+WRAITH_FORM		
+WREST		
+WRITHE		
+WROUGHT_IN_WAR	hit,forge	
+YAH		
+YOGA		
+ZAP	orbs,lightning	

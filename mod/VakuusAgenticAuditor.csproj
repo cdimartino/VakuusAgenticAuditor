@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GameData Condition="'$(GameData)' == ''">$(HOME)/Library/Application Support/Steam/steamapps/common/Slay the Spire 2/SlayTheSpire2.app/Contents/Resources/data_sts2_macos_arm64</GameData>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="sts2" HintPath="$(GameData)/sts2.dll" Private="false" />
+    <Reference Include="GodotSharp" HintPath="$(GameData)/GodotSharp.dll" Private="false" />
+    <Reference Include="0Harmony" HintPath="$(GameData)/0Harmony.dll" Private="false" />
+    <EmbeddedResource Include="roles.tsv" />
+    <EmbeddedResource Include="relics.tsv;relic-fit.tsv;bosses.tsv;potions.tsv" />
+    <None Update="VakuusAgenticAuditor.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

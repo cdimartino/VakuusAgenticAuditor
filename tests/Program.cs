@@ -1,0 +1,113 @@
+using Auditor;
+int count = 0;
+void Check(bool v, string name) { if (!v) throw new Exception(name); Console.WriteLine("PASS " + name); count++; }
+Card C(string id, int cost = 1) => Catalog.Get(id, id, cost, false, id.StartsWith("STRIKE_"));
+var deck = new Deck(Enumerable.Repeat(C("STRIKE_IRONCLAD"), 6).Concat(Enumerable.Repeat(C("DEFEND_IRONCLAD"), 4)).ToArray(), 70, 80, 1, false, []);
+foreach (var (who, enabler, payoff) in new[]{
+    ("Ironclad","TRUE_GRIT","FEEL_NO_PAIN"),("Silent","BLADE_DANCE","ACCURACY"),
+    ("Defect","COLD_SNAP","DEFRAGMENT"),("Regent","BULWARK","CONQUEROR"),
+    ("Necrobinder","AFTERLIFE","PROTECTOR"),("Fool","JEST","ALL_IS_WELL")})
+{
+    var card = C(payoff);
+    var alone = Coach.Assess(card, deck);
+    var supported = Coach.Assess(card, deck with { Cards = [.. deck.Cards, C(enabler)] });
+    Check(supported.Score > alone.Score + 2 && supported.Reason.Contains(enabler), who + " recognizes enabler");
+}
+var low = deck with { Hp = 18 };
+Check(Coach.Assess(C("SHRUG_IT_OFF"), low).Score > Coach.Assess(C("SHRUG_IT_OFF"), deck).Score, "HP changes defense priority");
+var heavy = deck with { Cards = [.. deck.Cards, C("BASH", 2), C("BASH", 2), C("BASH", 2)] };
+Check(Coach.Assess(C("BULWARK", 2), heavy).Score < Coach.Assess(C("BULWARK", 2), heavy with { Cards = [.. heavy.Cards, C("ADRENALINE")] }).Score, "energy supply changes expensive pick");
+var choice = Coach.Rank([C("ACCURACY")], deck, true);
+Check(choice[0].Id == "~skip" && Coach.After(choice[1], choice[0]).Contains("enabler"), "unsupported payoff loses to skip; feedback explains why");
+Check(Coach.Rank([C("ACCURACY")], deck, false).Length == 1, "no skip when forced");
+Check(double.IsNaN(Coach.Assess(C("UNKNOWN_MOD_CARD"), deck).Score), "unknowns unranked");
+Check(Coach.Assess(C("BLADE_DANCE"), deck with { Relics = ["KUNAI"] }).Reason.Contains("Kunai"), "relic synergy");
+Check(Coach.Rank([C("TRUE_GRIT"), C("TRUE_GRIT")], deck, false).Select(x => x.Score).Distinct().Count() == 1, "equal choices stay equal");
+Play attack = new("Strike", 1, 0, 0, 0, [6]);
+Play defend = new("Defend", 1, 0, 0, 5, [-1]);
+TurnLine Turn(Play[] h, Foe[] f, int e, int hp = 20, int stars = 0, int arrows = 0) => TurnCoach.Plan(h, f, e, stars, arrows, 0, hp);
+Check(Turn([defend, attack, attack], [new("Slug", 12, 12)], 2).EnemiesLeft == 0, "two-hit lethal beats block");
+Check(Turn([attack, defend], [new("Slug", 24, 8)], 1, 5).Steps.Single().Card == 1, "surviving beats chip damage");
+Check(Turn([attack with { Damage = [6, 6] }], [new("A", 6, 0), new("B", 6, 12)], 1).Steps.Single().Target == 1, "focus the dangerous attacker");
+Check(Turn([attack with { Damage = [4, 4], Area = true }], [new("A", 4, 3), new("B", 4, 5)], 1).EnemiesLeft == 0, "area damage removes both intents");
+Check(Turn([attack with { Stars = 2 }, attack with { Arrows = 1 }], [new("A", 10, 3)], 3).Steps.Count == 0, "no overspending stars or arrows");
+Check(Turn([attack], [new("A", 10, 3)], 3).Steps.Count == 1, "each hand card usable once");
+Check(Turn([new("Draw", 0, 0, 0, 0, [-1], Pivot: true)], [new("A", 12, 0)], 1).Steps.Count == 1, "draw is a replan point");
+EventPick sword = new("Grab the Sword", "Obtain the [gold]Sword of Stone.[/gold]");
+EventPick dive = new("Dive into the Water", "Gain [blue]101[/blue] Gold. Lose [red]7[/red] HP.");
+Check(EventCoach.Recommend([dive, sword], 33, 91, 107, true) is { } advice && advice.StartsWith(sword.Title) && advice.Contains("26/91"), "Sunken Statue: recommend sword and quantify the cost of diving");
+Check(EventCoach.Recommend([sword, dive], 85, 91, 107, true)!.StartsWith(dive.Title), "healthy player can trade HP for gold");
+Check(EventCoach.Recommend([sword, new("Risk", "Gain 101 Gold. Fight an elite.")], 33, 91, 107, true) == null, "unknown event consequence is not treated as free");
+Bottle ampoule = new("EXPLOSIVE_AMPOULE", "Explosive Ampoule"), blockPot = new("BLOCK_POTION", "Block Potion"), strength = new("STRENGTH_POTION", "Strength Potion"), other = new("OTHER", "Other");
+Check(PotionCoach.Recommend([strength, blockPot], [other, ampoule], 2, true, true)?.StartsWith("Discard Explosive Ampoule for Block Potion.") == true, "full belt before Waterfall Giant favors block over area damage");
+Check(PotionCoach.Recommend([strength, blockPot], [ampoule], 2, true, true)?.StartsWith("Take Block Potion in the open slot.") == true, "open slot never suggests discarding");
+Check(PotionCoach.Recommend([strength, blockPot], [other, ampoule], 2, false, true) == null, "no Giant swap at a different encounter");
+CombatBottle shield = new("BLOCK_POTION", "Block Potion", 12, [true]), fire = new("FIRE_POTION", "Fire Potion", 20, [true]);
+string? Use(CombatBottle[] belt, int life, int incoming, int energy = 1)
+{
+    Foe[] foes = [new("Giant", life, incoming)];
+    var plan = Turn([attack], foes, energy);
+    return PotionCoach.Use(belt, foes, [attack], plan, 20, true);
+}
+Check(Use([shield], 240, 24)!.Contains("before ending the turn"), "block potion on a heavy unblocked hit");
+Check(Use([shield], 240, 2) == null, "save block potion for meaningful damage");
+Check(Use([shield, fire], 6, 24) == null, "save potions when hand alone wins");
+Check(Use([shield, fire], 24, 24)!.Contains("Fire Potion after your cards"), "prefer ending fight over blocking it");
+Check(Use([fire with { Targets = [false] }], 24, 24) == null, "no fire potion suggestion for illegal target");
+Check(Use([new("STRENGTH_POTION", "Strength Potion", 0, [true])], 240, 0)!.Contains("before your first attack"), "time strength before boss attacks");
+var vitriol = new Play("Vitriol", 0, 0, 0, 0, [0], Weak: 1, Sadness: 1, Skill: true);
+var punch = new Play("Punch of Joy", 2, 0, 0, 0, [14], Converts: true, Attack: true);
+Play[] fool = [punch, attack, new("Jest", 2, 0, 0, 12, [-1], Sadness: 1), attack, vitriol];
+var combo = Turn(fool, [new("Giant", 240, 0)], 3);
+Check(combo.Joy == 1 && combo.Steps.FindIndex(s => s.Card == 4) < combo.Steps.FindIndex(s => s.Card == 0), "Fool turn: use Vitriol before Punch of Joy regardless of hand order");
+Check(Turn([vitriol], [new("A", 50, 20)], 0).Incoming == 15, "new Weak reduces the target's intent");
+Check(Turn([vitriol], [new("A", 50, 20, new(0, 0, 1))], 0).Incoming == 20, "Artifact prevents the predicted Weak");
+Check(Turn([vitriol], [new("A", 50, 15, new(1, 0, 0))], 0).Incoming == 15, "already weakened attack not reduced twice");
+Check(TurnCoach.Plan([punch], [new("A", 50, 8)], 2, 0, 0, 0, 20, sadness: 1).Joy == 1, "Sadness already in hand converts without a generator");
+Check(Turn([punch], [new("A", 50, 8)], 2).Joy == 0, "no conversion without Sadness");
+var beam = attack with { Name = "Beam Cell", Energy = 0, Damage = [3], Vulnerable = 1, Attack = true };
+Check(Turn([attack, beam], [new("A", 12, 20)], 1).Steps[0].Card == 1, "Vulnerable opener enables lethal with the next attack");
+var finish = attack with { HitsFrom = "attacks", Attack = true };
+Check(TurnCoach.Plan([finish], [new("A", 12, 10)], 1, 0, 0, 0, 20, attacks: 2).EnemiesLeft == 0 &&
+      Turn([finish], [new("A", 12, 10)], 1).EnemiesLeft == 1, "Finisher counts completed attacks, not future ones");
+RouteStop Road(string room, params RouteStop[] next) => new(room, next);
+var fork = new[] { Road("Monster", Road("RestSite")), Road("Monster", Road("Shop")) };
+var traveler = new RouteState(80, 90, 182, 1, true);
+Check(RouteCoach.Choose(fork, traveler)?.Index == 1, "same opening fight: prefer merchant with gold");
+Check(RouteCoach.Choose(fork, traveler with { Hp = 24, Gold = 32 })?.Index == 0, "same fork: prefer camp when injured and poor");
+Check(RouteCoach.Choose([fork[0]], traveler) == null, "no generic advice for forced step");
+var gifts = new[] { ("YUMMY_COOKIE", "Yummy Cookie"), ("BIIIG_HUG", "Biiig Hug"), ("PUMPKIN_CANDLE", "Pumpkin Candle") };
+Check(EventCoach.Ancient(gifts, 5, 4, 1, true)!.StartsWith("Take Yummy Cookie"), "Tezcatara upgrades a deck with good upgrade targets");
+Check(EventCoach.Ancient(gifts, 1, 5, 5, true)!.StartsWith("Take Pumpkin Candle"), "expensive deck favors energy");
+Check(EventCoach.Ancient(gifts, 1, 9, 1, true)!.StartsWith("Take Biiig Hug"), "starter-heavy deck favors removals");
+var layout = new RewardLayout(new(0, 0, 1920, 1080), new(350, 650), [new(580, 170, 760, 700), new(0, 0, 1920, 160)]);
+Check(layout.Place(315, 214) is { } box && box.X + 315 < 580 && box.Y > 160, "bubble near player clears rewards and HUD");
+Check((layout with { Blocked = [layout.View] }).Place(315, 214) == null, "no overlay when no clear space exists");
+Check(C("UPPERCUT").Has("weak") && C("UPPERCUT").Has("vulnerable") && !C("GO_FOR_THE_EYES").Has("weak"), "unconditional debuffs distinct from conditional previews");
+Check(C("DAGGER_SPRAY").Has("multiple hits") && !C("DISMANTLE").Has("multiple hits"), "conditional second hit not counted as guaranteed");
+Check(Coach.Assess(C("DEADLY_POISON"), deck with { Relics = ["SNECKO_SKULL"] }).Reason.Contains("Snecko Skull"), "poison application recognized by owned relic");
+Check(Turn([attack with { HpLoss = 2 }], [new("Target", 6, 0)], 1, 2).Steps.Count == 0, "planner cannot spend last HP for a projected kill");
+Check(Catalog.Bosses.Count == 12 && Catalog.Bosses["TEST_SUBJECT_BOSS"].Contains("revivals"), "boss notes distinguish phase break from victory");
+var drawCtx = new BeltContext(2, 1, 1, 9, 2, 0, 0, 0, 0, 0, 0, 0, false, false, false, false, false);
+Check(PotionCoach.Use([new("SWIFT_POTION", "Swift Potion", 0, [true])], [new("Boss", 200, 15)], [], new([], 15, 1, 0), 40, true, drawCtx)?.Contains("Swift Potion") == true, "draw potion suggested with hand space and remaining energy");
+Check(PotionCoach.Use([new("SWIFT_POTION", "Swift Potion", 0, [true])], [new("Boss", 200, 15)], [], new([], 15, 1, 0), 40, true, drawCtx with { Size = 10 }) == null, "draw potion withheld with full hand");
+Check(Catalog.Potions.Count == 67 && Catalog.Potions["FAIRY_IN_A_BOTTLE"][0] == "automatic", "wiki potion policies include passive revival");
+var gate = new DecisionGate(); object offerA = new(), rewardsPage = new();
+gate.Finish(offerA);
+Check(!gate.Ready(offerA, "take A", 100, true), "no repeat on outgoing offer, even on manual request");
+Check(!gate.Ready(null, "choice made", 210, false) && !gate.Ready(rewardsPage, "choice made", 320, false) &&
+    gate.Ready(rewardsPage, "choice made", 640, false), "intentional feedback waits through overlay gap for stable rewards");
+gate.Transition();
+Check(!gate.Ready(rewardsPage, "choice made", 700, false), "screen transition resets the dwell timer");
+gate.Reopen(offerA);
+Check(gate.Ready(offerA, "new options", 750, true), "fresh offer remains immediately available on demand");
+gate.NewReaction(); gate.Delivered(rewardsPage);
+Check(!gate.MayDeliver(rewardsPage) && gate.LeftReactionScreen(null) && gate.LeftReactionScreen(new object()), "praise cannot replay after rewards close or combat starts");
+Check(gate.FreshTurnHint(offerA, "1", "Sky Shot → Strike"), "first turn hint available");
+gate.MarkTurnHint("Sky Shot → Strike"); gate.Transition();
+Check(!gate.FreshTurnHint(offerA, "1", "Sky Shot → Strike") && gate.FreshTurnHint(offerA, "1", "Defend"), "transient UI cannot repeat a spoken combat line; changed line remains eligible");
+var savedSpots = new Dictionary<string, BubbleSpot> { { "map", BubbleSpot.From(797, 399, 200, 100, 1000, 600) }, { "fight", BubbleSpot.From(-300, -10, 200, 100, 1000, 600) } };
+var roundtrip = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, BubbleSpot>>(System.Text.Json.JsonSerializer.Serialize(savedSpots))!;
+Check(roundtrip["map"].Restore(200, 100, 800, 500).Left == 594 && roundtrip["fight"].Restore(200, 100, 800, 500).Left == 6, "drag positions persist independently and stay on screen after resize");
+Check(!BubbleSpot.Moved(2, 2) && BubbleSpot.Moved(6, 0), "click jitter dismisses; deliberate movement drags");
+Console.WriteLine($"{count} scenarios passed.");
