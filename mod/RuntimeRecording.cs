@@ -18,7 +18,8 @@ internal sealed class RuntimeRecording
     static readonly ConditionalWeakTable<object, Reference> references = new();
     static long referenceCount;
     internal static string Ref(object instance) => references.GetValue(instance, _ => new Reference((++referenceCount).ToString())).Value;
-    internal static int Profile => SaveManager.Instance.CurrentProfileId;
+    internal static int? Profile => SaveManager.Instance.IsProfileInitialized
+        ? SaveManager.Instance.CurrentProfileId : null;
     internal static string RunIdentity(RunState r)
     {
         // A repeated seed is not a repeated run. The game's history start time
