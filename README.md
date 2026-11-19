@@ -38,6 +38,8 @@ On some Mac keyboards, hold **Fn** for F6 or F8. Changes save immediately.
 
 These two documentation examples are staged from gameplay captures with the game's native speech bubble and the v0.1.16 coach's output.
 
+Vakuu’s bubble grows with the wrapped text at your selected text size. If a detailed comparison is longer than the available space, scroll inside the bubble with the mouse wheel or trackpad. A scrollable hint stays open until you dismiss it or the decision changes.
+
 ## Find a direction, then learn from the run
 
 At card rewards Vakuu can spot more than one way forward. If your Silent already has Blade Dance, Accuracy is a **Shiv engine** opportunity; owning a payoff alone doesn’t mean the engine is online. The coach looks for supported lines across all six characters without locking your deck into a single build.

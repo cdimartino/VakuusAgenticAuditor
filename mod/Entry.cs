@@ -319,7 +319,7 @@ public static class Entry
             if (reacting) decisions.Delivered(overlay!);
             if (battleKey != null) { turn = battleKey; decisions.MarkTurnHint(text); }
         }
-        else if (changed || now >= until) ui.Hide();
+        else if (changed || (now >= until && !ui.Scrolls)) ui.Hide();
         else if (ui.Visible && anchor is { } point) ui.PositionBubble(point);
         last = key;
     }

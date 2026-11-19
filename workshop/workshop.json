@@ -2,7 +2,7 @@
   "title": "Vakuu's Agentic Auditor",
   "description": "An offline coach for solo Slay the Spire 2 public-beta runs. Ask Vakuu about your hand, a reward, or the next fork. Click a suggestion to dismiss it or drag it to a favorite spot for that screen. Press V to ask again. Settings → General → Vakuu’s Agentic Auditor controls what you hear. Targets beta v0.113.1; no dependencies.",
   "visibility": "private",
-  "changeNote": "First packaged beta. Movable bubbles remember their positions by screen.",
+  "changeNote": "Speech bubbles fit wrapped coaching text at your chosen font size. Extra-long hints scroll when space is limited.",
   "tags": [],
   "dependencies": [],
   "contentDescriptors": []

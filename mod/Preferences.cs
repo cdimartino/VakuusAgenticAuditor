@@ -50,6 +50,9 @@ internal sealed class Display
     internal Preferences P = Preferences.Load();
     readonly Label note = new() { MouseFilter = Control.MouseFilterEnum.Ignore, AutowrapMode = TextServer.AutowrapMode.WordSmart };
     NSpeechBubbleVfx? speech;
+    SpeechFit? fit;
+    Vector2 lastAnchor;
+    public bool Scrolls => fit?.Scrolls == true;
     internal RewardLayout? RewardSpace;
     internal string ViewType = "other";
     string shownView = "";
@@ -97,6 +100,12 @@ internal sealed class Display
     public Display(SceneTree tree)
     {
         tree.Root.AddChild(layer); layer.AddChild(note); layer.AddChild(menu); note.Hide();
+        note.GetViewport().SizeChanged += () =>
+        {
+            if (fit == null) return;
+            fit.Fit(note.GetViewportRect().Size, RewardSpace);
+            PositionBubble(lastAnchor);
+        };
         layer.AddChild(keyPrompt);
         layer.AddChild(review); review.AddChild(reviewText);
         keyPrompt.WindowInput += e =>
@@ -138,6 +147,16 @@ internal sealed class Display
         surface.GuiInput += e =>
         {
             var mouse = surface.GetViewport().GetMousePosition();
+            if (fit?.Scrolls == true && e is InputEventPanGesture pan)
+            {
+                fit.Scroll(pan.Delta.Y); surface.AcceptEvent(); return;
+            }
+            if (fit?.Scrolls == true && e is InputEventMouseButton { Pressed: true } wheel
+                && wheel.ButtonIndex is MouseButton.WheelDown or MouseButton.WheelUp)
+            {
+                fit.Scroll(wheel.ButtonIndex == MouseButton.WheelDown ? 1 : -1);
+                surface.AcceptEvent(); return;
+            }
             if (e is InputEventMouseButton { ButtonIndex: MouseButton.Left } click)
             {
                 surface.AcceptEvent();
@@ -175,6 +194,7 @@ internal sealed class Display
         note.Hide();
         if (GodotObject.IsInstanceValid(speech)) { speech!.Hide(); speech.QueueFree(); }
         speech = null;
+        fit = null;
     }
     public void Show(string body, Vector2? anchor)
     {
@@ -185,13 +205,15 @@ internal sealed class Display
             // A choice can disappear before the reaction is drawn. That changes
             // where Vakuu speaks, not which renderer displays the reaction.
             var point = anchor ?? note.GetViewportRect().Size * new Vector2(.5f, .42f);
-            speech = NSpeechBubbleVfx.Create(body, DialogueSide.Left, point, Math.Clamp(P.Seconds, 2, 60), VfxColor.Purple);
+            speech = NSpeechBubbleVfx.Create(body, DialogueSide.Left, point, 86400, VfxColor.Purple);
             if (speech != null)
             {
                 layer.AddChild(speech);
                 foreach (var child in speech.FindChildren("*", "Control", true, false).OfType<Control>())
                     child.MouseFilter = Control.MouseFilterEnum.Ignore;
-                var art = speech.GetNode<Sprite2D>("%Bubble");
+                fit = new SpeechFit(speech, body, P.Font);
+                fit.Fit(note.GetViewportRect().Size, RewardSpace);
+                var art = fit.Art;
                 var bounds = art.GetRect();
                 var hit = new Control { Position = bounds.Position, Size = bounds.Size, FocusMode = Control.FocusModeEnum.None };
                 art.AddChild(hit);
@@ -225,10 +247,11 @@ internal sealed class Display
     public void PositionBubble(Vector2 anchor)
     {
         var size = note.GetViewportRect().Size;
-        if (!GodotObject.IsInstanceValid(speech)) return;
+        if (!GodotObject.IsInstanceValid(speech) || fit == null) return;
+        lastAnchor = anchor;
         // Native artwork is offset from its speech origin. Position using the
         // sprite bounds instead of stretching the bubble to its parent.
-        var art = speech!.GetNode<Sprite2D>("%Bubble");
+        var art = fit.Art;
         var rect = art.GlobalTransform * art.GetRect();
         var spot = preview ?? P.BubblePositions.GetValueOrDefault(shownView);
         if (spot != null)
@@ -240,7 +263,7 @@ internal sealed class Display
         {
             // If the normal size won't fit, try a smaller native bubble before
             // giving up the space to the game's controls.
-            var baseSize = rect.Size / speech.Scale.X;
+            var baseSize = rect.Size / speech!.Scale.X;
             foreach (var zoom in new[] { 1f, .85f, .72f })
             {
                 var preferred = spot == null ? layout : layout with { Speaker = new(anchor.X, anchor.Y + 2) };
@@ -254,7 +277,7 @@ internal sealed class Display
         }
         var left = Math.Clamp(anchor.X - rect.Size.X * .5f, 6, Math.Max(6, size.X - rect.Size.X - 6));
         var top = Math.Clamp(anchor.Y - rect.Size.Y - 10, 6, Math.Max(6, size.Y - rect.Size.Y - 6));
-        speech.GlobalPosition += new Vector2(left, top) - rect.Position;
+        speech!.GlobalPosition += new Vector2(left, top) - rect.Position;
     }
     public void Settings()
     {
