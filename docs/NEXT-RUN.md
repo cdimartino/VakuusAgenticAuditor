@@ -2,7 +2,7 @@
 
 **Question:** Can Luna follow the advice a player actually sees, at speed, and produce a review traceable to observed game state? A natural defeat is a valid outcome. The previous run reached floor 25 in 7,153 seconds on the game timer; it did not certify Detailed guidance.
 
-**Current gate: do not start the run.** On local candidate `a6486e5`, both F8 and clicking the visible **Vakuu’s Agentic Auditor…** button under General produced a new popup-visible log entry. Neither produced a settings panel Luna could read in the captures. Repeating the same two inputs does not resolve this blocker. First demonstrate a readable, operable panel in the actual game capture; then verify the preset and fresh export below. Separately, the downloaded Workshop item was v0.1.20, not this v0.1.21 candidate. Local smoke results do not clear either gate for Workshop certification.
+**Local title-screen gate: passed on `f2b0d28`.** Both F8 and **General → Vakuu’s Agentic Auditor…** opened the readable in-game panel. The UI applied Detailed, showed recording enabled, and enabled export. Two fresh title snapshots confirmed the audited build, mute/Curse off, and no actionable run. The UI restored Balanced and disabled export; the original installation was restored. This clears the earlier popup blocker for the local candidate, not for an arbitrary downloaded copy. **Workshop certification is still blocked** until item 3842451639 delivers the verified candidate instead of v0.1.20. Repeat the title gate on that copy, then use the first-combat checkpoint below on an authorized run.
 
 ### 1. Prove settings access without starting a run
 
