@@ -1,5 +1,6 @@
 """Rebuild semantic tags from a locally owned, unencrypted Godot 4.5 game pack.
 Only card identifiers and our classifications are emitted, never game text/art."""
+
 import json
 import re
 import struct
@@ -98,26 +99,36 @@ if __name__ == "__main__":
         tags = [k for k, pattern in providers.items() if re.search(pattern, text, re.M)]
         needs = [k for k, ids in consumers.items() if name in ids.split()]
         lines.append("\t".join([name, ",".join(tags), ",".join(needs)]))
-    (Path(__file__).resolve().parents[1] / "mod/roles.tsv").write_text("\n".join(lines) + "\n")
+    (Path(__file__).resolve().parents[1] / "mod/roles.tsv").write_text(
+        "\n".join(lines) + "\n"
+    )
     # Require whole-clause matches. "Heal ... You can no longer ..." is
     # materially different from a free heal and must not be scored as one.
     patterns = {
-        "max hp":r"upon pickup, (?:raise your max hp by|gain) \{maxhp\}(?: max hp)?\.",
-        "gold":r"upon pickup, gain \{gold\} gold\.",
-        "sustain":r"at the (?:start|end) of (?:each )?combat, heal \{heal\} hp\.",
-        "rest heal":r"whenever you rest, heal an additional \{heal\} hp\.",
-        "opening block":r"start each combat with \{block\} block\.",
-        "opening energy":r"start each combat with an additional \{energy:energyicons\(\)\}\.",
-        "energy":r"every .*?turns\}, gain \{energy:energyicons\(\)\}\.",
-        "opening draw":r"at the start of each combat, draw \{cards\} additional .*?\.",
-        "slots":r"upon pickup, gain \{potionslots\} potion .*?\.",
-        "strength":r"start each combat with \{strengthpower\} strength\.",
-        "dexterity":r"start each combat with \{dexteritypower\} dexterity\.",
+        "max hp": r"upon pickup, (?:raise your max hp by|gain) \{maxhp\}(?: max hp)?\.",
+        "gold": r"upon pickup, gain \{gold\} gold\.",
+        "sustain": r"at the (?:start|end) of (?:each )?combat, heal \{heal\} hp\.",
+        "rest heal": r"whenever you rest, heal an additional \{heal\} hp\.",
+        "opening block": r"start each combat with \{block\} block\.",
+        "opening energy": r"start each combat with an additional \{energy:energyicons\(\)\}\.",
+        "energy": r"every .*?turns\}, gain \{energy:energyicons\(\)\}\.",
+        "opening draw": r"at the start of each combat, draw \{cards\} additional .*?\.",
+        "slots": r"upon pickup, gain \{potionslots\} potion .*?\.",
+        "strength": r"start each combat with \{strengthpower\} strength\.",
+        "dexterity": r"start each combat with \{dexteritypower\} dexterity\.",
     }
-    relics = english_cards(Path(sys.argv[1]),"relics")
-    lines=[]
-    for key in sorted(k for k in relics if k.endswith(".title") and k.count(".")==1):
-        name=key.split(".")[0]
-        text=re.sub(r"\[/?\w+\]","",relics.get(name+".description","").lower())
-        lines.append(name+"\t"+next((tag for tag,pat in patterns.items() if re.fullmatch(pat,text)),""))
-    (Path(__file__).resolve().parents[1] / "mod/relic-fit.tsv").write_text("\n".join(lines)+"\n")
+    relics = english_cards(Path(sys.argv[1]), "relics")
+    lines = []
+    for key in sorted(k for k in relics if k.endswith(".title") and k.count(".") == 1):
+        name = key.split(".")[0]
+        text = re.sub(r"\[/?\w+\]", "", relics.get(name + ".description", "").lower())
+        lines.append(
+            name
+            + "\t"
+            + next(
+                (tag for tag, pat in patterns.items() if re.fullmatch(pat, text)), ""
+            )
+        )
+    (Path(__file__).resolve().parents[1] / "mod/relic-fit.tsv").write_text(
+        "\n".join(lines) + "\n"
+    )

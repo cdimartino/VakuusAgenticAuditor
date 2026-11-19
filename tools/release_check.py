@@ -1,4 +1,5 @@
 """Check the distributable, not just the build output."""
+
 import json
 import os
 from zipfile import ZipFile
@@ -6,13 +7,20 @@ from pathlib import Path
 
 name = "VakuusAgenticAuditor"
 with ZipFile(f"dist/{name}.zip") as release:
-    expected = {f"{name}/{name}.dll", f"{name}/{name}.json", "Install.command", "Install.ps1"}
+    expected = {
+        f"{name}/{name}.dll",
+        f"{name}/{name}.json",
+        "Install.command",
+        "Install.ps1",
+    }
     if set(release.namelist()) != expected or release.testzip():
         raise SystemExit("Unexpected or corrupt release payload")
     manifest = json.loads(release.read(f"{name}/{name}.json"))
     if manifest["id"] != name or manifest["affects_gameplay"] or manifest["has_pck"]:
         raise SystemExit("Unexpected manifest")
-    if os.getenv("GITHUB_REF_TYPE") == "tag" and manifest["version"] != os.getenv("GITHUB_REF_NAME"):
+    if os.getenv("GITHUB_REF_TYPE") == "tag" and manifest["version"] != os.getenv(
+        "GITHUB_REF_NAME"
+    ):
         raise SystemExit("Tag must equal manifest version")
     for suffix in ("dll", "json"):
         path = f"{name}/{name}.{suffix}"
