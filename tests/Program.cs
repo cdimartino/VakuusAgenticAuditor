@@ -55,7 +55,7 @@ EventPick sword = new("Grab the Sword", "Obtain the [gold]Sword of Stone.[/gold]
 EventPick dive = new("Dive into the Water", "Gain [blue]101[/blue] Gold. Lose [red]7[/red] HP.");
 Check(EventCoach.Recommend([dive, sword], 33, 91, 107, true) is { } advice && advice.StartsWith(sword.Title) && advice.Contains("26/91"), "Sunken Statue: recommend sword and quantify the cost of diving");
 Check(EventCoach.Recommend([sword, dive], 85, 91, 107, true)!.StartsWith(dive.Title), "healthy player can trade HP for gold");
-Check(EventCoach.Recommend([sword, new("Risk", "Gain 101 Gold. Fight an elite.")], 33, 91, 107, true) == null, "unknown event consequence is not treated as free");
+Check(EventCoach.Recommend([sword, new("Risk", "Gain 101 Gold. Fight an elite.")], 33, 91, 107, true)?.Contains("Fight an elite") == true, "unknown event consequence is explained rather than treated as free");
 Bottle ampoule = new("EXPLOSIVE_AMPOULE", "Explosive Ampoule"), blockPot = new("BLOCK_POTION", "Block Potion"), strength = new("STRENGTH_POTION", "Strength Potion"), other = new("OTHER", "Other");
 Check(PotionCoach.Recommend([strength, blockPot], [other, ampoule], 2, true, true)?.StartsWith("Discard Explosive Ampoule for Block Potion.") == true, "full belt before Waterfall Giant favors block over area damage");
 Check(PotionCoach.Recommend([strength, blockPot], [ampoule], 2, true, true)?.StartsWith("Take Block Potion in the open slot.") == true, "open slot never suggests discarding");
@@ -93,7 +93,7 @@ var fork = new[] { Road("Monster", Road("RestSite")), Road("Monster", Road("Shop
 var traveler = new RouteState(80, 90, 182, 1, true);
 Check(RouteCoach.Choose(fork, traveler)?.Index == 1, "same opening fight: prefer merchant with gold");
 Check(RouteCoach.Choose(fork, traveler with { Hp = 24, Gold = 32 })?.Index == 0, "same fork: prefer camp when injured and poor");
-Check(RouteCoach.Choose([fork[0]], traveler) == null, "no generic advice for forced step");
+Check(RouteCoach.Choose([fork[0]], traveler, true)?.Path.Length > 1, "full act path available beyond forced opening");
 var gifts = new[] { ("YUMMY_COOKIE", "Yummy Cookie"), ("BIIIG_HUG", "Biiig Hug"), ("PUMPKIN_CANDLE", "Pumpkin Candle") };
 Check(EventCoach.Ancient(gifts, 5, 4, 1, true)!.StartsWith("Take Yummy Cookie"), "Tezcatara upgrades a deck with good upgrade targets");
 Check(EventCoach.Ancient(gifts, 1, 5, 5, true)!.StartsWith("Take Pumpkin Candle"), "expensive deck favors energy");
@@ -151,6 +151,12 @@ Check(Cursed(0, bitten).Contains("Take Middle.") && Cursed(5, bitten).Contains("
 Check(Curse.Advice("Detailed", true, 0, bitten.ToString(), curseOffer) == Cursed(0, bitten), "reopening or asking for detail cannot reroll crooked counsel");
 Check(Curse.Advice("Truth", true, 0, bitten.ToString(), null).StartsWith("CURSE · Hint withheld") && Curse.Advice("Truth", true, 0, bitten.ToString(), [curseOffer[0], curseOffer[0]]).Contains("Hint withheld"), "without a clearly weaker alternative Vakuu withholds advice rather than inventing a choice");
 CombatRegression.Run(Check);
+NonupeipeRegression.Run(Check);
+EnemyKnowledgeRegression.Run(Check);
+EventEffectsRegression.Run(Check);
+EnemyDefenseRegression.Run(Check);
+CurseRegression.Run(Check);
+RouteRegression.Run(Check);
 RoomRegression.Run(Check);
 JournalRegression.Run(Check);
 PresetRegression.Run(Check);

@@ -2,6 +2,8 @@ namespace Auditor;
 
 internal record Card(string Id, string Name, int Cost, bool Up, bool Attack, bool Known, string[] Gives, string[] Needs)
 {
+    // Supplied from runtime CardType.Curse, never inferred from a name/tag.
+    internal bool IsCurse { get; init; }
     internal bool Has(string role) => Gives.Contains(role);
 }
 internal static class Catalog
@@ -63,6 +65,11 @@ internal static class Coach
     // A score is marginal fit for this deck, not predicted win rate.
     internal static Verdict Assess(Card c, Deck d)
     {
+        if (c.IsCurse)
+        {
+            var cost = CurseValuation.Addition([c.Id], d);
+            return new(c.Id, c.Name, -cost.Cost, cost.Reason, cost.Reason);
+        }
         if (!c.Known) return new(c.Id, c.Name, double.NaN, "I don’t know this card well enough to rank it.", null);
         var pros = new List<(double w, string text)>();
         var cons = new List<(double w, string text)>();

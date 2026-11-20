@@ -33,8 +33,14 @@ internal sealed class SpeechFit
         parent.AddChild(text);
         text.AddThemeFontOverride("normal_font", original.GetThemeFont("normal_font"));
         // Native speech uses a material to darken the game's cream UI text.
-        text.AddThemeColorOverride("default_color", new Color(.12f, .07f, .16f));
-        text.AddThemeFontSizeOverride("normal_font_size", Math.Clamp(font, 12, 30));
+        // Purple art is translucent and sits over wildly different game scenes.
+        // Near-black ink disappears in the dark forest shots; use warm ivory
+        // with a subtle dark outline so the copy stays legible over every scene.
+        text.AddThemeColorOverride("default_color", new Color("fff4d6"));
+        text.AddThemeColorOverride("font_outline_color", new Color("24182e"));
+        text.AddThemeConstantOverride("outline_size", 2);
+        text.AddThemeConstantOverride("line_separation", 3);
+        text.AddThemeFontSizeOverride("normal_font_size", Math.Clamp(font + 2, 14, 32));
     }
 
     internal void Scroll(float direction) => text.GetVScrollBar().Value += direction * 60;
@@ -66,8 +72,12 @@ internal sealed class SpeechFit
                 }
             }
             if (height * innerY < text.GetThemeFont("normal_font").GetHeight(text.GetThemeFontSize("normal_font_size")) + 4) continue;
-            // Prefer full content, then the least intrusive footprint.
-            float score = height >= needed ? 2 + 1 / (1 + width * height / 10000) : height / needed;
+            // Prefer full copy, then a broad readable card rather than the
+            // tall, narrow pill produced by choosing the native width first.
+            float shape = 1 / (1 + Math.Abs(width / Math.Max(1, height) - 1.25f));
+            float score = height >= needed
+                ? 3 + shape + 1 / (1 + width * height / 10000)
+                : height / needed + shape * .1f;
             if (score > best) { best = score; chosen = new(width, height); }
         }
         // No legal space: PositionBubble hides the bubble rather than covering a choice.

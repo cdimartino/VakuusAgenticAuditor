@@ -42,6 +42,10 @@ On some Mac keyboards, hold **Fn** for F6 or F8. Changes save immediately.
 
 *The first fight on the left leads to a campfire upgrade. The right branch keeps an elite relic in reach. Vakuu looks ahead so you can decide whether the trade is worth it.*
 
+The v0.1.22 candidate scores the entire reachable act from the first map. The result is a preference for your current resources, not a prediction of hidden encounters. Turn on **Route overlay** (beside **Map** in Auditor settings) for a moving dashed trace; it is off by default.
+
+On the audited beta, combat advice can distinguish a known fixed follow-up from a conditional or random move. Exoskeleton’s observed Hard to Kill amount is applied separately to each hit. Unknown powers and effects are not assumed to be fully simulated.
+
 These two documentation examples are staged from gameplay captures with the game's native speech bubble and the v0.1.16 coach's output.
 
 Vakuu’s bubble grows with the wrapped text at your selected text size. If a detailed comparison is longer than the available space, scroll inside the bubble with the mouse wheel or trackpad. A scrollable hint stays open until you dismiss it or the decision changes.

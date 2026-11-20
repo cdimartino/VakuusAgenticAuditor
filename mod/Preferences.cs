@@ -20,6 +20,7 @@ internal sealed class Preferences
     public bool Combat { get; set; } = true;
     public bool CombatPotions { get; set; } = true;
     public bool Routes { get; set; } = true;
+    public bool ShowRouteOverlay { get; set; }
     public bool Camps { get; set; } = true;
     public bool Shops { get; set; } = true;
     public bool ExplicitPick { get; set; } = true;
@@ -469,6 +470,7 @@ internal sealed class Display
         Toggle("When to use combat potions", P.CombatPotions, v => P.CombatPotions = v);
         Toggle("One automatic hint per turn", P.OncePerTurn, v => P.OncePerTurn = v);
         Toggle("Map", P.Routes, v => P.Routes = v);
+        Toggle("Route overlay", P.ShowRouteOverlay, v => P.ShowRouteOverlay = v);
         Toggle("Campfires", P.Camps, v => P.Camps = v);
         Toggle("Merchants", P.Shops, v => P.Shops = v);
         Toggle("Name the recommended pick", P.ExplicitPick, v => P.ExplicitPick = v);

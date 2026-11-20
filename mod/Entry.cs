@@ -220,7 +220,7 @@ public static class Entry
             c.IsUpgraded, c.Type == CardType.Attack, c.GetType().Assembly == typeof(CardModel).Assembly);
         if (card.Known && c.BaseStarCost > 0 && !card.Needs.Contains("stars"))
             card = card with { Needs = [.. card.Needs, "stars"] };
-        return card;
+        return card with { IsCurse = c.Type == CardType.Curse };
     }
     static Deck DeckOf(RunState r, Player p)
     {
@@ -288,18 +288,21 @@ public static class Entry
         {
             decisions.Transition(); ui.Hide(); postUntil = 0; return;
         }
+        if (trace != null && (!P.ShowRouteOverlay || !P.Routes || P.Muted || P.Mode == "Off" || P.CurseMode
+            || NMapScreen.Instance is not { IsOpen: true, IsTraveling: false })) ClearTrace();
         if (ui.KeyboardBusy) return;
-        if (ui.InSettings) return;
+        if (ui.InSettings) { eventRequest.Clear(); return; }
         if (Edge(Input.IsKeyPressed(P.MuteKey), ref muteKey)) { P.Muted = !P.Muted; P.Save(); postUntil = 0; last = ""; }
         bool why = Edge(Input.IsKeyPressed(P.SuggestionKey) || (Input.IsJoyButtonPressed(0, JoyButton.Back) && Input.IsJoyButtonPressed(0, JoyButton.RightShoulder)), ref whyKey);
-        if (why && ui.Visible) { ui.Hide(); return; }
+        if (why && ui.Visible) { eventRequest.Clear(); ui.Hide(); return; }
         if (now < next && !why) return;
         next = now + 320;
         if (why) detailUntil = now + (ulong)Math.Clamp(P.Seconds, 2, 60) * 1000;
         if (P.Muted || P.Mode == "Off" || !Solo() || RunManager.Instance.DebugOnlyGetState() is not { } r || r.Players.Count != 1)
-        { ui.Hide(); last = ""; postUntil = 0; return; }
+        { eventRequest.Clear(); ui.Hide(); last = ""; postUntil = 0; return; }
         if (!ReferenceEquals(r, session)) { session = r; offer = null; postUntil = 0; turn = ""; }
         var p = r.Players[0]; var overlay = NOverlayStack.Instance?.Peek();
+        if (r.CurrentRoom is not EventRoom || overlay != null || !P.Events || NMapScreen.Instance?.IsOpen == true) eventRequest.Clear();
         ObserveBridge(r, p);
         if (!ReferenceEquals(r.CurrentRoom, postRoom) || NMapScreen.Instance?.IsOpen == true ||
             CombatManager.Instance.IsInProgress || decisions.LeftReactionScreen(overlay)) postUntil = 0;
@@ -312,13 +315,37 @@ public static class Entry
             if (P.Routes && !map.IsTraveling)
             {
                 var routes = Visible<NMapPoint>(map).Where(x => x.State.ToString() == "Travelable" && x.Point != null).OrderBy(x => x.Point!.coord.col).ToArray();
-                if (routes.Length > 1 || why && routes.Length == 1)
+                if (routes.Length > 0)
                 {
                     var deck = DeckOf(r, p);
-                    var hint = RouteCoach.Choose(routes.Select(x => Route(x.Point!, 4)).ToArray(), new(deck.Hp, deck.MaxHp, p.Gold, p.Potions.Count(),
-                        deck.Cards.Count(c => c.Attack && !c.Id.StartsWith("STRIKE_")) >= 4), why);
-                    if (hint != null) { text = hint.Text; anchor = Above([routes[hint.Index]]); }
+                    var state = new RouteState(deck.Hp, deck.MaxHp, p.Gold, p.Potions.Count(), deck.Cards.Count(c => c.Attack && !c.Id.StartsWith("STRIKE_")) >= 4);
+                    var signature = $"{RuntimeRecording.Ref(r)}:{r.CurrentActIndex}:{RuntimeRecording.Ref(map)}:{string.Join(",", routes.Select(x => RuntimeRecording.Ref(x.Point!)))}:{state}";
+                    if (routeSignature != signature)
+                    {
+                        var memo = new Dictionary<MegaCrit.Sts2.Core.Map.MapPoint, RouteStop>();
+                        RouteStop Route(MegaCrit.Sts2.Core.Map.MapPoint node)
+                        {
+                            if (memo.TryGetValue(node, out var known)) return known;
+                            return memo[node] = new(node.PointType.ToString(), node.Children.Select(Route).ToArray(), node.coord.row, node.coord.col);
+                        }
+                        routePlan = RouteCoach.Choose(routes.Select(x => Route(x.Point!)).ToArray(), state, true);
+                        routeSignature = signature;
+                        ClearTrace();
+                    }
+                    if (routePlan is { } hint)
+                    {
+                        text = hint.Text; anchor = Above([routes[hint.Index]]);
+                        if (P.ShowRouteOverlay && !P.CurseMode && !GodotObject.IsInstanceValid(trace))
+                        {
+                            var holders = Visible<NMapPoint>(map).Where(x => x.Point != null).ToLookup(x => (x.Point!.coord.row, x.Point.coord.col));
+                            var path = hint.Path.Select(n => holders[(n.Row, n.Col)].FirstOrDefault()).TakeWhile(x => x != null).OfType<NMapPoint>().ToList();
+                            if (r.CurrentMapPoint is { } current && holders[(current.coord.row, current.coord.col)].FirstOrDefault() is { } here)
+                                path.Insert(0, here);
+                            if (path.Count >= 2) trace = RouteOverlay.Show(map, path);
+                        }
+                    }
                 }
+                else ClearTrace();
             }
         }
         else if (overlay is NCardRewardSelectionScreen cardScreen && P.Rewards)
@@ -370,11 +397,13 @@ public static class Entry
                     ? [] : eventButtons.Where(b => b.IsEnabled && b.Option is { IsLocked: false, IsProceed: false }).ToArray();
                 if (options.Length > 0)
                 {
+                    var eventManual = eventRequest.ForOffer(ev, options.Select(b => (object)b.Option).ToArray(), why, ui.Visible);
                     anchor = Above(options);
                     if (options.All(b => b.Option.Relic != null))
                     {
                         var deck = p.Deck.Cards;
-                        text = EventCoach.Ancient(options.Select(b => (b.Option.Relic!.Id.Entry, b.Option.Relic.Title.GetFormattedText())).ToArray(),
+                        text = NonupeipeBlessing.Compare(options.Select(b => b.Option.Relic!.Id.Entry), P.ExplicitPick);
+                        text ??= EventCoach.Ancient(options.Select(b => (b.Option.Relic!.Id.Entry, b.Option.Relic.Title.GetFormattedText())).ToArray(),
                             deck.Count(c => c.IsUpgradable && !c.Id.Entry.StartsWith("STRIKE_") && !c.Id.Entry.StartsWith("DEFEND_")),
                             deck.Count(c => !c.IsUpgraded && (c.Id.Entry.StartsWith("STRIKE_") || c.Id.Entry.StartsWith("DEFEND_"))),
                             deck.Count(c => Read(c).Cost >= 2), P.ExplicitPick, deck.Count(c => c.IsUpgradable));
@@ -382,12 +411,28 @@ public static class Entry
                     if (r.CurrentRoom is EventRoom currentEvent && currentEvent.CanonicalEvent.Id.Entry == "POTION_COURIER")
                         text = EventCoach.Courier(options.Select(b => (new EventPick(b.Option.Title.GetFormattedText(),
                             b.Option.Description?.GetFormattedText() ?? ""), b.IsEnabled)).ToArray(),
-                            p.PotionSlots.Count - p.Potions.Count(), why);
-                    text ??= EventCoach.Recommend(options.Select(b => new EventPick(b.Option.Title.GetFormattedText(),
-                        b.Option.Description?.GetFormattedText() ?? "", b.Option.Relic?.Title.GetFormattedText())).ToArray(),
-                        p.Creature.CurrentHp, p.Creature.MaxHp, p.Gold, P.ExplicitPick);
-                    text ??= EventCoach.Unsupported(why);
+                            p.PotionSlots.Count - p.Potions.Count(), eventManual);
+                    if (text == null)
+                    {
+                        var picks = options.Select(b => new EventPick(b.Option.Title.GetFormattedText(),
+                            b.Option.Description?.GetFormattedText() ?? "", b.Option.Relic?.Title.GetFormattedText())).ToArray();
+                        var named = new Dictionary<string, Card>(StringComparer.OrdinalIgnoreCase);
+                        foreach (var name in picks.SelectMany(o => System.Text.RegularExpressions.Regex.Matches(
+                            System.Text.RegularExpressions.Regex.Replace(o.Description, @"\[[^\]]+\]", ""),
+                            @"(?:^|[.\n]\s*)Add ([^.\n]+?) to your Deck", System.Text.RegularExpressions.RegexOptions.IgnoreCase)
+                            .Select(m => m.Groups[1].Value)).Distinct())
+                        {
+                            eventCardModels ??= ModelDb.AllCards.ToLookup(c => c.Title, StringComparer.OrdinalIgnoreCase);
+                            var matches = eventCardModels[name].Take(2).ToArray();
+                            if (matches.Length == 1) named[name] = Read(matches[0]);
+                        }
+                        text = EventCoach.Evaluate(picks.Select(o => (o, true)).ToArray(), new(p.Creature.CurrentHp,
+                            p.Creature.MaxHp, p.Gold, DeckOf(r, p), UpgradeTargets: p.Deck.Cards.Count(c => c.IsUpgradable),
+                            EmptyPotionSlots: p.PotionSlots.Count - p.Potions.Count(), NamedCards: named), P.ExplicitPick);
+                    }
+                    text ??= EventCoach.Unsupported(eventManual);
                 }
+                else eventRequest.Clear();
             }
             if (r.CurrentRoom is RestSiteRoom camp && P.Camps && NRestSiteRoom.Instance is { } site)
             {
@@ -415,6 +460,14 @@ public static class Entry
         {
             ui.RewardSpace = RewardSpace(reward, p);
             anchor = new Vector2(ui.RewardSpace.Speaker.X, ui.RewardSpace.Speaker.Y);
+        }
+        if (text != null && ui.RewardSpace == null && NMapScreen.Instance?.IsOpen != true
+            && (r.CurrentRoom is MerchantRoom or EventRoom) && MegaCrit.Sts2.Core.Nodes.NGame.Instance is { } game)
+        {
+            var area = new RewardLayout(new(0, 0, game.GetViewportRect().Size.X, game.GetViewportRect().Size.Y),
+                new(anchor?.X ?? game.GetViewportRect().Size.X / 2, anchor?.Y ?? game.GetViewportRect().Size.Y / 2), []);
+            AddDialogueBounds(game, area);
+            if (area.Blocked.Count != 0) ui.RewardSpace = area;
         }
         if (!P.RewardBubble) anchor = null;
         ui.ViewType = NMapScreen.Instance?.IsOpen == true ? "map" : overlay switch
@@ -576,7 +629,19 @@ public static class Entry
             Block(screen.GetNodeOrNull<Control>(path));
         foreach (var h in Visible<NCardHolder>(screen)) Block(h.Hitbox);
         foreach (var c in Visible<NClickableControl>(screen)) Block(c);
-        return new(Rect(view), new(speaker.X, speaker.Y), blocked);
+        var layout = new RewardLayout(Rect(view), new(speaker.X, speaker.Y), blocked);
+        if (MegaCrit.Sts2.Core.Nodes.NGame.Instance is { } game) AddDialogueBounds(game, layout);
+        return layout;
+    }
+    static void AddDialogueBounds(Node root, RewardLayout layout)
+    {
+        // Native speech lives under the game, not under Vakuu's root CanvasLayer.
+        foreach (var sprite in root.FindChildren("Bubble", "Sprite2D", true, false).OfType<Sprite2D>())
+        {
+            if (!sprite.IsVisibleInTree()) continue;
+            var box = sprite.GetGlobalTransformWithCanvas() * sprite.GetRect();
+            if (box.HasArea()) layout.Blocked.Add(new(box.Position.X, box.Position.Y, box.Size.X, box.Size.Y));
+        }
     }
     static string? RewardText(bool details, bool requested)
     {
@@ -588,8 +653,16 @@ public static class Entry
         if (details || close) text += "\n" + string.Join("\n", ranking.Skip(1).Take(details ? 5 : 1).Select(x => $"{x.Name}: {x.Reason}"));
         return text.TrimEnd();
     }
-    static RouteStop Route(MegaCrit.Sts2.Core.Map.MapPoint node, int depth) => new(node.PointType.ToString(),
-        depth == 1 ? [] : node.Children.OrderBy(n => n.coord.col).Select(n => Route(n, depth - 1)).ToArray());
+    static ILookup<string, CardModel>? eventCardModels;
+    static readonly EventRequest eventRequest = new();
+    static string routeSignature = "";
+    static RouteHint? routePlan;
+    static Control? trace;
+    static void ClearTrace()
+    {
+        if (GodotObject.IsInstanceValid(trace)) { trace!.Hide(); trace.QueueFree(); }
+        trace = null;
+    }
     static string? Camp(RestSiteRoom room, Player p)
     {
         var options = room.Options.Where(x => x.IsEnabled).Select(x => x.OptionId.ToUpperInvariant()).ToArray();
@@ -620,7 +693,8 @@ public static class Entry
         if (enemies.Length == 0) return (null, null);
         var foes = enemies.Select(e => new Foe(e.Monster!.Title.GetFormattedText(), e.CurrentHp + e.Block,
             e.Monster.NextMove!.Intents.OfType<AttackIntent>().Sum(a => a.GetTotalDamage(state.PlayerCreatures, e)),
-            new Status(Power(e, "WEAK_POWER"), Power(e, "VULNERABLE_POWER"), Power(e, "ARTIFACT_POWER")), Power(e, "STRENGTH_POWER"), e.Powers.Any(x => x.Id.Entry.Contains("ILLUSION")))).ToArray();
+            new Status(Power(e, "WEAK_POWER"), Power(e, "VULNERABLE_POWER"), Power(e, "ARTIFACT_POWER")), Power(e, "STRENGTH_POWER"), e.Powers.Any(x => x.Id.Entry.Contains("ILLUSION")),
+            DamageCap: e.Powers.FirstOrDefault(x => x.Id.Entry == "HARD_TO_KILL_POWER")?.Amount)).ToArray();
         static int Power(MegaCrit.Sts2.Core.Entities.Creatures.Creature creature, string id) =>
             creature.Powers.FirstOrDefault(z => z.Id.Entry == id)?.Amount ?? 0;
         var hand = pc.Hand.Cards.Where(c => c.CanPlay()).ToArray();
@@ -631,7 +705,7 @@ public static class Entry
             var effect = Catalog.Effect(card.Id);
             bool area = c.TargetType == TargetType.AllEnemies, single = c.TargetType == TargetType.AnyEnemy;
             var hits = Enumerable.Repeat(-1, enemies.Length).ToArray();
-            int guard = 0;
+            int guard = 0, repeats = 1;
             var vars = c.DynamicVars.Clone(c);
             for (int j = 0; j < (single || area ? enemies.Length : 1); j++)
             {
@@ -642,8 +716,8 @@ public static class Entry
                 if (card.Has("guard")) guard = Value("Block");
                 if (single || area)
                 {
-                    int repeats = card.Has("multiple hits") && vars.TryGetValue("HitCount", out var count) ? Math.Max(1, (int)count.BaseValue) : 1;
-                    hits[j] = card.Attack ? repeats * Math.Max(Value("Damage"), Math.Max(Value("CalculatedDamage"), Value("OstyDamage"))) : 0;
+                    repeats = card.Has("multiple hits") && vars.TryGetValue("HitCount", out var count) ? Math.Max(1, (int)count.BaseValue) : 1;
+                    hits[j] = card.Attack ? Math.Max(Value("Damage"), Math.Max(Value("CalculatedDamage"), Value("OstyDamage"))) : 0;
                 }
             }
             if (single && hits.All(n => n < 0)) continue;
@@ -661,7 +735,7 @@ public static class Entry
                 BlockMultipliers: effect == "block-damage" ? enemies.Select(enemy =>
                     (Power(p.Creature, "WEAK_POWER") > 0 ? .75 : 1.0) *
                     (Power(enemy, "VULNERABLE_POWER") > 0 ? 1.5 : 1.0)).ToArray() : null,
-                Instance: RuntimeRecording.Ref(c)));
+                Instance: RuntimeRecording.Ref(c), Hits: repeats));
         }
         var key = $"{session?.CurrentActIndex}:{session?.ActFloor}:{state.RoundNumber}";
         var played = CombatManager.Instance.History.CardPlaysFinished.Where(e => e.HappenedThisTurn(state) && e.CardPlay.Card.Owner == p)
@@ -708,7 +782,27 @@ public static class Entry
             });
         }).ToArray();
         expectedHpLoss = line.Incoming + line.HpCost;
-        string WithRisk(string value) => CombatGuidance.Risk(line, foes, p.Creature.CurrentHp, details) + "\n" + value;
+        string WithRisk(string value)
+        {
+            var parts = value.Split('\n', 2);
+            var risk = CombatGuidance.Risk(line, foes, p.Creature.CurrentHp, details);
+            int target = line.Steps.Select(s => s.Target).FirstOrDefault(i => i >= 0, 0);
+            var enemy = enemies[target];
+            var monster = enemy.Monster!;
+            var move = monster.NextMove!;
+            string cue = "";
+            if (!move.Intents.Any(x => x is HiddenIntent) && (details || foes[target].DamageCap.HasValue))
+            {
+                var follow = move.FollowUpState;
+                if (follow == null && move.FollowUpStateId is { } id && monster.MoveStateMachine is { } machine)
+                    machine.States.TryGetValue(id, out follow);
+                cue = EnemyKnowledge.Describe(loadedStatus.StartsWith("Audited") ? Catalog.Profile.Build : null,
+                    monster.Id.Entry, move.Id, follow?.GetType().Name, follow?.Id,
+                    enemy.Powers.Select(x => (x.Id.Entry, x.Amount)), monster.MoveStateMachine?.StateLog.LastOrDefault()?.Id);
+            }
+            return parts[0] + "\n" + risk + (parts.Length > 1 && parts[1].Length > 0 ? " " + parts[1] : "")
+                + (cue.Length == 0 ? "" : $"\n{foes[target].Name}: {cue}");
+        }
         string Describe(Step step)
         {
             var play = plays[step.Card]; if (step.Target < 0 || foes.Length == 1) return play.Name;
@@ -716,9 +810,9 @@ public static class Entry
                 (foes.Count(f => f.Name == foe.Name) > 1 ? $" ({enemies[step.Target].CurrentHp} HP)" : "");
         }
         string? text = line.Steps.Count == 0 ? (hand.Length > 0 ? "No clear line from damage and block alone. Inspect the other effects in your hand." : null)
-            : $"Turn {state.RoundNumber}: {string.Join(" → ", line.Steps.Select(Describe))}.\n" +
+            : $"{string.Join(" → ", line.Steps.Select(Describe))}.\n" +
             (line.EnemiesLeft == 0 ? "Projected lethal from current previews." : line.Joy > 0 ? "Turn Sadness into Joy. Play Joy and reassess the draw." : plays[line.Steps[^1].Card].Pivot ? "Reassess after that effect resolves." :
-            $"About {line.Incoming} incoming damage left after block and projected kills.");
+            "");
         if (P.CombatPotions && !CombatManager.Instance.PlayerActionsDisabled)
         {
             var belt = p.Potions.Where(b => !b.IsQueued && b.PassesCustomUsabilityCheck &&
@@ -743,7 +837,7 @@ public static class Entry
             {
                 plannedActions = []; // A potion choice requires a fresh observed state.
                 // Keep the potion instruction visible inside Vakuu's fixed-size bubble.
-                text = line.Steps.Count == 0 ? hint : $"{hint}\n{string.Join(" → ", line.Steps.Select(Describe))}.";
+                text = line.Steps.Count == 0 ? hint : $"{string.Join(" → ", line.Steps.Select(Describe))}.\n{hint}";
                 return (text == null ? null : WithRisk(text), key);
             }
         }
@@ -756,7 +850,7 @@ public static class Entry
             {
                 var play = plays[line.Steps[i].Card];
                 if (play.Converts && sadness > 0)
-                    return (WithRisk($"Turn {state.RoundNumber}: {string.Join(" → ", line.Steps.Take(i + 1).Select(Describe))} → Joy.\nDraw before committing to your next card."), key);
+                    return (WithRisk($"{string.Join(" → ", line.Steps.Take(i + 1).Select(Describe))} → Joy.\nDraw before committing to your next card."), key);
                 sadness += play.Sadness;
             }
         }
@@ -765,18 +859,6 @@ public static class Entry
         {
             string moves = string.Join(" → ", line.Steps.Select(Describe));
             return (WithRisk(moves.Length > 0 ? $"{moves}.\n{tactic}" : tactic), key);
-        }
-        if (text != null && details)
-        {
-            string resource = p.Character.Id.Entry switch
-            {
-                "REGENT" => $"{pc.Stars} stars",
-                "FOOL" => $"{pc.AvailableArrowCount} arrows available",
-                "DEFECT" => $"{pc.OrbQueue?.Orbs.Count() ?? 0}/{pc.OrbQueue?.Capacity ?? 0} orb slots filled",
-                "NECROBINDER" => $"Osty: {p.Osty?.CurrentHp ?? 0} HP",
-                _ => $"{pc.ExhaustPile.Cards.Count} exhausted"
-            };
-            text += $"\n{resource} · {pc.DrawPile.Cards.Count} to draw · {pc.DiscardPile.Cards.Count} discarded";
         }
         return (text == null ? null : WithRisk(text), key);
     }

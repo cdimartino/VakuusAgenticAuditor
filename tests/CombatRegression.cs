@@ -31,6 +31,8 @@ internal static class CombatRegression
             check(boundary.Steps[^1].Card == 0 && boundary.Recheck, effect + " ends the line");
         }
         var quiet = TurnCoach.Plan([], [new("Quiet", 100, 0)], 0, 0, 0, 0, 30);
+        check(CombatGuidance.Risk(quiet, [new("Strong", 100, 0, Strength: 4)], 30, false)
+            == CombatGuidance.Risk(quiet, [new("Quiet", 100, 0)], 30, false), "zero incoming has no generic Strength disclaimer");
         check(!CombatGuidance.Risk(quiet, [new("Quiet", 100, 0)], 30, false).Contains("Strength"), "quiet fight has no invented scaling");
         check(CombatGuidance.Risk(quiet, [new("Obscura", 100, 0, Strength: 4, Illusion: true)], 30, false).Contains("returning"), "visible scaling and illusion separate from zero current threat");
         check(CombatGuidance.Revision("1", ["anger1", "anger2"], ["a"], 1, 0, 0, 0, 30, false)

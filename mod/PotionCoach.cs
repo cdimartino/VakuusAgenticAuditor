@@ -18,7 +18,7 @@ internal static class PotionCoach
             var c = hand[step.Card];
             if (c.Damage.Any(n => n > 0)) attacks++;
             for (int j = 0; j < remaining.Length; j++)
-                if (c.Area || step.Target == j) remaining[j] = Math.Max(0, remaining[j] - Math.Max(0, c.Damage[j]));
+                if (c.Area || step.Target == j) remaining[j] = Math.Max(0, remaining[j] - TurnCoach.TargetDamage(foes[j], c.Damage[j], c.Hits));
         }
         var pivot = line.Steps.Count > 0 && hand[line.Steps[^1].Card].Pivot;
         remaining = line.Remaining ?? remaining;
@@ -35,7 +35,7 @@ internal static class PotionCoach
                 choices.Add((35, $"Drink {b.Name} before your first attack{(b.Id == "FLEX_POTION" ? " while you can attack repeatedly this turn" : " for lasting Strength in this fight")}."));
             if (!pivot && b.Amount > 0 && b.Id is "FIRE_POTION" or "EXPLOSIVE_AMPOULE" or "POTION_SHAPED_ROCK")
             {
-                var kills = Enumerable.Range(0, foes.Length).Where(j => b.Targets[j] && remaining[j] > 0 && remaining[j] <= b.Amount)
+                var kills = Enumerable.Range(0, foes.Length).Where(j => b.Targets[j] && remaining[j] > 0 && remaining[j] <= TurnCoach.TargetDamage(foes[j], b.Amount))
                     .OrderByDescending(j => foes[j].Intent).ToArray();
                 if (kills.Length == 0) continue;
                 bool all = b.Id == "EXPLOSIVE_AMPOULE";
@@ -64,7 +64,7 @@ internal static class PotionCoach
                 "permanent" => true,
                 "refill" => x.EmptySlots >= 1,
                 "triple block" => line.Steps.Any(s => hand[s.Card].Guard >= 5) && gap >= 8,
-                "splash" => b.Amount > 0 && hp > b.Amount && foes.All(f => f.Life <= b.Amount),
+                "splash" => b.Amount > 0 && hp > b.Amount && foes.All(f => f.Life <= TurnCoach.TargetDamage(f, b.Amount)),
                 "defense" => gap >= 6 && line.Steps.Any(s => hand[s.Card].Guard > 0),
                 "buff" => early && attacks > 0,
                 "early defense" => early && gap > 0,

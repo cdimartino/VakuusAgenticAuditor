@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.1.22
+
+- Combat bubbles lead with the card sequence, followed by the estimated result. Higher-contrast lettering and wider bubbles reduce narrow columns of text. Removed the generic zero-damage disclaimer.
+- Combat forecasts apply Exoskeleton’s observed Hard to Kill cap per hit. On the audited beta, enemy guidance distinguishes fixed follow-ups from conditional, random and unknown moves.
+- At the first map opportunity, Vakuu compares paths through the whole visible act, taking current health, gold, potion supply and combat readiness into account. Enable **Route overlay** for an animated dashed trace. Unknown rooms are not guaranteed rewards.
+- Event advice compares enabled choices using their displayed effects and the current deck. It reports unresolved clauses rather than treating an unknown cost as free. Actual curses are valued separately from the optional Curse Mode.
+
 ## v0.1.21
 
 - Settings now responds to a delivered shortcut press instead of waiting for a frame to sample the held key. **Settings → General → Vakuu’s Agentic Auditor…** remains available without a keyboard shortcut.

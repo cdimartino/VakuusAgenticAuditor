@@ -6,7 +6,7 @@ internal static class RoomRegression
     {
         RouteStop[] camp = [new("RestSite", [])];
         var state = new RouteState(40, 80, 50, 1, false);
-        check(RouteCoach.Choose(camp, state) == null, "forced route automatic quiet");
+        check(new RouteAnnouncements().Update(camp, state) != null, "announce full route at forced opening");
         check(RouteCoach.Choose(camp, state, true)?.Text.Contains("camp") == true, "forced camp manual response");
         check(RouteCoach.Choose([], state, true) == null, "transition has no forced hint");
         check(RouteCoach.Choose([camp[0], new("Shop", [])], state) != null, "branches retain comparison");

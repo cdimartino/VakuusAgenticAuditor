@@ -8,14 +8,13 @@ internal static class CombatGuidance
     internal static string Risk(TurnLine line, Foe[] foes, int hp, bool detailed)
     {
         bool lethal = line.Incoming + line.HpCost >= hp;
-        string text = lethal ? "Danger: the shown line is lethal. Recheck defenses or potions. " : "";
-        text += detailed
-            ? $"Estimate: {line.RawIntent} current intent − {line.RemovedIntent} from projected kills − {line.WeakReduction} from new Weak − {line.ExpectedBlock} block = {line.Incoming} damage against {hp} HP."
-            : $"Estimated shown line: {line.Incoming} damage against {hp} HP.";
-        if (line.HpCost > 0) text += $" Cards also cost {line.HpCost} HP.";
-        if (foes.Any(f => f.Strength > 0)) text += " Visible Strength: zero damage now does not mean a safe fight.";
-        if (foes.Any(f => f.Illusion)) text += " Illusion: a projected kill may only remove the current attack, not the returning threat.";
-        if (line.Recheck) text += " Recheck after the hand-changing effect; this is not an end-turn guarantee.";
+        string text = lethal ? $"Danger: estimated lethal ({line.Incoming + line.HpCost} HP loss vs {hp} HP)." :
+            line.Incoming == 0 ? "No attack damage expected this turn." : $"Expect {line.Incoming} damage after block.";
+        if (detailed && line.RawIntent > 0)
+            text += $" Intent {line.RawIntent}" + (line.RemovedIntent > 0 ? $" − {line.RemovedIntent} from kills" : "")
+                + (line.WeakReduction > 0 ? $" − {line.WeakReduction} from Weak" : "") + $" − {line.ExpectedBlock} block.";
+        if (line.HpCost > 0) text += $" Cards cost {line.HpCost} HP.";
+        if (foes.Any(f => f.Illusion)) text += " Watch for a returning Illusion.";
         return text;
     }
 

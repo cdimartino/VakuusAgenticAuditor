@@ -1,19 +1,25 @@
 namespace Auditor;
 
 internal readonly record struct Status(int Weak, int Vulnerable, int Artifact);
-internal record Foe(string Name, int Life, int Intent, Status Status = default, int Strength = 0, bool Illusion = false);
-// Damage is a per-enemy preview; -1 means this enemy isn't a legal target.
+internal record Foe(string Name, int Life, int Intent, Status Status = default, int Strength = 0, bool Illusion = false,
+    int? DamageCap = null);
+// Damage is a per-enemy, per-hit preview; -1 means this enemy isn't a legal target.
 internal record Play(string Name, int Energy, int Stars, int Arrows, int Guard, int[] Damage,
     bool Area = false, bool Pivot = false, bool Setup = false, bool Ex = false, bool Sx = false,
     int Weak = 0, int Vulnerable = 0, int Sadness = 0, bool Converts = false, bool Skill = false,
     string HitsFrom = "", bool Attack = false, int HpLoss = 0, bool BlockDamage = false,
-    double[]? BlockMultipliers = null, string Instance = "");
+    double[]? BlockMultipliers = null, string Instance = "", int Hits = 1);
 internal record Step(int Card, int Target);
 internal record TurnLine(List<Step> Steps, int Incoming, int EnemiesLeft, double Score, int Joy = 0, int[]? Remaining = null,
     int RawIntent = 0, int ExpectedBlock = 0, int RemovedIntent = 0, int WeakReduction = 0, int HpCost = 0, bool Recheck = false);
 
 internal static class TurnCoach
 {
+    // HARD_TO_KILL_POWER caps each damage event, after modifiers. Counter
+    // stacks change the cap; hits do not consume it. Null means no observed cap.
+    internal static int TargetDamage(Foe foe, int perHit, int hits = 1) =>
+        Math.Min(Math.Max(0, perHit), foe.DamageCap is int cap ? Math.Max(0, cap) : int.MaxValue) * Math.Max(0, hits);
+
     // Bounded beam search. Stop at draws/setup plays: the hand or costs may change.
     record State(int Energy, int Stars, int Arrows, int Block, int[] Life, ulong Used, TurnLine Line,
         Status[] Status, int Sadness, int Created, int Attacks, int Skills, int PaidHp);
@@ -57,7 +63,7 @@ internal static class TurnCoach
                                     : Math.Max(0, c.Damage[j]);
                                 if (!c.BlockDamage && newVulnerable) hit = hit * 3 / 2;
                                 int repeats = c.HitsFrom switch { "attacks" => s.Attacks, "skills" => s.Skills, _ => 1 };
-                                life[j] = Math.Max(0, life[j] - hit * repeats);
+                                life[j] = Math.Max(0, life[j] - TargetDamage(foes[j], hit, c.Hits * repeats));
                                 if (c.Weak > 0) z = z.Artifact > 0 ? z with { Artifact = z.Artifact - 1 } : z with { Weak = z.Weak + c.Weak };
                                 if (c.Vulnerable > 0) z = z.Artifact > 0 ? z with { Artifact = z.Artifact - 1 } : z with { Vulnerable = z.Vulnerable + c.Vulnerable };
                                 status[j] = z;
