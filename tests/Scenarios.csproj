@@ -1,6 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup><TargetFramework>net9.0</TargetFramework><Nullable>enable</Nullable><OutputType>Exe</OutputType><ImplicitUsings>enable</ImplicitUsings></PropertyGroup>
-  <ItemGroup><Compile Include="../mod/RewardLayout.cs" /></ItemGroup>
+  <ItemGroup>
+    <Compile Include="../mod/SettingsShortcut.cs" />
+    <Compile Include="../mod/RewardLayout.cs" />
+    <Compile Include="../mod/CombatGuidance.cs;../mod/RunJournal.cs;../mod/JournalAnalysis.cs;../mod/PlaytestPreset.cs;../mod/PlaytestExport.cs" />
+  </ItemGroup>
   <ItemGroup><Compile Include="../mod/DecisionGate.cs" /></ItemGroup>
   <ItemGroup><Compile Include="../mod/Curse.cs" /></ItemGroup>
   <ItemGroup><Compile Include="../mod/BubbleSpot.cs" /></ItemGroup>
@@ -9,5 +13,5 @@
     <EmbeddedResource Include="../mod/catalogs/index.json" LogicalName="auditor/catalogs/index.json" />
     <EmbeddedResource Include="../mod/catalogs/**/*.tsv" LogicalName="auditor/catalogs/%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
-  <ItemGroup><Compile Include="../mod/RouteCoach.cs" /><Compile Include="../mod/Coach.cs" /><Compile Include="../mod/EventCoach.cs" /><Compile Include="../mod/PotionCoach.cs" /><Compile Include="../mod/TurnCoach.cs" /></ItemGroup>
+  <ItemGroup><Compile Include="../mod/RouteCoach.cs;../mod/CurseValuation.cs" /><Compile Include="../mod/Coach.cs" /><Compile Include="../mod/EventCoach.cs;../mod/EventEffects.cs;../mod/EnemyKnowledge.cs;../mod/NonupeipeBlessing.cs" /><Compile Include="../mod/PotionCoach.cs" /><Compile Include="../mod/TurnCoach.cs" /></ItemGroup>
 </Project>

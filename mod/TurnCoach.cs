@@ -1,17 +1,25 @@
 namespace Auditor;
 
 internal readonly record struct Status(int Weak, int Vulnerable, int Artifact);
-internal record Foe(string Name, int Life, int Intent, Status Status = default);
-// Damage is a per-enemy preview; -1 means this enemy isn't a legal target.
+internal record Foe(string Name, int Life, int Intent, Status Status = default, int Strength = 0, bool Illusion = false,
+    int? DamageCap = null);
+// Damage is a per-enemy, per-hit preview; -1 means this enemy isn't a legal target.
 internal record Play(string Name, int Energy, int Stars, int Arrows, int Guard, int[] Damage,
     bool Area = false, bool Pivot = false, bool Setup = false, bool Ex = false, bool Sx = false,
     int Weak = 0, int Vulnerable = 0, int Sadness = 0, bool Converts = false, bool Skill = false,
-    string HitsFrom = "", bool Attack = false, int HpLoss = 0);
+    string HitsFrom = "", bool Attack = false, int HpLoss = 0, bool BlockDamage = false,
+    double[]? BlockMultipliers = null, string Instance = "", int Hits = 1);
 internal record Step(int Card, int Target);
-internal record TurnLine(List<Step> Steps, int Incoming, int EnemiesLeft, double Score, int Joy = 0, int[]? Remaining = null);
+internal record TurnLine(List<Step> Steps, int Incoming, int EnemiesLeft, double Score, int Joy = 0, int[]? Remaining = null,
+    int RawIntent = 0, int ExpectedBlock = 0, int RemovedIntent = 0, int WeakReduction = 0, int HpCost = 0, bool Recheck = false);
 
 internal static class TurnCoach
 {
+    // HARD_TO_KILL_POWER caps each damage event, after modifiers. Counter
+    // stacks change the cap; hits do not consume it. Null means no observed cap.
+    internal static int TargetDamage(Foe foe, int perHit, int hits = 1) =>
+        Math.Min(Math.Max(0, perHit), foe.DamageCap is int cap ? Math.Max(0, cap) : int.MaxValue) * Math.Max(0, hits);
+
     // Bounded beam search. Stop at draws/setup plays: the hand or costs may change.
     record State(int Energy, int Stars, int Arrows, int Block, int[] Life, ulong Used, TurnLine Line,
         Status[] Status, int Sadness, int Created, int Attacks, int Skills, int PaidHp);
@@ -19,7 +27,7 @@ internal static class TurnCoach
         int sadness = 0, int attacks = 0, int skills = 0, int creationBlock = 0, int handSize = 0)
     {
         int incoming = Math.Max(0, foes.Sum(f => f.Intent) - block);
-        var best = new TurnLine([], incoming, foes.Length, 0);
+        var best = new TurnLine([], incoming, foes.Length, 0, RawIntent: foes.Sum(f => f.Intent), ExpectedBlock: block);
         var front = new List<State> {new(energy,stars,arrows,block,foes.Select(f=>f.Life).ToArray(),0,best,
             foes.Select(f=>f.Status).ToArray(),sadness,0,attacks,skills,0)};
         for (int depth = 0; depth < Math.Min(hand.Length, 5); depth++)
@@ -44,10 +52,18 @@ internal static class TurnCoach
                             {
                                 // Damage previews already include the current board. Apply
                                 // only modifiers newly introduced by this candidate line.
-                                int hit = Math.Max(0, c.Damage[j]);
-                                if (z.Vulnerable > 0 && initial.Vulnerable == 0) hit = hit * 3 / 2;
+                                // Body Slam's base is the block at this point in the line,
+                                // not the starting-board preview (which can be zero).
+                                bool newVulnerable = z.Vulnerable > 0 && initial.Vulnerable == 0;
+                                // Combine block multipliers before rounding. In particular,
+                                // Weak + newly applied Vulnerable must not round twice.
+                                int hit = c.BlockDamage
+                                    ? (int)Math.Floor(s.Block * (c.BlockMultipliers?[j] ?? (initial.Vulnerable > 0 ? 1.5 : 1))
+                                        * (newVulnerable ? 1.5 : 1))
+                                    : Math.Max(0, c.Damage[j]);
+                                if (!c.BlockDamage && newVulnerable) hit = hit * 3 / 2;
                                 int repeats = c.HitsFrom switch { "attacks" => s.Attacks, "skills" => s.Skills, _ => 1 };
-                                life[j] = Math.Max(0, life[j] - hit * repeats);
+                                life[j] = Math.Max(0, life[j] - TargetDamage(foes[j], hit, c.Hits * repeats));
                                 if (c.Weak > 0) z = z.Artifact > 0 ? z with { Artifact = z.Artifact - 1 } : z with { Weak = z.Weak + c.Weak };
                                 if (c.Vulnerable > 0) z = z.Artifact > 0 ? z with { Artifact = z.Artifact - 1 } : z with { Vulnerable = z.Vulnerable + c.Vulnerable };
                                 status[j] = z;
@@ -73,9 +89,12 @@ internal static class TurnCoach
                         // ties: seeing another card before committing energy has value.
                         if (joy > 0 && alive > 0) score += .01 * (hand.Length - (s.Line.Joy == 0 ? depth :
                             s.Line.Steps.FindIndex(step => hand[step.Card].Converts)));
-                        var line = new TurnLine([.. s.Line.Steps, new(i, targeted ? t : -1)], gap, alive, score, joy, life);
+                        int removed = Enumerable.Range(0, life.Length).Where(j => life[j] == 0).Sum(j => foes[j].Intent);
+                        var line = new TurnLine([.. s.Line.Steps, new(i, targeted ? t : -1)], gap, alive, score, joy, life,
+                            foes.Sum(f => f.Intent), b, removed, foes.Sum(f => f.Intent) - removed - threat, paid,
+                            c.Pivot || convert);
                         if (score > best.Score) best = line;
-                        if (alive > 0 && !c.Pivot) next.Add(new(c.Ex ? 0 : s.Energy - c.Energy, c.Sx ? 0 : s.Stars - c.Stars, s.Arrows - c.Arrows, b, life, s.Used | bit, line,
+                        if (alive > 0 && !c.Pivot && !convert) next.Add(new(c.Ex ? 0 : s.Energy - c.Energy, c.Sx ? 0 : s.Stars - c.Stars, s.Arrows - c.Arrows, b, life, s.Used | bit, line,
                             status, sad, s.Created + added, s.Attacks + (c.Attack ? 1 : 0), s.Skills + (c.Skill ? 1 : 0), paid));
                     }
                 }

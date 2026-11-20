@@ -31,7 +31,7 @@ def english_cards(pack, table="cards"):
 providers = {
     "guard": r"^gain [^.\n]*? block\b",
     "hit": r"^(deal|osty deals|shoot an arrow to deal) .*?damage",
-    "draw": r"^draw (?:\{|\d|a card)",
+    "draw": r"^draw (?:\{|\d|a card|until\b)",
     "energy": r"^gain \{energy:energyicons",
     "exhaust": r"\bexhaust (?:your|all|a card|1|it\b)",
     "strength": r"\bgain [^.\n]{1,55} strength\b",

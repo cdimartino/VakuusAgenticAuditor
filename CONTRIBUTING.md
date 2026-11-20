@@ -10,4 +10,6 @@ Public pull requests use GitHub-hosted CI. Trusted main/tag pushes and manual ru
 
 Before tagging, test a real run: drag a bubble on the map, use a different spot in combat, click to dismiss, press V to recall, change resolution and restart. Confirm the two spots survive, reward choices still receive their clicks, and **Reset bubble positions** restores defaults.
 
+For an instrumented agent test, follow [PLAYTESTING.md](docs/PLAYTESTING.md). Game-state journals are local-only; do not commit player histories or account paths. Run the Python runner regressions with `python3 -m unittest discover -s tools/playtest -p 'test_*.py' -v`. The optional patched MCP binary is separate from the Workshop mod and must be installed only with the game safely closed.
+
 Community conventions used here: [BaseLib](https://github.com/Alchyr/BaseLib-StS2/releases) ships versioned downloads; [Minty Spire 2](https://github.com/erasels/Minty-Spire-2) documents manual installation and makes intrusive UI optional. Workshop staging follows [Mega Crit’s official uploader](https://github.com/megacrit/sts2-mod-uploader). None of these mods is a runtime dependency.

@@ -42,6 +42,10 @@ On some Mac keyboards, hold **Fn** for F6 or F8. Changes save immediately.
 
 *The first fight on the left leads to a campfire upgrade. The right branch keeps an elite relic in reach. Vakuu looks ahead so you can decide whether the trade is worth it.*
 
+The v0.1.22 candidate scores the entire reachable act from the first map. The result is a preference for your current resources, not a prediction of hidden encounters. Turn on **Route overlay** (beside **Map** in Auditor settings) for a moving dashed trace; it is off by default.
+
+On the audited beta, combat advice can distinguish a known fixed follow-up from a conditional or random move. Exoskeleton’s observed Hard to Kill amount is applied separately to each hit. Unknown powers and effects are not assumed to be fully simulated.
+
 These two documentation examples are staged from gameplay captures with the game's native speech bubble and the v0.1.16 coach's output.
 
 Vakuu’s bubble grows with the wrapped text at your selected text size. If a detailed comparison is longer than the available space, scroll inside the bubble with the mouse wheel or trackpad. A scrollable hint stays open until you dismiss it or the decision changes.
@@ -51,6 +55,16 @@ Vakuu’s bubble grows with the wrapped text at your selected text size. If a de
 At card rewards Vakuu can spot more than one way forward. If your Silent already has Blade Dance, Accuracy is a **Shiv engine** opportunity; owning a payoff alone doesn’t mean the engine is online. The coach looks for supported lines across all six characters without locking your deck into a single build.
 
 After a solo victory or defeat, **Vakuu’s run review** summarizes your deck identity, progress by act, largest recorded HP loss, upgrades, removals, gold spent and potion use. A loss review separates the recorded killer from coaching hypotheses and suggests what to practice next. Reopen it from the results screen or **Auditor settings → Read latest run review**. Disable **Open review after a run** to keep it on demand. The latest review stays locally in `user://mod_configs/VakuusAgenticAuditor/latest-run.txt`.
+
+### A record of what actually happened
+
+Local recording is on by default. During a supported solo run, Vakuu samples changing game state up to ten times per second: hand and deck, HP/block/resources, enemies and visible powers/intents, current choices, delivered advice (including curses), and completed card plays reported by the game. It also records state transitions; those are not proof of which action caused an effect. Recording continues while advice is muted.
+
+The end review includes a per-floor history and bounded highlights from this evidence. It does not claim an unused potion would have saved you or compare a prediction against unrelated HP loss. Turn recording cannot reconstruct earlier, unrecorded play.
+
+Files stay on your computer under `user://mod_configs/VakuusAgenticAuditor/runs/` as JSONL. No API key or network service is needed. Vakuu keeps at most 12 journals, with a 32 MiB limit per journal; reaching that limit stops recording for that run. Toggle **Record game-state snapshots locally** in Auditor settings to disable it. Recording gaps and storage failures limit the assessment rather than interrupting gameplay. Close the game before deleting journals you no longer want.
+
+**For playtest agents:** the separate, default-off **Export playtest setup** option exposes fresh advice to a [guarded local runner](docs/PLAYTESTING.md). It refreshes advice after changed combat state for that opt-in test; ordinary once-per-turn guidance is unchanged. The exporter does not play the game itself. The runner requires an explicitly approved profile/run and permission to send game actions.
 
 ## Troubleshooting
 

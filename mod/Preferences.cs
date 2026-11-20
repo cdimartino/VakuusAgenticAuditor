@@ -20,6 +20,7 @@ internal sealed class Preferences
     public bool Combat { get; set; } = true;
     public bool CombatPotions { get; set; } = true;
     public bool Routes { get; set; } = true;
+    public bool ShowRouteOverlay { get; set; }
     public bool Camps { get; set; } = true;
     public bool Shops { get; set; } = true;
     public bool ExplicitPick { get; set; } = true;
@@ -29,6 +30,13 @@ internal sealed class Preferences
     public bool AllowClosestCatalog { get; set; }
     public bool CurseMode { get; set; }
     public bool OpenRunReview { get; set; } = true;
+    // Local-only analysis capture. The host runtime owns the recorder itself.
+    public bool RecordRun { get; set; } = true;
+    // Opt-in local snapshot export; Entry owns writing the snapshot file.
+    public bool PlaytestBridge { get; set; }
+    // Serialized ownership record lets restoration remain safe across restarts.
+    public Dictionary<string, string> PlaytestPresetBefore { get; set; } = new();
+    public Dictionary<string, string> PlaytestPresetApplied { get; set; } = new();
     public Key SuggestionKey { get; set; } = Key.V;
     public Key SettingsKey { get; set; } = Key.F8;
     public Key MuteKey { get; set; } = Key.F6;
@@ -63,10 +71,37 @@ internal sealed class Display
     bool dragged;
     BubbleSpot? preview;
     readonly StyleBoxFlat corner;
-    readonly PopupMenu menu = new() { HideOnItemSelection = false };
+    readonly PanelContainer menu = new() { Name = "AuditorSettings", Visible = false, MouseFilter = Control.MouseFilterEnum.Stop, FocusMode = Control.FocusModeEnum.All };
+    readonly ColorRect settingsBackdrop = new() { Color = new Color(0.035f, 0.025f, 0.05f, 0.72f), Visible = false, MouseFilter = Control.MouseFilterEnum.Stop };
+    readonly VBoxContainer settingsRows = new() { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill };
+    readonly Button settingsDone = new() { Text = "Done", FocusMode = Control.FocusModeEnum.All, CustomMinimumSize = new Vector2(0, 44) };
     readonly AcceptDialog keyPrompt = new() { Title = "Auditor keyboard shortcuts", OkButtonText = "Cancel" };
     Action<Key>? bind;
     Key waitForRelease = Key.None;
+    internal event Func<bool>? SettingsPressed;
+    readonly SettingsShortcut<Key> settingsShortcut = new();
+    bool SettingsBlocked => KeyboardBusy || review.Visible;
+    internal void SettingsController(bool pressed)
+    {
+        if (settingsShortcut.Controller(pressed, SettingsBlocked)) SettingsPressed?.Invoke();
+    }
+    void SettingsInput(Window source, InputEvent input)
+    {
+        if (input is not InputEventKey key) return;
+        if (!key.Pressed)
+        {
+            if (waitForRelease == key.Keycode) waitForRelease = Key.None;
+        }
+        // Window input is delivered even when both edges fall between frames.
+        // Track all keys, including keys being rebound; echoes and duplicate
+        // delivery through an embedded popup must never toggle a second time.
+        if (menu.Visible && !keyPrompt.Visible && !review.Visible && key.Pressed && !key.Echo && key.Keycode == Key.Escape)
+        {
+            menu.Hide(); source.SetInputAsHandled(); return;
+        }
+        if (settingsShortcut.Key(key.Keycode, key.Pressed, key.Echo, P.SettingsKey, SettingsBlocked)
+            && SettingsPressed?.Invoke() == true) source.SetInputAsHandled();
+    }
     public bool KeyboardBusy
     {
         get
@@ -86,13 +121,29 @@ internal sealed class Display
         latest = report;
         try { Directory.CreateDirectory(Path.GetDirectoryName(ReviewPath)!); File.WriteAllText(ReviewPath + ".tmp", report); File.Move(ReviewPath + ".tmp", ReviewPath, true); }
         catch (IOException ex) { GD.PushWarning(ex.Message); }
-        var button = new Button { Text = "Vakuu’s run review", Position = new(20, 80) };
+        var button = new Button
+        {
+            Text = "Vakuu’s run review",
+            FocusMode = Control.FocusModeEnum.All,
+            AnchorLeft = 1,
+            AnchorRight = 1,
+            AnchorTop = 0,
+            AnchorBottom = 0,
+            OffsetLeft = -224,
+            OffsetRight = -20,
+            OffsetTop = 20,
+            OffsetBottom = 64
+        };
         screen.AddChild(button); button.Pressed += ShowReview;
+        button.ZIndex = 100;
+        button.GrabFocus();
         if (P.OpenRunReview && !P.Muted && P.Mode != "Off") Callable.From(ShowReview).CallDeferred();
     }
     void ShowReview()
     {
-        menu.Hide(); Hide();
+        // Keep the settings panel open underneath the review dialog; closing
+        // the child dialog returns the player to the same panel and scroll spot.
+        Hide();
         if (latest == null && File.Exists(ReviewPath)) latest = File.ReadAllText(ReviewPath);
         reviewText.Text = latest ?? "Finish a solo run with the Auditor enabled to see your review.";
         reviewText.ScrollVertical = 0;
@@ -100,10 +151,32 @@ internal sealed class Display
     }
     readonly CanvasLayer layer = new() { Layer = 80, Name = "VakuuAuditor" };
     readonly string catalogStatus;
-    public Display(SceneTree tree, string catalogStatus)
+    readonly string? richerStatus;
+    public Display(SceneTree tree, string catalogStatus) : this(tree, catalogStatus, null) { }
+    public Display(SceneTree tree, string catalogStatus, string? richerStatus)
     {
         this.catalogStatus = catalogStatus;
-        tree.Root.AddChild(layer); layer.AddChild(note); layer.AddChild(menu); note.Hide();
+        this.richerStatus = richerStatus;
+        tree.Root.AddChild(layer); layer.AddChild(note); layer.AddChild(settingsBackdrop); layer.AddChild(menu); note.Hide();
+        settingsBackdrop.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
+        settingsBackdrop.GuiInput += e => { settingsBackdrop.AcceptEvent(); };
+        var frame = new VBoxContainer { SizeFlagsHorizontal = Control.SizeFlags.ExpandFill, SizeFlagsVertical = Control.SizeFlags.ExpandFill };
+        frame.AddChild(new Label { Text = "VAKUU  /  SETTINGS", HorizontalAlignment = HorizontalAlignment.Center });
+        frame.AddChild(new HSeparator());
+        var settingsScroll = new ScrollContainer { HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled, SizeFlagsVertical = Control.SizeFlags.ExpandFill };
+        settingsScroll.AddChild(settingsRows); frame.AddChild(settingsScroll); frame.AddChild(settingsDone);
+        menu.AddChild(frame);
+        menu.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.TopLeft);
+        menu.CustomMinimumSize = Vector2.Zero;
+        menu.AddThemeStyleboxOverride("panel", new StyleBoxFlat { BgColor = new Color("17131f"), BorderColor = new Color("a98bd4"), BorderWidthLeft = 2, BorderWidthRight = 2, BorderWidthTop = 2, BorderWidthBottom = 2, ContentMarginLeft = 14, ContentMarginRight = 14, ContentMarginTop = 12, ContentMarginBottom = 12 });
+        settingsDone.Pressed += () => menu.Hide();
+        menu.GuiInput += e => { if (e is InputEventMouseButton { Pressed: true } click && click.ButtonIndex == MouseButton.Left) menu.AcceptEvent(); };
+        void UpdateSettingsModal() => settingsBackdrop.Visible = menu.Visible || keyPrompt.Visible || review.Visible;
+        menu.VisibilityChanged += () =>
+        {
+            UpdateSettingsModal();
+            if (menu.Visible) { GD.Print("[VakuuAuditor] Settings popup visible"); settingsDone.GrabFocus(); }
+        };
         note.GetViewport().SizeChanged += () =>
         {
             if (fit == null) return;
@@ -126,23 +199,26 @@ internal sealed class Display
         };
         keyPrompt.VisibilityChanged += () =>
         {
+            UpdateSettingsModal();
             if (!keyPrompt.Visible && bind != null)
             {
                 bind = null;
-                Callable.From(() => { RefreshSettings(); menu.PopupCentered(); }).CallDeferred();
+                Callable.From(() => { RefreshSettings(); menu.Show(); menu.GrabFocus(); }).CallDeferred();
             }
         };
+        review.VisibilityChanged += UpdateSettingsModal;
+        menu.GetViewport().SizeChanged += RepositionSettings;
+        // These are native Window signals: no custom Node/_Input registration.
+        // Attach after the Display is fully initialized and its subscribers exist.
+        Callable.From(() =>
+        {
+            foreach (var window in new Window[] { tree.Root, keyPrompt, review })
+                window.WindowInput += input => SettingsInput(window, input);
+            tree.Root.FocusExited += settingsShortcut.Reset;
+        }).CallDeferred();
         corner = new StyleBoxFlat { BgColor = new Color(.07f, .055f, .09f, .93f), ContentMarginLeft = 12, ContentMarginRight = 12, ContentMarginTop = 8, ContentMarginBottom = 8 };
         note.AddThemeStyleboxOverride("normal", corner);
         MakeDismissible(note);
-        menu.IdPressed += id =>
-        {
-            actions[(int)id]();
-            if (!menu.Visible) return; // Done
-            P.Save();
-            Hide();
-            RefreshSettings();
-        };
     }
     public bool Visible => note.Visible || GodotObject.IsInstanceValid(speech);
     void MakeDismissible(Control surface, Sprite2D? art = null)
@@ -285,18 +361,53 @@ internal sealed class Display
     }
     public void Settings()
     {
-        if (menu.Visible) { menu.Hide(); return; }
+        if (menu.Visible)
+        {
+            if (!keyPrompt.Visible && !review.Visible) menu.Hide();
+            return;
+        }
         RefreshSettings();
-        menu.PopupCentered();
+        RepositionSettings();
+        settingsBackdrop.Visible = true;
+        menu.Show();
+        settingsDone.GrabFocus();
+    }
+    void RepositionSettings()
+    {
+        if (!GodotObject.IsInstanceValid(menu)) return;
+        var viewport = menu.GetViewportRect().Size;
+        menu.Size = new Vector2(Math.Max(1, Math.Min(560, viewport.X - 24)), Math.Max(1, Math.Min(620, viewport.Y - 24)));
+        menu.Position = (viewport - menu.Size) / 2;
     }
     void RefreshSettings()
     {
         actions.Clear();
+        foreach (var child in settingsRows.GetChildren())
+        {
+            settingsRows.RemoveChild((Node)child);
+            ((Node)child).QueueFree();
+        }
         void Item(string s, Action a)
         {
             int index = actions.Count;
-            if (index == menu.ItemCount) menu.AddItem(s, index);
-            else menu.SetItemText(index, s);
+            var button = new Button
+            {
+                Text = s,
+                Alignment = HorizontalAlignment.Left,
+                FocusMode = Control.FocusModeEnum.All,
+                CustomMinimumSize = new Vector2(0, 36),
+                SizeFlagsHorizontal = Control.SizeFlags.ExpandFill,
+                TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis
+            };
+            settingsRows.AddChild(button);
+            button.Pressed += () =>
+            {
+                actions[index]();
+                if (!menu.Visible) return;
+                P.Save();
+                RefreshSettings();
+                if (index < settingsRows.GetChildCount()) ((Control)settingsRows.GetChild(index)).GrabFocus();
+            };
             actions.Add(a);
         }
         void Toggle(string label, bool v, Action<bool> set) => Item((v ? "✓ " : "   ") + label, () => set(!v));
@@ -320,13 +431,33 @@ internal sealed class Display
         }
         Toggle("Curse Mode · unreliable advice (scales with Ascension)", P.CurseMode, v => P.CurseMode = v);
         Toggle("Unknown patch: use closest catalog (restart required)", P.AllowClosestCatalog, v => P.AllowClosestCatalog = v);
-        Item(catalogStatus, () => { });
-        menu.SetItemDisabled(actions.Count - 1, true);
+        Item(string.IsNullOrWhiteSpace(richerStatus) ? catalogStatus : richerStatus, () => { });
+        ((BaseButton)settingsRows.GetChild(settingsRows.GetChildCount() - 1)).Disabled = true;
+        Item("Guidance: " + P.Mode, () => P.Mode = Next(P.Mode, "Off", "On demand", "Balanced", "Detailed"));
+        Toggle("Quick mute", P.Muted, v => P.Muted = v);
+        Toggle("Record local game-state snapshots (not inputs)", P.RecordRun, v => P.RecordRun = v);
+        Toggle("Export playtest setup · off by default", P.PlaytestBridge, v => P.PlaytestBridge = v);
+        Item(P.PlaytestPresetApplied.Count > 0 ? "Restore playtest preset (field-specific)" : "Apply Detailed playtest preset", () =>
+        {
+            var state = new Dictionary<string, string>
+            {
+                [nameof(P.Mode)] = P.Mode,
+                [nameof(P.Muted)] = P.Muted.ToString(),
+                [nameof(P.CurseMode)] = P.CurseMode.ToString(),
+                [nameof(P.AllowClosestCatalog)] = P.AllowClosestCatalog.ToString(),
+            };
+            var preset = new PlaytestPreset(P.PlaytestPresetBefore, P.PlaytestPresetApplied);
+            var conflicts = preset.Active ? preset.Restore(state) : preset.Apply(state);
+            P.Mode = state[nameof(P.Mode)];
+            P.Muted = bool.Parse(state[nameof(P.Muted)]);
+            P.CurseMode = bool.Parse(state[nameof(P.CurseMode)]);
+            P.AllowClosestCatalog = bool.Parse(state[nameof(P.AllowClosestCatalog)]);
+            P.Save();
+            if (conflicts.Count > 0) GD.PushWarning("Playtest preset left externally changed settings untouched: " + string.Join(", ", conflicts));
+        });
         Shortcut("Show / dismiss suggestion", P.SuggestionKey, k => P.SuggestionKey = k);
         Shortcut("Open settings", P.SettingsKey, k => P.SettingsKey = k);
         Shortcut("Mute / unmute", P.MuteKey, k => P.MuteKey = k);
-        Item("Guidance: " + P.Mode, () => P.Mode = Next(P.Mode, "Off", "On demand", "Balanced", "Detailed"));
-        Toggle("Quick mute", P.Muted, v => P.Muted = v);
         Toggle("Open review after a run", P.OpenRunReview, v => P.OpenRunReview = v);
         Item("Read latest run review", ShowReview);
         Toggle("Before card picks", P.Rewards, v => P.Rewards = v);
@@ -339,6 +470,7 @@ internal sealed class Display
         Toggle("When to use combat potions", P.CombatPotions, v => P.CombatPotions = v);
         Toggle("One automatic hint per turn", P.OncePerTurn, v => P.OncePerTurn = v);
         Toggle("Map", P.Routes, v => P.Routes = v);
+        Toggle("Route overlay", P.ShowRouteOverlay, v => P.ShowRouteOverlay = v);
         Toggle("Campfires", P.Camps, v => P.Camps = v);
         Toggle("Merchants", P.Shops, v => P.Shops = v);
         Toggle("Name the recommended pick", P.ExplicitPick, v => P.ExplicitPick = v);
@@ -349,6 +481,6 @@ internal sealed class Display
         Item("Show for: " + P.Seconds + "s", () => P.Seconds = Next(P.Seconds, 5, 9, 15, 30));
         Item("Reset bubble positions", () => P.BubblePositions.Clear());
         Item("Reset defaults", () => P = new());
-        Item("Done", menu.Hide);
+        // The footer Done button remains visible regardless of scroll position.
     }
 }

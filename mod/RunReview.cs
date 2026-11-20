@@ -1,10 +1,10 @@
 using System.Text;
 namespace Auditor;
 
-internal record FloorResult(int Act, int Floor, string Room, int Damage, int Healed, int Used, int Spent, int Gained, int Removed, int Upgraded, int Turns);
+internal record FloorResult(int Act, int Floor, string Room, int Damage, int Healed, int Used, int Spent, int Gained, int Removed, int Upgraded, int Turns, int? StartupHpGrant = null);
 internal static class RunReview
 {
-    internal static string Write(Deck deck, FloorResult[] path, bool won, bool abandoned, string? killer, int ascension, int gold, string[] potions)
+    internal static string Write(Deck deck, FloorResult[] path, bool won, bool abandoned, string? killer, int ascension, int gold, string[] potions, string? journalAssessment = null)
     {
         var s = new StringBuilder();
         var lines = Archetypes.Analyze(deck);
@@ -15,7 +15,8 @@ internal static class RunReview
         if (lines.Length == 0) s.AppendLine("No supported archetype had a clear signal. A flexible deck is a valid outcome.");
         foreach (var l in lines.Take(3))
         {
-            var names = string.Join(", ", l.Sources.Concat(l.Payoffs).Select(x => x.Name).Distinct().Take(4));
+            var names = "sources: " + string.Join(", ", l.Sources.Select(x => x.Name).Distinct().Take(3))
+                + "; payoffs: " + string.Join(", ", l.Payoffs.Select(x => x.Name).Distinct().Take(3));
             s.AppendLine($"{l.Line.Name} — {(l.Online ? "supported" : l.Payoffs.Length == 0 ? "possible direction; no tagged payoff" : "payoff without a tagged enabler")}: {names}.");
         }
         s.AppendLine($"{deck.Cards.Count(c => c.Has("guard"))} direct block cards · {deck.Cards.Count(c => c.Has("draw"))} draw cards · {deck.Cards.Count(c => c.Up)} upgraded.");
@@ -23,6 +24,14 @@ internal static class RunReview
         foreach (var act in path.GroupBy(f => f.Act))
             s.AppendLine($"Act {act.Key}: {act.Count()} floors; {act.Sum(f => f.Damage)} damage taken, {act.Sum(f => f.Healed)} healed, {act.Sum(f => f.Used)} potions used.");
         s.AppendLine($"{path.Sum(f => f.Gained)} cards gained, {path.Sum(f => f.Removed)} removed, {path.Sum(f => f.Upgraded)} upgrades recorded; {path.Sum(f => f.Spent)} gold spent.");
+        s.AppendLine("\nPER-FLOOR HISTORY");
+        foreach (var f in path)
+        {
+            s.AppendLine($"A{f.Act}/F{f.Floor} {RoomLabel(f.Room)}: {f.Damage} damage, {f.Healed} game-recorded healing, {f.Used} potions, {f.Spent} gold spent; +{f.Gained}/−{f.Removed} cards, {f.Upgraded} upgrades, {f.Turns} turns.");
+            if (f.StartupHpGrant is { } grant) s.AppendLine($"  Identified startup HP grant: {grant}; separate from tactical recovery (included in history healing only if the game records it there).");
+        }
+        if (path.Any(f => f.Floor == 1 && f.Healed > 0 && f.StartupHpGrant == null))
+            s.AppendLine("Floor-one healing may include initialization; history alone does not identify a startup grant or tactical recovery.");
         if (worst is { Damage: > 0 }) s.AppendLine($"Largest HP cost: floor {worst.Floor}, {worst.Room} ({worst.Damage} damage recorded).");
         s.AppendLine(abandoned ? "\nWHAT TO PRACTICE" : won ? "\nWHAT TO REPEAT" : "\nLOSS ANALYSIS");
         if (!won && !abandoned) s.AppendLine(killer == null ? "The game did not record a killing encounter or event." : $"Recorded cause: {killer}.");
@@ -40,6 +49,12 @@ internal static class RunReview
         else if (worst is { Damage: > 0 })
             s.AppendLine($"• Use {worst.Room} as a practice fight: plan for its first dangerous turn before spending energy on setup.");
         else s.AppendLine("• At each reward, name one immediate problem the card solves before taking it over Skip.");
+        if (!string.IsNullOrWhiteSpace(journalAssessment)) s.AppendLine("\n" + journalAssessment);
         return s.ToString();
+    }
+    static string RoomLabel(string room)
+    {
+        var text = room.Replace('_', ' ').Replace("Normal", "regular fight").Replace("RestSite", "Rest site").Replace("Merchant", "Shop");
+        return System.Text.RegularExpressions.Regex.Replace(text, "(?<=[a-z])(?=[A-Z])", " ");
     }
 }

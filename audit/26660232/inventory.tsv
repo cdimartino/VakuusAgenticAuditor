@@ -464,7 +464,7 @@ cards	PERFECTED_STRIKE	Perfected Strike	Perfected Strike	roles: hit
 cards	PHANTOM_BLADES	Phantom Blades	Phantom Blades	ID only; no inferred role
 cards	PHOTON_CUT	Photon Cut	Photon Cut	roles: hit,draw
 cards	PIERCING_WAIL	Piercing Wail	Piercing Wail	ID only; no inferred role
-cards	PILLAGE	Pillage	Pillage	roles: hit
+cards	PILLAGE	Pillage	Pillage	roles: hit,draw
 cards	PILLAR_OF_CREATION	Pillar of Creation	Pillar of Creation	ID only; no inferred role
 cards	PINPOINT	Pinpoint	Pinpoint	roles: hit
 cards	PITY	Pity		ID only; no inferred role

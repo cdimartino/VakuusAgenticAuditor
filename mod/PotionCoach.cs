@@ -18,7 +18,7 @@ internal static class PotionCoach
             var c = hand[step.Card];
             if (c.Damage.Any(n => n > 0)) attacks++;
             for (int j = 0; j < remaining.Length; j++)
-                if (c.Area || step.Target == j) remaining[j] = Math.Max(0, remaining[j] - Math.Max(0, c.Damage[j]));
+                if (c.Area || step.Target == j) remaining[j] = Math.Max(0, remaining[j] - TurnCoach.TargetDamage(foes[j], c.Damage[j], c.Hits));
         }
         var pivot = line.Steps.Count > 0 && hand[line.Steps[^1].Card].Pivot;
         remaining = line.Remaining ?? remaining;
@@ -35,7 +35,7 @@ internal static class PotionCoach
                 choices.Add((35, $"Drink {b.Name} before your first attack{(b.Id == "FLEX_POTION" ? " while you can attack repeatedly this turn" : " for lasting Strength in this fight")}."));
             if (!pivot && b.Amount > 0 && b.Id is "FIRE_POTION" or "EXPLOSIVE_AMPOULE" or "POTION_SHAPED_ROCK")
             {
-                var kills = Enumerable.Range(0, foes.Length).Where(j => b.Targets[j] && remaining[j] > 0 && remaining[j] <= b.Amount)
+                var kills = Enumerable.Range(0, foes.Length).Where(j => b.Targets[j] && remaining[j] > 0 && remaining[j] <= TurnCoach.TargetDamage(foes[j], b.Amount))
                     .OrderByDescending(j => foes[j].Intent).ToArray();
                 if (kills.Length == 0) continue;
                 bool all = b.Id == "EXPLOSIVE_AMPOULE";
@@ -48,7 +48,11 @@ internal static class PotionCoach
                 choices.Add((ends ? 110 : saved >= hp ? 100 : 65, $"Use {b.Name}{targetLabel} {timing} to {(ends ? "finish the fight" : hit.Length > 1 ? "finish multiple enemies" : "remove an attacker")}."));
             }
             if (ctx is not { } x || !Catalog.Potions.TryGetValue(b.Id, out var profile)) continue;
-            bool early = majorFight && x.Round <= 2;
+            // A normal encounter can be a long, dangerous fight too. Reevaluate
+            // against the current line rather than relying on room class alone.
+            bool extended = majorFight || foes.Any(f => f.Strength > 0 || f.Illusion)
+                || (line.EnemiesLeft > 0 && remaining.Sum() >= 40 && (gap >= 8 || x.MissingHp >= 15));
+            bool early = extended && (x.Round <= 2 || foes.Any(f => f.Strength > 0) || gap >= hp / 2);
             bool shortTurn = line.Steps.Count < 2 && !pivot;
             var target = Enumerable.Range(0, foes.Length).Where(i => b.Targets[i] && remaining[i] > 0 && foes[i].Status.Artifact == 0)
                 .OrderByDescending(i => foes[i].Intent).FirstOrDefault(-1);
@@ -60,7 +64,7 @@ internal static class PotionCoach
                 "permanent" => true,
                 "refill" => x.EmptySlots >= 1,
                 "triple block" => line.Steps.Any(s => hand[s.Card].Guard >= 5) && gap >= 8,
-                "splash" => b.Amount > 0 && hp > b.Amount && foes.All(f => f.Life <= b.Amount),
+                "splash" => b.Amount > 0 && hp > b.Amount && foes.All(f => f.Life <= TurnCoach.TargetDamage(f, b.Amount)),
                 "defense" => gap >= 6 && line.Steps.Any(s => hand[s.Card].Guard > 0),
                 "buff" => early && attacks > 0,
                 "early defense" => early && gap > 0,
@@ -84,14 +88,20 @@ internal static class PotionCoach
                 "clutter" => x.Clutter >= 2 && majorFight,
                 "upgrades" => early && x.Upgrades >= 3,
                 "repeat" or "big attack" => majorFight && line.Steps.Any(s => hand[s.Card].Damage.Any(d => d >= 15)),
-                "retain" => x.Expensive >= 2 && majorFight,
+                "retain" => x.Expensive >= 2 && extended && x.Draw + x.Discard > 0,
                 "joy" => x.Converts && x.Size <= 6 && majorFight,
                 _ => false
             };
             if (useful)
             {
                 bool aimed = target >= 0 && foes.Length > 1 && profile[0] is "debuff" or "debuff scaling" or "vulnerable";
-                choices.Add((profile[0] == "emergency" ? 85 : 25, $"{b.Name}{(aimed ? $" on {foes[target].Name}" : "")}: {profile[1]}"));
+                string timing = profile[0] switch
+                {
+                    "regen" => " Delayed healing over future turns; not immediate block.",
+                    "retain" => " Saves future hands; not immediate block.",
+                    _ => ""
+                };
+                choices.Add((profile[0] == "emergency" ? 85 : 25, $"{b.Name}{(aimed ? $" on {foes[target].Name}" : "")}: {profile[1]}{timing}"));
             }
         }
         return choices.OrderByDescending(c => c.priority).FirstOrDefault().hint;
