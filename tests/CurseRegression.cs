@@ -19,9 +19,9 @@ internal static class CurseRegression
         EventPick leave = new("Leave", "Leave.");
         check(EventCoach.Recommend([Offer(1), leave], 50, 80, 0, true, small)?.StartsWith("Leave.") == true, "small reward loses to curse cost");
         check(EventCoach.Recommend([Offer(200), leave], 50, 80, 0, true, small)?.StartsWith("Accept.") == true, "large reward can outweigh curse cost");
-        check(EventCoach.Recommend([Offer(200), leave], 50, 80, 0, true)!.Contains("unresolved"), "missing deck explains unresolved curse offers");
-        check(EventCoach.Recommend([new("Unknown", "Gain 200 Gold. Add a random Curse to your Deck."), leave], 50, 80, 0, true, small)!.Contains("unresolved"), "random curse not silently treated as free");
-        check(EventCoach.Recommend([new("Fight", "Gain 200 Gold. Fight."), leave], 50, 80, 0, true, small)!.Contains("unresolved: Fight"), "unsupported event conditions remain explicitly unresolved");
+        check(EventCoach.Recommend([Offer(200), leave], 50, 80, 0, true)!.EndsWith("I can't assess every effect."), "missing deck explains unresolved curse offers");
+        check(EventCoach.Recommend([new("Unknown", "Gain 200 Gold. Add a random Curse to your Deck."), leave], 50, 80, 0, true, small)!.EndsWith("I can't assess every effect."), "random curse not silently treated as free");
+        check(EventCoach.Recommend([new("Fight", "Gain 200 Gold. Fight."), leave], 50, 80, 0, true, small)!.EndsWith("I can't assess every effect."), "unsupported event conditions remain explicitly unresolved");
         check(CurseValuation.Addition(["GUILTY"], small).Reason.Contains("duration is not modeled"), "Guilty duration is not invented");
     }
 }

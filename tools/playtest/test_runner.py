@@ -184,16 +184,26 @@ class Tests(unittest.TestCase):
         state = fixture()
         state["delivered"] = None
         path.write_text(json.dumps(state))
-        self.runner.read = lambda: snapshot(path)
+        first_read = threading.Event()
+        self.runner.readiness_timeout = 3
+
+        def read():
+            current = snapshot(path)
+            first_read.set()
+            return current
+
+        self.runner.read = read
 
         def publish():
+            if not first_read.wait(timeout=3):
+                return
             fresh = fixture()
             fresh["stateRevision"] = "2"
             temporary = path.with_suffix(".tmp")
             temporary.write_text(json.dumps(fresh))
             temporary.replace(path)
 
-        timer = threading.Timer(0.05, publish)
+        timer = threading.Thread(target=publish)
         timer.start()
         try:
             result = self.runner.wait_fresh(state, "1")

@@ -55,7 +55,7 @@ EventPick sword = new("Grab the Sword", "Obtain the [gold]Sword of Stone.[/gold]
 EventPick dive = new("Dive into the Water", "Gain [blue]101[/blue] Gold. Lose [red]7[/red] HP.");
 Check(EventCoach.Recommend([dive, sword], 33, 91, 107, true) is { } advice && advice.StartsWith(sword.Title) && advice.Contains("26/91"), "Sunken Statue: recommend sword and quantify the cost of diving");
 Check(EventCoach.Recommend([sword, dive], 85, 91, 107, true)!.StartsWith(dive.Title), "healthy player can trade HP for gold");
-Check(EventCoach.Recommend([sword, new("Risk", "Gain 101 Gold. Fight an elite.")], 33, 91, 107, true)?.Contains("Fight an elite") == true, "unknown event consequence is explained rather than treated as free");
+Check(EventCoach.Recommend([sword, new("Risk", "Gain 101 Gold. Fight an elite.")], 33, 91, 107, true)?.EndsWith("I can't assess every effect.") == true, "unknown event consequence gets a short caveat rather than being treated as free");
 Bottle ampoule = new("EXPLOSIVE_AMPOULE", "Explosive Ampoule"), blockPot = new("BLOCK_POTION", "Block Potion"), strength = new("STRENGTH_POTION", "Strength Potion"), other = new("OTHER", "Other");
 Check(PotionCoach.Recommend([strength, blockPot], [other, ampoule], 2, true, true)?.StartsWith("Discard Explosive Ampoule for Block Potion.") == true, "full belt before Waterfall Giant favors block over area damage");
 Check(PotionCoach.Recommend([strength, blockPot], [ampoule], 2, true, true)?.StartsWith("Take Block Potion in the open slot.") == true, "open slot never suggests discarding");
@@ -124,6 +124,18 @@ Check(!gate.MayDeliver(rewardsPage) && gate.LeftReactionScreen(null) && gate.Lef
 Check(gate.FreshTurnHint(offerA, "1", "Sky Shot → Strike"), "first turn hint available");
 gate.MarkTurnHint("Sky Shot → Strike"); gate.Transition();
 Check(!gate.FreshTurnHint(offerA, "1", "Sky Shot → Strike") && gate.FreshTurnHint(offerA, "1", "Defend"), "transient UI cannot repeat a spoken combat line; changed line remains eligible");
+var opener = new DecisionGate();
+Check(DecisionGate.Delivery(false, true, true, true, true, false, false, false) == (true, true)
+    && DecisionGate.Delivery(false, true, false, false, false, false, true, true) == (false, false)
+    && DecisionGate.Delivery(false, true, false, false, true, true, true, true) == (true, false),
+    "one visible opening hint; a new export revision neither redraws it nor extends its timer");
+Check(DecisionGate.Delivery(false, true, false, false, true, true, false, true) == (false, false)
+    && DecisionGate.Delivery(false, true, false, false, true, true, true, false) == (false, false)
+    && DecisionGate.Delivery(true, false, false, false, false, false, false, false) == (true, true),
+    "expired or dismissed combat advice stays gone until requested");
+Check(!opener.Ready(offerA, "turn 1: Strike", 0, false) && !opener.Ready(offerA, "turn 1: Defend → Strike", 320, false)
+    && opener.Ready(offerA, "turn 1: Defend → Strike", 640, false) && opener.Ready(offerA, "turn 1: Defend → Strike", 960, false),
+    "opening deal settles before speech, then unchanged combat advice survives the next frame");
 var savedSpots = new Dictionary<string, BubbleSpot> { { "map", BubbleSpot.From(797, 399, 200, 100, 1000, 600) }, { "fight", BubbleSpot.From(-300, -10, 200, 100, 1000, 600) } };
 var roundtrip = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, BubbleSpot>>(System.Text.Json.JsonSerializer.Serialize(savedSpots))!;
 Check(roundtrip["map"].Restore(200, 100, 800, 500).Left == 594 && roundtrip["fight"].Restore(200, 100, 800, 500).Left == 6, "drag positions persist independently and stay on screen after resize");
@@ -151,6 +163,8 @@ Check(Cursed(0, bitten).Contains("Take Middle.") && Cursed(5, bitten).Contains("
 Check(Curse.Advice("Detailed", true, 0, bitten.ToString(), curseOffer) == Cursed(0, bitten), "reopening or asking for detail cannot reroll crooked counsel");
 Check(Curse.Advice("Truth", true, 0, bitten.ToString(), null).StartsWith("CURSE · Hint withheld") && Curse.Advice("Truth", true, 0, bitten.ToString(), [curseOffer[0], curseOffer[0]]).Contains("Hint withheld"), "without a clearly weaker alternative Vakuu withholds advice rather than inventing a choice");
 CombatRegression.Run(Check);
+AncientOfferRegression.Run(Check);
+CardCoverageRegression.Run(Check);
 NonupeipeRegression.Run(Check);
 EnemyKnowledgeRegression.Run(Check);
 EventEffectsRegression.Run(Check);

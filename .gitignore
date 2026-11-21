@@ -4,3 +4,4 @@ dist/
 __pycache__/
 .DS_Store
 .ruff_cache/
+.slim/deepwork/

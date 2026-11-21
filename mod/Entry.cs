@@ -48,7 +48,7 @@ public static class Entry
     static readonly RuntimeRecording recording = new();
     static readonly PlaytestExport bridge = new(ProjectSettings.GlobalizePath("user://mod_configs/VakuusAgenticAuditor/playtest-state.json"));
     static object[] plannedActions = [], legalActions = [];
-    static string combatRevision = "", lastExportRevision = "";
+    static string lastExportRevision = "";
     static ulong nextRecord;
     static string loadedStatus = "";
     static string loadedVersion = "";
@@ -403,6 +403,17 @@ public static class Entry
                     {
                         var deck = p.Deck.Cards;
                         text = NonupeipeBlessing.Compare(options.Select(b => b.Option.Relic!.Id.Entry), P.ExplicitPick);
+                        var relics = options.Select(b => b.Option.Relic!).ToArray();
+                        if (text == null && loadedStatus.StartsWith("Audited", StringComparison.Ordinal))
+                        {
+                            var removable = deck.Where(c => c.IsRemovable).ToArray();
+                            var transformable = deck.Where(c => c.Type != CardType.Quest && c.IsTransformable).ToArray();
+                            var tome = relics.OfType<MegaCrit.Sts2.Core.Models.Relics.DustyTome>().FirstOrDefault();
+                            Card? tomeCard = tome?.AncientCard is { } id ? ReadOfferCard(ModelDb.GetById<CardModel>(id), true) : null;
+                            text = AncientOffer.Compare(relics.Select(x => x.Id.Entry), DeckOf(r, p), P.ExplicitPick,
+                                new(removable.Length, transformable.Length, deck.Count(c => c.IsUpgradable),
+                                    tomeCard, removable.Select(Read).ToArray(), transformable.Select(Read).ToArray()));
+                        }
                         text ??= EventCoach.Ancient(options.Select(b => (b.Option.Relic!.Id.Entry, b.Option.Relic.Title.GetFormattedText())).ToArray(),
                             deck.Count(c => c.IsUpgradable && !c.Id.Entry.StartsWith("STRIKE_") && !c.Id.Entry.StartsWith("DEFEND_")),
                             deck.Count(c => !c.IsUpgraded && (c.Id.Entry.StartsWith("STRIKE_") || c.Id.Entry.StartsWith("DEFEND_"))),
@@ -416,19 +427,11 @@ public static class Entry
                     {
                         var picks = options.Select(b => new EventPick(b.Option.Title.GetFormattedText(),
                             b.Option.Description?.GetFormattedText() ?? "", b.Option.Relic?.Title.GetFormattedText())).ToArray();
-                        var named = new Dictionary<string, Card>(StringComparer.OrdinalIgnoreCase);
-                        foreach (var name in picks.SelectMany(o => System.Text.RegularExpressions.Regex.Matches(
-                            System.Text.RegularExpressions.Regex.Replace(o.Description, @"\[[^\]]+\]", ""),
-                            @"(?:^|[.\n]\s*)Add ([^.\n]+?) to your Deck", System.Text.RegularExpressions.RegexOptions.IgnoreCase)
-                            .Select(m => m.Groups[1].Value)).Distinct())
-                        {
-                            eventCardModels ??= ModelDb.AllCards.ToLookup(c => c.Title, StringComparer.OrdinalIgnoreCase);
-                            var matches = eventCardModels[name].Take(2).ToArray();
-                            if (matches.Length == 1) named[name] = Read(matches[0]);
-                        }
                         text = EventCoach.Evaluate(picks.Select(o => (o, true)).ToArray(), new(p.Creature.CurrentHp,
                             p.Creature.MaxHp, p.Gold, DeckOf(r, p), UpgradeTargets: p.Deck.Cards.Count(c => c.IsUpgradable),
-                            EmptyPotionSlots: p.PotionSlots.Count - p.Potions.Count(), NamedCards: named), P.ExplicitPick);
+                            RemovalTargets: p.Deck.Cards.Count(c => c.IsRemovable),
+                            TransformTargets: p.Deck.Cards.Count(c => c.Type != CardType.Quest && c.IsTransformable),
+                            EmptyPotionSlots: p.PotionSlots.Count - p.Potions.Count(), ResolveNamedCard: ResolveOfferCard), P.ExplicitPick);
                     }
                     text ??= EventCoach.Unsupported(eventManual);
                 }
@@ -479,14 +482,18 @@ public static class Entry
             NChooseABundleSelectionScreen => "bundles",
             _ => r.CurrentRoom switch { CombatRoom => "fight", RestSiteRoom => "camp", MerchantRoom => "shop", EventRoom => "event", TreasureRoom => "treasure", _ => "other" }
         };
-        var key = $"{r.CurrentActIndex}:{r.ActFloor}:{ui.ViewType}:{P.RewardBubble}:{P.CurseMode}:{(battleKey == null ? "" : combatRevision)}:{text}";
+        // The recording also observes transient card-holder/hitbox changes while
+        // the hand is dealt. Those invalidate exported actions, not visible text.
+        var key = $"{r.CurrentActIndex}:{r.ActFloor}:{ui.ViewType}:{P.RewardBubble}:{P.CurseMode}:{battleKey}:{text}";
         object? decision = NMapScreen.Instance?.IsOpen == true ? NMapScreen.Instance : (object?)overlay ?? r.CurrentRoom;
-        if (battleKey == null && !decisions.Ready(decision, text, now, why)) { ui.Hide(); last = ""; return; }
+        if (!decisions.Ready(decision, battleKey == null || text == null ? text : key, now, why)) { ui.Hide(); last = ""; return; }
         if (text == null) { ui.Hide(); last = ""; return; }
         bool changed = key != last;
-        bool fresh = battleKey == null || P.PlaytestBridge && bridge.Revision != lastExportRevision || decisions.FreshTurnHint(r.CurrentRoom, battleKey, text);
-        if ((why || (changed && fresh && P.Mode != "On demand" && (P.PlaytestBridge || battleKey == null || !P.OncePerTurn || turn != battleKey)))
-            && (!reacting || decisions.MayDeliver(overlay!)))
+        bool reexport = battleKey != null && P.PlaytestBridge && bridge.Revision != lastExportRevision;
+        bool fresh = battleKey == null || decisions.FreshTurnHint(r.CurrentRoom, battleKey, text);
+        var delivery = DecisionGate.Delivery(why, P.Mode != "On demand", changed, fresh,
+            P.PlaytestBridge || battleKey == null || !P.OncePerTurn || turn != battleKey, reexport, ui.Visible, now < until || ui.Scrolls);
+        if (delivery.Deliver && (!reacting || decisions.MayDeliver(overlay!)))
         {
             string spoken = text;
             if (!reacting && P.CurseMode)
@@ -502,7 +509,11 @@ public static class Entry
             if (P.RecordRun) recording.Advice(bridge.Revision, spoken, spoken.StartsWith("CURSE ·"),
                 actions.Select(a => System.Text.Json.JsonSerializer.Serialize(a)).ToArray(),
                 battleKey == null ? null : "Recheck on any changed state", spoken == text ? expectedHpLoss : null);
-            ui.Show(spoken, anchor); until = now + (ulong)Math.Clamp(P.Seconds, 2, 60) * 1000;
+            if (delivery.Show)
+            {
+                ui.Show(spoken, anchor); until = now + (ulong)Math.Clamp(P.Seconds, 2, 60) * 1000;
+            }
+            else if (now >= until && !ui.Scrolls) ui.Hide();
             if (reacting) decisions.Delivered(overlay!);
             if (battleKey != null) { turn = battleKey; decisions.MarkTurnHint(text); }
         }
@@ -538,9 +549,11 @@ public static class Entry
             if (holders.Length == 0) return null;
             var deck = DeckOf(r, p);
             var cards = holders.Select(h => Read(h.CardModel!)).ToArray();
-            if (screen is NChooseACardSelectionScreen && cards.All(c => c.Known))
+            if (screen is NChooseACardSelectionScreen)
             {
-                var best = Coach.Rank(cards, deck, false)[0];
+                var ranked = Coach.Rank(cards, deck, false);
+                if (ranked.Any(x => !double.IsFinite(x.Score))) return (UncomparedCards, Above(holders.Select(h => h.Hitbox)));
+                var best = ranked[0];
                 return ((P.ExplicitPick ? $"Take {best.Name}. " : "") + best.Reason, Above(holders.Select(h => h.Hitbox)));
             }
             if (screen is NDeckTransformSelectScreen && cards.FirstOrDefault(c => c.Id.StartsWith("STRIKE_")) is { } basic &&
@@ -643,10 +656,11 @@ public static class Entry
             if (box.HasArea()) layout.Blocked.Add(new(box.Position.X, box.Position.Y, box.Size.X, box.Size.Y));
         }
     }
+    const string UncomparedCards = "I can’t reliably compare these cards.";
     static string? RewardText(bool details, bool requested)
     {
         var top = ranking[0];
-        if (ranking.Any(x => double.IsNaN(x.Score))) return "An unfamiliar card is on offer. I can’t reliably compare the whole set.";
+        if (ranking.Any(x => !double.IsFinite(x.Score))) return UncomparedCards;
         var close = ranking.Length > 1 && top.Score - ranking[1].Score <= .55;
         if (P.ClearLeadOnly && close && !requested) return null;
         string text = (P.ExplicitPick ? (close ? "Close call: " : P.Voice == "Vakuu" ? "I’d take " : "Consider ") + top.Name + ". " : "") + top.Reason;
@@ -655,6 +669,20 @@ public static class Entry
     }
     static ILookup<string, CardModel>? eventCardModels;
     static readonly EventRequest eventRequest = new();
+    static Card? ResolveOfferCard(string title, bool upgraded)
+    {
+        eventCardModels ??= ModelDb.AllCards.ToLookup(c => c.Title, StringComparer.OrdinalIgnoreCase);
+        var matches = eventCardModels[title].Take(2).ToArray();
+        return matches.Length == 1 ? ReadOfferCard(matches[0], upgraded) : null;
+    }
+    static Card? ReadOfferCard(CardModel model, bool upgraded)
+    {
+        if (!upgraded || model.IsUpgraded) return Read(model);
+        if (!model.IsUpgradable || model.GetType().Assembly != typeof(CardModel).Assembly) return null;
+        var preview = model.IsMutable ? (CardModel)model.MutableClone() : model.ToMutable();
+        preview.UpgradeInternal();
+        return preview.IsUpgraded ? Read(preview) : null;
+    }
     static string routeSignature = "";
     static RouteHint? routePlan;
     static Control? trace;
@@ -687,7 +715,8 @@ public static class Entry
     static (string?, string?) Battle(Player p, bool details)
     {
         var state = CombatManager.Instance.DebugOnlyGetState(); var pc = p.PlayerCombatState;
-        if (!CombatManager.Instance.IsInProgress || state?.CurrentSide != CombatSide.Player || pc?.Phase != PlayerTurnPhase.Play) return (null, null);
+        if (!CombatManager.Instance.IsInProgress || CombatManager.Instance.PlayerActionsDisabled
+            || state?.CurrentSide != CombatSide.Player || pc?.Phase != PlayerTurnPhase.Play) return (null, null);
         var enemies = state.Enemies.Where(e => e.IsAlive).ToArray();
         if (p.Relics.Any(x => x.Id.Entry == "RUNIC_DOME") || enemies.Any(e => e.Monster?.NextMove == null)) return (null, null);
         if (enemies.Length == 0) return (null, null);
@@ -699,9 +728,11 @@ public static class Entry
             creature.Powers.FirstOrDefault(z => z.Id.Entry == id)?.Amount ?? 0;
         var hand = pc.Hand.Cards.Where(c => c.CanPlay()).ToArray();
         var plays = new List<Play>();
+        bool hasUnassessedCard = false;
         foreach (var c in hand)
         {
-            var card = Read(c); if (!card.Known) continue;
+            var card = Read(c);
+            if (!card.CombatKnown) { hasUnassessedCard = true; continue; }
             var effect = Catalog.Effect(card.Id);
             bool area = c.TargetType == TargetType.AllEnemies, single = c.TargetType == TargetType.AnyEnemy;
             var hits = Enumerable.Repeat(-1, enemies.Length).ToArray();
@@ -713,25 +744,25 @@ public static class Entry
                 if (single && (!c.CanPlayTargeting(enemy) || effect == "requires-impale" && Power(enemy, "IMPALED_POWER") == 0)) continue;
                 c.UpdateDynamicVarPreview(CardPreviewMode.Normal, single || area ? enemy : null, vars);
                 int Value(string name) => vars.TryGetValue(name, out var v) ? Math.Max(0, (int)v.PreviewValue) : 0;
-                if (card.Has("guard")) guard = Value("Block");
+                if (card.CombatHas("guard")) guard = Math.Max(Value("Block"), Value("CalculatedBlock"));
                 if (single || area)
                 {
-                    repeats = card.Has("multiple hits") && vars.TryGetValue("HitCount", out var count) ? Math.Max(1, (int)count.BaseValue) : 1;
+                    repeats = card.CombatHas("multiple hits") && vars.TryGetValue("HitCount", out var count) ? Math.Max(1, (int)count.BaseValue) : 1;
                     hits[j] = card.Attack ? Math.Max(Value("Damage"), Math.Max(Value("CalculatedDamage"), Value("OstyDamage"))) : 0;
                 }
             }
             if (single && hits.All(n => n < 0)) continue;
-            bool pivot = card.Has("draw") || card.Has("energy") || card.Has("discard") || card.Has("exhaust") || c.Type == CardType.Power || CombatGuidance.Boundary(effect ?? "");
+            bool pivot = card.CombatHas("draw") || card.CombatHas("energy") || card.CombatHas("discard") || card.CombatHas("exhaust") || c.Type == CardType.Power || CombatGuidance.Boundary(effect ?? "");
             int Base(string name) => vars.TryGetValue(name, out var v) ? Math.Max(0, (int)v.BaseValue) : 0;
-            int weak = card.Has("weak") ? Math.Max(Base("WeakPower"), Base("Power")) : 0;
-            int vuln = card.Has("vulnerable") ? Math.Max(Base("VulnerablePower"), Base("Power")) : 0;
+            int weak = card.CombatHas("weak") ? Math.Max(Base("WeakPower"), Base("Power")) : 0;
+            int vuln = card.CombatHas("vulnerable") ? Math.Max(Base("VulnerablePower"), Base("Power")) : 0;
             int sad = effect switch { "sadness-one" => 1, "sadness-cards" => Base("Cards"), _ => 0 };
             if (guard == 0 && hits.All(n => n <= 0) && !pivot && weak + vuln + sad == 0) continue;
             plays.Add(new(c.Title, c.EnergyCost.CostsX ? 0 : Math.Max(0, c.EnergyCost.GetAmountToSpend()),
-                c.HasStarCostX ? 0 : Math.Max(0, c.GetStarCostWithModifiers()), card.Has("shots") ? 1 : 0, guard, hits, area, pivot,
+                c.HasStarCostX ? 0 : Math.Max(0, c.GetStarCostWithModifiers()), card.CombatHas("shots") ? 1 : 0, guard, hits, area, pivot,
                 c.Type == CardType.Power, c.EnergyCost.CostsX, c.HasStarCostX, weak, vuln, sad, effect == "convert-sadness",
                 c.Type == CardType.Skill, effect switch { "repeat-attacks" => "attacks", "repeat-skills" => "skills", _ => "" }, card.Attack,
-                card.Has("hp loss") ? Base("HpLoss") : 0, BlockDamage: effect == "block-damage",
+                card.CombatHas("hp loss") ? Base("HpLoss") : 0, BlockDamage: effect == "block-damage",
                 BlockMultipliers: effect == "block-damage" ? enemies.Select(enemy =>
                     (Power(p.Creature, "WEAK_POWER") > 0 ? .75 : 1.0) *
                     (Power(enemy, "VULNERABLE_POWER") > 0 ? 1.5 : 1.0)).ToArray() : null,
@@ -743,13 +774,6 @@ public static class Entry
         var line = TurnCoach.Plan(plays.ToArray(), foes, pc.Energy, pc.Stars, pc.AvailableArrowCount, p.Creature.Block, p.Creature.CurrentHp,
             pc.Hand.Cards.Count(c => c.Id.Entry == "SADNESS"), played.Count(t => t == CardType.Attack), played.Count(t => t == CardType.Skill),
             Power(p.Creature, "ALL_IS_WELL_POWER"), pc.Hand.Cards.Count);
-        var observed = RuntimeRecording.Capture(session!, p);
-        var revision = System.Text.Json.JsonSerializer.Serialize(observed);
-        if (combatRevision != revision)
-        {
-            combatRevision = revision;
-            ui.Hide();
-        }
 
         var references = new Dictionary<string, CardModel>();
         foreach (var card in hand) references[RuntimeRecording.Ref(card)] = card;
@@ -801,6 +825,7 @@ public static class Entry
                     enemy.Powers.Select(x => (x.Id.Entry, x.Amount)), monster.MoveStateMachine?.StateLog.LastOrDefault()?.Id);
             }
             return parts[0] + "\n" + risk + (parts.Length > 1 && parts[1].Length > 0 ? " " + parts[1] : "")
+                + (hasUnassessedCard && line.Steps.Count > 0 ? " Some cards aren’t assessed." : "")
                 + (cue.Length == 0 ? "" : $"\n{foes[target].Name}: {cue}");
         }
         string Describe(Step step)
@@ -809,11 +834,11 @@ public static class Entry
             var foe = foes[step.Target]; return $"{play.Name} on {foe.Name}" +
                 (foes.Count(f => f.Name == foe.Name) > 1 ? $" ({enemies[step.Target].CurrentHp} HP)" : "");
         }
-        string? text = line.Steps.Count == 0 ? (hand.Length > 0 ? "No clear line from damage and block alone. Inspect the other effects in your hand." : null)
+        string? text = line.Steps.Count == 0 ? (hand.Length > 0 ? (hasUnassessedCard ? UncomparedCards : "No clear line from damage and block alone.") : null)
             : $"{string.Join(" → ", line.Steps.Select(Describe))}.\n" +
             (line.EnemiesLeft == 0 ? "Projected lethal from current previews." : line.Joy > 0 ? "Turn Sadness into Joy. Play Joy and reassess the draw." : plays[line.Steps[^1].Card].Pivot ? "Reassess after that effect resolves." :
             "");
-        if (P.CombatPotions && !CombatManager.Instance.PlayerActionsDisabled)
+        if (P.CombatPotions && (!hasUnassessedCard || line.Steps.Count > 0) && !CombatManager.Instance.PlayerActionsDisabled)
         {
             var belt = p.Potions.Where(b => !b.IsQueued && b.PassesCustomUsabilityCheck &&
                 b.Usage != MegaCrit.Sts2.Core.Entities.Potions.PotionUsage.Automatic).Select(b =>

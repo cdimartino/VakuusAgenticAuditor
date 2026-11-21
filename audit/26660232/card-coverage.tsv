@@ -1,0 +1,747 @@
+id	source	indexed_gives	indexed_needs	base_immediate	upgraded_immediate	needs	effect	base_reward	upgraded_reward	evidence	deferred_gives	setup_only
+ABRASIVE	model+text	dexterity,thorns		dexterity,thorns	dexterity,thorns			role-fit	role-fit	-		no
+ABUNDANCE	model+text							abstain	abstain	-		no
+ACCELERANT	model+text		poison			poison		role-fit	role-fit	-		no
+ACCURACY	model+text		shivs			shivs		role-fit	role-fit	-		no
+ACROBATICS	model+text	draw,discard		discard,draw	discard,draw			role-fit	role-fit	-		no
+ADAPTIVE_STRIKE	model+text	hit		hit	hit			role-fit	role-fit	-		no
+ADRENALINE	model+text	draw,energy		draw,energy	draw,energy			role-fit	role-fit	-		no
+AFTERIMAGE	model+text							role-fit	role-fit	conditional-text	guard	no
+AFTERLIFE	model+text	summon		summon	summon			role-fit	role-fit	-		no
+AGGRESSION	model+text							abstain	abstain	conditional-text		no
+ALCHEMIZE	model+text							abstain	abstain	-		no
+ALIGNMENT	model+text	energy		energy	energy			role-fit	role-fit	-		no
+ALL_FOR_ONE	model+text	hit		hit	hit			role-fit	role-fit	-		no
+ALL_IS_WELL	model+text		sadness			sadness		role-fit	role-fit	conditional-text		no
+AMNESIA	model+text							abstain	abstain	-		no
+ANGER	model+text	hit		hit	hit			role-fit	role-fit	-		no
+ANGUISH	model+text	hit	sadness	hit	hit	sadness		role-fit	role-fit	conditional-text		no
+ANOINTED	model+text							abstain	abstain	-		no
+ANTICIPATE	model+text	dexterity		dexterity	dexterity			role-fit	role-fit	-		no
+APOTHEOSIS	model+text							abstain	abstain	-		no
+APPARITION	model+text							abstain	abstain	-		no
+ARCHERY	model+text							abstain	abstain	conditional-text		no
+ARMAMENTS	model+text	guard		guard	guard		hand-upgrade	role-fit	role-fit	upgrade-branch		no
+ARROW_STAB	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+ARSENAL	model+text	strength						role-fit	role-fit	conditional-text	strength	no
+ASCENDERS_BANE	model+text							typed-curse	typed-curse	-		no
+ASHEN_STRIKE	model+text	hit	exhaust	hit	hit	exhaust		role-fit	role-fit	conditional-text		no
+ASSASSINATE	model+text	hit,vulnerable		hit,vulnerable	hit,vulnerable			role-fit	role-fit	-		no
+ASTRAL_PULSE	model+text	hit,multiple hits,area damage		area damage,hit,multiple hits	area damage,hit,multiple hits			role-fit	role-fit	-		no
+AUTOMATION	model+text							abstain	abstain	-		no
+BACKFLIP	model+text	guard,draw		draw,guard	draw,guard			role-fit	role-fit	-		no
+BACKSTAB	model+text	hit		hit	hit			role-fit	role-fit	-		no
+BAD_LUCK	model+text							typed-curse	typed-curse	conditional-text		no
+BALL_LIGHTNING	model+text	hit,orbs,lightning		hit,lightning,orbs	hit,lightning,orbs			role-fit	role-fit	-		no
+BANSHEES_CRY	model+text	hit,area damage		area damage,hit	area damage,hit			role-fit	role-fit	conditional-text		no
+BARRAGE	model+text	hit	orbs	hit	hit	orbs		role-fit	role-fit	conditional-text		no
+BARRICADE	model+text							abstain	abstain	conditional-text		yes
+BASH	model+text	hit,vulnerable		hit,vulnerable	hit,vulnerable			role-fit	role-fit	-		no
+BATTLE_TRANCE	model+text	draw		draw	draw			role-fit	role-fit	-		no
+BEACON_OF_HOPE	model+text							abstain	abstain	conditional-text		no
+BEAM_CELL	model+text	hit,vulnerable		hit,vulnerable	hit,vulnerable			role-fit	role-fit	-		no
+BEAT_DOWN	model+text							abstain	abstain	-		no
+BEAT_INTO_SHAPE	model+text	hit,forge		forge,hit	forge,hit			role-fit	role-fit	-		no
+BECKON	model+text							abstain	abstain	conditional-text		no
+BEGONE	model+text							abstain	abstain	upgrade-branch		no
+BELIEVE_IN_YOU	model+text							abstain	abstain	-		no
+BIASED_COGNITION	model+text	focus		focus	focus			role-fit	role-fit	conditional-text		no
+BIG_BANG	model+text	draw,energy,forge,stars		draw,energy,forge,stars	draw,energy,forge,stars			role-fit	role-fit	-		no
+BLACK_HOLE	model+text							abstain	abstain	conditional-text		no
+BLADE_DANCE	model+text	shivs		shivs	shivs			role-fit	role-fit	-		no
+BLADE_OF_INK	model+text	shivs		shivs	shivs			role-fit	role-fit	-		no
+BLADE_SYMPHONY	model+text	shivs		shivs	shivs			role-fit	role-fit	-		no
+BLAZE	model+text							abstain	abstain	-		no
+BLIGHT_STRIKE	model+text	hit		hit	hit			role-fit	role-fit	-		no
+BLOODLETTING	model+text	energy,hp loss		energy,hp loss	energy,hp loss			role-fit	role-fit	-		no
+BLOOD_WALL	model+text	guard,hp loss		guard,hp loss	guard,hp loss			role-fit	role-fit	-		no
+BLOSSOM_SHOT	model+text	hit,shots,impale		hit,impale,shots	hit,impale,shots			role-fit	role-fit	-		no
+BLOT_OUT_THE_SKY	model+text							abstain	abstain	-		no
+BLUDGEON	model+text	hit		hit	hit			role-fit	role-fit	-		no
+BLUR	model+text	guard		guard	guard			role-fit	role-fit	conditional-text		no
+BODYGUARD	model+text	summon		summon	summon			role-fit	role-fit	-		no
+BODY_SLAM	model+text	hit	guard	hit	hit	guard	block-damage	role-fit	role-fit	-		no
+BOLAS	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+BOMBARDMENT	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+BONE_SHARDS	model+text							abstain	abstain	conditional-text		no
+BOOST_AWAY	model+text	guard		guard	guard			role-fit	role-fit	-		no
+BOOT_SEQUENCE	model+text	guard		guard	guard			role-fit	role-fit	-		no
+BORROWED_TIME	model+text	energy		energy	energy			role-fit	role-fit	-		no
+BOUNCE	model+text	stretch		stretch	stretch			role-fit	role-fit	conditional-text		no
+BOUNCING_FLASK	model+text	poison		poison	poison			role-fit	role-fit	-		no
+BOW_SMACK	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+BRACE	model+text	aim		aim	aim			role-fit	role-fit	-		no
+BRAND	model+text	exhaust,strength,hp loss		exhaust,hp loss,strength	exhaust,hp loss,strength			role-fit	role-fit	-		no
+BREAK	model+text	hit,vulnerable		hit,vulnerable	hit,vulnerable			role-fit	role-fit	-		no
+BREAKTHROUGH	model+text	hit,hp loss,area damage		area damage,hit,hp loss	area damage,hit,hp loss			role-fit	role-fit	-		no
+BRIGHTEN_UP	model+text	sadness		sadness	sadness			role-fit	role-fit	-		no
+BRIGHTEST_FLAME	model+text	draw,energy		draw,energy	draw,energy			role-fit	role-fit	-		no
+BUBBLE_BUBBLE	model+text	poison						abstain	abstain	conditional-text		no
+BUFFER	model+text							abstain	abstain	-		yes
+BULK_UP	model+text	strength,dexterity		dexterity,strength	dexterity,strength			role-fit	role-fit	-		no
+BULLET_TIME	model+text							abstain	abstain	-		no
+BULLY	model+text	hit	vulnerable	hit	hit	vulnerable		role-fit	role-fit	conditional-text		no
+BULWARK	model+text	guard,forge		forge,guard	forge,guard			role-fit	role-fit	-		no
+BUNDLE_OF_JOY	model+text							abstain	abstain	-		no
+BURN	model+text							abstain	abstain	conditional-text		no
+BURNING_PACT	model+text	draw,exhaust		draw,exhaust	draw,exhaust			role-fit	role-fit	-		no
+BURST	model+text							abstain	abstain	-		no
+BURY	model+text	hit		hit	hit			role-fit	role-fit	-		no
+BYRDONIS_EGG	model+text							abstain	abstain	-		no
+BYRD_SWOOP	model+text	hit		hit	hit			role-fit	role-fit	-		no
+CACOPHONY	model+text							abstain	abstain	-		no
+CALAMITY	model+text							abstain	abstain	conditional-text		no
+CALCIFY	model+text		summon			summon		role-fit	role-fit	-		no
+CALCULATED_GAMBLE	model+text	discard		discard	discard			role-fit	role-fit	-		no
+CALL_OF_THE_VOID	model+text							abstain	abstain	conditional-text		no
+CALTROPS	model+text							abstain	abstain	conditional-text		no
+CAPACITOR	model+text		orbs			orbs		role-fit	role-fit	-		no
+CAPTURE_SPIRIT	model+text	souls		souls	souls			role-fit	role-fit	-		no
+CASCADE	model+text							abstain	abstain	upgrade-branch		no
+CATASTROPHE	model+text							abstain	abstain	-		no
+CELESTIAL_MIGHT	model+text	hit,multiple hits		hit,multiple hits	hit,multiple hits			role-fit	role-fit	-		no
+CHAOS	model+text	orbs		orbs	orbs			role-fit	role-fit	-		no
+CHARGE	model+text							abstain	abstain	upgrade-branch		no
+CHARGE_BATTERY	model+text	guard		guard	guard			role-fit	role-fit	conditional-text		no
+CHILD_OF_THE_STARS	model+text							abstain	abstain	conditional-text		no
+CHILL	model+text	orbs,frost		frost,orbs	frost,orbs			role-fit	role-fit	conditional-text		no
+CHO_BARBS	model+text	guard,thorns		guard,melody,thorns	guard,melody,thorns			role-fit	role-fit	-		no
+CHO_CHORUS	model+text	guard		guard,melody	guard,melody			role-fit	role-fit	-		no
+CHO_FIRM	model+text	guard		guard,melody	guard,melody			role-fit	role-fit	conditional-text		no
+CHO_KI	model+text	guard		guard,melody	guard,melody			role-fit	role-fit	-		no
+CHO_LIMBS	model+text	guard		guard,melody	guard,melody			role-fit	role-fit	conditional-text		no
+CHO_READY	model+text	guard		aim,guard,melody	aim,guard,melody			role-fit	role-fit	-		no
+CHRYSALIS	text-only							abstain	abstain	-		no
+CINDER	model+text	hit,exhaust		exhaust,hit	exhaust,hit			role-fit	role-fit	-		no
+CLASH	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+CLAW	model+text	hit		hit	hit			role-fit	role-fit	-		no
+CLEANSE	model+text	exhaust,summon		exhaust,summon	exhaust,summon			role-fit	role-fit	-		no
+CLOAK_AND_DAGGER	model+text	guard,shivs		guard,shivs	guard,shivs			role-fit	role-fit	-		no
+CLOAK_OF_STARS	model+text	guard		guard	guard			role-fit	role-fit	-		no
+CLUMSY	model+text							typed-curse	typed-curse	-		no
+CODA	model+text	hit		hit	hit	melody		role-fit	role-fit	conditional-text		no
+COLD_SNAP	model+text	hit,orbs,frost		frost,hit,orbs	frost,hit,orbs			role-fit	role-fit	-		no
+COLLISION_COURSE	model+text	hit		hit	hit			role-fit	role-fit	-		no
+COLOSSUS	model+text	guard		guard	guard			role-fit	role-fit	-		no
+COMET	model+text	hit,weak,vulnerable		hit,vulnerable,weak	hit,vulnerable,weak			role-fit	role-fit	-		no
+COMPACT	model+text	guard		guard	guard			role-fit	role-fit	upgrade-branch		no
+COMPILE_DRIVER	model+text	hit,draw		draw,hit	draw,hit			role-fit	role-fit	conditional-text		no
+COMPOST	model+text							abstain	abstain	conditional-text		no
+CONCOCT	model+text	poison						abstain	abstain	conditional-text		no
+CONFLAGRATION	model+text	hit,multiple hits,area damage		area damage,hit,multiple hits	area damage,hit,multiple hits			role-fit	role-fit	-		no
+CONQUEROR	model+text	forge	forge	forge	forge	forge		role-fit	role-fit	-		no
+CONSTELLATION	model+text							abstain	abstain	-		no
+CONSUMING_SHADOW	model+text	orbs		orbs	orbs			role-fit	role-fit	conditional-text		no
+CONVERGENCE	model+text	energy,retain hand		retain hand	retain hand			role-fit	role-fit	conditional-text		no
+COOLANT	model+text							abstain	abstain	conditional-text		no
+COOLHEADED	model+text	draw,orbs,frost		draw,frost,orbs	draw,frost,orbs			role-fit	role-fit	-		no
+COORDINATE	model+text							abstain	abstain	-		no
+CORROSIVE_WAVE	model+text	poison						role-fit	role-fit	conditional-text	poison	no
+CORRUPTION	model+text	exhaust						abstain	abstain	conditional-text		no
+COSMIC_INDIFFERENCE	model+text	guard		guard	guard			role-fit	role-fit	-		no
+COUNTDOWN	model+text	doom						role-fit	role-fit	conditional-text	doom	no
+COVERING_FIRE	model+text							abstain	abstain	conditional-text		no
+CRASH_LANDING	model+text	hit,area damage		area damage,hit	area damage,hit			role-fit	role-fit	-		no
+CREATIVE_AI	model+text							abstain	abstain	conditional-text		no
+CRESCENT_SPEAR	model+text	hit		hit	hit			role-fit	role-fit	-		no
+CRIMSON_MANTLE	model+text							abstain	abstain	conditional-text		no
+CRUELTY	model+text							abstain	abstain	-		no
+CRUSH_UNDER	model+text	hit,area damage		area damage,hit	area damage,hit			role-fit	role-fit	-		no
+CURSE_OF_THE_BELL	model+text							typed-curse	typed-curse	-		no
+DAGGER_SPRAY	model+text	hit,multiple hits,area damage		area damage,hit,multiple hits	area damage,hit,multiple hits			role-fit	role-fit	-		no
+DAGGER_THROW	model+text	hit,draw,discard		discard,draw,hit	discard,draw,hit			role-fit	role-fit	-		no
+DANSE_MACABRE	model+text							abstain	abstain	conditional-text		no
+DARKNESS	model+text	orbs		orbs	orbs			role-fit	role-fit	upgrade-branch		no
+DARK_EMBRACE	model+text	draw	exhaust			exhaust		role-fit	role-fit	conditional-text	draw	no
+DARK_SHACKLES	model+text							abstain	abstain	-		no
+DASH	model+text	guard,hit		guard,hit	guard,hit			role-fit	role-fit	-		no
+DAZED	model+text							abstain	abstain	-		no
+DEADLY_POISON	model+text	poison		poison	poison			role-fit	role-fit	-		no
+DEATH	model+text	doom		doom	doom			role-fit	role-fit	-		no
+DEATHBRINGER	model+text	doom		doom	doom			role-fit	role-fit	-		no
+DEATHS_DOOR	model+text	guard	doom	guard	guard	doom		role-fit	role-fit	conditional-text		no
+DEATH_MARCH	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+DEBILITATE	model+text	hit		hit	hit			role-fit	role-fit	-		no
+DEBRIS	model+text							abstain	abstain	-		no
+DEBT	model+text							typed-curse	typed-curse	conditional-text		no
+DECAY	model+text							typed-curse	typed-curse	conditional-text		no
+DECISIONS_DECISIONS	model+text	draw		draw	draw			role-fit	role-fit	-		no
+DEEP_STRETCH	model+text	draw,stretch		draw,stretch	draw,stretch			role-fit	role-fit	-		no
+DEFEND_DEFECT	model+text	guard		guard	guard			role-fit	role-fit	-		no
+DEFEND_FOOL	model+text	guard		guard	guard			role-fit	role-fit	-		no
+DEFEND_IRONCLAD	model+text	guard		guard	guard			role-fit	role-fit	-		no
+DEFEND_NECROBINDER	model+text	guard		guard	guard			role-fit	role-fit	-		no
+DEFEND_REGENT	model+text	guard		guard	guard			role-fit	role-fit	-		no
+DEFEND_SILENT	model+text	guard		guard	guard			role-fit	role-fit	-		no
+DEFILE	model+text	hit		hit	hit			role-fit	role-fit	-		no
+DEFLECT	model+text	guard		guard	guard			role-fit	role-fit	-		no
+DEFRAGMENT	model+text	focus	orbs	focus	focus	orbs		role-fit	role-fit	-		no
+DEFY	model+text	guard,weak		guard,weak	guard,weak			role-fit	role-fit	-		no
+DELAY	model+text	guard,energy		guard	guard			role-fit	role-fit	conditional-text	energy	no
+DEMESNE	model+text							role-fit	role-fit	conditional-text	draw,energy	no
+DEMONIC_SHIELD	model+text	hp loss		hp loss	hp loss			role-fit	role-fit	-		no
+DEMON_FORM	model+text	strength						role-fit	role-fit	conditional-text	strength	no
+DEPRECATED_CARD	model+text	draw						abstain	abstain	-		no
+DESPAIR	text-only							abstain	abstain	-		no
+DEVASTATE	model+text	hit		hit	hit			role-fit	role-fit	-		no
+DEVOUR_LIFE	model+text	summon						abstain	abstain	conditional-text		no
+DINGY_DAGGER	model+text	hit		hit	hit			role-fit	role-fit	-		no
+DIRGE	model+text	summon		souls,summon	souls,summon			role-fit	role-fit	upgrade-branch		no
+DISCOVERY	model+text							abstain	abstain	-		no
+DISINTEGRATION	model+text							abstain	abstain	conditional-text		no
+DISLIKE_YOU	model+text	hit		hit	hit			role-fit	role-fit	-		no
+DISMANTLE	model+text	hit	vulnerable	hit	hit	vulnerable		role-fit	role-fit	conditional-text		no
+DISTRACTION	model+text							abstain	abstain	-		no
+DIVINE_SHOT	model+text	hit,shots,impale		hit,impale,shots	hit,impale,shots			role-fit	role-fit	-		no
+DODGE_AND_ROLL	model+text	guard		guard	guard			role-fit	role-fit	conditional-text		no
+DOMINATE	model+text	strength,vulnerable		strength,vulnerable	strength,vulnerable			role-fit	role-fit	conditional-text		no
+DOUBLE_ENERGY	model+text							abstain	abstain	-		no
+DOUBT	model+text							typed-curse	typed-curse	conditional-text		no
+DOWSING	model+text							abstain	abstain	-		no
+DRAIN_POWER	model+text	hit		hit	hit			role-fit	role-fit	-		no
+DRAMATIC_ENTRANCE	model+text	hit,area damage		area damage,hit	area damage,hit			role-fit	role-fit	-		no
+DREDGE	model+text							abstain	abstain	-		no
+DRUM_OF_BATTLE	model+text	draw		draw	draw			role-fit	role-fit	conditional-text		no
+DUALCAST	model+text							abstain	abstain	-		no
+DUAL_WIELD	model+text							abstain	abstain	upgrade-branch		no
+DYING_STAR	model+text	hit,area damage		area damage,hit	area damage,hit			role-fit	role-fit	-		no
+ECHOING_SLASH	model+text	hit,area damage		area damage,hit	area damage,hit			role-fit	role-fit	conditional-text		no
+ECHO_FORM	model+text							abstain	abstain	-		no
+ECSTASY	model+text		sadness			sadness		role-fit	role-fit	conditional-text		no
+EIDOLON	model+text							abstain	abstain	-		no
+ENCORE	model+text	draw,energy		draw,energy	draw,energy			role-fit	role-fit	-		no
+END_OF_DAYS	model+text	doom		doom	doom			role-fit	role-fit	-		no
+ENERGY_SURGE	model+text							abstain	abstain	-		no
+ENFEEBLING_TOUCH	model+text							abstain	abstain	-		no
+ENLIGHTENMENT	model+text							abstain	abstain	upgrade-branch		no
+ENNUI	model+text	sadness						role-fit	role-fit	conditional-text	draw,sadness	no
+ENRAPTURE	model+text							abstain	abstain	-		no
+ENSEMBLE	model+text							abstain	abstain	-		no
+ENTHRALLED	model+text							typed-curse	typed-curse	conditional-text		no
+ENTRENCH	model+text		guard			guard		role-fit	role-fit	-		no
+ENTROPY	model+text							abstain	abstain	conditional-text		no
+ENVENOM	model+text	poison						abstain	abstain	conditional-text		no
+EPIC_RETRIEVAL	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+EQUILIBRIUM	model+text	guard,retain hand		guard,retain hand	guard,retain hand			role-fit	role-fit	-		no
+ERADICATE	model+text	hit		hit	hit			role-fit	role-fit	-		no
+ESCAPE_PLAN	model+text	draw		draw	draw			role-fit	role-fit	conditional-text		no
+ETERNAL_ARMOR	model+text	plating		plating	plating			role-fit	role-fit	-		no
+EVIL_EYE	model+text	guard	exhaust	guard	guard	exhaust		role-fit	role-fit	conditional-text		no
+EXPECT_A_FIGHT	model+text	guard		guard	guard			role-fit	role-fit	-		no
+EXPERTISE	model+text	draw,retain hand		draw,retain hand	draw,retain hand			role-fit	role-fit	-		no
+EXPLOSIVE_ARROWS	model+text							abstain	abstain	conditional-text		no
+EXPOSE	model+text	vulnerable		vulnerable	vulnerable			role-fit	role-fit	-		no
+EXTERMINATE	model+text	hit,multiple hits,area damage		area damage,hit,multiple hits	area damage,hit,multiple hits			role-fit	role-fit	-		no
+FADE	model+text							abstain	abstain	-		no
+FALLING_STAR	model+text	hit,weak,vulnerable		hit,vulnerable,weak	hit,vulnerable,weak			role-fit	role-fit	-		no
+FAN_OF_KNIVES	model+text	shivs		shivs	shivs			role-fit	role-fit	-		no
+FASTEN	model+text	guard		guard	guard			role-fit	role-fit	-		no
+FEAR	model+text	hit,vulnerable		hit,vulnerable	hit,vulnerable			role-fit	role-fit	-		no
+FEED	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+FEEDING_FRENZY	model+text	strength		strength	strength			role-fit	role-fit	-		no
+FEEL_NO_PAIN	model+text		exhaust			exhaust		role-fit	role-fit	conditional-text		no
+FERAL	model+text							abstain	abstain	-		no
+FETCH	model+text	hit,Osty attacks		Osty attacks,hit	Osty attacks,hit			role-fit	role-fit	conditional-text		no
+FIEND_FIRE	model+text	hit,exhaust		exhaust,hit	exhaust,hit			role-fit	role-fit	conditional-text		no
+FIGHT_ME	model+text	hit,strength,multiple hits		hit,multiple hits,strength	hit,multiple hits,strength			role-fit	role-fit	-		no
+FIGHT_THROUGH	model+text	guard		guard	guard			role-fit	role-fit	-		no
+FINESSE	model+text	guard,draw		draw,guard	draw,guard			role-fit	role-fit	-		no
+FINISHER	model+text	hit		hit	hit		repeat-attacks	role-fit	role-fit	conditional-text		no
+FISTICUFFS	model+text	hit		hit	hit			role-fit	role-fit	-		no
+FLAK_CANNON	model+text	hit,exhaust		exhaust,hit	exhaust,hit			role-fit	role-fit	conditional-text		no
+FLAME_BARRIER	model+text	guard		guard	guard			role-fit	role-fit	conditional-text		no
+FLAME_IN_THE_DARK	text-only	draw,energy						abstain	abstain	-		no
+FLANKING	model+text							abstain	abstain	-		no
+FLASH_OF_STEEL	model+text	hit,draw		draw,hit	draw,hit			role-fit	role-fit	-		no
+FLATTEN	model+text	hit,Osty attacks		Osty attacks,hit	Osty attacks,hit			role-fit	role-fit	conditional-text		no
+FLECHETTES	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+FLICK_FLACK	model+text	hit,area damage		area damage,hit	area damage,hit			role-fit	role-fit	-		no
+FLORESCENCE	model+text	exhaust		exhaust	exhaust			role-fit	role-fit	upgrade-branch		no
+FOCUSED_STRIKE	model+text	hit,focus		focus,hit	focus,hit			role-fit	role-fit	-		no
+FOLLY	model+text							typed-curse	typed-curse	-		no
+FOOLISH_SHOT	model+text	hit,shots,impale		hit,impale,shots	hit,impale,shots			role-fit	role-fit	-		no
+FOOTWORK	model+text	dexterity		dexterity	dexterity			role-fit	role-fit	-		no
+FORBIDDEN_GRIMOIRE	model+text							abstain	abstain	conditional-text		no
+FOREGONE_CONCLUSION	model+text							abstain	abstain	conditional-text		no
+FORGOTTEN_RITUAL	model+text							abstain	abstain	conditional-text		no
+FRANTIC_ESCAPE	model+text							abstain	abstain	-		no
+FRIENDSHIP	model+text	energy		energy	energy			role-fit	role-fit	conditional-text		no
+FTL	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+FUEL	model+text	energy		energy	energy			role-fit	role-fit	-		no
+FURNACE	model+text	forge						role-fit	role-fit	conditional-text	forge	no
+FUSION	model+text	orbs		orbs	orbs			role-fit	role-fit	-		no
+GAMMA_BLAST	model+text	hit,weak,vulnerable		hit,vulnerable,weak	hit,vulnerable,weak			role-fit	role-fit	-		no
+GANG_UP	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+GATHER_LIGHT	model+text	guard,stars		guard,stars	guard,stars			role-fit	role-fit	-		no
+GENESIS	model+text							abstain	abstain	conditional-text		no
+GENETIC_ALGORITHM	model+text	guard		guard	guard			role-fit	role-fit	-		no
+GHOST_EATER	text-only	energy						abstain	abstain	-		no
+GIANT_ROCK	model+text	hit		hit	hit			role-fit	role-fit	-		no
+GLACIER	model+text	guard,orbs,frost		frost,guard,orbs	frost,guard,orbs			role-fit	role-fit	-		no
+GLASSWORK	model+text	guard,orbs		guard,orbs	guard,orbs			role-fit	role-fit	-		no
+GLIMMER	model+text	draw		draw	draw			role-fit	role-fit	-		no
+GLIMPSE_BEYOND	model+text	souls						abstain	abstain	-		no
+GLITTERSTREAM	model+text	guard		guard	guard			role-fit	role-fit	conditional-text		no
+GLOW	model+text	draw,stars		draw,stars	draw,stars			role-fit	role-fit	conditional-text		no
+GOD_BYRD	model+text							abstain	abstain	conditional-text		no
+GOLD_AXE	model+text	hit		hit	hit			role-fit	role-fit	-		no
+GOOD_INSTINCTS	text-only	guard						abstain	abstain	-		no
+GO_FOR_THE_EYES	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+GRAND_FINALE	model+text			area damage,hit	area damage,hit			role-fit	role-fit	conditional-text		no
+GRAVEBLAST	model+text	hit		hit	hit			role-fit	role-fit	-		no
+GRAVE_WARDEN	model+text	guard,souls		guard,souls	guard,souls			role-fit	role-fit	-		no
+GREED	model+text							typed-curse	typed-curse	-		no
+GROWTH	model+text	exhaust,stretch	sadness	exhaust,stretch	exhaust,stretch	sadness		role-fit	role-fit	conditional-text		no
+GUARDS	model+text							abstain	abstain	upgrade-branch		no
+GUIDING_STAR	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+GUILTY	model+text							typed-curse	typed-curse	-		no
+GUNK_UP	model+text	hit,multiple hits		hit,multiple hits	hit,multiple hits			role-fit	role-fit	-		no
+HAILSTORM	model+text		frost			frost		role-fit	role-fit	conditional-text		no
+HAMMER_TIME	model+text							abstain	abstain	conditional-text		no
+HAND_OF_GREED	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+HAND_TRICK	model+text	guard		guard	guard			role-fit	role-fit	-		no
+HANG	model+text	hit		hit	hit			role-fit	role-fit	-		no
+HARMONIC_SHIELD	model+text	guard		guard	guard	melody		role-fit	role-fit	conditional-text		no
+HAUNT	model+text							abstain	abstain	conditional-text		no
+HAVOC	model+text	exhaust						abstain	abstain	-		no
+HAZE	model+text	poison		poison	poison			role-fit	role-fit	-		no
+HEADBUTT	model+text	hit		hit	hit			role-fit	role-fit	-		no
+HEAVENLY_DRILL	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+HEAVY_SHOT	model+text	hit,shots,impale	aim	hit,impale,shots	hit,impale,shots	aim		role-fit	role-fit	-		no
+HEGEMONY	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+HEIRLOOM_HAMMER	model+text	hit		hit	hit			role-fit	role-fit	-		no
+HELIX_DRILL	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+HELLO_WORLD	model+text							abstain	abstain	conditional-text		no
+HELLRAISER	model+text							abstain	abstain	conditional-text		no
+HEMOKINESIS	model+text	hit,hp loss		hit,hp loss	hit,hp loss			role-fit	role-fit	-		no
+HIBERNATE	model+text	orbs,frost		frost,orbs	frost,orbs			role-fit	role-fit	-		no
+HIDDEN_CACHE	model+text	stars		stars	stars			role-fit	role-fit	conditional-text		no
+HIDDEN_DAGGERS	model+text	discard		discard,shivs	discard,shivs			role-fit	role-fit	upgrade-branch		no
+HIDDEN_GEM	model+text							abstain	abstain	-		no
+HIDDEN_ROOTS	model+text							abstain	abstain	conditional-text		no
+HIGH_FIVE	model+text	hit,Osty attacks		Osty attacks,hit	Osty attacks,hit			role-fit	role-fit	-		no
+HOBBLING_SHOT	model+text	hit,shots,impale		hit,impale,shots,weak	hit,impale,shots,weak			role-fit	role-fit	-		no
+HOLOGRAM	model+text	guard		guard	guard			role-fit	role-fit	-		no
+HONING	model+text		shots			shots		role-fit	role-fit	-		no
+HOTFIX	model+text	focus		focus	focus			role-fit	role-fit	-		no
+HOWL_FROM_BEYOND	model+text	hit,area damage		area damage,hit	area damage,hit			role-fit	role-fit	conditional-text		no
+HUDDLE_UP	model+text							abstain	abstain	-		no
+HYPERBEAM	model+text	hit,area damage		area damage,hit	area damage,hit			role-fit	role-fit	-		no
+ICE_LANCE	model+text	hit,orbs,frost		frost,hit,orbs	frost,hit,orbs			role-fit	role-fit	-		no
+IGNITION	model+text							abstain	abstain	-		no
+IMITATION_LEARNING	model+text							abstain	abstain	-		no
+IMMORTALITY	text-only	hp loss						abstain	abstain	-		no
+IMPALE	text-only	hit,poison						abstain	abstain	-		no
+IMPATIENCE	model+text							abstain	abstain	conditional-text		no
+IMPERVIOUS	model+text	guard		guard	guard			role-fit	role-fit	-		no
+INFECTION	model+text							abstain	abstain	conditional-text		no
+INFERNAL_BLADE	model+text							abstain	abstain	-		no
+INFERNO	model+text							abstain	abstain	conditional-text		no
+INFINITE_BLADES	model+text	shivs						role-fit	role-fit	conditional-text	shivs	no
+INFLAME	model+text	strength		strength	strength			role-fit	role-fit	-		no
+INJURY	model+text							typed-curse	typed-curse	-		no
+INTERCEPT	model+text	guard		guard	guard			role-fit	role-fit	-		no
+INVOKE	model+text	summon						role-fit	role-fit	conditional-text	energy,summon	no
+IRON_WAVE	model+text	guard,hit		guard,hit	guard,hit			role-fit	role-fit	-		no
+ITERATION	model+text							abstain	abstain	-		no
+I_AM_INVINCIBLE	model+text	guard		guard	guard			role-fit	role-fit	conditional-text		no
+JACKPOT	model+text	hit		hit	hit			role-fit	role-fit	upgrade-branch		no
+JACK_OF_ALL_TRADES	model+text							abstain	abstain	-		no
+JEST	model+text	guard,sadness		guard,sadness	guard,sadness		sadness-cards	role-fit	role-fit	-		no
+JOY	model+text	draw,energy		draw,energy	draw,energy			role-fit	role-fit	-		no
+JUDGEMENT	model+text							abstain	abstain	conditional-text		no
+JUGGERNAUT	model+text							abstain	abstain	conditional-text		no
+JUGGLING	model+text							abstain	abstain	-		no
+JUSTICE	model+text	hit		hit	hit			role-fit	role-fit	-		no
+KINGLY_KICK	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+KINGLY_PUNCH	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+KI_CHANT	model+text			melody	melody			role-fit	role-fit	-		no
+KI_HOP	model+text	hit		hit,melody	hit,melody			role-fit	role-fit	conditional-text		no
+KI_REST	model+text			melody	melody			role-fit	role-fit	conditional-text		no
+KI_VERSE	model+text			melody	melody			role-fit	role-fit	-		no
+KI_WHIP	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+KNIFE_TRAP	model+text							abstain	abstain	upgrade-branch		no
+KNOCKDOWN	model+text	hit		hit	hit			role-fit	role-fit	upgrade-branch		no
+KNOCKOUT_BLOW	model+text	hit,stars		hit	hit			role-fit	role-fit	conditional-text		no
+KNOW_THY_PLACE	model+text	weak,vulnerable		vulnerable,weak	vulnerable,weak			role-fit	role-fit	-		no
+LANTERN_KEY	model+text							abstain	abstain	-		no
+LARGESSE	model+text							abstain	abstain	upgrade-branch		no
+LEADING_STRIKE	model+text	hit,shivs		hit,shivs	hit,shivs			role-fit	role-fit	-		no
+LEAP	model+text	guard		guard	guard			role-fit	role-fit	-		no
+LEGION_OF_BONE	model+text	summon						abstain	abstain	-		no
+LEG_SWEEP	model+text	guard,weak		guard,weak	guard,weak			role-fit	role-fit	-		no
+LETHALITY	model+text							abstain	abstain	-		no
+LIFT	model+text							abstain	abstain	-		no
+LIGHTNING_ROD	model+text	guard,orbs		guard	guard			role-fit	role-fit	conditional-text	lightning,orbs	no
+LOCKED_IN	model+text							abstain	abstain	-		no
+LOOP	model+text							abstain	abstain	upgrade-branch,conditional-text		no
+LOST_LUTE	model+text					melody		role-fit	role-fit	conditional-text		no
+LULLABY	model+text							abstain	abstain	conditional-text		no
+LUMINESCE	model+text	energy		energy	energy			role-fit	role-fit	-		no
+LUNAR_BLAST	model+text	hit		hit	hit		repeat-skills	role-fit	role-fit	conditional-text		no
+MACHINE_LEARNING	model+text							role-fit	role-fit	conditional-text	draw	no
+MAD_SCIENCE	model+text	draw,strength,dexterity						abstain	abstain	conditional-text,variable-riders		no
+MAKE_IT_SO	model+text	hit		hit	hit			role-fit	role-fit	-		no
+MALAISE	model+text							abstain	abstain	upgrade-branch		no
+MANGLE	model+text	hit		hit	hit			role-fit	role-fit	-		no
+MANIFEST_AUTHORITY	model+text	guard		guard	guard			role-fit	role-fit	upgrade-branch		no
+MASTER_OF_STRATEGY	model+text	draw		draw	draw			role-fit	role-fit	-		no
+MASTER_PLANNER	model+text							abstain	abstain	conditional-text		no
+MAUL	model+text	hit,multiple hits		hit,multiple hits	hit,multiple hits			role-fit	role-fit	-		no
+MAYHEM	model+text							abstain	abstain	conditional-text		no
+MELANCHOLY	model+text	guard		guard	guard			role-fit	role-fit	conditional-text		no
+MELODIC_SHOT	model+text	hit,shots,impale		hit,impale,shots	hit,impale,shots	melody		role-fit	role-fit	conditional-text		no
+MEMENTO_MORI	model+text	hit		hit	hit			role-fit	role-fit	-		no
+METAMORPHOSIS	model+text							abstain	abstain	-		no
+METEOR_SHOWER	model+text	hit,weak,area damage		area damage,hit,weak	area damage,hit,weak			role-fit	role-fit	-		no
+METEOR_STRIKE	model+text	hit,orbs		hit,orbs	hit,orbs			role-fit	role-fit	-		no
+MIDNIGHT	model+text	hit	exhaust	hit	hit	exhaust		role-fit	role-fit	conditional-text		no
+MIGHTY_SHIELD	model+text	guard		guard	guard			role-fit	role-fit	-		no
+MIGHTY_WEAPON	model+text	hit,area damage		area damage,hit	area damage,hit			role-fit	role-fit	-		no
+MIMIC	model+text	guard		guard	guard			role-fit	role-fit	-		no
+MIND_BLAST	model+text	hit		hit	hit			role-fit	role-fit	-		no
+MIND_ROT	model+text	draw		draw	draw			role-fit	role-fit	-		no
+MINION_DIVE_BOMB	model+text	hit		hit	hit			role-fit	role-fit	-		no
+MINION_SACRIFICE	model+text	guard		guard	guard			role-fit	role-fit	-		no
+MINION_STRIKE	model+text	hit,draw		draw,hit	draw,hit			role-fit	role-fit	-		no
+MIRAGE	model+text							abstain	abstain	-		no
+MISERY	model+text	hit		hit	hit			role-fit	role-fit	-		no
+MOCK_ATTACK_CARD	model+text							abstain	abstain	-		no
+MOCK_CURSE_CARD	model+text							abstain	abstain	-		no
+MOCK_POWER_CARD	model+text							abstain	abstain	-		no
+MOCK_QUEST_CARD	model+text							abstain	abstain	-		no
+MOCK_SKILL_CARD	model+text							abstain	abstain	-		no
+MOCK_STATUS_CARD	model+text							abstain	abstain	-		no
+MOCK_TURN_END_IN_HAND_RECORDER_CARD	model-only							abstain	abstain	-		no
+MODDED	model+text	draw		draw	draw			role-fit	role-fit	-		no
+MOLTEN_FIST	model+text	hit		hit	hit			role-fit	role-fit	-		no
+MOMENTUM_STRIKE	model+text	hit		hit	hit			role-fit	role-fit	-		no
+MONARCHS_GAZE	model+text							abstain	abstain	conditional-text		no
+MONOLOGUE	model+text	strength						abstain	abstain	conditional-text		no
+MOTIF	model+text					melody		role-fit	role-fit	conditional-text		no
+MOURNING_BLOW	model+text	hit,sadness		hit,sadness	hit,sadness			role-fit	role-fit	-		no
+MULTI_CAST	model+text							abstain	abstain	upgrade-branch		no
+MURDER	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+MYTHIC_FORM	model+text							abstain	abstain	upgrade-branch,conditional-text		no
+MY_SHINIES	model+text	hit		hit	hit			role-fit	role-fit	-		no
+NAIL	model+text		impale			impale	requires-impale	role-fit	role-fit	conditional-text		no
+NECRO_MASTERY	model+text	summon	summon	summon	summon	summon		role-fit	role-fit	conditional-text		no
+NEGATIVE_PULSE	model+text	guard,doom		doom,guard	doom,guard			role-fit	role-fit	-		no
+NEOWS_FURY	model+text	hit		hit	hit			role-fit	role-fit	-		no
+NEUROSURGE	model+text	draw,energy,doom		draw,energy	draw,energy			role-fit	role-fit	conditional-text		no
+NEUTRALIZE	model+text	hit,weak		hit,weak	hit,weak			role-fit	role-fit	-		no
+NEUTRON_AEGIS	model+text	plating		plating	plating			role-fit	role-fit	-		no
+NIGHTMARE	model+text							abstain	abstain	conditional-text		no
+NOCK	model+text	aim		aim	aim			role-fit	role-fit	-		no
+NORMALITY	model+text							typed-curse	typed-curse	-		no
+NOSTALGIA	model+text							abstain	abstain	-		no
+NOT_YET	model+text	healing		healing	healing			role-fit	role-fit	-		no
+NOXIOUS_FUMES	model+text	poison						role-fit	role-fit	conditional-text	poison	no
+NO_ESCAPE	model+text	doom	doom	doom	doom	doom		role-fit	role-fit	-		no
+NULL	model+text	hit,orbs,weak		hit,orbs,weak	hit,orbs,weak			role-fit	role-fit	-		no
+OBLIVION	model+text	doom						abstain	abstain	conditional-text		no
+OFFERING	model+text	draw,energy,hp loss		draw,energy,hp loss	draw,energy,hp loss			role-fit	role-fit	-		no
+OFF_BY_ONE	text-only							abstain	abstain	conditional-text		no
+OMNISLICE	model+text	hit		hit	hit			role-fit	role-fit	-		no
+ONE_FOR_ALL	model+text							abstain	abstain	-		no
+ONE_TWO_PUNCH	model+text							abstain	abstain	-		no
+ORBIT	model+text	energy						abstain	abstain	-		no
+OUTBREAK	model+text	poison		poison	poison			role-fit	role-fit	-		no
+OUTMANEUVER	model+text							abstain	abstain	conditional-text		no
+OUTRAGE	model+text	hit		hit	hit			role-fit	role-fit	-		no
+OVERCLOCK	model+text	draw		draw	draw			role-fit	role-fit	-		no
+PACTS_END	model+text	hit,area damage						abstain	abstain	conditional-text		no
+PAELS_STRIKE	text-only	hit						abstain	abstain	-		no
+PAGESTORM	model+text							abstain	abstain	conditional-text		no
+PALE_BLUE_DOT	model+text							abstain	abstain	conditional-text		no
+PANACHE	model+text							abstain	abstain	-		no
+PANIC_BUTTON	model+text	guard		guard	guard			role-fit	role-fit	-		no
+PARRY	model+text							abstain	abstain	-		no
+PARSE	model+text	draw		draw	draw			role-fit	role-fit	-		no
+PARTICLE_WALL	model+text	guard		guard	guard			role-fit	role-fit	-		no
+PATTER	model+text	guard		guard	guard			role-fit	role-fit	-		no
+PECK	model+text	hit,multiple hits		hit,multiple hits	hit,multiple hits			role-fit	role-fit	-		no
+PERFECTED_STRIKE	model+text	hit		hit	hit			role-fit	role-fit	-		no
+PHANTOM_BLADES	model+text							abstain	abstain	-		no
+PHOTON_CUT	model+text	hit,draw		draw,hit	draw,hit			role-fit	role-fit	-		no
+PIERCING_WAIL	model+text							abstain	abstain	-		no
+PILLAGE	model+text	hit,draw		draw,hit	draw,hit		uncertain-draw	role-fit	role-fit	-		no
+PILLAR_OF_CREATION	model+text							abstain	abstain	conditional-text		no
+PINPOINT	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+PITY	text-only							abstain	abstain	-		no
+PLOT	model+text							abstain	abstain	conditional-text		no
+POISONED_STAB	model+text	hit,poison		hit,poison	hit,poison			role-fit	role-fit	-		no
+POKE	model+text	hit,Osty attacks		Osty attacks,hit	Osty attacks,hit			role-fit	role-fit	-		no
+POMMEL_STRIKE	model+text	hit,draw		draw,hit	draw,hit			role-fit	role-fit	-		no
+POOR_SLEEP	model+text							typed-curse	typed-curse	-		no
+POUNCE	model+text	hit		hit	hit			role-fit	role-fit	-		no
+PRECISE_CUT	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+PREDATOR	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+PREPARED	model+text	draw,discard		discard,draw	discard,draw			role-fit	role-fit	-		no
+PREP_TIME	model+text							abstain	abstain	conditional-text		no
+PRIMAL_FORCE	model+text							abstain	abstain	upgrade-branch		no
+PRODUCTION	model+text	energy		energy	energy			role-fit	role-fit	-		no
+PROLONG	model+text							abstain	abstain	conditional-text		no
+PROPHESIZE	model+text	draw		draw	draw			role-fit	role-fit	-		no
+PROTECTOR	model+text	hit,Osty attacks	summon	Osty attacks,hit	Osty attacks,hit	summon		role-fit	role-fit	-		no
+PROWESS	model+text	strength,dexterity		dexterity,strength	dexterity,strength			role-fit	role-fit	-		no
+PULL_AGGRO	model+text	guard,summon		guard,summon	guard,summon			role-fit	role-fit	-		no
+PULL_FROM_BELOW	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+PUNCH_OF_JOY	model+text	hit		hit	hit		convert-sadness	role-fit	role-fit	-		no
+PURITY	model+text							abstain	abstain	-		no
+PUTREFY	model+text	weak,vulnerable		vulnerable,weak	vulnerable,weak			role-fit	role-fit	-		no
+PYRE	model+text	energy		energy	energy			role-fit	role-fit	conditional-text		no
+QUADCAST	model+text							abstain	abstain	-		no
+QUASAR	model+text							abstain	abstain	upgrade-branch		no
+QUICK_SHOT	model+text	hit,shots,impale		hit,impale,shots	hit,impale,shots			role-fit	role-fit	-		no
+QUICK_SLASH	text-only	hit,draw						abstain	abstain	-		no
+QUIETUS	model+text		shots			shots		role-fit	role-fit	upgrade-branch		no
+QUIVER	model+text							abstain	abstain	-		no
+RADIATE	model+text	hit,area damage	stars	area damage,hit	area damage,hit	stars		role-fit	role-fit	conditional-text		no
+RAGE	model+text							abstain	abstain	conditional-text		no
+RAINBOW	model+text	orbs,frost,lightning		frost,lightning,orbs	frost,lightning,orbs			role-fit	role-fit	-		no
+RAIN_SHOT	model+text	hit,shots,impale		hit,impale,shots	hit,impale,shots			role-fit	role-fit	-		no
+RALLY	model+text							abstain	abstain	-		no
+RAMPAGE	model+text	hit		hit	hit			role-fit	role-fit	-		no
+RAPID_SHOT	model+text	hit,shots,impale		hit,impale,shots	hit,impale,shots			role-fit	role-fit	-		no
+RATTLE	model+text	hit,Osty attacks		Osty attacks,hit	Osty attacks,hit			role-fit	role-fit	conditional-text		no
+REANIMATE	model+text	summon		summon	summon			role-fit	role-fit	-		no
+REAP	model+text	hit		hit	hit			role-fit	role-fit	-		no
+REAPER_FORM	model+text	doom						role-fit	role-fit	conditional-text	doom	no
+REAVE	model+text	hit		hit,souls	hit,souls			role-fit	role-fit	upgrade-branch		no
+REBOOT	model+text	draw		draw	draw			role-fit	role-fit	-		no
+REBOUND	model+text	hit		hit	hit			role-fit	role-fit	-		no
+RECALL	model+text					impale		role-fit	role-fit	conditional-text		no
+REFINE_BLADE	model+text	forge		forge	forge			role-fit	role-fit	conditional-text		no
+REFLECT	model+text	guard		guard	guard			role-fit	role-fit	-		no
+REFLEX	model+text	draw	discard	draw	draw	discard		role-fit	role-fit	-		no
+REFRACT	model+text	hit,orbs,multiple hits		hit,multiple hits,orbs	hit,multiple hits,orbs			role-fit	role-fit	-		no
+REGRET	model+text							typed-curse	typed-curse	conditional-text		no
+RELAX	model+text	guard		guard	guard			role-fit	role-fit	conditional-text	draw,energy	no
+REND	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+REPEAT_SHOT	model+text	hit,shots,impale		hit,impale,shots	hit,impale,shots			role-fit	role-fit	-		no
+RESERVES	text-only							abstain	abstain	conditional-text		no
+RESONANCE	model+text	strength		strength	strength			role-fit	role-fit	-		no
+RESTLESSNESS	model+text							abstain	abstain	conditional-text		no
+RHYTHM_STRIKE	model+text	hit		hit	hit	melody		role-fit	role-fit	conditional-text		no
+RICOCHET	model+text	hit		hit	hit			role-fit	role-fit	-		no
+RIGHT_HAND_HAND	model+text	hit,Osty attacks		Osty attacks,hit	Osty attacks,hit			role-fit	role-fit	conditional-text		no
+RIP_AND_TEAR	model+text	hit		hit	hit			role-fit	role-fit	-		no
+ROCKET_PUNCH	model+text	hit,draw		draw,hit	draw,hit			role-fit	role-fit	conditional-text		no
+ROLLING_BOULDER	model+text							abstain	abstain	conditional-text		no
+ROYALTIES	model+text							abstain	abstain	conditional-text		no
+ROYAL_GAMBLE	model+text							abstain	abstain	-		no
+RUMMAGE	model+text	draw,sadness		draw,sadness	draw,sadness			role-fit	role-fit	-		no
+RUPTURE	model+text	strength	hp loss			hp loss		role-fit	role-fit	conditional-text	strength	no
+SACRIFICE	model+text							abstain	abstain	conditional-text		no
+SADNESS	model+text							abstain	abstain	-		no
+SALVO	model+text	hit,retain hand		hit,retain hand	hit,retain hand			role-fit	role-fit	-		no
+SCAVENGE	model+text	exhaust		exhaust	exhaust			role-fit	role-fit	conditional-text		no
+SCOURGE	model+text	draw,doom		doom,draw	doom,draw			role-fit	role-fit	-		no
+SCRAPE	model+text	hit,draw		draw,hit	draw,hit			role-fit	role-fit	-		no
+SCRAWL	model+text							abstain	abstain	-		no
+SCULPTING_STRIKE	model+text	hit		hit	hit			role-fit	role-fit	-		no
+SEANCE	model+text							abstain	abstain	-		no
+SECOND_WIND	model+text	exhaust		exhaust,guard	exhaust,guard			role-fit	role-fit	conditional-text		no
+SECRET_TECHNIQUE	model+text							abstain	abstain	-		no
+SECRET_WEAPON	model+text							abstain	abstain	-		no
+SEEKER_STRIKE	model+text	hit		hit	hit			role-fit	role-fit	-		no
+SEEKING_EDGE	model+text	forge		forge	forge			role-fit	role-fit	-		no
+SELF_DEPRECATE	model+text	sadness		sadness	sadness			role-fit	role-fit	-		no
+SENTRY_MODE	model+text							abstain	abstain	conditional-text		no
+SERPENT_FORM	model+text							abstain	abstain	conditional-text		no
+SERRATED_ARROWS	model+text		impale			impale		role-fit	role-fit	-		no
+SETUP_STRIKE	model+text	hit,strength		hit,strength	hit,strength			role-fit	role-fit	-		no
+SEVEN_STARS	model+text	hit,multiple hits,area damage		area damage,hit,multiple hits	area damage,hit,multiple hits			role-fit	role-fit	-		no
+SEVERANCE	model+text	hit,souls		hit,souls	hit,souls			role-fit	role-fit	-		no
+SHADOWMELD	model+text							abstain	abstain	-		no
+SHADOW_SHIELD	model+text	guard,orbs		guard,orbs	guard,orbs			role-fit	role-fit	-		no
+SHADOW_STEP	model+text	discard		discard	discard			role-fit	role-fit	conditional-text		no
+SHAME	model+text							typed-curse	typed-curse	conditional-text		no
+SHARED_FATE	model+text							abstain	abstain	-		no
+SHARP_EDGE	text-only							abstain	abstain	conditional-text		no
+SHATTER	model+text	hit,area damage		area damage,hit	area damage,hit			role-fit	role-fit	-		no
+SHINING_STRIKE	model+text	hit,stars		hit,stars	hit,stars			role-fit	role-fit	-		no
+SHIV	model+text	hit		hit	hit			role-fit	role-fit	-		no
+SHOCKWAVE	model+text	weak		vulnerable,weak	vulnerable,weak			role-fit	role-fit	-		no
+SHOW_OFF	model+text	aim		aim	aim			role-fit	role-fit	conditional-text		no
+SHROUD	model+text		doom			doom		role-fit	role-fit	conditional-text	guard	no
+SHRUG_IT_OFF	model+text	guard,draw		draw,guard	draw,guard			role-fit	role-fit	-		no
+SIC_EM	model+text	hit,summon,Osty attacks		Osty attacks,hit	Osty attacks,hit			role-fit	role-fit	conditional-text		no
+SIDESTEP	model+text							abstain	abstain	conditional-text		no
+SIGNAL_BOOST	model+text							abstain	abstain	-		no
+SIMPLETON	model+text							abstain	abstain	conditional-text		no
+SKEWER	model+text	hit		hit	hit			role-fit	role-fit	-		no
+SKIM	model+text	draw		draw	draw			role-fit	role-fit	-		no
+SKY_SHOT	model+text	hit,shots,impale		hit,impale,shots	hit,impale,shots			role-fit	role-fit	-		no
+SLEIGHT_OF_FLESH	model+text							abstain	abstain	conditional-text		no
+SLICE	model+text	hit		hit	hit			role-fit	role-fit	-		no
+SLIMED	model+text	draw		draw	draw			role-fit	role-fit	-		no
+SLOTH	model+text							abstain	abstain	-		no
+SMOKESTACK	model+text							abstain	abstain	conditional-text		no
+SNAKEBITE	model+text	poison		poison	poison			role-fit	role-fit	-		no
+SNAP	model+text	hit,Osty attacks		Osty attacks,hit	Osty attacks,hit			role-fit	role-fit	-		no
+SNEAKY	model+text							abstain	abstain	conditional-text		no
+SOLAR_STRIKE	model+text	hit,stars		hit,stars	hit,stars			role-fit	role-fit	-		no
+SONG_PATH	model+text							abstain	abstain	conditional-text		no
+SOOT	model+text							abstain	abstain	-		no
+SORROWFUL_STRIKE	model+text	hit,sadness		hit,sadness	hit,sadness		sadness-cards	role-fit	role-fit	-		no
+SOUL	model+text	draw		draw	draw			role-fit	role-fit	-		no
+SOULBOUND	model+text	souls						abstain	abstain	conditional-text		no
+SOUL_STORM	model+text	hit	souls	hit	hit	souls		role-fit	role-fit	conditional-text		no
+SOVEREIGN_BLADE	model+text	guard,hit		guard,hit	guard,hit			role-fit	role-fit	-		no
+SOW	model+text	hit,area damage		area damage,hit	area damage,hit			role-fit	role-fit	-		no
+SPECTRUM_SHIFT	model+text							abstain	abstain	conditional-text		no
+SPEEDSTER	model+text							abstain	abstain	conditional-text		no
+SPIKED	text-only							abstain	abstain	conditional-text		no
+SPINNER	model+text	orbs			orbs			role-fit	role-fit	upgrade-branch,conditional-text	orbs	no
+SPIRIT_OF_ASH	model+text							abstain	abstain	conditional-text		no
+SPITE	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+SPLASH	model+text							abstain	abstain	upgrade-branch		no
+SPOILS_MAP	model+text							abstain	abstain	-		no
+SPOILS_OF_BATTLE	model+text	draw,forge		draw,forge	draw,forge			role-fit	role-fit	-		no
+SPORE_MIND	model+text							typed-curse	typed-curse	-		no
+SPUR	model+text	summon		summon	summon			role-fit	role-fit	-		no
+SQUASH	model+text	hit,vulnerable		hit,vulnerable	hit,vulnerable			role-fit	role-fit	-		no
+SQUEEZE	model+text	hit,Osty attacks		Osty attacks,hit	Osty attacks,hit			role-fit	role-fit	-		no
+STACK	model+text			guard	guard			role-fit	role-fit	upgrade-branch		no
+STAMPEDE	model+text							abstain	abstain	conditional-text		no
+STARDUST	model+text	hit		hit	hit			role-fit	role-fit	-		no
+STAR_BLAST	text-only	guard,hit						abstain	abstain	-		no
+STAR_SHIELD	text-only	guard,draw						abstain	abstain	-		no
+STEADY_CADENCE	model+text	hit,draw		draw,hit	draw,hit			role-fit	role-fit	conditional-text		no
+STOKE	model+text	exhaust		exhaust	exhaust			role-fit	role-fit	upgrade-branch,conditional-text		no
+STOMP	model+text	hit,area damage		area damage,hit	area damage,hit			role-fit	role-fit	conditional-text		no
+STONE_ARMOR	model+text	plating		plating	plating			role-fit	role-fit	-		no
+STORM	model+text	orbs						role-fit	role-fit	conditional-text	lightning,orbs	no
+STORM_OF_STEEL	model+text	discard		discard,shivs	discard,shivs			role-fit	role-fit	upgrade-branch,conditional-text		no
+STRANGLE	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+STRATAGEM	model+text							abstain	abstain	conditional-text		no
+STRENGTH	model+text	strength		strength	strength			role-fit	role-fit	-		no
+STRIKE_DEFECT	model+text	hit		hit	hit			role-fit	role-fit	-		no
+STRIKE_FOOL	model+text	hit		hit	hit			role-fit	role-fit	-		no
+STRIKE_IRONCLAD	model+text	hit		hit	hit			role-fit	role-fit	-		no
+STRIKE_NECROBINDER	model+text	hit		hit	hit			role-fit	role-fit	-		no
+STRIKE_REGENT	model+text	hit		hit	hit			role-fit	role-fit	-		no
+STRIKE_SILENT	model+text	hit		hit	hit			role-fit	role-fit	-		no
+SUBROUTINE	model+text							abstain	abstain	conditional-text		no
+SUCKER_PUNCH	model+text	hit,weak		hit,weak	hit,weak			role-fit	role-fit	-		no
+SUMMON_FORTH	model+text	forge		forge	forge			role-fit	role-fit	-		no
+SUNDER	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+SUPERCRITICAL	model+text	energy		energy	energy			role-fit	role-fit	-		no
+SUPERMASSIVE	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+SUPPRESS	model+text	hit,weak		hit,weak	hit,weak			role-fit	role-fit	-		no
+SURVIVOR	model+text	guard,discard		discard,guard	discard,guard			role-fit	role-fit	-		no
+SWEEPING_BEAM	model+text	hit,draw,area damage		area damage,draw,hit	area damage,draw,hit			role-fit	role-fit	-		no
+SWEEPING_GAZE	model+text	hit,Osty attacks		Osty attacks,hit	Osty attacks,hit			role-fit	role-fit	-		no
+SWIFT_STRIKE	text-only	hit						abstain	abstain	-		no
+SWORD_BOOMERANG	model+text	hit	strength	hit	hit	strength		role-fit	role-fit	-		no
+SWORD_SAGE	model+text							abstain	abstain	-		no
+SYNCHRONIZE	model+text	focus		focus	focus			role-fit	role-fit	conditional-text		no
+SYNTHESIS	model+text	hit		hit	hit			role-fit	role-fit	-		no
+TACTICIAN	model+text	energy	discard	energy	energy	discard		role-fit	role-fit	-		no
+TAG_TEAM	model+text	hit		hit	hit			role-fit	role-fit	-		no
+TANK	model+text							abstain	abstain	-		no
+TAUNT	model+text	guard,vulnerable		guard,vulnerable	guard,vulnerable			role-fit	role-fit	-		no
+TEAR_ASUNDER	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+TEMPERANCE	model+text	guard		guard	guard			role-fit	role-fit	-		no
+TEMPEST	model+text	orbs,lightning		lightning,orbs	lightning,orbs			role-fit	role-fit	upgrade-branch		no
+TERRAFORMING	model+text							abstain	abstain	-		no
+TESLA_COIL	model+text	hit		hit	hit			role-fit	role-fit	upgrade-branch		no
+TEZCATARAS_MIGHT	text-only	strength						abstain	abstain	conditional-text		no
+THE_BALL	model+text	hit		hit	hit			role-fit	role-fit	-		no
+THE_BOMB	model+text							abstain	abstain	conditional-text		no
+THE_CHARIOT	model+text	hit,area damage		area damage,hit	area damage,hit			role-fit	role-fit	-		no
+THE_DEVIL	model+text	exhaust		exhaust	exhaust			role-fit	role-fit	upgrade-branch,conditional-text		no
+THE_EMPEROR	model+text	energy		energy	energy			role-fit	role-fit	-		no
+THE_EMPRESS	model+text	weak,vulnerable		vulnerable,weak	vulnerable,weak			role-fit	role-fit	-		no
+THE_FOOL	model+text							abstain	abstain	-		no
+THE_GAMBIT	model+text	guard		guard	guard			role-fit	role-fit	conditional-text		no
+THE_HANGED_MAN	model+text	hp loss		hp loss	hp loss			role-fit	role-fit	-		no
+THE_HERMIT	model+text	draw,discard		discard,draw	discard,draw			role-fit	role-fit	-		no
+THE_HIEROPHANT	model+text							abstain	abstain	-		no
+THE_HIGH_PRIESTESS	model+text	draw		draw	draw			role-fit	role-fit	-		no
+THE_HUNT	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+THE_LOVERS	model+text							abstain	abstain	upgrade-branch		no
+THE_MAGICIAN	model+text	orbs		orbs	orbs			role-fit	role-fit	-		no
+THE_MOON	model+text							abstain	abstain	upgrade-branch		no
+THE_SCYTHE	model+text	hit		hit	hit			role-fit	role-fit	-		no
+THE_SEALED_THRONE	model+text							abstain	abstain	conditional-text		no
+THE_SHOT	model+text	hit,shots,impale		hit,impale,shots	hit,impale,shots			role-fit	role-fit	conditional-text		no
+THE_SMITH	model+text	forge		forge	forge			role-fit	role-fit	-		no
+THE_STAR	model+text							role-fit	role-fit	conditional-text	draw,energy	no
+THE_SUN	model+text	draw,energy		draw,energy	draw,energy			role-fit	role-fit	-		no
+THE_TOWER	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+THE_WORLD	model+text							abstain	abstain	-		no
+THINKING_AHEAD	model+text	draw		draw	draw			role-fit	role-fit	-		no
+THRASH	model+text	hit,multiple hits		hit,multiple hits	hit,multiple hits			role-fit	role-fit	-		no
+THRUMMING_HATCHET	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+THUNDER	model+text							abstain	abstain	conditional-text		no
+THUNDERCLAP	model+text	hit		area damage,hit,vulnerable	area damage,hit,vulnerable			role-fit	role-fit	-		no
+TIMBER	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
+TIMES_UP	model+text	hit		hit	hit			role-fit	role-fit	-		no
+TOOLS_OF_THE_TRADE	model+text	discard						role-fit	role-fit	conditional-text	discard,draw	no
+TORIC_TOUGHNESS	model+text	guard		guard	guard			role-fit	role-fit	conditional-text		no
+TOXIC	model+text							abstain	abstain	conditional-text		no
+TRACKING	model+text		weak			weak		role-fit	role-fit	-		no
+TRAINING_STRIKE	text-only	hit						abstain	abstain	conditional-text		no
+TRANSFIGURE	model+text							abstain	abstain	-		no
+TRASH_TO_TREASURE	model+text	orbs						role-fit	role-fit	conditional-text	orbs	no
+TREMBLE	model+text	vulnerable		vulnerable	vulnerable			role-fit	role-fit	-		no
+TRICK_SHOT	model+text	hit,shots,impale		hit,impale,shots	hit,impale,shots			role-fit	role-fit	-		no
+TRUE_GRIT	model+text	guard,exhaust		exhaust,guard	exhaust,guard		exhaust-choice	role-fit	role-fit	upgrade-branch		no
+TUNE	model+text							abstain	abstain	conditional-text		no
+TURBO	model+text	energy		energy	energy			role-fit	role-fit	-		no
+TUTOR	model+text							abstain	abstain	-		no
+TWIN_STRIKE	model+text	hit,multiple hits		hit,multiple hits	hit,multiple hits			role-fit	role-fit	-		no
+TYRANNY	model+text	exhaust						abstain	abstain	conditional-text		no
+ULTIMATE_DEFEND	model+text	guard		guard	guard			role-fit	role-fit	-		no
+ULTIMATE_STRIKE	model+text	hit		hit	hit			role-fit	role-fit	-		no
+UNDEATH	model+text	guard		guard	guard			role-fit	role-fit	-		no
+UNDERWORLD	model+text	doom						abstain	abstain	conditional-text		no
+UNLEASH	model+text	hit,Osty attacks	summon	Osty attacks,hit	Osty attacks,hit	summon		role-fit	role-fit	-		no
+UNMOVABLE	model+text							abstain	abstain	-		no
+UNRELENTING	model+text	hit		hit	hit			role-fit	role-fit	-		no
+UNTOUCHABLE	model+text	guard		guard	guard			role-fit	role-fit	-		no
+UPPERCUT	model+text	hit,weak,vulnerable		hit,vulnerable,weak	hit,vulnerable,weak			role-fit	role-fit	-		no
+UPROAR	model+text	hit,multiple hits		hit,multiple hits	hit,multiple hits			role-fit	role-fit	-		no
+UPROOT	model+text					impale		role-fit	role-fit	conditional-text		no
+UP_MY_SLEEVE	model+text	shivs		shivs	shivs			role-fit	role-fit	-		no
+VEILPIERCER	model+text	hit		hit	hit			role-fit	role-fit	-		no
+VENERATE	model+text	stars		stars	stars			role-fit	role-fit	-		no
+VETERAN	text-only	guard,strength						abstain	abstain	-		no
+VICIOUS	model+text		vulnerable			vulnerable		role-fit	role-fit	conditional-text		no
+VIOLENT_CHORD	model+text							abstain	abstain	conditional-text		no
+VISIONS_OF_GRANDEUR	text-only							abstain	abstain	conditional-text		no
+VITRIOL	model+text	sadness,weak		sadness,weak	sadness,weak		sadness-one	role-fit	role-fit	-		no
+VOID	model+text							abstain	abstain	conditional-text		no
+VOID_FORM	model+text							abstain	abstain	-		no
+VOLLEY	model+text	hit		hit	hit			role-fit	role-fit	-		no
+VOLTAIC	model+text	orbs,lightning	lightning	lightning,orbs	lightning,orbs	lightning		role-fit	role-fit	-		no
+WAH_BLAST	model+text	hit,area damage		area damage,hit,melody	area damage,hit,melody			role-fit	role-fit	conditional-text		no
+WAH_CHO	model+text	guard,hit		guard,hit,melody	guard,hit,melody			role-fit	role-fit	-		no
+WAH_CHO_KI	model+text	guard,hit,draw		draw,guard,hit,melody	draw,guard,hit,melody			role-fit	role-fit	-		no
+WAH_HAMMER	model+text	hit	impale	hit,melody	hit,melody	impale		role-fit	role-fit	-		no
+WAH_KI	model+text	hit,multiple hits		hit,melody,multiple hits	hit,melody,multiple hits			role-fit	role-fit	conditional-text	draw,energy	no
+WAH_SWEEP	model+text	hit,area damage		area damage,hit,melody	area damage,hit,melody			role-fit	role-fit	-		no
+WAH_SYMPHONY	model+text	hit,area damage		area damage,hit,melody	area damage,hit,melody			role-fit	role-fit	-		no
+WAH_TOUCH	model+text	hit,vulnerable		hit,melody,vulnerable	hit,melody,vulnerable			role-fit	role-fit	-		no
+WARP_SPACE	text-only							abstain	abstain	-		no
+WASTE_AWAY	model+text							abstain	abstain	-		no
+WELL_LAID_PLANS	model+text	discard		retain hand	retain hand			role-fit	role-fit	conditional-text		no
+WHEEL_OF_FORTUNE	model+text	draw,discard		discard,draw	discard,draw			role-fit	role-fit	-		no
+WHIRLWIND	model+text	hit,area damage	strength	area damage,hit	area damage,hit	strength		role-fit	role-fit	-		no
+WHISTLE	model+text	hit		hit	hit			role-fit	role-fit	-		no
+WHISTLING_ARROWS	model+text	guard,shots,impale	shots	guard	guard	shots		role-fit	role-fit	conditional-text		no
+WHITE_NOISE	model+text							abstain	abstain	-		no
+WISH	model+text							abstain	abstain	-		no
+WISP	model+text	energy		energy	energy			role-fit	role-fit	-		no
+WITHER	model+text							abstain	abstain	conditional-text		no
+WOUND	model+text							abstain	abstain	-		no
+WRAITH_FORM	model+text							abstain	abstain	conditional-text		no
+WREST	model+text					impale		role-fit	role-fit	conditional-text		no
+WRITHE	model+text							typed-curse	typed-curse	-		no
+WROUGHT_IN_WAR	model+text	hit,forge		forge,hit	forge,hit			role-fit	role-fit	-		no
+YAH	model+text							abstain	abstain	-		no
+YOGA	model+text							abstain	abstain	-		no
+ZAP	model+text	orbs,lightning		lightning,orbs	lightning,orbs			role-fit	role-fit	-		no
