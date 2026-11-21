@@ -2,6 +2,8 @@
 
 ## v0.1.24
 
+- Recognize all 324 relic catalog IDs. Name relevant cards when relics help or conflict with them in rewards, shops, treasure and detailed combat hints. Darv’s Lost Lute comparison now names an actual Melody source if your deck has one.
+
 - Recognize all 102 known relic gifts across all eight gift-giving Ancients, including mixed rolls, plus Neow’s five modifier openings and Blitz. Show short gift-specific tradeoffs; uncertain outcomes do not get guaranteed scores. The Architect’s dialogue is not a gift choice.
 
 ## v0.1.23

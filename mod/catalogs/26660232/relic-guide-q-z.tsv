@@ -1,0 +1,96 @@
+RADIANT_PEARL	utility	-	Open each fight with Luminesce in hand for energy.
+RAINBOW_RING	conditional	-	Play all three types in one turn for Strength and Dexterity, once that turn.
+RAZOR_TOOTH	synergy	attack,skill	Playing an Attack or Skill upgrades that card for later plays this fight.
+RED_MASK	utility	-	Every foe begins the fight Weak.
+RED_SKULL	conditional	-	Strength stays boosted only while HP is at or below the cutoff.
+RED_VINE_TEA	utility	-	Draw a larger opening hand for a limited number of fights.
+REGALITE	synergy	ID:BLADE_DANCE,ID:CLOAK_AND_DAGGER	The first card created each turn grants Block; making a Shiv qualifies.
+REGAL_PILLOW	utility	-	Resting restores extra HP.
+REPTILE_TRINKET	conditional	-	Use a potion for a Strength boost that expires this turn.
+RINGING_TRIANGLE	utility	-	Keep leftover opening-hand cards after turn one.
+RING_OF_THE_DRAKE	utility	-	Draw extra cards on the opening turns of each fight.
+RING_OF_THE_SNAKE	utility	-	Draw extra cards for the opening hand.
+RIPPLE_BASIN	tradeoff	attack	Playing even one Attack forfeits this turn's bonus Block.
+ROYAL_POISON	tradeoff	-	Budget for HP loss on entering every fight.
+ROYAL_STAMP	synergy	attack,skill	Pick an Attack or Skill already in the deck for an enchantment.
+RUINED_HELMET	synergy	strength	Make the first Strength gain of the fight a large one: it doubles.
+RUNIC_CAPACITOR	synergy	orbs	Extra opening orb slots let you Channel more before forcing an Evoke.
+RUNIC_PYRAMID	utility	-	Unplayed cards stay in hand across turns; leave space for new draws.
+SAI	utility	-	Begin each turn with Block before playing a card.
+SAND_CASTLE	utility	-	Pickup upgrades random cards already in the deck.
+SCREAMING_FLAGON	conditional	-	Finish the turn empty-handed to damage every enemy.
+SCROLL_BOXES	utility	-	Choose one of two card packs; the whole chosen pack joins the deck.
+SEAL_OF_GOLD	tradeoff	-	Turn-start energy draws from your gold reserve.
+SEA_GLASS	utility	-	Review another character's cards and take as many or as few as fit.
+SELF_FORMING_CLAY	synergy	hp loss	Losing HP this fight banks Block for the next turn.
+SERE_TALON	tradeoff	-	Trade 9 Max HP for Wishes added to the deck.
+SHOVEL	utility	-	Digging spends a Rest Site action on a random relic.
+SHURIKEN	synergy	attack,shivs	Count Attack plays within one turn; each full set grants Strength. Generated Shivs count when played.
+SIGNET_RING	utility	-	Pickup supplies gold for later purchases.
+SILKEN_TRESS	tradeoff	-	Give up all current gold for Glam on the first card reward.
+SILVER_CRUCIBLE	tradeoff	-	Early card rewards come upgraded, but the first chest is empty.
+SLING_OF_COURAGE	conditional	-	The opening Strength bonus applies only in Elite fights.
+SMALL_CAPSULE	utility	-	Pickup immediately awards a random relic.
+SNECKO_EYE	tradeoff	zero-cost	Extra draw each turn; Confused rerolls drawn costs, even on free cards.
+SNECKO_SKULL	synergy	poison	Every Poison application puts extra Poison on its target.
+SONG_BOW	synergy	shots	Opening Aim boosts the next Arrow, not every Arrow in the fight.
+SOZU	tradeoff	-	Gain turn-start energy at the cost of all future potion pickups.
+SPARKLING_ROUGE	conditional	-	Strength and Dexterity arrive at the start of turn three.
+SPIKED_GAUNTLETS	tradeoff	power	Get energy each turn, but pay one extra energy per Power.
+STONE_CALENDAR	conditional	-	The damage burst hits every foe at the end of the marked turn.
+STONE_CRACKER	utility	-	Random draw-pile cards get a fight-long upgrade at combat start.
+STONE_HUMIDIFIER	utility	-	Choose Rest at a Rest Site to also increase Max HP.
+STORYBOOK	utility	-	Add Brightest Flame: energy and draw at a Max HP cost when played.
+STORYTELLER	synergy	shots	Start with Aim for an Arrow and gain more Aim at each turn's end.
+STRAWBERRY	utility	-	Pickup permanently raises the HP ceiling.
+STRIKE_DUMMY	synergy	basic-strike,ID:ADAPTIVE_STRIKE,ID:ASHEN_STRIKE,ID:BLIGHT_STRIKE,ID:FOCUSED_STRIKE,ID:LEADING_STRIKE,ID:METEOR_STRIKE,ID:MINION_STRIKE,ID:MOMENTUM_STRIKE,ID:PAELS_STRIKE,ID:PERFECTED_STRIKE,ID:POMMEL_STRIKE,ID:RHYTHM_STRIKE,ID:SCULPTING_STRIKE,ID:SEEKER_STRIKE,ID:SETUP_STRIKE,ID:SHINING_STRIKE,ID:SOLAR_STRIKE,ID:SORROWFUL_STRIKE,ID:SWIFT_STRIKE,ID:TRAINING_STRIKE,ID:TWIN_STRIKE,ID:ULTIMATE_STRIKE	The damage bonus follows the word Strike in the card's name.
+STURDY_CLAMP	synergy	guard	Unused Block carries into the next turn up to the clamp's limit.
+SWORD_OF_JADE	synergy	multi-hit	Opening Strength adds damage to each hit of a multi-hit Attack.
+SWORD_OF_STONE	conditional	-	Elite victories advance this relic toward its transformation.
+SYMBIOTIC_VIRUS	synergy	focus	Channel Dark at combat start; Focus strengthens its passive growth.
+TANXS_WHISTLE	utility	-	Add Whistle to the deck for a damaging Stun.
+TEA_OF_DISCOURTESY	tradeoff	-	Dazed cards clog the draw pile in the next fight only.
+THE_ABACUS	conditional	-	Reshuffling the draw pile grants Block; drawing alone does not.
+THE_BOOT	conditional	-	Small attack hits get a damage floor only if damage gets past Block.
+THE_COURIER	utility	-	Merchant stock replenishes and prices fall.
+THROWING_AXE	conditional	-	Lead with the card you want played twice; only the opener repeats.
+THUMBSCREW	synergy	multi-hit	A multi-hit Attack gets one more hit.
+TINGSHA	synergy	discard	Each card discarded during your turn damages a random foe.
+TINY_MAILBOX	utility	-	Choosing Rest also brings two random potions.
+TOASTY_MITTENS	tradeoff	-	Each turn starts by exhausting a hand card and granting Strength.
+TOOLBOX	utility	-	Choose a random Colorless offer for your hand as each fight starts.
+TORMENTOUS_COLLAR	conditional	-	Elite fights open with Weak on every enemy.
+TOUCH_OF_OROBAS	utility	-	Your starter relic is replaced by its Ancient version.
+TOUGH_BANDAGES	synergy	discard	Each card discarded on your turn pays out Block.
+TOXIC_EGG	synergy	skill	New Skills enter the deck upgraded; existing ones get no upgrade.
+TOY_BOX	utility	-	Gain Wax Relics; the leftmost melts each time the combat timer expires.
+TRI_BOOMERANG	synergy	attack	Choose existing Attacks to receive Instinct.
+TUNGSTEN_ROD	synergy	hp loss	Reduce each instance of HP loss, including a card's self-damage.
+TUNING_FORK	synergy	skill	Each Skill play advances the counter toward bonus Block.
+TWINE	synergy	ID:RECALL,ID:UPROOT,ID:WREST,ID:EPIC_RETRIEVAL	Dislodge an Arrow for Block; shooting it is not the trigger.
+TWISTED_FUNNEL	synergy	poison	Every foe starts Poisoned; further applications build on those stacks.
+UNCEASING_TOP	conditional	-	Empty the hand during your turn to draw again.
+UNDYING_SIGIL	synergy	doom	Bring Doom up to the foe's remaining HP to halve its damage.
+UNSETTLING_LAMP	synergy	weak,vulnerable	Double the first enemy debuff from a card played each fight.
+VAJRA	synergy	multi-hit	Starting Strength improves each hit of a multi-hit Attack.
+VAMBRACE	synergy	guard	The first Block gained from a card each fight doubles.
+VELVET_CHOKER	tradeoff	-	Extra energy each turn comes with a hard cap on card plays.
+VENERABLE_TEA_SET	utility	-	Entering a Rest Site banks opening energy for the next fight.
+VERY_HOT_COCOA	utility	-	Extra opening energy is available on turn one of every fight.
+VEXING_PUZZLEBOX	utility	-	Open with a random card in hand; its free play expires this turn.
+VINE_BRACELET	utility	-	Pickup raises Max HP immediately.
+VITRUVIAN_MINION	synergy	ID:MINION_DIVE_BOMB,ID:MINION_SACRIFICE,ID:MINION_STRIKE	Minion in the card name doubles its damage and Block.
+WAR_HAMMER	utility	-	Each Elite kill upgrades random cards in the deck.
+WAR_PAINT	utility	-	Pickup upgrades random Skills already in the deck.
+WHETSTONE	utility	-	Pickup upgrades random Attacks already in the deck.
+WHISPERING_EARRING	tradeoff	-	Gain energy each turn, but Vakuu controls the opener.
+WHITE_BEAST_STATUE	utility	-	Every combat reward offers a potion.
+WHITE_STAR	utility	-	Elite victories add a second card reward offering Rare cards.
+WHITTLING_KNIFE	conditional	-	Reshuffling the draw pile readies Aim for the next Arrow.
+WINGED_BOOTS	utility	-	Spend a limited use to move off the connected map paths.
+WING_CHARM	utility	-	Look for Swift on one random card in each card reward.
+WONGOS_MYSTERY_TICKET	utility	-	The remaining fight counter delays a payout of random relics.
+WONGO_CUSTOMER_APPRECIATION_BADGE	utility	-	The badge grants no gameplay effect.
+WUPPY	utility	-	Wuppy takes incoming attack damage against its own HP pool.
+WUPPY_STRONG	conditional	-	Strong Wuppy has no separate effect text; check its in-game tooltip.
+YUMMY_COOKIE	utility	-	Choose cards to upgrade immediately on pickup.

@@ -4,6 +4,10 @@ internal record Card(string Id, string Name, int Cost, bool Up, bool Attack, boo
 {
     // Supplied from runtime CardType.Curse, never inferred from a name/tag.
     internal bool IsCurse { get; init; }
+    internal bool Skill { get; init; }
+    internal bool Power { get; init; }
+    internal bool VariableCost { get; init; }
+    internal bool NativePlayableType => Attack || Skill || Power;
     internal bool ForeignModel { get; init; }
     internal bool CombatKnown { get; init; }
     internal bool AuditedCurse { get; init; }
@@ -56,17 +60,14 @@ internal static class Catalog
         };
     }
 }
-internal record Deck(Card[] Cards, int Hp, int MaxHp, int Act, bool EliteOnly, string[] Relics, string Character = "");
+internal record Deck(Card[] Cards, int Hp, int MaxHp, int Act, bool EliteOnly, string[] Relics, string Character = "", IReadOnlyDictionary<string, string>? RelicNames = null);
 internal record Verdict(string Id, string Name, double Score, string Reason, string? Caution);
 internal static class Coach
 {
     internal static (int score, string reason) Relic(string id, Deck deck)
     {
-        if (Catalog.Relics.TryGetValue(id, out var rule))
-        {
-            var support = deck.Cards.Where(c => c.Has(rule[0])).ToArray();
-            if (support.Length > 0) return (5 + Math.Min(4, support.Length), $"{rule[1]} {support[0].Name} fits.");
-        }
+        var match = RelicGuide.ForRelic(id, deck.RelicNames?.GetValueOrDefault(id) ?? RelicGuide.Name(id), deck);
+        if (match != null) return (match.Tradeoff ? -2 : 5 + match.Specificity, match.Text);
         bool injured = deck.Hp * 2 < deck.MaxHp;
         return Catalog.RelicFit.GetValueOrDefault(id) switch
         {
@@ -79,7 +80,7 @@ internal static class Coach
             "slots" => (4, "An extra potion slot gives you more options at the next elite."),
             "strength" => (deck.Cards.Count(c => c.Attack) >= 6 ? 7 : 4, "Strength adds damage to your attacks."),
             "dexterity" => (deck.Cards.Count(c => c.Has("guard")) >= 4 ? 7 : 4, "Dexterity improves your block cards."),
-            _ => (0, "")
+            _ => (0, RelicGuide.Get(id)?.Cue ?? "")
         };
     }
     // A score is marginal fit for this deck, not predicted win rate.
@@ -122,9 +123,11 @@ internal static class Coach
         foreach (var tag in c.Gives)
             if (cards.FirstOrDefault(x => x.Needs.Contains(tag)) is { } payoff)
                 pros.Add((2.4, $"Its {tag} effect helps {payoff.Name} pay off more often."));
-        foreach (var id in d.Relics)
-            if (Catalog.Relics.TryGetValue(id, out var rule) && c.Has(rule[0]))
-                pros.Add((2.3, $"{System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(id.Replace('_', ' ').ToLowerInvariant())}: {rule[1]}"));
+        var matches = RelicGuide.ForCard(c, d.Relics, d.RelicNames).ToArray();
+        var benefit = RelicGuide.Best(matches.Where(m => !m.Tradeoff));
+        var drawback = RelicGuide.Best(matches.Where(m => m.Tradeoff));
+        if (benefit != null) pros.Add((1 + benefit.Specificity * .4, benefit.Text));
+        if (drawback != null) cons.Add((1 + drawback.Specificity * .4, drawback.Text));
         if (c.Cost >= 2 && cards.Count(x => x.Cost >= 2) >= 3 && !cards.Any(x => x.Has("energy")))
             cons.Add((1.6, "Several expensive cards already compete for energy."));
         int copies = cards.Count(x => x.Id == c.Id);
@@ -134,7 +137,7 @@ internal static class Coach
         var best = pros.OrderByDescending(x => x.w).FirstOrDefault().text;
         var risk = cons.OrderByDescending(x => x.w).FirstOrDefault().text;
         return new(c.Id, c.Name, .35 + pros.Sum(x => x.w) - cons.Sum(x => x.w) + (opportunity != null && !opportunity.StartsWith("Possible ") ? 1 : 0),
-            opportunity ?? best ?? risk ?? "No strong interaction stands out in this deck.", risk);
+            drawback?.Text ?? benefit?.Text ?? opportunity ?? best ?? risk ?? "No strong interaction stands out in this deck.", risk);
     }
     internal static Verdict[] Rank(IEnumerable<Card> choices, Deck deck, bool skip)
     {

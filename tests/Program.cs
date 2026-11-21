@@ -163,6 +163,7 @@ Check(Cursed(0, bitten).Contains("Take Middle.") && Cursed(5, bitten).Contains("
 Check(Curse.Advice("Detailed", true, 0, bitten.ToString(), curseOffer) == Cursed(0, bitten), "reopening or asking for detail cannot reroll crooked counsel");
 Check(Curse.Advice("Truth", true, 0, bitten.ToString(), null).StartsWith("CURSE · Hint withheld") && Curse.Advice("Truth", true, 0, bitten.ToString(), [curseOffer[0], curseOffer[0]]).Contains("Hint withheld"), "without a clearly weaker alternative Vakuu withholds advice rather than inventing a choice");
 CombatRegression.Run(Check);
+RelicGuideRegression.Run(Check);
 AncientOfferRegression.Run(Check);
 AncientGiftCatalogRegression.Run(Check);
 CardCoverageRegression.Run(Check);

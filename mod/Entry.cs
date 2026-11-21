@@ -220,13 +220,15 @@ public static class Entry
             c.IsUpgraded, c.Type == CardType.Attack, c.GetType().Assembly == typeof(CardModel).Assembly);
         if (card.Known && c.BaseStarCost > 0 && !card.Needs.Contains("stars"))
             card = card with { Needs = [.. card.Needs, "stars"] };
-        return card with { IsCurse = c.Type == CardType.Curse };
+        return card with { IsCurse = c.Type == CardType.Curse, Skill = c.Type == CardType.Skill, Power = c.Type == CardType.Power, VariableCost = c.EnergyCost.CostsX || c.HasStarCostX || c.BaseStarCost > 0 };
     }
     static Deck DeckOf(RunState r, Player p)
     {
         var routes = r.CurrentMapPoint?.Children;
+        var relics = p.Relics.Where(v => v.GetType().Assembly == typeof(RelicModel).Assembly)
+            .DistinctBy(v => v.Id.Entry).ToDictionary(v => v.Id.Entry, v => v.Title.GetFormattedText());
         return new(p.Deck.Cards.Select(Read).ToArray(), p.Creature.CurrentHp, p.Creature.MaxHp, r.CurrentActIndex + 1,
-            routes?.Count > 0 && routes.All(n => n.PointType.ToString() == "Elite"), p.Relics.Select(v => v.Id.Entry).ToArray(), p.Character.Id.Entry);
+            routes?.Count > 0 && routes.All(n => n.PointType.ToString() == "Elite"), relics.Keys.ToArray(), p.Character.Id.Entry, relics);
     }
 
     [HarmonyPatch(typeof(NCardRewardSelectionScreen), "RefreshOptions")]
@@ -466,7 +468,7 @@ public static class Entry
                 var relics = Visible<NTreasureRoomRelicHolder>(treasure).Where(h => h.IsEnabled && h.Relic?.Model != null).ToArray();
                 if (relics.Length > 0)
                 {
-                    text = $"Inspect {relics[0].Relic!.Model!.Title.GetFormattedText()} and compare its trigger with the cards you play most often.";
+                    text = VisibleRelicAdvice(relics.Select(h => h.Relic!.Model!), DeckOf(r, p));
                     anchor = Above(relics);
                 }
             }
@@ -594,12 +596,8 @@ public static class Entry
         {
             var holders = Visible<NRelicBasicHolder>(screen).ToArray();
             var deck = DeckOf(r, p);
-            var matches = holders.Select(h => h.Relic?.Model).OfType<RelicModel>()
-                .Select(m => (model: m, fit: Coach.Relic(m.Id.Entry, deck)))
-                .Where(x => x.fit.score > 0).OrderByDescending(x => x.fit.score).ToArray();
-            if (matches.Length == 0) return null;
-            var fit = matches[0];
-            return ($"{(P.ExplicitPick ? fit.model.Title.GetFormattedText() + ": " : "")}{fit.fit.reason}", Above(holders));
+            var advice = VisibleRelicAdvice(holders.Select(h => h.Relic?.Model).OfType<RelicModel>(), deck);
+            return advice == null ? null : (advice, Above(holders));
         }
         if (screen is NRewardsScreen)
         {
@@ -616,6 +614,8 @@ public static class Entry
                 if (advice != null) return (advice, Above(pots));
                 if (buttons.Length == pots.Length) return null;
             }
+            var relicRewards = buttons.Select(b => b.Reward).OfType<RelicReward>().Select(reward => reward.Relic).OfType<RelicModel>();
+            if (VisibleRelicAdvice(relicRewards, DeckOf(r, p)) is { } relicAdvice) return (relicAdvice, Above(buttons));
             return buttons.Length == 0 ? null : ($"Check the rewards before leaving. You have {p.Potions.Count()} potions and {p.Deck.Cards.Count} cards; you needn’t take every card.", Above(buttons));
         }
         // Additional selection overlays (including modded ones): use only visible
@@ -714,6 +714,17 @@ public static class Entry
         var upgrade = p.Deck.Cards.Where(c => c.IsUpgradable && !c.Id.Entry.StartsWith("STRIKE_") && !c.Id.Entry.StartsWith("DEFEND_")).OrderByDescending(c => Coach.Assess(Read(c), deck).Score).FirstOrDefault();
         return upgrade == null ? null : $"You have health to spare. Inspect the upgrade on {upgrade.Title} before resting.";
     }
+    static bool NativeRelic(RelicModel m) => m.GetType().Assembly == typeof(RelicModel).Assembly;
+    static string? VisibleRelicAdvice(IEnumerable<RelicModel> models, Deck deck)
+    {
+        var visible = models.Where(NativeRelic).Select(m => (m, fit: Coach.Relic(m.Id.Entry, deck)))
+            .Where(x => x.fit.reason.Length > 0).OrderByDescending(x => x.fit.score).ToArray();
+        if (visible.Length == 0) return null;
+        var (model, fit) = visible[0];
+        var name = model.Title.GetFormattedText();
+        var pair = RelicGuide.ForRelic(model.Id.Entry, name, deck);
+        return pair?.Text ?? $"{name}: {fit.reason}";
+    }
     static string? Shop(MerchantRoom room, RunState r, Player p)
     {
         var inv = NMerchantRoom.Instance?.Inventory?.Inventory; if (inv == null) return null;
@@ -721,6 +732,10 @@ public static class Entry
         var best = inv.CardEntries.Where(e => e.IsStocked && e.EnoughGold && e.CreationResult?.Card != null)
             .Select(e => (v: Coach.Assess(Read(e.CreationResult!.Card), deck), cost: e.Cost)).Where(x => x.v.Score >= 1.6)
             .OrderByDescending(x => x.v.Score / (1 + x.cost / 100.0)).FirstOrDefault();
+        var relic = inv.RelicEntries.Where(e => e.IsStocked && e.EnoughGold && e.Model != null && NativeRelic(e.Model))
+            .Select(e => (pair: RelicGuide.ForRelic(e.Model!.Id.Entry, e.Model.Title.GetFormattedText(), deck), cost: e.Cost))
+            .Where(x => x.pair is { Tradeoff: false }).OrderByDescending(x => x.pair!.Specificity).ThenBy(x => x.cost).FirstOrDefault();
+        if (relic.pair != null) return $"{relic.pair.Title} ({relic.cost} gold) + {relic.pair.Card.Name}: {relic.pair.Rule.Cue}";
         if (best.v != null) return $"Among the affordable cards: {best.v.Name} ({best.cost} gold). {best.v.Reason}";
         if (inv.CardRemovalEntry is { IsStocked: true, EnoughGold: true } rem && deck.Cards.Any(x => x.Id.StartsWith("STRIKE_")))
             return $"Removal costs {rem.Cost} of your {p.Gold} gold. If damage is covered, thinning a basic Strike makes your other cards come up sooner.";
@@ -838,9 +853,19 @@ public static class Entry
                     monster.Id.Entry, move.Id, follow?.GetType().Name, follow?.Id,
                     enemy.Powers.Select(x => (x.Id.Entry, x.Amount)), monster.MoveStateMachine?.StateLog.LastOrDefault()?.Id);
             }
+            string pairCue = "";
+            if (details && line.Steps.Count > 0)
+            {
+                var owned = p.Relics.Where(NativeRelic).DistinctBy(v => v.Id.Entry)
+                    .ToDictionary(v => v.Id.Entry, v => v.Title.GetFormattedText());
+                var ids = owned.Keys.ToArray();
+                var pair = RelicGuide.Best(line.Steps.SelectMany(step => RelicGuide.ForCard(
+                    Read(references[plays[step.Card].Instance]), ids, owned, immediate: true)));
+                if (pair != null) pairCue = "\n" + pair.Text;
+            }
             return parts[0] + "\n" + risk + (parts.Length > 1 && parts[1].Length > 0 ? " " + parts[1] : "")
                 + (hasUnassessedCard && line.Steps.Count > 0 ? " Some cards aren’t assessed." : "")
-                + (cue.Length == 0 ? "" : $"\n{foes[target].Name}: {cue}");
+                + (cue.Length == 0 ? "" : $"\n{foes[target].Name}: {cue}") + pairCue;
         }
         string Describe(Step step)
         {
