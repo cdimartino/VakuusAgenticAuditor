@@ -21,6 +21,13 @@ internal sealed class DecisionGate
         return !spoken.Contains(message);
     }
     internal void MarkTurnHint(string message) => spoken.Add(message);
+    internal static (bool Deliver, bool Show) Delivery(bool manual, bool automatic, bool changed, bool fresh,
+        bool allowMore, bool exportChanged, bool visible, bool withinLifetime)
+    {
+        bool show = manual || automatic && changed && allowMore && (fresh || exportChanged);
+        // A revalidated export of the same suggestion must not redisplay the bubble or extend its timer.
+        return (show || automatic && exportChanged && !changed && visible && withinLifetime, show);
+    }
     internal void Finish(object screen) { finished = screen; owner = null; content = null; }
     internal void Reopen(object screen) { if (ReferenceEquals(finished, screen)) finished = null; }
     internal void Transition() { owner = null; content = null; }

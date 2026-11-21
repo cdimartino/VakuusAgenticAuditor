@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.23
+
+- Combat advice waits for the opening hand to settle. Card-holder animations no longer dismiss an unchanged recommendation or restart its display timer.
+- Ancient gift advice uses the eligible deck and the actual card offered by Dusty Tome. Random transforms are described as a tradeoff. When effects cannot be compared, Vakuu says so once instead of repeating the buttons.
+- The build-specific card and encounter audits distinguish recognized options from effects Vakuu can actually evaluate. Unsupported cards do not receive a confident ranking.
+
 ## v0.1.22
 
 - Combat bubbles lead with the card sequence, followed by the estimated result. Higher-contrast lettering and wider bubbles reduce narrow columns of text. Removed the generic zero-damage disclaimer.

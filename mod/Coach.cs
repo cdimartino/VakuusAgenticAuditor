@@ -4,15 +4,25 @@ internal record Card(string Id, string Name, int Cost, bool Up, bool Attack, boo
 {
     // Supplied from runtime CardType.Curse, never inferred from a name/tag.
     internal bool IsCurse { get; init; }
+    internal bool ForeignModel { get; init; }
+    internal bool CombatKnown { get; init; }
+    internal bool AuditedCurse { get; init; }
+    internal string[]? Immediate { get; init; }
     internal bool Has(string role) => Gives.Contains(role);
+    internal bool CombatHas(string role) => (Immediate ?? Gives).Contains(role);
 }
 internal static class Catalog
 {
     internal static CatalogProfile Profile { get; set; } = null!;
     static class Tables
     {
-        internal static readonly Dictionary<string, string[][]> Roles = Table("roles.tsv").ToDictionary(a => a[0], a => a.Skip(1)
-            .Select(s => s.Split(',', StringSplitOptions.RemoveEmptyEntries)).ToArray());
+        // Evidence columns: native source, indexed roles, effective base/upgrade roles,
+        // payoff roles, combat hook and reward policies. Use effective roles only.
+        internal sealed record Rules(string[] Base, string[] Up, string[] Needs, string[] Deferred, bool Hook, bool Curse);
+        static string[] Tags(string s) => s.Split(',', StringSplitOptions.RemoveEmptyEntries);
+        internal static readonly Dictionary<string, Rules> Roles = Table("card-coverage.tsv").Skip(1)
+            .Where(a => a[1] == "model+text").ToDictionary(a => a[0], a =>
+                new Rules(Tags(a[4]), Tags(a[5]), Tags(a[6]), Tags(a[11]), a[7] != "" || a[12] == "yes", a[8] == "typed-curse"));
         internal static readonly Dictionary<string, string[]> Relics = Table("relics.tsv").ToDictionary(a => a[0], a => a[1..]);
         internal static readonly Dictionary<string, string> Bosses = Table("bosses.tsv").ToDictionary(a => a[0], a => a[1]);
         internal static readonly Dictionary<string, string[]> Potions = Table("potions.tsv").ToDictionary(a => a[0], a => a[1..]);
@@ -32,8 +42,18 @@ internal static class Catalog
     }
     internal static Card Get(string id, string name, int cost, bool up, bool attack, bool vanilla = true)
     {
-        var roles = Tables.Roles.GetValueOrDefault(id);
-        return new(id, name, cost, up, attack, vanilla && roles != null, roles?[0] ?? [], roles?[1] ?? []);
+        var roles = vanilla ? Tables.Roles.GetValueOrDefault(id) : null;
+        var immediate = up ? roles?.Up ?? [] : roles?.Base ?? [];
+        var gives = immediate.Union(roles?.Deferred ?? []).ToArray();
+        var needs = roles?.Needs ?? [];
+        var known = gives.Length + needs.Length > 0;
+        return new(id, name, cost, up, attack, known, gives, needs)
+        {
+            ForeignModel = !vanilla,
+            AuditedCurse = roles?.Curse == true,
+            Immediate = immediate,
+            CombatKnown = known || roles?.Hook == true
+        };
     }
 }
 internal record Deck(Card[] Cards, int Hp, int MaxHp, int Act, bool EliteOnly, string[] Relics, string Character = "");
@@ -65,7 +85,7 @@ internal static class Coach
     // A score is marginal fit for this deck, not predicted win rate.
     internal static Verdict Assess(Card c, Deck d)
     {
-        if (c.IsCurse)
+        if (c.IsCurse && !c.ForeignModel && (c.AuditedCurse || CurseValuation.Names.ContainsKey(c.Id)))
         {
             var cost = CurseValuation.Addition([c.Id], d);
             return new(c.Id, c.Name, -cost.Cost, cost.Reason, cost.Reason);
@@ -79,7 +99,7 @@ internal static class Coach
         var nonBasicHits = cards.Count(x => x.Attack && !x.Id.StartsWith("STRIKE_"));
         if (c.Cost == 1 && c.Has("hit") && c.Has("guard") && c.Has("draw"))
             pros.Add((2.2, "One energy buys damage, block, and a replacement draw."));
-        if (c.Has("guard") && (guards * 3 <= cards.Length || d.Hp * 2 <= d.MaxHp))
+        if (c.CombatHas("guard") && (guards * 3 <= cards.Length || d.Hp * 2 <= d.MaxHp))
             pros.Add((d.Hp * 2 <= d.MaxHp ? 2.6 : 1.5, $"At {d.Hp}/{d.MaxHp} HP, another block draw gives you breathing room."));
         if (c.Has("hit") && nonBasicHits < (d.EliteOnly ? 5 : 3))
             pros.Add((d.EliteOnly ? 2.8 : 1.8, $"You have {nonBasicHits} non-Strike attack{(nonBasicHits == 1 ? "" : "s")}{(d.EliteOnly ? " before a forced elite" : "")}. This adds damage now."));
@@ -91,7 +111,7 @@ internal static class Coach
             pros.Add((1.15, "Weak gives you a way to reduce incoming attacks."));
         if (c.Has("hp loss") && d.Hp * 3 <= d.MaxHp)
             cons.Add((2.5, $"At {d.Hp} HP, the health cost is a real drawback."));
-        if (c.Has("energy") && cards.Count(x => x.Cost >= 2) >= 3)
+        if (c.CombatHas("energy") && cards.Count(x => x.Cost >= 2) >= 3)
             pros.Add((1.6, "You have several expensive plays competing for the same turn."));
         foreach (var tag in c.Needs)
         {

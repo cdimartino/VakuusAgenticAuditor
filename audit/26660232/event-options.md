@@ -2,7 +2,7 @@
 
 The owned English event table contains 842 localization entries across 68 roots; 66 event IDs are inventoried, and the other two roots are shared text. These are inventory counts, not counts of fully understood or playtested events. Option visibility, locks, actual quantities and legal targets depend on the current game state.
 
-At runtime the evaluator uses the enabled choices on the current page. It compares recognized effects with current resources. An unrecognized clause stays attached to its option and limits the recommendation; it is not a zero-cost effect. Named Ancient relic and Courier choices have separate handlers.
+At runtime the evaluator uses the enabled choices on the current page. It compares recognized effects with current resources. An unrecognized clause stays attached to its option and limits the recommendation; it is not a zero-cost effect. The bubble summarizes uncertainty once instead of repeating the option text. Named Ancient relic and Courier choices have separate handlers.
 
 Spirit Grafter is a regression case for combined effects: cap the displayed heal at missing HP, account for adding Metamorphosis, and compare against losing HP for one eligible upgrade. Metamorphosis is an Event Skill, not a curse; its random Attacks enter the draw pile, not the hand. Tests include a full-health player, lethal HP cost, missing upgrade targets, and unresolved or random outcomes.
 

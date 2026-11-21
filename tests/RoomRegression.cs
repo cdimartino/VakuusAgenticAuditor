@@ -25,6 +25,6 @@ internal static class RoomRegression
         check(!EventCoach.Courier(courier, 2, true)!.Contains("Ransack"), "disabled offer excluded");
         courier[0] = (new("Grab Potions", "Procure 3 Foul Potions. Fight an enemy."), true);
         check(EventCoach.Courier(courier, 2, false) == null, "unknown courier auto quiet");
-        check(EventCoach.Courier(courier, 2, true)!.Contains("unrecognized"), "unknown courier manual reason");
+        check(EventCoach.Courier(courier, 2, true) == "I can't compare these choices.", "unknown courier gets a short manual fallback");
     }
 }

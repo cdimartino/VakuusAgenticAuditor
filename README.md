@@ -2,9 +2,11 @@
 
 Ever hover over three cards and wish someone would make a case for **Skip**? Vakuu looks at the deck you actually have and offers a second opinion. In a fight, ask for a sequence from your current hand. At a fork, see what the next few rooms offer. You always make the play.
 
-**[Download the mod](https://github.com/cdimartino/VakuusAgenticAuditor/releases/latest/download/VakuusAgenticAuditor.zip)** · [Release notes](https://github.com/cdimartino/VakuusAgenticAuditor/releases) · [Report a confusing suggestion](https://github.com/cdimartino/VakuusAgenticAuditor/issues/new)
+**[Subscribe on Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3842451639)** · **[Download the mod](https://github.com/cdimartino/VakuusAgenticAuditor/releases/latest/download/VakuusAgenticAuditor.zip)** · [Release notes](https://github.com/cdimartino/VakuusAgenticAuditor/releases) · [Report a confusing suggestion](https://github.com/cdimartino/VakuusAgenticAuditor/issues/new)
 
 For **solo runs on Slay the Spire 2 public-beta v0.113.1**. Works offline, from the first floor. No relic, API key, BaseLib or other mod required.
+
+**What does Vakuu know?** The [card ledger](audit/26660232/card-coverage.tsv) records base and upgraded guidance separately. The [encounter ledger](audit/26660232/encounter-coverage.tsv) distinguishes modeled choices, choices that depend on the live offer, and effects Vakuu does not rank. An entry in the Compendium is not a promise that the coach can predict its outcome.
 
 **Game updates:** Vakuu selects coaching data for the exact game release. The audited snapshot is public-beta v0.113.1 (Steam build `26660232`). On an unrecognized build the coach stays inactive by default. To try approximate advice, open **Settings → General → Vakuu’s Agentic Auditor → Unknown patch: use closest catalog**, then restart the game. The menu shows the active catalog. Exact matches always win; otherwise Vakuu picks the nearest audited numeric version within the same major version (older patch on a tie). Card effects may differ. Turn the option off and restart to restore strict matching. Both main and public-beta are [monitored for changes](https://github.com/cdimartino/VakuusAgenticAuditor/actions/workflows/watch-game.yml); monitoring a branch does not mean its latest build has passed review.
 
@@ -42,7 +44,7 @@ On some Mac keyboards, hold **Fn** for F6 or F8. Changes save immediately.
 
 *The first fight on the left leads to a campfire upgrade. The right branch keeps an elite relic in reach. Vakuu looks ahead so you can decide whether the trade is worth it.*
 
-The v0.1.22 candidate scores the entire reachable act from the first map. The result is a preference for your current resources, not a prediction of hidden encounters. Turn on **Route overlay** (beside **Map** in Auditor settings) for a moving dashed trace; it is off by default.
+Vakuu scores the entire reachable act from the first map. The result is a preference for your current resources, not a prediction of hidden encounters. Turn on **Route overlay** (beside **Map** in Auditor settings) for a moving dashed trace; it is off by default.
 
 On the audited beta, combat advice can distinguish a known fixed follow-up from a conditional or random move. Exoskeleton’s observed Hard to Kill amount is applied separately to each hit. Unknown powers and effects are not assumed to be fully simulated.
 

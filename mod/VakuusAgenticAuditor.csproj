@@ -9,6 +9,7 @@
     <Reference Include="sts2" HintPath="$(GameData)/sts2.dll" Private="false" />
     <Reference Include="GodotSharp" HintPath="$(GameData)/GodotSharp.dll" Private="false" />
     <Reference Include="0Harmony" HintPath="$(GameData)/0Harmony.dll" Private="false" />
+    <EmbeddedResource Include="../audit/**/card-coverage.tsv" LogicalName="auditor/catalogs/%(RecursiveDir)%(Filename)%(Extension)" />
     <EmbeddedResource Include="catalogs/index.json" LogicalName="auditor/catalogs/index.json" />
     <EmbeddedResource Include="catalogs/**/*.tsv" LogicalName="auditor/catalogs/%(RecursiveDir)%(Filename)%(Extension)" />
     <None Update="VakuusAgenticAuditor.json" CopyToOutputDirectory="PreserveNewest" />

@@ -35,7 +35,7 @@ internal static class EventCoach
     }
 
     internal static string? Unsupported(bool manual) => manual
-        ? "I can't safely compare these event options: an effect or condition is unrecognized. Check the visible costs and rewards." : null;
+        ? "I can't compare these choices." : null;
 
     // Exact installed English clauses only; never infer an effect from a title.
     // Pass only visible options, including enabled state, and live empty slots.
