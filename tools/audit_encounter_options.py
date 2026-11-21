@@ -54,7 +54,7 @@ for availability, disposition, labels in (
     ),
     ("enabled_only", "conditional_live", "gold_minigame party_transform"),
     ("transition", "conditional_live", "combat_transition advance"),
-    ("transition", "deferred", "abandon_confirm"),
+    ("transition", "not_ranked", "abandon_confirm"),
     ("terminal", "not_ranked", "exit terminal_text unavailable_exit"),
     ("locked", "not_ranked", "locked"),
     ("test_only", "not_ranked", "mock"),
@@ -119,14 +119,29 @@ CAMP = {
         }.items()
     },
 }
-BLITZ = """
-    card_enchant_entry card_packs_entry card_removal_entry card_reward_of_each_rarity_entry
-    card_rewards_entry card_transform_entry card_upgrade_entry colorless_card_reward_entry
-    enchanted_card_reward_entry full_heal_and_max_hp_entry glam_entry potions_entry
-    prismatic_card_reward_entry random_upgrades_entry rare_card_reward_entry relic_entry
-    two_more_choices_entry two_relics_entry upgraded_card_reward_entry
-    upgraded_rare_card_entry upgraded_rare_card_reward_entry
-""".split()
+BLITZ = (
+    "card_enchant_entry",
+    "card_packs_entry",
+    "card_removal_entry",
+    "card_reward_of_each_rarity_entry",
+    "card_rewards_entry",
+    "card_transform_entry",
+    "card_upgrade_entry",
+    "colorless_card_reward_entry",
+    "enchanted_card_reward_entry",
+    "full_heal_and_max_hp_entry",
+    "glam_entry",
+    "potions_entry",
+    "prismatic_card_reward_entry",
+    "random_upgrades_entry",
+    "rare_card_reward_entry",
+    "relic_entry",
+    "two_more_choices_entry",
+    "two_relics_entry",
+    "upgraded_card_reward_entry",
+    "upgraded_rare_card_entry",
+    "upgraded_rare_card_reward_entry",
+)
 CARD_ALTERNATES = {
     "OPTION_SKIP": ("enabled_only", "conditional_live", "card_reward_skip"),
     "OPTION_REROLL": ("run_dependent", "deferred", "future_roll_not_ranked"),
@@ -151,10 +166,20 @@ CATALOG_ONLY_ENCOUNTERS = {"FLYCONID_WEAK", "OVERGROWTH_WILDLIFE"}
 ANCIENT_SPECIALIZED = {
     "DARV": {
         relic: "ancient_tradeoff"
-        for relic in """
-            ASTROLABE BLACK_STAR CALLING_BELL DUSTY_TOME ECTOPLASM EMPTY_CAGE
-            PANDORAS_BOX PHILOSOPHERS_STONE RUNIC_PYRAMID SNECKO_EYE SOZU VELVET_CHOKER
-        """.split()
+        for relic in (
+            "ASTROLABE",
+            "BLACK_STAR",
+            "CALLING_BELL",
+            "DUSTY_TOME",
+            "ECTOPLASM",
+            "EMPTY_CAGE",
+            "PANDORAS_BOX",
+            "PHILOSOPHERS_STONE",
+            "RUNIC_PYRAMID",
+            "SNECKO_EYE",
+            "SOZU",
+            "VELVET_CHOKER",
+        )
     },
     "NONUPEIPE": dict.fromkeys(
         ("BEAUTIFUL_BRACELET", "BRILLIANT_SCARF", "GLITTER"),

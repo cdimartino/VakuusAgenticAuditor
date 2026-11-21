@@ -236,7 +236,7 @@ def generate(ids, roles, effects, records):
                 policy(card, up or deferred, needs),
                 ",".join(notes) or "-",
                 deferred,
-                "yes" if card in SETUP_ONLY else "",
+                "yes" if card in SETUP_ONLY else "no",
             ]
         )
     return rows
@@ -303,7 +303,7 @@ def main():
             or bp != policy(card, base or deferred, needs)
             or upolicy != policy(card, up or deferred, needs)
             or deferred != DEFERRED.get(card, "")
-            or setup != ("yes" if card in SETUP_ONLY else "")
+            or setup != ("yes" if card in SETUP_ONLY else "no")
             or (source != "model+text" and any((base, up, needs, effect)))
         ):
             raise ValueError(f"inconsistent evidence for {card}")
