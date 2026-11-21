@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.24
+
+- Recognize all 102 known relic gifts across all eight gift-giving Ancients, including mixed rolls, plus Neow’s five modifier openings and Blitz. Show short gift-specific tradeoffs; uncertain outcomes do not get guaranteed scores. The Architect’s dialogue is not a gift choice.
+
 ## v0.1.23
 
 - Combat advice waits for the opening hand to settle. Card-holder animations no longer dismiss an unchanged recommendation or restart its display timer.

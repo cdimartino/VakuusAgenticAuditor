@@ -399,25 +399,39 @@ public static class Entry
                 {
                     var eventManual = eventRequest.ForOffer(ev, options.Select(b => (object)b.Option).ToArray(), why, ui.Visible);
                     anchor = Above(options);
-                    if (options.All(b => b.Option.Relic != null))
+                    if (loadedStatus.StartsWith("Audited", StringComparison.Ordinal) && Catalog.Profile.Build == "26660232"
+                        && r.CurrentRoom is EventRoom giftRoom)
                     {
+                        var owner = giftRoom.CanonicalEvent.Id.Entry;
                         var deck = p.Deck.Cards;
-                        text = NonupeipeBlessing.Compare(options.Select(b => b.Option.Relic!.Id.Entry), P.ExplicitPick);
-                        var relics = options.Select(b => b.Option.Relic!).ToArray();
-                        if (text == null && loadedStatus.StartsWith("Audited", StringComparison.Ordinal))
+                        var gifts = options.Select(b => new AncientGiftCatalog.Offer(b.Option.Relic?.Id.Entry ?? b.Option.TextKey,
+                            b.Option.Title.GetFormattedText())).ToArray();
+                        var ids = gifts.Select(g => g.Id).ToArray();
+                        if (owner == "NEOW" && options.Length == 1 && options[0].Option.Relic == null)
+                            text = AncientGiftCatalog.Opening(owner, ids[0]);
+                        if (owner == "NONUPEIPE") text = NonupeipeBlessing.Compare(ids, P.ExplicitPick);
+                        if (owner == "TEZCATARA" && ids.All(id => id is "YUMMY_COOKIE" or "BIIIG_HUG" or "PUMPKIN_CANDLE"))
+                            text = EventCoach.Ancient(gifts.Select(g => (g.Id, g.Title)).ToArray(),
+                                deck.Count(c => c.IsUpgradable && !c.Id.Entry.StartsWith("STRIKE_") && !c.Id.Entry.StartsWith("DEFEND_")),
+                                deck.Count(c => !c.IsUpgraded && (c.Id.Entry.StartsWith("STRIKE_") || c.Id.Entry.StartsWith("DEFEND_"))),
+                                deck.Count(c => Read(c).Cost >= 2), P.ExplicitPick, deck.Count(c => c.IsUpgradable));
+                        if (owner == "DARV" && ids.Length == 3 && ids.Contains("ASTROLABE") && ids.Contains("EMPTY_CAGE") && ids.Contains("DUSTY_TOME"))
                         {
                             var removable = deck.Where(c => c.IsRemovable).ToArray();
                             var transformable = deck.Where(c => c.Type != CardType.Quest && c.IsTransformable).ToArray();
-                            var tome = relics.OfType<MegaCrit.Sts2.Core.Models.Relics.DustyTome>().FirstOrDefault();
+                            var tome = options.Select(b => b.Option.Relic).OfType<MegaCrit.Sts2.Core.Models.Relics.DustyTome>().FirstOrDefault();
                             Card? tomeCard = tome?.AncientCard is { } id ? ReadOfferCard(ModelDb.GetById<CardModel>(id), true) : null;
-                            text = AncientOffer.Compare(relics.Select(x => x.Id.Entry), DeckOf(r, p), P.ExplicitPick,
+                            text = AncientOffer.Compare(ids, DeckOf(r, p), P.ExplicitPick,
                                 new(removable.Length, transformable.Length, deck.Count(c => c.IsUpgradable),
                                     tomeCard, removable.Select(Read).ToArray(), transformable.Select(Read).ToArray()));
                         }
-                        text ??= EventCoach.Ancient(options.Select(b => (b.Option.Relic!.Id.Entry, b.Option.Relic.Title.GetFormattedText())).ToArray(),
-                            deck.Count(c => c.IsUpgradable && !c.Id.Entry.StartsWith("STRIKE_") && !c.Id.Entry.StartsWith("DEFEND_")),
-                            deck.Count(c => !c.IsUpgraded && (c.Id.Entry.StartsWith("STRIKE_") || c.Id.Entry.StartsWith("DEFEND_"))),
-                            deck.Count(c => Read(c).Cost >= 2), P.ExplicitPick, deck.Count(c => c.IsUpgradable));
+                        if (text == null && options.All(b => b.Option.Relic != null) && AncientGiftCatalog.HasPool(owner))
+                        {
+                            var tome = options.Select(b => b.Option.Relic).OfType<MegaCrit.Sts2.Core.Models.Relics.DustyTome>().FirstOrDefault();
+                            string? tomeTitle = tome?.AncientCard is { } cardId ? ModelDb.GetById<CardModel>(cardId).Title : null;
+                            text = AncientGiftCatalog.Compare(owner, gifts, DeckOf(r, p), deck.Count(c => c.IsUpgradable), p.Gold,
+                                p.PotionSlots.Count, p.PotionSlots.Count - p.Potions.Count(), P.ExplicitPick, tomeTitle);
+                        }
                     }
                     if (r.CurrentRoom is EventRoom currentEvent && currentEvent.CanonicalEvent.Id.Entry == "POTION_COURIER")
                         text = EventCoach.Courier(options.Select(b => (new EventPick(b.Option.Title.GetFormattedText(),
