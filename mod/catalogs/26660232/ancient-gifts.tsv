@@ -1,0 +1,102 @@
+DARV	ASTROLABE	basic	Trade basics for random upgraded cards.
+DARV	BLACK_STAR	elite	Extra relics pay off on elite routes.
+DARV	CALLING_BELL	-	Random relics come with a permanent curse.
+DARV	DUSTY_TOME	-	Check the offered Ancient card against your deck.
+DARV	ECTOPLASM	energy	More energy, but future gold is gone.
+DARV	EMPTY_CAGE	basic	Cut weak draws without rolling replacements.
+DARV	PANDORAS_BOX	basic	Reroll basics; you may lose reliable block.
+DARV	PHILOSOPHERS_STONE	-	More energy makes enemy multi-hits riskier.
+DARV	RUNIC_PYRAMID	discard	Save key cards; clear junk to avoid clogging your hand.
+DARV	SNECKO_EYE	expensive	Cost rolls favor expensive hands over cheap ones.
+DARV	SOZU	energy	Trade future potion pickups for energy.
+DARV	VELVET_CHOKER	-	Extra energy suits short turns, not long card chains.
+NEOW	ARCANE_SCROLL	-	A random rare may not fit your starting deck.
+NEOW	BOOMING_CONCH	elite	Front-load draw and energy against elites.
+NEOW	CURSED_PEARL	-	Get spending money, but make room for Greed.
+NEOW	DOWSING_ROD	-	Visit unknown rooms to mature Dowsing.
+NEOW	FISHING_ROD	-	Normal fights earn upgrades; the target is random.
+NEOW	GOLDEN_PEARL	poor	Fund an early shop without adding cards.
+NEOW	HEFTY_TABLET	-	Choose a rare, but Injury dilutes future draws.
+NEOW	KALEIDOSCOPE	-	Off-color rewards widen your choices, not your synergies.
+NEOW	LARGE_CAPSULE	-	Random relics also cost two extra basic draws.
+NEOW	LAVA_ROCK	-	The extra relics arrive after the first boss.
+NEOW	LEAD_PAPERWEIGHT	-	Choose a colorless tool that fills a gap.
+NEOW	LEAFY_POULTICE	-	Reroll two starters at the cost of max HP.
+NEOW	LOST_COFFER	emptybelt	A card choice and a potion can help immediately.
+NEOW	MASSIVE_SCROLL	-	Choose a multiplayer card that fits the team.
+NEOW	NEOWS_BONES	-	Random Neow relics also bring random curses.
+NEOW	NEOWS_SACRIFICE	-	Weigh Ambergris against drawing Guilty.
+NEOW	NEOWS_TALISMAN	starterpair	Improve a basic attack and defense immediately.
+NEOW	NEOWS_TORMENT	-	Neow’s Fury brings discarded cards back to hand.
+NEOW	NEW_LEAF	basic	Reroll expendable cards; replacements are random.
+NEOW	NUTRITIOUS_OYSTER	-	A larger health pool leaves the deck unchanged.
+NEOW	PHIAL_HOLSTER	fullbelt	Expand your potion belt and stock it immediately.
+NEOW	POMANDER	upgrade	Choose the upgrade instead of rolling for one.
+NEOW	PRECARIOUS_SHEARS	-	Thin the deck only if the HP cost is affordable.
+NEOW	PRECISE_SCISSORS	basic	Remove weak draws without spending health.
+NEOW	SCROLL_BOXES	-	Judge the whole pack, including cards you rarely want.
+NEOW	SILKEN_TRESS	-	Trade all current gold for Replay on the first reward.
+NEOW	SILVER_CRUCIBLE	-	Early upgraded rewards replace your first chest’s loot.
+NEOW	SMALL_CAPSULE	-	A random relic adds no extra cards to draw.
+NEOW	STONE_HUMIDIFIER	hurt	Resting also builds your future health pool.
+NEOW	WINGED_BOOTS	-	Bypass bad connections to reach a safer room.
+NONUPEIPE	BEAUTIFUL_BRACELET	-	Random cards gain first-play draw.
+NONUPEIPE	BLESSED_ANTLER	energy	Gain energy, but draw past Dazed each fight.
+NONUPEIPE	BRILLIANT_SCARF	cheap	Save an expensive card for your sixth hand play.
+NONUPEIPE	DELICATE_FROND	emptybelt	Spend potions freely; empty slots refill each fight.
+NONUPEIPE	DIAMOND_DIADEM	hurt	Opening block carries into turn two.
+NONUPEIPE	FUR_COAT	-	Look for marked fights with one-HP enemies.
+NONUPEIPE	GLITTER	-	Future card rewards get Replay; your current deck doesn’t.
+NONUPEIPE	JEWELRY_BOX	upgrade	Apotheosis can upgrade several cards in combat.
+NONUPEIPE	LOOMING_FRUIT	-	Raise max HP without diluting your deck.
+NONUPEIPE	SIGNET_RING	poor	Buy flexibility at the next merchant.
+OROBAS	ALCHEMICAL_COFFER	fullbelt	Add filled potion slots without giving up your belt.
+OROBAS	ARCHAIC_TOOTH	-	Compare the offered Ancient card with the starter it replaces.
+OROBAS	DRIFTWOOD	-	Reroll a weak card reward instead of settling for it.
+OROBAS	ELECTRIC_SHRYMP	-	Pick a Skill worth playing automatically as combat starts.
+OROBAS	GLASS_EYE	-	Five new cards can bury a compact deck’s best draw.
+OROBAS	PRISMATIC_GEM	energy	Gain energy; future rewards span other colors.
+OROBAS	RADIANT_PEARL	-	Use the opening Luminesce for energy.
+OROBAS	SAND_CASTLE	upgrade	Improve the deck now; upgrade targets are random.
+OROBAS	SEA_GLASS	-	Take only the off-color cards that fit.
+OROBAS	TOUCH_OF_OROBAS	-	Check the upgraded starter relic before trading yours.
+PAEL	PAELS_BLOOD	large	Draw deeper each turn without spending energy.
+PAEL	PAELS_CLAW	defends	Keeping basic Defends gives the enchantment more targets.
+PAEL	PAELS_EYE	-	Pass a turn for an extra one, but exhaust that hand.
+PAEL	PAELS_FLESH	energy	Energy starts on turn three; survive the opening first.
+PAEL	PAELS_GROWTH	-	Choose a card you expect to play repeatedly to enchant.
+PAEL	PAELS_HORN	-	Two Relax cards shift draw and energy to the next turn.
+PAEL	PAELS_LEGION	guard	Time a large block card for the doubling turn.
+PAEL	PAELS_TEARS	-	Unspent energy this turn funds the next one.
+PAEL	PAELS_TOOTH	-	Temporary thinning; cards return upgraded after fights.
+PAEL	PAELS_WING	-	Trade unwanted card rewards toward relics.
+TANX	CLAWS	basic	Turn expendable cards into Maul instead of cutting them.
+TANX	CROSSBOW	-	A free attack each turn; don’t count on a specific one.
+TANX	IRON_CLUB	cheap	Long play chains earn more draw.
+TANX	MEAT_CLEAVER	-	Cooking adds another use for campfires.
+TANX	SAI	hurt	Start each turn with block before spending a card.
+TANX	SPIKED_GAUNTLETS	energy	More energy each turn, but Powers cost more.
+TANX	TANXS_WHISTLE	-	Whistle adds a way to stun an attacker.
+TANX	THROWING_AXE	-	Lead combat with the card you want to play twice.
+TANX	TRI_BOOMERANG	-	Double the damage of attacks you use repeatedly.
+TANX	WAR_HAMMER	elite	Elite kills upgrade cards; you don’t choose which.
+TEZCATARA	BIIIG_HUG	basic	Cut starter clutter, but each shuffle adds Soot.
+TEZCATARA	GOLDEN_COMPASS	-	Trade route flexibility for one special Act 2 path.
+TEZCATARA	NUTRITIOUS_SOUP	strikes	Keeping basic Strikes gives Ember more targets.
+TEZCATARA	PUMPKIN_CANDLE	energy	Energy runs out; budget a campfire to rekindle it.
+TEZCATARA	SEAL_OF_GOLD	-	Turn gold into energy at the cost of your shop budget.
+TEZCATARA	STORYBOOK	-	Brightest Flame buys draw and energy with max HP.
+TEZCATARA	TOASTY_MITTENS	exhaust	Fuel Strength by exhausting a card from each hand.
+TEZCATARA	TOY_BOX	-	Wax relics pay now but melt as fights pass.
+TEZCATARA	VERY_HOT_COCOA	expensive	Use the extra opening energy for early setup.
+TEZCATARA	YUMMY_COOKIE	upgrade	Choose permanent upgrades for cards you already use.
+VAKUU	BLOOD_SOAKED_ROSE	energy	Extra energy comes with Enthralled in your deck.
+VAKUU	CHOICES_PARADOX	-	Retain a card from the opening offer until it matters.
+VAKUU	DISTINGUISHED_CAPE	-	Apparitions buy defense; curses dilute later hands.
+VAKUU	FIDDLE	-	More opening draw each turn, but no mid-turn draws.
+VAKUU	JEWELED_MASK	-	Put a random deck Power into your opening hand for free.
+VAKUU	LORDS_PARASOL	poor	Route to a merchant to collect the stock for free.
+VAKUU	MUSIC_BOX	attacks	Lead each turn with an Attack worth copying.
+VAKUU	PRESERVED_FOG	-	Thin weak cards, but account for the new Folly.
+VAKUU	SERE_TALON	-	Wishes cost nine max HP up front.
+VAKUU	WHISPERING_EARRING	-	Gain energy but surrender control of the first turn.

@@ -163,51 +163,6 @@ NO_EVENT_OPTIONS = {
     ),
 }
 CATALOG_ONLY_ENCOUNTERS = {"FLYCONID_WEAK", "OVERGROWTH_WILDLIFE"}
-ANCIENT_SPECIALIZED = {
-    "DARV": {
-        relic: "ancient_tradeoff"
-        for relic in (
-            "ASTROLABE",
-            "BLACK_STAR",
-            "CALLING_BELL",
-            "DUSTY_TOME",
-            "ECTOPLASM",
-            "EMPTY_CAGE",
-            "PANDORAS_BOX",
-            "PHILOSOPHERS_STONE",
-            "RUNIC_PYRAMID",
-            "SNECKO_EYE",
-            "SOZU",
-            "VELVET_CHOKER",
-        )
-    },
-    "NONUPEIPE": dict.fromkeys(
-        ("BEAUTIFUL_BRACELET", "BRILLIANT_SCARF", "GLITTER"),
-        "exact_ancient_trio",
-    ),
-    "TEZCATARA": dict.fromkeys(
-        ("YUMMY_COOKIE", "BIIIG_HUG", "PUMPKIN_CANDLE"),
-        "ancient_eligibility_and_tradeoff",
-    ),
-}
-ANCIENT_DEFERRED = {
-    owner: set(ids.split())
-    for owner, ids in {
-        "NEOW": """
-        ARCANE_SCROLL BOOMING_CONCH CURSED_PEARL DOWSING_ROD FISHING_ROD GOLDEN_PEARL
-        HEFTY_TABLET KALEIDOSCOPE LARGE_CAPSULE LAVA_ROCK LEAD_PAPERWEIGHT LEAFY_POULTICE
-        LOST_COFFER MASSIVE_SCROLL NEOWS_BONES NEOWS_SACRIFICE NEOWS_TALISMAN NEOWS_TORMENT
-        NEW_LEAF NUTRITIOUS_OYSTER PHIAL_HOLSTER POMANDER PRECARIOUS_SHEARS PRECISE_SCISSORS
-        SCROLL_BOXES SILKEN_TRESS SILVER_CRUCIBLE SMALL_CAPSULE STONE_HUMIDIFIER WINGED_BOOTS
-    """,
-        "NONUPEIPE": "BLESSED_ANTLER DELICATE_FROND DIAMOND_DIADEM FUR_COAT JEWELRY_BOX LOOMING_FRUIT SIGNET_RING",
-        "OROBAS": "ALCHEMICAL_COFFER ARCHAIC_TOOTH DRIFTWOOD ELECTRIC_SHRYMP GLASS_EYE PRISMATIC_GEM RADIANT_PEARL SAND_CASTLE SEA_GLASS TOUCH_OF_OROBAS",
-        "PAEL": "PAELS_BLOOD PAELS_CLAW PAELS_EYE PAELS_FLESH PAELS_GROWTH PAELS_HORN PAELS_LEGION PAELS_TEARS PAELS_TOOTH PAELS_WING",
-        "TANX": "CLAWS CROSSBOW IRON_CLUB MEAT_CLEAVER SAI SPIKED_GAUNTLETS TANXS_WHISTLE THROWING_AXE TRI_BOOMERANG WAR_HAMMER",
-        "TEZCATARA": "GOLDEN_COMPASS NUTRITIOUS_SOUP SEAL_OF_GOLD STORYBOOK TOASTY_MITTENS TOY_BOX VERY_HOT_COCOA",
-        "VAKUU": "BLOOD_SOAKED_ROSE CHOICES_PARADOX DISTINGUISHED_CAPE FIDDLE JEWELED_MASK LORDS_PARASOL MUSIC_BOX PRESERVED_FOG SERE_TALON WHISPERING_EARRING",
-    }.items()
-}
 EVENT_RELICS = {
     "DOLL_ROOM": (
         "doll_take_dynamic_title",
@@ -617,23 +572,19 @@ def audit(pack, assembly):
                 inventory["ancients"] - {"THE_ARCHITECT"},
                 {owner for owner, _ in pools},
             )
-            declared = {
-                (owner, relic)
-                for owner, cases in ANCIENT_SPECIALIZED.items()
-                for relic in cases
-            }
-            deferred = {
-                (owner, relic)
-                for owner, cases in ANCIENT_DEFERRED.items()
-                for relic in cases
-            }
-            if declared & deferred:
-                raise ValueError("Ancient relic dispositions overlap")
-            exact(
-                "Classified Ancient relic IDs vs assembly pools",
-                pools,
-                declared | deferred,
-            )
+            declared = set()
+            for line in (
+                (ROOT / "mod/catalogs" / BUILD / "ancient-gifts.tsv")
+                .read_text()
+                .splitlines()
+            ):
+                owner, relic, fit, cue = line.split("\t")
+                if (owner, relic) in declared or not cue.strip() or not fit.strip():
+                    raise ValueError(
+                        f"Duplicate or incomplete gift rule: {owner}/{relic}"
+                    )
+                declared.add((owner, relic))
+            exact("Runtime Ancient gift rules vs assembly pools", pools, declared)
         else:
             exact(
                 "Classified event relic payloads vs assembly",
@@ -645,13 +596,12 @@ def audit(pack, assembly):
                 },
             )
         for (owner, relic), methods in pools.items():
-            tag = ANCIENT_SPECIALIZED.get(owner, {}).get(relic)
             if kind == "event_relic":
                 tag = EVENT_RELICS[owner][0]
                 disposition = "deferred"
             else:
-                disposition = "conditional_live" if tag else "deferred"
-                tag = tag or "ancient_relic_not_scored"
+                disposition = "conditional_live"
+                tag = "build_specific_gift_tradeoff"
             key = (
                 f"{owner}.pages.INITIAL.options.{relic}"
                 if kind == "ancient_relic"
@@ -689,8 +639,8 @@ def audit(pack, assembly):
             "neow_modifier",
             f"NEOW.{key}",
             "mode_only",
-            "deferred",
-            "modifier_generated_callback",
+            "conditional_live",
+            "neow_sequential_opening",
             fields,
         )
     for key in ("CONTINUE", "RESPOND"):
@@ -714,7 +664,7 @@ def audit(pack, assembly):
         "event_control",
         "NEOW.BLITZ",
         "mode_only",
-        "deferred",
+        "conditional_live",
         "blitz_neow_opening",
         scoped_keys(tables["ascension"], "BLITZ.NEOW"),
     )
@@ -763,7 +713,11 @@ DYNAMIC = {
         "deferred",
         "fake_shop_foul_potion_callback",
     ),
-    "NEOW.MODIFIER_QUEUE": ("mode_only", "deferred", "modifier_options_depend_on_run"),
+    "NEOW.MODIFIER_QUEUE": (
+        "mode_only",
+        "conditional_live",
+        "modifier_options_depend_on_run",
+    ),
     "RANWID_THE_ELDER.OFFERED_ITEM": (
         "run_dependent",
         "deferred",

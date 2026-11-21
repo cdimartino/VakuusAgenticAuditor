@@ -164,6 +164,7 @@ Check(Curse.Advice("Detailed", true, 0, bitten.ToString(), curseOffer) == Cursed
 Check(Curse.Advice("Truth", true, 0, bitten.ToString(), null).StartsWith("CURSE · Hint withheld") && Curse.Advice("Truth", true, 0, bitten.ToString(), [curseOffer[0], curseOffer[0]]).Contains("Hint withheld"), "without a clearly weaker alternative Vakuu withholds advice rather than inventing a choice");
 CombatRegression.Run(Check);
 AncientOfferRegression.Run(Check);
+AncientGiftCatalogRegression.Run(Check);
 CardCoverageRegression.Run(Check);
 NonupeipeRegression.Run(Check);
 EnemyKnowledgeRegression.Run(Check);
