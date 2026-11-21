@@ -13,6 +13,9 @@ internal static class AncientOfferRegression
         var text = AncientOffer.Compare(trio, deck, true, context)!;
         check(text.Length <= 200 && text.Contains("Lean Cage") && text.Contains("3 upgraded") && text.Contains("Melody"), "Darv trio is concise and actionable");
         check(!text.Contains("++") && !text.Contains("unresolved") && !text.Contains("guaranteed"), "trio avoids duplicate upgrade marker and boilerplate");
+        var verse = Catalog.Get("KI_VERSE", "Ki Verse", 1, false, false);
+        check(text.Contains("no known source") && AncientOffer.Compare(trio, deck with { Cards = [.. deck.Cards, verse] }, true, context)!.Contains("Ki Verse helps build Melody for Lost Lute+"),
+            "Darv distinguishes an actual Melody source from the offered Lute itself");
         check(AncientOffer.Compare(trio.Reverse(), deck, true, context) == text, "trio order invariant");
         check(!AncientOffer.Compare(trio, deck, false, context)!.Contains("Lean "), "indirect preference respected");
         var shortCounts = context with { Removable = 1, Transformable = 2 };

@@ -1,0 +1,120 @@
+AKABEKO	synergy	multi-hit	Save opening Vigor for a first Attack that hits repeatedly.
+ALCHEMICAL_COFFER	utility	-	Adds potion slots and stocks the new slots at random.
+AMETHYST_AUBERGINE	utility	-	Enemy Gold drops are larger.
+ANCHOR	synergy	ID:BODY_SLAM,ID:ENTRENCH	Opening Block gives turn-one Block payoffs a head start.
+ARCANE_SCROLL	utility	-	Adds a random Rare to the deck immediately.
+ARCHAIC_TOOTH	utility	-	Replaces the designated starter with its ancient version.
+ART_OF_WAR	tradeoff	attack	Playing even one Attack forfeits the next-turn bonus Energy.
+ASTROLABE	utility	-	Transforms selected cards and upgrades their replacements.
+BAG_OF_MARBLES	synergy	ID:BULLY,ID:DISMANTLE	Every enemy starts Vulnerable; exploit it before it wears off.
+BAG_OF_PREPARATION	utility	-	See more of the deck in the opening hand.
+BATH_ROBES	utility	-	The next Boss fight begins at full HP.
+BATH_TOWEL	utility	-	Recover HP as each fight begins.
+BEATING_REMNANT	utility	-	Total HP loss is capped at 20 per turn.
+BEAUTIFUL_BRACELET	utility	-	Random deck cards draw two on their first play via Swift.
+BELLOWS	utility	-	The opening hand arrives upgraded each combat.
+BELT_BUCKLE	synergy	guard	Empty every potion slot to boost Block from cards with Dexterity.
+BIG_HAT	utility	-	Opening hand gets random Ethereal cards; unused ones Exhaust.
+BIG_MUSHROOM	tradeoff	-	Gain Max HP now at the cost of a smaller opening hand.
+BIIIG_HUG	tradeoff	-	Thin the deck now; each shuffle puts Soot in the draw pile.
+BING_BONG	conditional	-	Each permanent deck addition brings a second copy.
+BIZARRE_LAMP	synergy	ID:GROWTH,ID:ANGUISH	Start with Joy and a Sadness for cards that use Sadness.
+BLACK_BLOOD	utility	-	Recover HP when combat ends.
+BLACK_STAR	utility	-	Elite victories award an extra relic.
+BLESSED_ANTLER	tradeoff	-	More Energy every turn, but Dazed starts in the draw pile.
+BLOOD_SOAKED_ROSE	tradeoff	-	Extra Energy each turn comes with Enthralled, which must be played first.
+BLOOD_VIAL	utility	-	Recover HP as combat opens.
+BONE_FLUTE	synergy	Osty attacks	Each Osty attack grants Block; summoning alone does not.
+BONE_TEA	utility	-	Upcoming fights start with an upgraded hand for a limited time.
+BOOKMARK	conditional	-	At turn end, one random Retained card gets cheaper until played.
+BOOK_OF_FIVE_RINGS	conditional	-	Permanent deck additions count toward periodic healing.
+BOOK_REPAIR_KNIFE	synergy	doom	Heal when Doom kills a non-Minion; applying Doom alone does not heal.
+BOOMING_CONCH	utility	-	Open Elite fights with extra cards and Energy.
+BOUND_PHYLACTERY	synergy	ID:PROTECTOR,ID:UNLEASH	Turn-start Summon builds Osty's HP for HP-based attacks.
+BOWLER_HAT	utility	-	Increases Gold income by a percentage.
+BREAD	tradeoff	-	Less Energy on turn one; extra Energy each turn after.
+BRILLIANT_SCARF	conditional	-	Make the sixth card played from hand each turn the costly one.
+BRIMSTONE	synergy	multi-hit	Strength boosts repeated hits, but every enemy gains Strength each turn too.
+BRONZE_SCALES	utility	-	Opening Thorns retaliates against incoming hits.
+BURNING_BLOOD	utility	-	Heal after each fight.
+BURNING_STICKS	conditional	-	The first Skill exhausted each fight sends a copy to hand.
+BYRDINE	utility	-	Replaces Byrd Swoop with God Byrd on pickup.
+BYRDPIP	synergy	ID:BYRD_SWOOP	Play the granted Byrd Swoop enough times to unlock a Rest Site evolution.
+CALLING_BELL	tradeoff	-	Gain relics immediately along with a unique Curse.
+CANDELABRA	utility	-	Plan a bigger spend at the start of turn two.
+CAPTAINS_WHEEL	utility	-	Turn three opens with Block.
+CAULDRON	utility	-	Brews a batch of random potions on pickup.
+CENTENNIAL_PUZZLE	synergy	hp loss	The first HP loss each fight draws cards; self-damage can trigger it.
+CHANDELIER	utility	-	Turn three opens with extra Energy.
+CHARONS_ASHES	synergy	exhaust	Each exhausted card damages the entire enemy group.
+CHEMICAL_X	synergy	ID:BRACE,ID:CASCADE,ID:DIRGE,ID:ERADICATE,ID:HEAVENLY_DRILL,ID:MALAISE,ID:MULTI_CAST,ID:REPEAT_SHOT,ID:SKEWER,ID:STARDUST,ID:TEMPEST,ID:VOLLEY,ID:WHIRLWIND	X-cost effects resolve with a larger X.
+CHOICES_PARADOX	utility	-	Pick a random opening offer for the hand; it gains Retain.
+CHOSEN_CHEESE	utility	-	Each completed fight increases Max HP.
+CIRCLET	utility	-	Keepsake with no listed combat effect.
+CLAWS	synergy	ID:MAUL	Make extra Mauls; playing one strengthens the others that combat.
+CLOAK_CLASP	conditional	-	Leave cards in hand at turn end to collect Block per card.
+CONDUCTORS_BATON	conditional	-	Complete the full Melody set to take 25% less attack damage until next turn.
+CRACKED_CORE	synergy	ID:VOLTAIC,ID:BARRAGE	Opening Lightning supplies an Orb and counts toward Lightning channeled.
+CROSSBOW	utility	-	Each turn adds a random Attack, free for that turn only.
+CURSED_KETTLE	tradeoff	-	Each Elite win gives later Elites in this act more opening Strength.
+CURSED_PEARL	tradeoff	-	Take a lump of Gold along with Greed.
+DARKSTONE_PERIAPT	conditional	-	Acquiring a Curse increases Max HP.
+DATA_DISK	synergy	frost,lightning	Opening Focus boosts Frost Block and Lightning damage.
+DAUGHTER_OF_THE_WIND	synergy	attack	Playing an Attack grants Block once per play, not per hit.
+DELICATE_FROND	utility	-	Empty potion slots refill at random as combat opens.
+DEMON_TONGUE	synergy	hp loss	Refunds the first HP loss on your turn as healing.
+DEPRECATED_RELIC	utility	-	Legacy placeholder without an active effect.
+DIAMOND_DIADEM	synergy	guard,ID:BODY_SLAM,ID:ENTRENCH	Start with Block and carry remaining Block into turn two.
+DINGY_RUG	utility	-	Colorless cards can appear in card rewards.
+DISTINGUISHED_CAPE	tradeoff	-	Adds Apparitions and random Curses together.
+DIVINE_DESTINY	synergy	ID:RADIATE	Opening Stars count toward Radiate's first-turn hits.
+DIVINE_RIGHT	synergy	ID:RADIATE	Opening Stars count toward Radiate's first-turn hits.
+DOLLYS_MIRROR	utility	-	Permanently duplicate one card already in the deck.
+DOWSING_ROD	utility	-	Adds Dowsing to the deck once on pickup.
+DRAGON_FRUIT	conditional	-	Each Gold gain also increases Max HP.
+DREAM_CATCHER	utility	-	Resting offers an optional card addition.
+DRIFTWOOD	utility	-	Each card reward gets one reroll.
+DUSTY_TOME	utility	-	Grants an Ancient card once on pickup.
+ECTOPLASM	tradeoff	-	Extra Energy every turn shuts off future Gold gains.
+ELECTRIC_SHRYMP	synergy	skill	Choose a Skill now to play automatically as each fight starts.
+EMBER_TEA	synergy	multi-hit	Temporary supply of opening Strength boosts each hit in upcoming fights.
+EMOTION_CHIP	synergy	orbs	Last turn's HP loss triggers all Orb passives as your turn starts.
+EMPTY_CAGE	utility	-	Remove selected cards from the deck on pickup.
+ENDLESS_APPETITE	synergy	exhaust	Each exhausted card builds Strength.
+ETERNAL_FEATHER	utility	-	Entering a Rest Site heals based on deck size; no Rest action needed.
+EXERCISE_MAT	synergy	guard	Opening Stretch boosts the next Block gained from a card.
+FAKE_ANCHOR	synergy	ID:BODY_SLAM,ID:ENTRENCH	Starts with Block to use for a turn-one Block payoff.
+FAKE_BLOOD_VIAL	utility	-	Heal at the opening of each fight.
+FAKE_HAPPY_FLOWER	utility	-	A recurring turn counter pays out Energy.
+FAKE_LEES_WAFFLE	utility	-	One-time percentage heal on pickup.
+FAKE_MANGO	utility	-	Max HP increases once on pickup.
+FAKE_MERCHANTS_RUG	utility	-	Imitation rug with no effect.
+FAKE_ORICHALCUM	conditional	-	The fallback Block only appears if you end the turn with none.
+FAKE_SNECKO_EYE	tradeoff	zero-cost	Opening Confused rerolls costs on draw; free cards can become costly.
+FAKE_STRIKE_DUMMY	synergy	basic-strike,ID:ADAPTIVE_STRIKE,ID:ASHEN_STRIKE,ID:BLIGHT_STRIKE,ID:FOCUSED_STRIKE,ID:LEADING_STRIKE,ID:METEOR_STRIKE,ID:MINION_STRIKE,ID:MOMENTUM_STRIKE,ID:PAELS_STRIKE,ID:PERFECTED_STRIKE,ID:POMMEL_STRIKE,ID:RHYTHM_STRIKE,ID:SCULPTING_STRIKE,ID:SEEKER_STRIKE,ID:SETUP_STRIKE,ID:SHINING_STRIKE,ID:SOLAR_STRIKE,ID:SORROWFUL_STRIKE,ID:SWIFT_STRIKE,ID:TRAINING_STRIKE,ID:TWIN_STRIKE,ID:ULTIMATE_STRIKE	Boosts damage for cards with Strike in the name.
+FAKE_VENERABLE_TEA_SET	utility	-	Visit a Rest Site for extra opening Energy in the next fight.
+FENCING_MANUAL	synergy	forge,ID:CONQUEROR	Opening Forge gives Sovereign Blade a head start.
+FERTILIZER	synergy	sadness	Creating Sadness builds Strength; playing existing Sadness does not.
+FESTIVE_POPPER	utility	-	All enemies take damage before the first turn.
+FIDDLE	tradeoff	draw	Draw extra at turn start, but card draw during your turn is blocked.
+FISHING_ROD	utility	-	Normal combats count toward a random permanent card upgrade.
+FORGOTTEN_SOUL	synergy	exhaust	Each exhausted card damages one random enemy.
+FRAGRANT_MUSHROOM	tradeoff	-	Pay HP on pickup for random deck upgrades.
+FRESNEL_LENS	synergy	guard	Newly added Block cards gain Nimble for extra Block.
+FROZEN_EGG	synergy	power	Powers added after pickup enter the deck upgraded.
+FUNERARY_MASK	synergy	ID:SOUL_STORM	Starting Souls go in the draw pile; exhausting them scales Soul Storm.
+FUR_COAT	utility	-	Marked combat rooms have enemies with just 1 HP.
+GALACTIC_DUST	conditional	-	Stars spent count toward Block; gaining Stars alone gives none.
+GAMBLING_CHIP	synergy	ID:TACTICIAN,ID:REFLEX	The opening redraw lets you discard chosen cards for their discard effects.
+GAME_PIECE	synergy	power	Each Power played draws more cards.
+GHOST_SEED	tradeoff	basic-strike,basic-defend	Unplayed Ethereal Strikes and Defends Exhaust at turn end.
+GIRYA	synergy	multi-hit	Gain Strength at Rest Sites up to three times; each hit benefits.
+GLASS_EYE	utility	-	Adds five cards on pickup: two Common, two Uncommon and one Rare.
+GLITTER	utility	-	Reward cards gain Glam for a once-per-combat replay.
+GLOWING_ORB	utility	-	Elite fights open with extra Energy.
+GNARLED_HAMMER	synergy	attack	Choose Attacks on pickup to increase their damage with Sharp.
+GOLDEN_COMPASS	utility	-	Replaces the Act 2 map with one special route.
+GOLDEN_PEARL	utility	-	Immediate one-time Gold payout.
+GOLD_PLATED_CABLES	synergy	frost,lightning	The rightmost Orb gets an extra passive trigger; position it deliberately.
+GORGET	utility	-	Begin each fight with Plating.
+GREMLIN_HORN	conditional	-	Each enemy death gives Energy and cards, useful against surviving foes.

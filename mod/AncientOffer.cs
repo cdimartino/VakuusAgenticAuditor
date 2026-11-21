@@ -91,8 +91,15 @@ internal static class AncientOffer
                 : weak == 1 ? "Cage needs a second expendable card"
                     : "Cage needs 2 expendable cards";
             string astro = context?.Transformable is int n && n < 3 ? $"Astrolabe can only transform {Math.Max(0, n)}" : "Astrolabe rolls 3 upgraded replacements";
-            string tome = context?.TomeCard?.Id == "LOST_LUTE" ? "Lost Lute+ plays the top card when you gain Melody" : "Tome’s value depends on the card it offers";
-            return $"{cage}; {astro}. {tome}.";
+            var melody = deck.Cards.FirstOrDefault(c => !c.ForeignModel && c.Has("melody"));
+            string tome = context?.TomeCard switch
+            {
+                { Id: "LOST_LUTE" } when melody != null => $"{melody.Name} helps build Melody for Lost Lute+ to play your top card",
+                { Id: "LOST_LUTE" } => "Lost Lute+ needs Melody; no known source in your deck",
+                { } card => $"Tome adds {card.Name.TrimEnd('+')}+",
+                _ => "Tome’s card is unknown"
+            };
+            return $"{cage}; {astro}.\n{tome}.";
         }
         // Partial offers get a useful observation, never a fabricated overall winner.
         if (known.Length != offered.Length || best == null)

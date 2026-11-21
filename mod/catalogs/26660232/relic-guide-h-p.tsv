@@ -1,0 +1,108 @@
+HAND_DRILL	conditional	-	Break the last point of enemy Block to inflict Vulnerable.
+HAPPY_FLOWER	synergy	expensive	Plan a costly play for the extra energy every third turn.
+HEFTY_TABLET	utility	-	Pick one of three rares; Injury joins your deck too.
+HELICAL_DART	synergy	ID:SHIV	Play the Shiv before blocking; its Dexterity lasts this turn.
+HISTORY_COURSE	synergy	attack	Your last Attack sets the free replay at turn start.
+HORN_CLEAT	utility	-	Budget for defense on turn one; the free Block comes on turn two.
+ICE_CREAM	synergy	expensive	Save unused energy for a costly play on a later turn.
+INFUSED_CORE	synergy	lightning	Open with three Lightning; each Lightning orb also hits harder.
+INK_BOTTLE	synergy	zero-cost	Free plays advance the counter toward another draw.
+INTIMIDATING_HELMET	synergy	expensive	A play costing at least two energy adds four Block.
+IRON_CLUB	synergy	zero-cost	Free plays help reach the extra draw on every fourth card.
+IVORY_TILE	conditional	-	A play costing three energy or more refunds one; two is too little.
+JEWELED_MASK	synergy	power	One random Power from your draw pile starts in hand and stays free this fight.
+JEWELRY_BOX	utility	-	Apotheosis joins your deck; draw it to upgrade cards for that fight.
+JOSS_PAPER	synergy	exhaust	Each fifth card exhausted earns a draw.
+JUZU_BRACELET	utility	-	Question-mark rooms are safe from ordinary enemy encounters.
+KALEIDOSCOPE	utility	-	Choose from other characters' card rewards when you take this.
+KIFUDA	utility	-	Pick up to three cards for Adroit when you take this.
+KUNAI	synergy	attack,shivs	Play three separate Attacks in one turn to build Dexterity. Generated Shivs count when played.
+KUSARIGAMA	synergy	attack	Every third Attack in the same turn hits a random enemy for six extra.
+LANTERN	synergy	expensive	The opening energy helps pay for a costly first-turn play.
+LARGE_CAPSULE	utility	-	Two random relics come with another basic Strike and Defend.
+LASTING_CANDY	utility	-	Look for an extra Power choice in every other fight's card rewards.
+LAVA_LAMP	conditional	-	Finish the fight without taking damage to upgrade all its card rewards.
+LAVA_ROCK	utility	-	Expect two relics from the Act 1 boss.
+LEAD_PAPERWEIGHT	utility	-	Pick one of two Colorless cards when you take this.
+LEAFY_POULTICE	utility	-	Reroll a basic Strike and Defend at the cost of 12 max HP.
+LEES_WAFFLE	utility	-	Take it while hurt to fill the newly enlarged HP bar.
+LETTER_OPENER	synergy	skill	Every third Skill in one turn hits the whole enemy group.
+LIZARD_TAIL	utility	-	One lethal hit leaves you at half max HP instead.
+LOOMING_FRUIT	utility	-	Collect it for 31 extra max HP.
+LORDS_PARASOL	utility	-	Meeting the Merchant gives you his entire stock.
+LOST_COFFER	utility	-	Collect a card reward and a random potion together.
+LOST_WISP	synergy	power	Playing a Power hits the entire enemy group.
+LUCKY_FYSH	utility	-	Add cards to the deck to collect gold; combat-only copies don't count.
+LUNAR_PASTRY	synergy	ID:BLACK_HOLE,ID:FALLING_STAR,ID:COMET	The end-turn Star triggers gain effects and funds later Star costs.
+MANGO	utility	-	The mango adds 14 to your HP ceiling.
+MASSIVE_SCROLL	utility	-	Pick one card from three multiplayer options.
+MAW_BANK	conditional	-	Climbing earns gold until your first shop purchase.
+MEAL_TICKET	utility	-	Route through a shop for healing, even if you buy nothing.
+MEAT_CLEAVER	utility	-	Rest sites now offer Cook as an option.
+MEAT_ON_THE_BONE	conditional	-	Finish combat at half HP or less to heal 12.
+MEMBERSHIP_CARD	utility	-	Shop gold goes further with the storewide discount.
+MERCURY_HOURGLASS	utility	-	Count on group damage at turn start, before choosing a target.
+METRONOME	synergy	orbs	The seventh orb channeled hits all enemies for 30, once per fight.
+MIGHTY_WINGS	conditional	-	One Attack hit must reach 30 damage for Strength; several small hits don't add up.
+MINIATURE_CANNON	conditional	-	Only upgraded Attacks get the extra three damage.
+MINIATURE_TENT	utility	-	Take multiple rest-site options in a single visit.
+MINI_REGENT	synergy	ID:FALLING_STAR,ID:COMET	Only the first Star spend each turn grants Strength.
+MOLTEN_EGG	synergy	attack	New Attack cards enter the deck upgraded.
+MR_STRUGGLES	utility	-	At turn start, every enemy takes damage equal to the turn number.
+MUMMIFIED_HAND	synergy	power	Play a Power while another card is in hand for a random free play this turn.
+MUSIC_BOX	synergy	attack	Lead with the Attack you want copied; the copy is Ethereal.
+MYSTERIOUS_COCOON	synergy	ID:TRAINING_STRIKE	Finish enemies with Training Strike to advance its change into Impale.
+MYSTIC_LIGHTER	conditional	-	Bonus damage requires an enchanted Attack; an upgrade alone won't do.
+NEOWS_BONES	utility	-	Two random Neow relics come with one random Curse.
+NEOWS_SACRIFICE	utility	-	Ambergris comes with Guilty in your deck.
+NEOWS_TALISMAN	synergy	basic-strike,basic-defend	One existing basic Strike and one basic Defend receive upgrades.
+NEOWS_TORMENT	utility	-	Neow's Fury joins your deck when you take this.
+NEW_LEAF	utility	-	Pick one card to transform; its replacement is uncertain.
+NINJA_SCROLL	synergy	ID:ACCURACY	Opening Shivs give Accuracy targets as soon as you can play it.
+NUNCHAKU	synergy	attack,shivs	Each Attack advances the counter; the tenth supplies energy. Generated Shivs count when played.
+NUTRITIOUS_OYSTER	utility	-	The oyster adds 11 to your HP ceiling.
+NUTRITIOUS_SOUP	synergy	basic-strike	Strikes already in your deck receive Tezcatara's Ember.
+OBSIDIAN_VICE	conditional	-	Each card left in hand at turn end sends one damage to a random enemy.
+OCARINA	utility	-	Your opening hand gets a random Wah, Cho or Ki card.
+ODDLY_SMOOTH_STONE	synergy	guard	Opening Dexterity improves Block gained from block cards.
+OLD_COIN	utility	-	Bank the immediate gold for a future shop.
+ORANGE_DOUGH	utility	-	Check the random Colorless cards added to your opening hand.
+ORICHALCUM	tradeoff	guard	Even one Block left at turn end shuts off the relic's Block.
+ORNAMENTAL_FAN	synergy	attack,shivs	Every third Attack in the same turn supplies Block. Generated Shivs count when played.
+ORRERY	utility	-	Review five separate card rewards when you take this.
+PAELS_BLOOD	utility	-	See more cards with the extra draw at each turn start.
+PAELS_CLAW	synergy	basic-defend	Basic Defends already in the deck receive Goopy.
+PAELS_EYE	conditional	-	Once per fight, play nothing to trade the whole hand for an extra turn.
+PAELS_FLESH	synergy	expensive	Extra energy funds costly cards from turn three onward.
+PAELS_GROWTH	utility	-	Pick one card to receive Clone.
+PAELS_HORN	utility	-	Two copies of Relax enter the deck together.
+PAELS_LEGION	synergy	guard	Use a large Block card while doubling is ready; it then sleeps two turns.
+PAELS_TEARS	conditional	-	Leave energy unspent at turn end to start the next turn with extra energy.
+PAELS_TOOTH	utility	-	Set five cards aside; a random one returns upgraded after each fight.
+PAELS_WING	utility	-	Give up two card rewards to earn a relic.
+PANDORAS_BOX	utility	-	Every basic Strike and Defend becomes a different card on pickup.
+PANTOGRAPH	utility	-	Entering a boss fight restores HP before you play.
+PAPER_KRANE	synergy	weak	Keep attackers Weak to cut their damage to you by 40%.
+PAPER_PHROG	synergy	vulnerable	Keep targets Vulnerable for a 75% damage bonus instead of 50%.
+PARRYING_SHIELD	synergy	guard	End the turn with at least ten Block to hit a random enemy for six.
+PEAR	utility	-	The pear adds ten to your HP ceiling.
+PENDULUM	utility	-	Expect an extra card in hand every third turn.
+PEN_NIB	synergy	attack	Line up a hard hitter for the tenth Attack; it deals double.
+PERMAFROST	synergy	power	The first Power you play in each fight also supplies Block.
+PETRIFIED_TOAD	utility	-	Make room for a Potion-Shaped Rock at combat start.
+PHIAL_HOLSTER	utility	-	Pick up extra potion capacity and random potions together.
+PHILOSOPHERS_STONE	synergy	expensive	Extra energy funds costly plays each turn, but every enemy starts stronger.
+PHYLACTERY_UNBOUND	synergy	ID:PROTECTOR	Summon at combat and turn start grows Osty's max HP for Protector.
+PLANISPHERE	utility	-	Route through question marks for healing on entry.
+POCKETWATCH	conditional	-	Stop at three plays or fewer to draw three extra cards next turn.
+POLLINOUS_CORE	utility	-	Expect two extra cards every fourth turn.
+POMANDER	utility	-	Choose one card for an immediate upgrade.
+POTION_BELT	utility	-	Carry two more potions between fights.
+POWER_CELL	synergy	zero-cost	Start with up to two zero-cost cards pulled from your draw pile.
+PRAYER_WHEEL	utility	-	Ordinary enemy fights offer a second card reward.
+PRECARIOUS_SHEARS	utility	-	Cut two cards at a cost of 16 current HP.
+PRECISE_SCISSORS	utility	-	Pick one card to cut from the deck.
+PRESERVED_FOG	utility	-	Cut three cards, but count Folly among the cards left behind.
+PRISMATIC_GEM	synergy	expensive	Extra energy funds costly turns; future rewards mix colors.
+PUMPKIN_CANDLE	synergy	expensive	Fund costly turns for five fights; rekindle at a rest site.
+PUNCH_DAGGER	synergy	attack	Pick one Attack for Momentum 5 when you take the dagger.
