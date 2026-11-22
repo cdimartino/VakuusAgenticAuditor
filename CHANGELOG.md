@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.29
+
+- Press F7 on the map to show or hide the dashed route, including in Curse Mode. The toggle remembers your choice; change the key in Auditor settings.
+
 ## v0.1.28
 
 - The run-review button now sits in the results summary rather than covering the map, deck and settings controls. It no longer takes focus when the results screen opens.

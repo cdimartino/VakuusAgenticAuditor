@@ -39,13 +39,21 @@ internal sealed class Preferences
     public Dictionary<string, string> PlaytestPresetApplied { get; set; } = new();
     public Key SuggestionKey { get; set; } = Key.V;
     public Key SettingsKey { get; set; } = Key.F8;
+    public Key RouteOverlayKey { get; set; } = Key.F7;
     public Key MuteKey { get; set; } = Key.F6;
     public Dictionary<string, BubbleSpot> BubblePositions { get; set; } = new();
     static string PathName => ProjectSettings.GlobalizePath("user://mod_configs/VakuusAgenticAuditor/settings.json");
     static readonly JsonSerializerOptions Json = new() { WriteIndented = true };
     public static Preferences Load()
     {
-        try { return File.Exists(PathName) ? JsonSerializer.Deserialize<Preferences>(File.ReadAllText(PathName)) ?? new() : new(); }
+        try
+        {
+            var prefs = File.Exists(PathName) ? JsonSerializer.Deserialize<Preferences>(File.ReadAllText(PathName)) ?? new() : new();
+            Key[] existing = [prefs.SettingsKey, prefs.MuteKey, prefs.SuggestionKey];
+            if (existing.Contains(prefs.RouteOverlayKey))
+                prefs.RouteOverlayKey = new[] { Key.F7, Key.F9, Key.F10, Key.F11 }.First(k => !existing.Contains(k));
+            return prefs;
+        }
         catch (Exception ex) { GD.PushWarning($"Auditor settings: {ex.Message}"); return new(); }
     }
     public void Save()
@@ -79,6 +87,8 @@ internal sealed class Display
     Action<Key>? bind;
     Key waitForRelease = Key.None;
     internal event Func<bool>? SettingsPressed;
+    internal event Func<bool>? RouteOverlayPressed;
+    readonly SettingsShortcut<Key> routeShortcut = new();
     readonly SettingsShortcut<Key> settingsShortcut = new();
     bool SettingsBlocked => KeyboardBusy || review.Visible;
     internal void SettingsController(bool pressed)
@@ -99,6 +109,8 @@ internal sealed class Display
         {
             menu.Hide(); source.SetInputAsHandled(); return;
         }
+        if (routeShortcut.Key(key.Keycode, key.Pressed, key.Echo, P.RouteOverlayKey, SettingsBlocked || InSettings)
+            && RouteOverlayPressed?.Invoke() == true) source.SetInputAsHandled();
         if (settingsShortcut.Key(key.Keycode, key.Pressed, key.Echo, P.SettingsKey, SettingsBlocked)
             && SettingsPressed?.Invoke() == true) source.SetInputAsHandled();
     }
@@ -212,6 +224,7 @@ internal sealed class Display
             foreach (var window in new Window[] { tree.Root, keyPrompt, review })
                 window.WindowInput += input => SettingsInput(window, input);
             tree.Root.FocusExited += settingsShortcut.Reset;
+            tree.Root.FocusExited += routeShortcut.Reset;
         }).CallDeferred();
         corner = new StyleBoxFlat { BgColor = new Color(.07f, .055f, .09f, .93f), ContentMarginLeft = 12, ContentMarginRight = 12, ContentMarginTop = 8, ContentMarginBottom = 8 };
         note.AddThemeStyleboxOverride("normal", corner);
@@ -419,6 +432,7 @@ internal sealed class Display
                     // Swapping preserves access to both actions.
                     if (P.SuggestionKey == key) P.SuggestionKey = old;
                     else if (P.SettingsKey == key) P.SettingsKey = old;
+                    else if (P.RouteOverlayKey == key) P.RouteOverlayKey = old;
                     else if (P.MuteKey == key) P.MuteKey = old;
                     set(key);
                 };
@@ -454,6 +468,7 @@ internal sealed class Display
         });
         Shortcut("Show / dismiss suggestion", P.SuggestionKey, k => P.SuggestionKey = k);
         Shortcut("Open settings", P.SettingsKey, k => P.SettingsKey = k);
+        Shortcut("Show / hide map route", P.RouteOverlayKey, k => P.RouteOverlayKey = k);
         Shortcut("Mute / unmute", P.MuteKey, k => P.MuteKey = k);
         Toggle("Open review after a run", P.OpenRunReview, v => P.OpenRunReview = v);
         Item("Read latest run review", ShowReview);

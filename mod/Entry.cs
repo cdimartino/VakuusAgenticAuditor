@@ -84,6 +84,17 @@ public static class Entry
                 Safe(ui.Settings);
                 return true;
             };
+            ui.RouteOverlayPressed += () =>
+            {
+                if (profile == null || !P.Routes || P.Muted || P.Mode == "Off" || !Solo()
+                    || NMapScreen.Instance is not { IsOpen: true, IsTraveling: false }
+                    || MegaCrit.Sts2.Core.Nodes.NGame.Instance?.Transition?.InTransition == true) return false;
+                P.ShowRouteOverlay = !P.ShowRouteOverlay;
+                P.Save();
+                if (!P.ShowRouteOverlay) ClearTrace();
+                next = 0;
+                return true;
+            };
             tree.ProcessFrame += SettingsControllerFrame;
             tree.ProcessFrame += RecordFrame;
             if (profile != null) tree.ProcessFrame += Frame;
@@ -292,7 +303,7 @@ public static class Entry
         {
             decisions.Transition(); ui.Hide(); postUntil = 0; return;
         }
-        if (trace != null && (!P.ShowRouteOverlay || !P.Routes || P.Muted || P.Mode == "Off" || P.CurseMode
+        if (trace != null && (!P.ShowRouteOverlay || !P.Routes || P.Muted || P.Mode == "Off"
             || NMapScreen.Instance is not { IsOpen: true, IsTraveling: false })) ClearTrace();
         if (ui.KeyboardBusy) return;
         if (ui.InSettings) { eventRequest.Clear(); return; }
@@ -339,7 +350,7 @@ public static class Entry
                     if (routePlan is { } hint)
                     {
                         text = hint.Text; anchor = Above([routes[hint.Index]]);
-                        if (P.ShowRouteOverlay && !P.CurseMode && !GodotObject.IsInstanceValid(trace))
+                        if (P.ShowRouteOverlay && !GodotObject.IsInstanceValid(trace))
                         {
                             var holders = Visible<NMapPoint>(map).Where(x => x.Point != null).ToLookup(x => (x.Point!.coord.row, x.Point.coord.col));
                             var path = hint.Path.Select(n => holders[(n.Row, n.Col)].FirstOrDefault()).TakeWhile(x => x != null).OfType<NMapPoint>().ToList();
@@ -542,7 +553,7 @@ public static class Entry
         if (delivery.Deliver && (!reacting || decisions.MayDeliver(overlay!)))
         {
             string spoken = text;
-            if (!reacting && P.CurseMode)
+            if (!reacting && P.CurseMode && !(P.ShowRouteOverlay && ui.ViewType == "map"))
             {
                 var cards = overlay is NCardRewardSelectionScreen && ui.ViewType == "card rewards" ? ranking : null;
                 var identity = $"{r.Rng.StringSeed}:{r.CurrentActIndex}:{r.ActFloor}:{ui.ViewType}:{overlay?.GetType().Name}:{battleKey}";
