@@ -5,6 +5,19 @@ internal static class CombatGuidance
 {
     internal static bool Boundary(string effect) => effect is "hand-upgrade" or "exhaust-choice" or "uncertain-draw";
 
+    // Option value, never damage/block/draw. Deck payoffs are possible future
+    // support; only observed active powers count as already online.
+    internal static (double fit, string? reason) Economy(string id, int summon, int souls,
+        int ostyHp, bool ostySupport, bool hauntInDeck, int activeHaunt)
+    {
+        double fit = Math.Min(8, summon * (ostyHp <= 1 ? .8 : .4) * (ostySupport ? 1 : .5))
+            + Math.Min(12, souls * (2 + (activeHaunt > 0 ? 1 : hauntInDeck ? .5 : 0)));
+        return fit > 0 ? (fit, souls > 0
+            ? "Shuffled Souls support later turns; no immediate draw or Haunt damage is assumed."
+            : "Summon supports Osty on later turns; no immediate block or extra attack is assumed.")
+            : (0, null);
+    }
+
     // Bounded deck-fit estimates, not simulated future draws or guaranteed damage.
     internal static (double fit, string? reason) Setup(Card card, int amount, Card[] deck, Foe[] foes)
     {

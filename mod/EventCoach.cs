@@ -6,19 +6,23 @@ internal record EventPick(string Title, string Description, string? Relic = null
 internal record UpgradeTarget(string Key, string Name, double Value, bool Eligible = true, bool Selected = false);
 internal static class EventCoach
 {
-    internal static string? Ancient((string id, string name)[] relics, int upgrades, int basics, int expensive, bool pick, int? legalUpgrades = null)
+    internal static string? Ancient((string id, string name)[] relics, int upgrades, int basics, int expensive, bool pick, int? legalUpgrades = null, int? legalRemovals = null)
     {
         int legal = Math.Min(4, Math.Max(0, legalUpgrades ?? upgrades));
         var ranked = relics.Select(r => r.id switch
         {
             "YUMMY_COOKIE" when legal > 0 => (3 * Math.Min(legal, upgrades) + 1, r.name, $"Choose {legal} cards to upgrade permanently; {Math.Min(legal, Math.Max(0, upgrades))} are priority targets. Include eligible basics if needed. No Soot added."),
-            "BIIIG_HUG" when basics >= 4 => (basics >= 8 ? 14 : 7, r.name, "Remove four starter cards. The tradeoff is a Soot every shuffle."),
+            "YUMMY_COOKIE" => (0, r.name, "No eligible upgrade targets."),
+            "BIIIG_HUG" when basics >= 4 => (basics >= 8 ? 14 : 7, r.name, "Choose four cards to remove; weak starters are candidates. Each shuffle adds a Soot."),
+            "BIIIG_HUG" when legalRemovals is int n => (Math.Min(4, basics) - 2, r.name, $"Remove {Math.Clamp(n, 0, 4)} cards; check which you can spare. Each shuffle adds a Soot."),
             "PUMPKIN_CANDLE" => (expensive >= 4 ? 15 : 6, r.name, "Extra energy helps your expensive turns. It lasts five fights before it needs kindling."),
             _ => (int.MinValue, r.name, "")
         }).Where(x => x.Item1 > int.MinValue).OrderByDescending(x => x.Item1).ToArray();
         if (ranked.Length == 0) return null;
-        return (pick ? $"Take {ranked[0].name}. " : "") + ranked[0].Item3
-            + (relics.Any(r => r.id is not ("YUMMY_COOKIE" or "BIIIG_HUG" or "PUMPKIN_CANDLE"))
+        bool complete = ranked.Length == relics.Length;
+        bool lead = complete && ranked[0].Item1 > 0 && (ranked.Length == 1 || ranked[0].Item1 > ranked[1].Item1);
+        return string.Join("\n", ranked.Select((x, i) => (i == 0 && pick && lead ? $"Take {x.name}. " : $"{x.name}: ") + x.Item3))
+            + (!complete
                 ? " Another relic's effect is unmodeled; this comparison is incomplete." : "");
     }
     // Keys identify card instances, not names. Caller supplies the live picker's
@@ -39,7 +43,7 @@ internal static class EventCoach
 
     // Exact installed English clauses only; never infer an effect from a title.
     // Pass only visible options, including enabled state, and live empty slots.
-    internal static string? Courier((EventPick Option, bool Enabled)[] options, int emptySlots, bool manual)
+    internal static string? Courier((EventPick Option, bool Enabled)[] options, int emptySlots, bool manual, bool sozu = false)
     {
         var enabled = options.Where(o => o.Enabled).Select(o => o.Option).ToArray();
         if (enabled.Length == 0) return Unsupported(manual);
@@ -53,9 +57,11 @@ internal static class EventCoach
             else if (effect == "Procure 1 random Uncommon Potion.") offers.Add((option, 1, false));
             else return Unsupported(manual);
         }
+        if (sozu) return "Sozu prevents acquiring potions from these offers.";
         if (emptySlots <= 0)
             return "Your potion belt is full. Make room before taking potions; I won't assume an existing potion should be discarded."
-                + " Foul Potions also damage all players, or can be thrown at the Merchant for gold; the uncommon potion is random.";
+                + (offers.Any(x => x.foul) ? " Foul Potions damage all players and enemies, or can be thrown at the Merchant for gold." : "")
+                + (offers.Any(x => !x.foul) ? " The uncommon potion is random." : "");
         var random = offers.FirstOrDefault(o => !o.foul);
         if (random.option != null)
             return $"{Plain(random.option.Title)} offers one random uncommon potion, not a guaranteed specific effect."

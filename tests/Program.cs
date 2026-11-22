@@ -152,6 +152,8 @@ FloorResult[] history = [new(1, 1, "Small enemy", 2, 0, 0, 0, 1, 0, 0, 2), new(1
 var loss = RunReview.Write(deck with { Character = "FOOL", Cards = [C("VITRIOL"), C("PUNCH_OF_JOY")] }, history, false, false, "Elite", 2, 42, ["Block Potion"]);
 Check(loss.Contains("floor 2, Elite (21") && loss.Contains("Recorded cause: Elite") && loss.Contains("cannot establish whether") && loss.Contains("Sadness conversion"), "loss review ties coaching to history without claiming potion would save the run");
 Check(RunReview.Write(deck, history, true, false, null, 0, 0, []).Contains("WHAT TO REPEAT"), "victory review uses winning analysis");
+var eventReview = RunReview.Write(deck with { Cards = [C("AFTERIMAGE")] }, [new(1, 3, "Event", 8, 0, 0, 0, 0, 0, 0, 0)], true, false, null, 0, 0, []);
+Check(eventReview.Contains("0 direct block cards") && !eventReview.Contains("practice fight"), "review separates triggered block and event HP costs from direct combat evidence");
 Check(!RunReview.Write(deck, [], false, true, null, 0, 0, []).Contains("LOSS ANALYSIS"), "abandoned run is not misclassified as a death");
 var curseOffer = new[] { new Verdict("best", "Best", 5, "", null), new Verdict("middle", "Middle", 2, "", null), new Verdict("~skip", "Skip", 0, "", null) };
 string Cursed(int a, int i, bool on = true) => Curse.Advice("Honest", on, a, i.ToString(), curseOffer);
@@ -163,6 +165,11 @@ Check(Cursed(0, bitten).Contains("Take Middle.") && Cursed(5, bitten).Contains("
 Check(Curse.Advice("Detailed", true, 0, bitten.ToString(), curseOffer) == Cursed(0, bitten), "reopening or asking for detail cannot reroll crooked counsel");
 Check(Curse.Advice("Truth", true, 0, bitten.ToString(), null).StartsWith("CURSE · Hint withheld") && Curse.Advice("Truth", true, 0, bitten.ToString(), [curseOffer[0], curseOffer[0]]).Contains("Hint withheld"), "without a clearly weaker alternative Vakuu withholds advice rather than inventing a choice");
 CombatRegression.Run(Check);
+CardPlayEffectsRegression.Run(Check);
+string[] well = ["WELLSPRING.pages.INITIAL.options.BOTTLE", "WELLSPRING.pages.INITIAL.options.BATHE"];
+Check(WellspringCoach.Compare(well, 3, false, deck.Cards, 1, true) is { } wellAdvice && wellAdvice.StartsWith("Consider Bottle") && wellAdvice.Contains("Guilty"), "pictured Wellspring compares empty belt with temporary curse cost");
+Check(WellspringCoach.Compare(well, 0, false, [C("REGRET") with { IsCurse = true }], 1, true) is { } swap && swap.StartsWith("Consider Bathe") && swap.Contains("REGRET"), "a removable permanent curse changes the Wellspring tradeoff");
+Check(WellspringCoach.Compare(well, 2, true, [], 1, false) is { } blocked && blocked.Contains("Sozu prevents") && blocked.Contains("No legal"), "Sozu and no legal removal do not invent a benefit");
 BookCoachRegression.Run(Check);
 RelicGuideRegression.Run(Check);
 AncientOfferRegression.Run(Check);

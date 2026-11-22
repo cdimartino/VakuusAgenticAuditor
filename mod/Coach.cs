@@ -66,11 +66,14 @@ internal static class Coach
 {
     internal static (int score, string reason) Relic(string id, Deck deck)
     {
+        if (RelicGuide.BlockedDraw(id, deck.Relics)) return (0, "Fiddle blocks the in-turn draw.");
         var match = RelicGuide.ForRelic(id, deck.RelicNames?.GetValueOrDefault(id) ?? RelicGuide.Name(id), deck);
         if (match != null) return (match.Tradeoff ? -2 : 5 + match.Specificity, match.Text);
         bool injured = deck.Hp * 2 < deck.MaxHp;
         return Catalog.RelicFit.GetValueOrDefault(id) switch
         {
+            "gold" when deck.Relics.Contains("ECTOPLASM") => (0, "Ectoplasm prevents the gold gain."),
+            "slots" when deck.Relics.Contains("SOZU") => (0, "Sozu prevents acquiring potions for the extra space."),
             "max hp" => (injured ? 7 : 4, $"More maximum HP gives you room for mistakes at {deck.Hp}/{deck.MaxHp}."),
             "gold" => (4, "Bank the gold for an upgrade to your deck at the next merchant."),
             "sustain" or "rest heal" => (injured ? 8 : 4, $"Repeatable healing matters at {deck.Hp}/{deck.MaxHp} HP."),
@@ -91,20 +94,55 @@ internal static class Coach
             var cost = CurseValuation.Addition([c.Id], d);
             return new(c.Id, c.Name, -cost.Cost, cost.Reason, cost.Reason);
         }
-        if (!c.Known) return new(c.Id, c.Name, double.NaN, "I don’t know this card well enough to rank it.", null);
+        bool auditedRare = Catalog.Profile.Build == "26660232" && !c.ForeignModel && c.Id is ("UNDEATH" or "TRANSFIGURE" or "OBLIVION");
+        if (!c.Known && !auditedRare) return new(c.Id, c.Name, double.NaN, "I don’t know this card well enough to rank it.", null);
         var pros = new List<(double w, string text)>();
         var cons = new List<(double w, string text)>();
         var cards = d.Cards;
         var opportunity = Archetypes.Opportunity(d, c);
         var guards = cards.Count(x => x.Has("guard"));
         var nonBasicHits = cards.Count(x => x.Attack && !x.Id.StartsWith("STRIKE_"));
-        if (c.Cost == 1 && c.Has("hit") && c.Has("guard") && c.Has("draw"))
+        string? specific = null;
+        if (auditedRare)
+        {
+            if (c.Id == "UNDEATH")
+            {
+                specific = $"Gain {(c.Up ? 9 : 7)} Block; each play adds a copy to your discard this combat, crowding later draws.";
+                pros.Add((1, "Block without spending base energy."));
+                cons.Add((guards * 3 >= cards.Length ? 1.25 : .5, "Repeated copies dilute later hands."));
+            }
+            else if (c.Id == "TRANSFIGURE")
+            {
+                var candidate = cards.FirstOrDefault(x => !x.ForeignModel && !x.VariableCost && x.Cost is 0 or 1
+                    && (x.Id == "HAUNT" && cards.Any(s => s.Has("souls")) || x.Has("area damage") || x.Has("summon") && cards.Any(s => s.Needs.Contains("summon"))));
+                specific = candidate == null ? "Choose another card in hand for Replay this combat; fixed energy costs rise by 1."
+                    : $"If drawn together, choose {candidate.Name} in hand for Replay this combat; its fixed cost rises by 1 energy.";
+                specific += c.Up ? " Transfigure+ does not Exhaust." : " Transfigure Exhausts.";
+                if (candidate != null) pros.Add((2, specific));
+                cons.Add((.7, "Needs a worthwhile target in hand and energy to play it."));
+            }
+            else
+            {
+                var souls = cards.FirstOrDefault(x => !x.ForeignModel && x.Has("souls"));
+                var cheap = cards.Count(x => x.Known && !x.VariableCost && x.Cost == 0 && !x.IsCurse);
+                var doomPayoff = cards.FirstOrDefault(x => !x.ForeignModel && x.Needs.Contains("doom"));
+                specific = $"Each card you play afterward this turn applies {(c.Up ? 4 : 3)} Doom to the target, not immediate damage.";
+                if (souls != null) specific += $" Souls from {souls.Name} can add plays.";
+                else if (doomPayoff != null) specific += $" {doomPayoff.Name} rewards Doom.";
+                else if (cheap == 0) specific += " Needs plays left in hand.";
+                if (souls != null || cheap > 0) pros.Add((1.5 + Math.Min(2, cheap) * .3, specific));
+                if (doomPayoff != null) pros.Add((1, specific));
+                if (c.Up) pros.Add((.4, "More Doom per follow-up."));
+            }
+        }
+        bool drawBenefit = c.Has("draw") && !(c.CombatHas("draw") && d.Relics.Contains("FIDDLE"));
+        if (c.Cost == 1 && c.CombatHas("hit") && c.CombatHas("guard") && c.CombatHas("draw") && drawBenefit)
             pros.Add((2.2, "One energy buys damage, block, and a replacement draw."));
         if (c.CombatHas("guard") && (guards * 3 <= cards.Length || d.Hp * 2 <= d.MaxHp))
             pros.Add((d.Hp * 2 <= d.MaxHp ? 2.6 : 1.5, $"At {d.Hp}/{d.MaxHp} HP, another block draw gives you breathing room."));
         if (c.Has("hit") && nonBasicHits < (d.EliteOnly ? 5 : 3))
             pros.Add((d.EliteOnly ? 2.8 : 1.8, $"You have {nonBasicHits} non-Strike attack{(nonBasicHits == 1 ? "" : "s")}{(d.EliteOnly ? " before a forced elite" : "")}. This adds damage now."));
-        if (c.Has("draw") && cards.Length >= 15)
+        if (drawBenefit && cards.Length >= 15)
             pros.Add((1.4, $"Draw helps you reach key cards in a {cards.Length}-card deck."));
         if (c.Has("area damage") && !cards.Any(x => x.Has("area damage")))
             pros.Add((1.45, "Your deck has no tagged area attack. This can damage several enemies in one play."));
@@ -133,18 +171,43 @@ internal static class Coach
         int copies = cards.Count(x => x.Id == c.Id);
         if (copies > 0) cons.Add((Math.Min(2.4, .85 * copies), $"You already have {copies} {(copies == 1 ? "copy" : "copies")}."));
         if (c.Up) pros.Add((.6, "It comes upgraded without spending a campfire."));
-        if (cards.Length >= 20 && !c.Has("draw")) cons.Add((.7, $"Adding it dilutes your {cards.Length}-card deck."));
+        if (cards.Length >= 20 && !drawBenefit) cons.Add((.7, $"Adding it dilutes your {cards.Length}-card deck."));
         var best = pros.OrderByDescending(x => x.w).FirstOrDefault().text;
         var risk = cons.OrderByDescending(x => x.w).FirstOrDefault().text;
-        return new(c.Id, c.Name, .35 + pros.Sum(x => x.w) - cons.Sum(x => x.w) + (opportunity != null && !opportunity.StartsWith("Possible ") ? 1 : 0),
-            drawback?.Text ?? benefit?.Text ?? opportunity ?? best ?? risk ?? "No strong interaction stands out in this deck.", risk);
+        return new(c.Id, c.Name, pros.Sum(x => x.w) - cons.Sum(x => x.w) + (opportunity != null && !opportunity.StartsWith("Possible ") ? 1 : 0),
+            specific ?? drawback?.Text ?? benefit?.Text ?? opportunity ?? best ?? risk ?? "No strong interaction stands out in this deck.", risk);
     }
     internal static Verdict[] Rank(IEnumerable<Card> choices, Deck deck, bool skip)
+        => Rank(choices, deck, skip ? ["skip"] : []);
+    internal static Verdict[] Rank(IEnumerable<Card> choices, Deck deck, IEnumerable<string> alternatives)
     {
         var options = choices.Select(c => Assess(c, deck)).ToList();
-        if (skip) options.Add(new("~skip", "Skip", deck.Cards.Length >= 16 ? 1 : .2,
-            "Skipping keeps your current cards coming around as often.", null));
+        foreach (var id in alternatives.Distinct(StringComparer.OrdinalIgnoreCase))
+            options.Add(string.Equals(id, "skip", StringComparison.OrdinalIgnoreCase)
+                ? new("~skip", "Skip", deck.Cards.Length >= 16 ? 1 : .2, "Skipping keeps your current cards coming around as often.", null)
+                : new("~alternative:" + id, "Other reward", double.NaN, "The alternative reward's value is unassessed.", null));
         return options.OrderByDescending(x => x.Score).ToArray();
+    }
+    internal static string Shop(Verdict? card, int cardCost, RelicGuide.Interaction? relic, int relicCost,
+        int? removalCost, bool affordablePotion, int gold)
+    {
+        var lines = new List<string>();
+        if (card != null) lines.Add($"{card.Name} ({cardCost}g): {card.Reason}");
+        if (relic != null) lines.Add($"{relic.Text} ({relicCost}g)");
+        if (removalCost != null) lines.Add($"Removal ({removalCost}g): check which draw you can spare.");
+        if (affordablePotion) lines.Add("A potion also fits your budget and belt.");
+        lines.Add($"You can save your {gold} gold.");
+        return string.Join("\n", lines);
+    }
+    internal static string? PartialReward(Verdict[] ranking)
+    {
+        var unknown = ranking.Where(x => !double.IsFinite(x.Score)).ToArray();
+        if (unknown.Length == 0) return null;
+        var known = ranking.Where(x => double.IsFinite(x.Score) && x.Id != "~skip").OrderByDescending(x => x.Score).FirstOrDefault();
+        bool skip = ranking.Any(x => x.Id == "~skip");
+        var names = unknown.Select(x => x.Id.StartsWith("~alternative:") ? "an alternative reward" : x.Name).Distinct();
+        return (known == null ? "" : $"{known.Name}: {known.Reason} ")
+            + $"I can’t rank {string.Join(", ", names)}." + (skip ? " Skip keeps the deck unchanged." : "");
     }
     internal static string After(Verdict pick, Verdict top)
     {

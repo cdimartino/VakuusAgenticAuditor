@@ -35,7 +35,7 @@ for availability, disposition, labels in (
         "enabled_only",
         "conditional_live",
         """
-        book_enchantment upgrade card_fit resource_curse courier metamorphosis repeat_hp repeat_resource
+        wellspring_offer book_enchantment upgrade card_fit resource_curse courier metamorphosis repeat_hp repeat_resource
         hp_relic hp_random_reward gold_random_reward gold_transform gold_random_upgrade
         gold_card_repeat hp_random_upgrade hp_enchant combat_hp resource_item
         curse_remove curse_enchant curse_relic curse_upgrade curse_random_reward
@@ -70,7 +70,7 @@ ROOM = {
     "Elite": ("enabled_only", "conditional_live", "battle_visible_intent"),
     "Boss": ("enabled_only", "conditional_live", "battle_visible_intent_boss_catalog"),
     "Treasure": ("enabled_only", "conditional_live", "treasure_first_relic_inspection"),
-    "Shop": ("enabled_only", "conditional_live", "shop_compare_cards_then_removal"),
+    "Shop": ("enabled_only", "conditional_live", "shop_affordable_choices_and_saving"),
     "Event": ("enabled_only", "conditional_live", "event_visible_effects"),
     "RestSite": ("enabled_only", "conditional_live", "camp_compare_heal_smith"),
     "Map": ("transition", "conditional_live", "route_travelable_only"),
@@ -758,8 +758,12 @@ DYNAMIC = {
         "conditional_live",
         "shop_rank_stocked_affordable_card",
     ),
-    "SHOP.RELIC": ("run_dependent", "deferred", "shop_does_not_rank_relics"),
-    "SHOP.POTION": ("run_dependent", "deferred", "shop_does_not_rank_potions"),
+    "SHOP.RELIC": ("run_dependent", "conditional_live", "shop_visible_relic_synergy"),
+    "SHOP.POTION": (
+        "run_dependent",
+        "conditional_live",
+        "shop_affordable_belt_option_not_individual_rank",
+    ),
     "SHOP.FOUL_POTION": ("run_dependent", "deferred", "throw_target_effect_not_ranked"),
     "SHOP.CARD_REMOVAL_TARGET": (
         "run_dependent",

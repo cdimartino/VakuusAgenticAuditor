@@ -6,6 +6,7 @@ internal static class NonupeipeRegression
     {
         string[] ids = ["GLITTER", "BEAUTIFUL_BRACELET", "BRILLIANT_SCARF"];
         string? advice = NonupeipeBlessing.Compare(ids, true);
+        check(NonupeipeBlessing.Compare(ids, true, true) is { } blocked && blocked.Contains("Fiddle blocks") && !blocked.StartsWith("Take"), "blocked Bracelet draw does not win a blessing offer");
         check(advice != null && advice.Contains("sixth hand play") && advice.Contains("random") && advice.Contains("Replay once per combat"), "Nonupeipe pictured trio compares all three triggers");
         check(NonupeipeBlessing.Compare(ids.Reverse(), false) is string indirect && !indirect.StartsWith("Take "), "blessing order and explicit pick preference");
         check(NonupeipeBlessing.Compare(ids.Take(2), true) == null && NonupeipeBlessing.Compare([.. ids, "OTHER"], true) == null, "different blessing offer is not ranked as the pictured trio");

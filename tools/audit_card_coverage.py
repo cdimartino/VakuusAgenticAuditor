@@ -34,6 +34,7 @@ CURSES = set(
 CURSE_OF_THE_BELL ASCENDERS_BANE GREED DEBT ENTHRALLED FOLLY POOR_SLEEP SPORE_MIND""".split()
 )
 EXTRA_NEEDS = {
+    "card creation": {"PILLAR_OF_CREATION"},
     "melody": {
         "LOST_LUTE",
         "MOTIF",
@@ -61,6 +62,16 @@ EXTRA_GIVES = {
     "PILLAGE": {"draw"},
     "VOLTAIC": {"orbs"},
     "TEMPEST": {"orbs"},
+    "RALLY": {"guard"},
+    "MIRAGE": {"guard"},
+    "HUDDLE_UP": {"draw"},
+    "SCRAWL": {"draw"},
+    "PURITY": {"exhaust"},
+    "ENERGY_SURGE": {"energy"},
+    "ROYAL_GAMBLE": {"stars"},
+    "YOGA": {"stretch"},
+    "THE_MOON": {"shivs"},
+    "CALTROPS": {"thorns"},
 }
 # Deck synergy only. Never feed delayed effects into the current play's previews.
 DEFERRED = {
@@ -89,9 +100,58 @@ DEFERRED = {
     "WAH_KI": "draw,energy",
     "RELAX": "draw,energy",
     "THE_STAR": "draw,energy",
+    # The native play installs a power, not its later trigger.
+    "ARCHERY": "aim",
+    "AUTOMATION": "energy",
+    "CHILD_OF_THE_STARS": "guard",
+    "COOLANT": "guard",
+    "DANSE_MACABRE": "guard",
+    "ENVENOM": "poison",
+    "GENESIS": "stars",
+    "HIDDEN_ROOTS": "stretch",
+    "ITERATION": "draw",
+    "LULLABY": "guard",
+    "ORBIT": "energy",
+    "OUTMANEUVER": "energy",
+    "PAGESTORM": "draw",
+    "PALE_BLUE_DOT": "draw",
+    "PILLAR_OF_CREATION": "guard",
+    "PLOT": "draw",
+    "PROLONG": "guard",
+    "RAGE": "guard",
+    "SIDESTEP": "energy",
+    "SONG_PATH": "guard",
+    "SPIRIT_OF_ASH": "guard",
+    "SUBROUTINE": "energy",
+    "THE_SEALED_THRONE": "stars",
+    "TYRANNY": "draw,exhaust",
 }
 # Power setup/recheck only; do not predict prevention or future retained block.
 SETUP_ONLY = {"BUFFER", "BARRICADE"}
+LEGACY_HOOKS = {
+    "requires-impale",
+    "sadness-one",
+    "sadness-cards",
+    "convert-sadness",
+    "repeat-attacks",
+    "repeat-skills",
+    "block-damage",
+    "hand-upgrade",
+    "exhaust-choice",
+    "uncertain-draw",
+}
+
+
+def combat_path(immediate, needs, effect, deferred, setup):
+    if effect:
+        return "legacy-hook" if effect in LEGACY_HOOKS else "action-profile"
+    if setup == "yes":
+        return "setup-only"
+    if immediate:
+        return "role-preview-candidate"
+    if needs or deferred:
+        return "deck-evidence-only-candidate"
+    return "ineligible"
 
 
 def table(path, columns):
@@ -158,6 +218,8 @@ def direct_roles(card, text, up):
 
 
 def policy(card, gives, needs):
+    if card in {"UNDEATH", "TRANSFIGURE", "OBLIVION"}:
+        return "bespoke-reward"
     if card in CURSES:
         return "typed-curse"
     return "role-fit" if gives or needs else "abstain"
@@ -196,6 +258,7 @@ def generate(ids, roles, effects, records):
             else "model+text"
         )
         indexed, payoff = roles.get(card, ["", ""])
+        effect = effects.get(card, [""])[0]
         text = records.get(card, {}).get("description", "")
         base, up, needs = set(), set(), set()
         if (
@@ -204,6 +267,9 @@ def generate(ids, roles, effects, records):
             and card != "DEPRECATED_CARD"
         ):
             base, up = (direct_roles(card, text, flag) for flag in (False, True))
+            if effect in {"create-one", "create-cards", "create-fill"}:
+                base.add("card creation")
+                up.add("card creation")
             needs = set(filter(None, payoff.split(",")))
             needs.update(role for role, cards in EXTRA_NEEDS.items() if card in cards)
         notes = []
@@ -231,7 +297,7 @@ def generate(ids, roles, effects, records):
                 csv_tags(base),
                 csv_tags(up),
                 csv_tags(needs),
-                effects.get(card, [""])[0],
+                effect,
                 policy(card, base or deferred, needs),
                 policy(card, up or deferred, needs),
                 ",".join(notes) or "-",
@@ -246,12 +312,27 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--pack", type=Path)
     parser.add_argument(
+        "--assembly",
+        type=Path,
+        help="verify the exact managed artifact used for action profiles",
+    )
+    parser.add_argument(
         "--models",
         type=Path,
         help="TSV from card-coverage-models.cs; validate native and installed-mod inventory",
     )
     parser.add_argument("--write", action="store_true")
     args = parser.parse_args()
+    if args.assembly:
+        with args.assembly.open("rb") as stream:
+            digest = hashlib.sha256()
+            for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+                digest.update(chunk)
+        if (
+            digest.hexdigest()
+            != "a671e9efb86a7b80405133105665867b053c787670d475b4347cf5ccc15cb5fb"
+        ):
+            raise ValueError("managed action profiles require the audited assembly")
     ids = set(json.loads((AUDIT / "card-text-hashes.json").read_text()))
     if args.models:
         expected_models = ids - TEXT_ONLY | MODEL_ONLY
@@ -284,7 +365,7 @@ def main():
     if rows.pop("id", None) != FIELDS[1:]:
         raise ValueError("unexpected ledger header")
     equal_ids("ledger vs native union", ids | MODEL_ONLY, set(rows))
-    counts = Counter()
+    counts, paths = Counter(), Counter()
     for card, row in rows.items():
         src, gives, wants, base, up, needs, effect, bp, upolicy, _, deferred, setup = (
             row
@@ -308,9 +389,11 @@ def main():
         ):
             raise ValueError(f"inconsistent evidence for {card}")
         counts[bp] += 1
+        paths[combat_path(base, needs, effect, deferred, setup)] += 1
     print(
         f"Cards: {len(rows)} accounted ({len(ids)} localized, {len(rows) - len(TEXT_ONLY)} concrete models); "
-        f"base reward policies: {dict(sorted(counts.items()))}."
+        f"base reward policies: {dict(sorted(counts.items()))}; "
+        f"base combat evidence: {dict(sorted(paths.items()))}."
     )
 
 

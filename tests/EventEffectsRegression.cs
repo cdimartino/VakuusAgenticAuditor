@@ -33,7 +33,14 @@ internal static class EventEffectsRegression
         check(EventCoach.Evaluate(spirit, full, true, muted: true) == null, "event mute gate preserved");
         check(EventCoach.Evaluate([(reject, true)], full, false)!.StartsWith("Rejection:"), "non-pick mode describes without command");
         EventPick leave = new("Leave", "Leave.");
+        var tied = EventCoach.Evaluate([(new("Heal", "Heal 10 HP."), true), (leave, true)], full, true)!;
+        check(tied.StartsWith("Heal:") && tied.Contains("heals 0 HP"), "full-health healing does not win a tie over Leave by input order");
+        var blocked = full with { Deck = new Deck([], 80, 80, 1, false, ["ECTOPLASM"]) };
+        check(EventEffects.Assess(new("Gold", "Gain 100 Gold. Pay 90 Gold."), blocked) is { Unsafe: true, Score: < 0 },
+            "blocked event gold cannot pay for a later clause");
         var opaque = new EventPick("Risk", "Gain 100 Gold. Fight a mysterious foe.");
+        check(!EventCoach.Evaluate([(opaque, true), (reject, true)], low, true)!.StartsWith("Risk."),
+            "a lethal alternative does not certify an opaque fight as safe");
         var r = EventEffects.Assess(opaque, full);
         check(r.Known.Contains("Gain 100 Gold") && r.Unresolved.Contains("Fight a mysterious foe"), "opaque clause retains known reward and specific uncertainty");
         var random = EventEffects.Assess(new("Reward", "Obtain a random Relic."), full);
@@ -42,6 +49,9 @@ internal static class EventEffectsRegression
         check(EventCoach.Evaluate([(opaque, false), (leave, true)], full, true) == "Leave. Leave: no change.", "disabled options excluded");
         check(!EventEffects.Assess(new("Remove", "Remove 1 card from your Deck."), full with { RemovalTargets = 0 }).Unsafe, "no removal target is not an unsafe cost");
         check(EventEffects.Assess(new("Potion", "Procure 1 random Uncommon Potion."), full with { EmptyPotionSlots = 0 }).Unresolved.Any(u => u.Contains("belt is full")), "full potion belt not silently replaced");
+        var sozu = full with { Deck = new Deck([], 80, 80, 1, false, ["SOZU"]), EmptyPotionSlots = 1 };
+        check(EventEffects.Assess(new("Potion", "Procure 1 random Uncommon Potion."), sozu) is { Score: 0, Unresolved.Length: 0, Known: [var unavailable] } && unavailable.Contains("Sozu"),
+            "blocked potion pickup has no value even with room in the belt");
         check(EventCoach.Evaluate([(new("Heal", "Heal 10 HP."), true), (leave, true)], low, true)!.StartsWith("Heal."), "fully known event supports explicit pick");
         EventPick sword = new("Grab the Sword", "Obtain the [gold]Sword of Stone.[/gold]");
         EventPick dive = new("Dive", "Gain 101 Gold. Lose 7 HP.");

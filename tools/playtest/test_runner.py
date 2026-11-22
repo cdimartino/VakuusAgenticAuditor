@@ -78,6 +78,7 @@ class Tests(unittest.TestCase):
         for change in [
             {"readiness": {"actionable": True, "picker": True}},
             {"runId": "other"},
+            {"profileId": None},
             {"delivered": None},
             {"legalActions": []},
         ]:
@@ -120,6 +121,8 @@ class Tests(unittest.TestCase):
             "captureAvailable": True,
         }
         self.assertTrue(all(preflight(self.state, 2, evidence).values()))
+        with self.assertRaisesRegex(Stop, "profile"):
+            preflight(self.state | {"profileId": None}, 2, evidence)
 
     def test_stale_heartbeat_never_mutates(self):
         self.state["generatedUtc"] = (

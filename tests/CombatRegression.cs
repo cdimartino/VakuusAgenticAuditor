@@ -4,6 +4,51 @@ internal static class CombatRegression
 {
     public static void Run(Action<bool, string> check)
     {
+        Foe[] beetle = [new("Shrinker Beetle", 38, 0)];
+        Play flatten = new("Flatten", 2, 0, 0, 0, [12], Attack: true);
+        Play defy = new("Defy", 1, 0, 0, 6, [0], Weak: 1, Skill: true);
+        var old = TurnCoach.Plan([flatten, defy], beetle, 3, 0, 0, 0, 52);
+        // Old runtime omitted Afterlife, Grave Warden's Souls, and Capture
+        // Spirit altogether. Its only meaningful line was Flatten → Defy.
+        check(old.Steps.Count > 0 && old.Steps[0].Card == 0 && old.Remaining![0] == 26,
+            "old legal screenshot projection spends two energy on 12 damage");
+        var summonValue = CombatGuidance.Economy("AFTERLIFE", 6, 0, 1, true, true, 0);
+        var soulsValue = CombatGuidance.Economy("CAPTURE_SPIRIT", 0, 3, 1, true, true, 0);
+        var wardenValue = CombatGuidance.Economy("GRAVE_WARDEN", 0, 1, 1, true, true, 0);
+        Play afterlife = new("Afterlife", 1, 0, 0, 0, [-1], Skill: true,
+            FutureFit: summonValue.fit, FutureReason: summonValue.reason);
+        Play warden = new("Grave Warden", 1, 0, 0, 8, [-1], Skill: true,
+            FutureFit: wardenValue.fit, FutureReason: wardenValue.reason);
+        Play capture = new("Capture Spirit", 1, 0, 0, 0, [0], Skill: true, EnemyHpLoss: 3,
+            FutureFit: soulsValue.fit, FutureReason: soulsValue.reason);
+        var corrected = TurnCoach.Plan([afterlife, warden, capture, flatten, defy], beetle, 3, 0, 0, 0, 52);
+        check(corrected.Steps.Count == 3 && corrected.Steps.All(s => s.Card < 3)
+            && corrected.Remaining![0] == 35 && corrected.Incoming == 0 && !corrected.Recheck,
+            "quiet beetle considers summon and delayed Souls, not fake damage or mandatory ordering");
+        check(TurnCoach.Plan([defy], beetle, 1, 0, 0, 0, 52).Steps.Count == 0,
+            "one Weak on a debuff turn is not promised future attack reduction");
+        var protectedEnemy = new Foe("Blocked", 13, 0, new(0, 1, 0), Block: 10);
+        check(TurnCoach.Plan([capture with { FutureFit = 0 }], [protectedEnemy], 1, 0, 0, 0, 52).EnemiesLeft == 0,
+            "Capture Spirit loses three enemy HP through ten Block without Vulnerable multiplication");
+        check(TurnCoach.Plan([capture with { FutureFit = 0 }], [protectedEnemy with { Life = 14 }], 1, 0, 0, 0, 52).Remaining![0] == 11,
+            "flat enemy HP loss is not an attack and does not multiply by Vulnerable");
+        check(TurnCoach.Plan([flatten, capture], [new("Kill", 15, 50)], 3, 0, 0, 0, 10).EnemiesLeft == 0,
+            "immediate lethal outranks delayed economy in a dangerous fight");
+        check(CombatGuidance.Economy("CAPTURE_SPIRIT", 0, 3, 1, true, true, 7).fit > soulsValue.fit,
+            "Haunt merely in deck is valued below observed active Haunt");
+        Play poke = new("Poke", 1, 0, 0, 0, [6], Attack: true, OstyAttack: true);
+        var discounted = flatten with { OstyAttack = true, FreeAfterOsty = true };
+        var order = TurnCoach.Plan([discounted, poke], [new("Target", 18, 40)], 1, 0, 0, 0, 10);
+        check(order.EnemiesLeft == 0 && order.Steps[0].Card == 1,
+            "Osty attack before Flatten unlocks its actual zero cost, without summon counting as an attack");
+        check(TurnCoach.Plan([afterlife, discounted], [new("Target", 12, 40)], 1, 0, 0, 0, 10).EnemiesLeft == 1,
+            "summon does not unlock Flatten discount");
+        check(TurnCoach.Plan([capture with { FutureFit = 0 }], [new("Capped", 3, 0, DamageCap: 2)], 1, 0, 0, 0, 52).Remaining![0] == 1,
+            "Hard to Kill caps Capture Spirit HP loss without treating it as an attack");
+        CombatBottle strength = new("STRENGTH_POTION", "Strength Potion", 0, [true]);
+        var ostyLine = TurnCoach.Plan([discounted], [new("Boss", 100, 0)], 2, 0, 0, 0, 52);
+        check(PotionCoach.Use([strength], [new("Boss", 100, 0)], [discounted], ostyLine, 52, true) == null,
+            "player Strength potion not recommended for an Osty-only attack");
         check(Catalog.Get("PILLAGE", "Pillage+", 1, true, false).Has("draw"), "Pillage+ audited draw classification");
         Play guard = new("Guard", 1, 0, 0, 14, [-1]);
         var shots = Enumerable.Repeat(Catalog.Get("QUICK_SHOT", "Quick Shot", 1, false, true), 3).ToArray();

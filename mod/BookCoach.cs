@@ -26,6 +26,7 @@ internal static class BookCoach
                     Effect.Sharp when card.CombatHas("multiple hits") => 7,
                     Effect.Sharp when card.CombatHas("area damage") => 5,
                     Effect.Sharp when card.CombatHas("hit") => cheap ? 3 : 2,
+                    // Nimble.CanEnchant itself verifies GainsBlock, including uncatalogued cards.
                     Effect.Nimble => (hp * 2 <= maxHp ? 5 : 2) + (cheap ? 1 : 0),
                     Effect.Swift => fiddle ? -1 : cheap ? 5 : 3,
                     _ => 0
@@ -36,6 +37,7 @@ internal static class BookCoach
             string benefit = offer.Effect switch
             {
                 Effect.Sharp when card.CombatHas("multiple hits") => $"{card.Name} gets +2 damage per powered hit",
+                Effect.Sharp when Fit(card) == 0 => $"{card.Name}: no verified powered hit for Sharp",
                 Effect.Sharp => $"{card.Name}: +2 to powered attack damage",
                 Effect.Nimble => $"{card.Name}: +2 Block when it grants Block",
                 _ => fiddle ? $"{card.Name}: Fiddle blocks Swift’s in-turn draw" : $"{card.Name}: draw 2 on its first play each combat"
