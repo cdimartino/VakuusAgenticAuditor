@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.30
+
+- Loss reviews now lead with decisions to revisit across acts. See costly event choices, fights and potion use, low-health upgrades, the final rest before the loss, and repeated reward picks even when turn recording is off.
+
 ## v0.1.29
 
 - Press F7 on the map to show or hide the dashed route, including in Curse Mode. The toggle remembers your choice; change the key in Auditor settings.

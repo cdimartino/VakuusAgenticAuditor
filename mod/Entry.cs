@@ -193,7 +193,11 @@ public static class Entry
                         var stats = f.PlayerStats.FirstOrDefault(); if (stats == null) continue;
                         var room = f.Rooms.LastOrDefault();
                         path.Add(new(act, floor, Label(room?.ModelId?.Entry ?? f.MapPointType.ToString()), stats.DamageTaken, stats.HpHealed,
-                            stats.PotionUsed.Count, stats.GoldSpent, stats.CardsGained.Count, stats.CardsRemoved.Count, stats.UpgradedCards.Count, f.Rooms.Sum(x => x.TurnsTaken)));
+                            stats.PotionUsed.Count, stats.GoldSpent, stats.CardsGained.Count, stats.CardsRemoved.Count, stats.UpgradedCards.Count, f.Rooms.Sum(x => x.TurnsTaken),
+                            EndHp: stats.CurrentHp, MaxHp: stats.MaxHp,
+                            EventPicks: stats.EventChoices.Select(x => Label(x.Title.LocEntryKey.Split('.').Reverse().Skip(1).FirstOrDefault() ?? x.Title.LocEntryKey)).ToArray(),
+                            CampPicks: stats.RestSiteChoices.ToArray(), BeltUsed: stats.PotionUsed.Select(x => Label(x.Entry)).ToArray(),
+                            PickedCards: stats.CardChoices.Where(x => x.wasPicked).Select(x => x.Card?.Id?.Entry).OfType<string>().Select(Label).ToArray()));
                     }
                 }
                 recording.Observe(____runState, p, P.RecordRun);

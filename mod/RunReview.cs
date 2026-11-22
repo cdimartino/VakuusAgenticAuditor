@@ -1,7 +1,8 @@
 using System.Text;
 namespace Auditor;
 
-internal record FloorResult(int Act, int Floor, string Room, int Damage, int Healed, int Used, int Spent, int Gained, int Removed, int Upgraded, int Turns, int? StartupHpGrant = null);
+internal record FloorResult(int Act, int Floor, string Room, int Damage, int Healed, int Used, int Spent, int Gained, int Removed, int Upgraded, int Turns, int? StartupHpGrant = null,
+    int? EndHp = null, int? MaxHp = null, string[]? EventPicks = null, string[]? CampPicks = null, string[]? BeltUsed = null, string[]? PickedCards = null);
 internal static class RunReview
 {
     internal static string Write(Deck deck, FloorResult[] path, bool won, bool abandoned, string? killer, int ascension, int gold, string[] potions, string? journalAssessment = null)
@@ -11,6 +12,11 @@ internal static class RunReview
         var worst = path.OrderByDescending(f => f.Damage).FirstOrDefault();
         s.AppendLine($"{deck.Character} · Ascension {ascension} · {(abandoned ? "Abandoned" : won ? "Victory" : "Defeat")}");
         s.AppendLine($"{path.Length} recorded floors · {deck.Cards.Length} cards · {deck.Relics.Length} relics · {gold} gold at finish");
+        s.AppendLine(abandoned ? "\nWHAT TO PRACTICE" : won ? "\nWHAT TO REPEAT" : "\nLOSS ANALYSIS");
+        if (!won && !abandoned) s.AppendLine(killer == null ? "The game did not record a killing encounter or event." : $"Recorded cause: {killer}.");
+        if (path.LastOrDefault() is { } end) s.AppendLine($"Last floor: {end.Room}; {end.Damage} damage taken, {end.Used} potions used" + (end.Turns > 0 ? $", {end.Turns} turns." : "."));
+        s.AppendLine(potions.Length > 0 ? $"Potions at finish: {string.Join(", ", potions)}." : "No potions remained at the finish.");
+        if (!won && !abandoned) LossDecisions(s, path, deck);
         s.AppendLine("\nDECK IDENTITY");
         if (lines.Length == 0) s.AppendLine("No supported archetype had a clear signal. A flexible deck is a valid outcome.");
         foreach (var l in lines.Take(3))
@@ -33,10 +39,6 @@ internal static class RunReview
         if (path.Any(f => f.Floor == 1 && f.Healed > 0 && f.StartupHpGrant == null))
             s.AppendLine("Floor-one healing may include initialization; history alone does not identify a startup grant or tactical recovery.");
         if (worst is { Damage: > 0 }) s.AppendLine($"Largest HP cost: floor {worst.Floor}, {worst.Room} ({worst.Damage} damage recorded).");
-        s.AppendLine(abandoned ? "\nWHAT TO PRACTICE" : won ? "\nWHAT TO REPEAT" : "\nLOSS ANALYSIS");
-        if (!won && !abandoned) s.AppendLine(killer == null ? "The game did not record a killing encounter or event." : $"Recorded cause: {killer}.");
-        if (path.LastOrDefault() is { } end) s.AppendLine($"Last floor: {end.Room}; {end.Damage} damage taken, {end.Used} potions used" + (end.Turns > 0 ? $", {end.Turns} turns." : "."));
-        s.AppendLine(potions.Length > 0 ? $"Potions at finish: {string.Join(", ", potions)}." : "No potions remained at the finish.");
         s.AppendLine("\nNEXT-RUN COACHING");
         if (!won && !abandoned && potions.Length > 0 && worst is { Damage: > 0 })
             s.AppendLine($"• Before ending a high-damage turn, check your belt. You finished with {potions.Length} potion(s); history cannot establish whether they would have prevented the loss.");
@@ -51,6 +53,40 @@ internal static class RunReview
         else s.AppendLine("• At each reward, name one immediate problem the card solves before taking it over Skip.");
         if (!string.IsNullOrWhiteSpace(journalAssessment)) s.AppendLine("\n" + journalAssessment);
         return s.ToString();
+    }
+    static void LossDecisions(StringBuilder s, FloorResult[] path, Deck deck)
+    {
+        if (path.Length == 0) return;
+        var end = path[^1];
+        var earlier = path.SkipLast(1).ToArray();
+        s.AppendLine("Decisions to revisit (in floor order):");
+        var points = new List<(FloorResult floor, string text)>();
+        // Take one costly encounter per act, plus the highest-cost event choice.
+        // Don't label a fight optional unless history actually records the choice.
+        var notable = earlier.Where(f => f.Damage > 0 && f.Turns > 0).GroupBy(f => f.Act)
+            .Select(g => g.MaxBy(f => f.Damage)!).Concat(earlier.Where(f => f.Damage > 0 && f.EventPicks is { Length: > 0 })
+                .OrderByDescending(f => f.Damage).Take(1)).Distinct();
+        foreach (var f in notable)
+        {
+            string choice = f.EventPicks is { Length: > 0 } picks ? $"You chose {string.Join(" → ", picks)}. " : "";
+            string potion = f.BeltUsed is { Length: > 0 } belt ? $" and used {string.Join(", ", belt)}" : f.Used > 0 ? $" and used {f.Used} potion(s)" : "";
+            string advice = f.EventPicks?.Contains("Fight") == true ? "Before choosing an event fight, weigh its reward against the HP and belt you need for the boss." : f.Turns == 0 ? "Compare the event reward with the HP it leaves for the next fight." : "Before committing to a similar fight, budget for both damage and potion use.";
+            points.Add((f, $"{choice}You took {f.Damage} damage{potion}" + (f.EndHp is int hp ? $", finishing at {hp} HP. " : ". ") + advice));
+        }
+        var smith = earlier.LastOrDefault(f => f.CampPicks?.Contains("SMITH") == true && f.EndHp is > 0 && f.MaxHp > 0 && f.EndHp * 5 <= f.MaxHp * 3);
+        if (smith != null) points.Add((smith, $"You upgraded at {smith.EndHp}/{smith.MaxHp} HP. The upgrade may have paid off; at that health, compare it with recovery before the next hard fight."));
+        var camp = earlier.LastOrDefault();
+        if (camp?.CampPicks?.Contains("HEAL") == true && camp.Healed > 0 && camp.EndHp is int entryHp)
+            points.Add((camp, $"You healed {camp.Healed} HP and left at {entryHp}/{camp.MaxHp}. The next floor, {end.Room}, recorded {end.Damage} damage. The rest helped; look upstream for where you lost that buffer."));
+        foreach (var p in points.OrderBy(x => x.floor.Floor)) s.AppendLine($"• A{p.floor.Act}/F{p.floor.Floor} {RoomLabel(p.floor.Room)}: {p.text}");
+        var picksTaken = path.SelectMany(f => f.PickedCards ?? []).ToArray();
+        var draws = deck.Cards.Count(c => c.Has("draw"));
+        if (deck.Cards.Length >= 25 && picksTaken.Length >= 5 && draws * 8 < deck.Cards.Length)
+        {
+            var repeat = picksTaken.GroupBy(x => x).Where(g => g.Count() > 1).OrderByDescending(g => g.Count()).Select(g => g.Key).Take(2).ToArray();
+            s.AppendLine($"• Reward decisions: you picked {picksTaken.Length} cards" + (repeat.Length > 0 ? $", including repeat picks of {string.Join(" and ", repeat)}" : "") + $". You finished with {deck.Cards.Length} cards and {draws} tagged for draw. Consider skipping a duplicate to see your key cards more often; history doesn’t show that a particular draw killed you.");
+        }
+        if (points.Count == 0) s.AppendLine("No earlier costly fight, event choice or low-health upgrade can be identified from these floors.");
     }
     static string RoomLabel(string room)
     {

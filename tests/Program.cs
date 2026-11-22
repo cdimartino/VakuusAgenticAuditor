@@ -152,6 +152,12 @@ FloorResult[] history = [new(1, 1, "Small enemy", 2, 0, 0, 0, 1, 0, 0, 2), new(1
 var loss = RunReview.Write(deck with { Character = "FOOL", Cards = [C("VITRIOL"), C("PUNCH_OF_JOY")] }, history, false, false, "Elite", 2, 42, ["Block Potion"]);
 Check(loss.Contains("floor 2, Elite (21") && loss.Contains("Recorded cause: Elite") && loss.Contains("cannot establish whether") && loss.Contains("Sadness conversion"), "loss review ties coaching to history without claiming potion would save the run");
 Check(RunReview.Write(deck, history, true, false, null, 0, 0, []).Contains("WHAT TO REPEAT"), "victory review uses winning analysis");
+FloorResult[] crabRun = [new(1, 9, "Bygone Effigy", 33, 1, 2, 0, 1, 0, 0, 5),
+    new(2, 31, "Mysterious Knight", 40, 6, 1, 0, 2, 0, 0, 5, EndHp: 31, EventPicks: ["Keep The Key", "Fight"], BeltUsed: ["Heart Of Iron"]),
+    new(2, 32, "Restsite", 0, 27, 0, 0, 0, 0, 0, 0, EndHp: 58, MaxHp: 91, CampPicks: ["HEAL"]),
+    new(2, 33, "Kaiser Crab Boss", 58, 0, 0, 0, 0, 0, 0, 6)];
+var crabLoss = RunReview.Write(deck, crabRun, false, false, "Kaiser Crab Boss", 5, 147, []);
+Check(crabLoss.IndexOf("A1/F9") < crabLoss.IndexOf("Keep The Key → Fight") && crabLoss.Contains("used Heart Of Iron, finishing at 31 HP") && crabLoss.Contains("healed 27 HP and left at 58/91") && crabLoss.IndexOf("LOSS ANALYSIS") < crabLoss.IndexOf("PER-FLOOR HISTORY"), "loss leads with costly choices across acts and links the last rest to the boss without a journal");
 var eventReview = RunReview.Write(deck with { Cards = [C("AFTERIMAGE")] }, [new(1, 3, "Event", 8, 0, 0, 0, 0, 0, 0, 0)], true, false, null, 0, 0, []);
 Check(eventReview.Contains("0 direct block cards") && !eventReview.Contains("practice fight"), "review separates triggered block and event HP costs from direct combat evidence");
 Check(!RunReview.Write(deck, [], false, true, null, 0, 0, []).Contains("LOSS ANALYSIS"), "abandoned run is not misclassified as a death");
