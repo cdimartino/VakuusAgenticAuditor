@@ -1,7 +1,8 @@
 # Changelog
 
-## v0.1.26
+## v0.1.27
 
+- The local playtest runner also supports UTC timestamps on Python 3.10.
 - Combat advice now distinguishes attacks from direct HP loss, counts summoning Osty and generating Souls as setup, and considers Flatten’s discount after an Osty attack. Generated Souls do not count as cards already drawn or played.
 - More card hints use actual hand space, drawable cards, available discard cards, and the orb queue. Vakuu stops for a fresh decision after a hand-changing effect rather than guessing the next card.
 - Wellspring compares the random potion against a permanent removal and five combats with Guilty. The comparison uses your potion slots, Sozu and actual removal targets.
