@@ -22,7 +22,7 @@ class Journal:
 
     def emit(self, kind, **fields):
         row = dict(
-            utc=datetime.datetime.now(datetime.UTC).isoformat(),
+            utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
             monotonicNs=time.monotonic_ns(),
             kind=kind,
             **fields,
@@ -116,8 +116,12 @@ class Runner:
 
     def guard(self, state, origin, require_ready=True):
         try:
-            generated = datetime.datetime.fromisoformat(state["generatedUtc"])
-            age = (datetime.datetime.now(datetime.UTC) - generated).total_seconds()
+            generated = datetime.datetime.fromisoformat(
+                state["generatedUtc"].replace("Z", "+00:00")
+            )
+            age = (
+                datetime.datetime.now(datetime.timezone.utc) - generated
+            ).total_seconds()
         except (KeyError, TypeError, ValueError) as error:
             raise Stop("missing or invalid heartbeat") from error
         if not 0 <= age <= 5:

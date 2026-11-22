@@ -16,7 +16,7 @@ def fixture():
     return {
         "schemaVersion": 1,
         "enabled": True,
-        "generatedUtc": datetime.datetime.now(datetime.UTC).isoformat(),
+        "generatedUtc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "profileId": 2,
         "runId": "seed-session",
         "roomId": "1:2:Combat",
@@ -126,7 +126,7 @@ class Tests(unittest.TestCase):
 
     def test_stale_heartbeat_never_mutates(self):
         self.state["generatedUtc"] = (
-            datetime.datetime.now(datetime.UTC) - datetime.timedelta(seconds=6)
+            datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(seconds=6)
         ).isoformat()
         with self.assertRaisesRegex(Stop, "heartbeat"):
             self.runner.follow_current_advice()
@@ -135,7 +135,9 @@ class Tests(unittest.TestCase):
     def test_fresh_heartbeat_refresh_does_not_invalidate_mapping(self):
         def read():
             state = copy.deepcopy(self.state)
-            state["generatedUtc"] = datetime.datetime.now(datetime.UTC).isoformat()
+            state["generatedUtc"] = datetime.datetime.now(
+                datetime.timezone.utc
+            ).isoformat()
             return state
 
         self.runner.read = read
@@ -151,7 +153,8 @@ class Tests(unittest.TestCase):
             state = copy.deepcopy(self.state)
             if reads >= 4:
                 state["generatedUtc"] = (
-                    datetime.datetime.now(datetime.UTC) - datetime.timedelta(seconds=6)
+                    datetime.datetime.now(datetime.timezone.utc)
+                    - datetime.timedelta(seconds=6)
                 ).isoformat()
             return state
 
