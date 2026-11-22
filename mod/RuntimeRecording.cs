@@ -69,7 +69,8 @@ internal sealed class RuntimeRecording
             pc?.Stars ?? 0, pc?.AvailableArrowCount ?? 0, pc?.DrawPile.Cards.Count ?? 0,
             pc?.DiscardPile.Cards.Count ?? 0, pc?.ExhaustPile.Cards.Count ?? 0,
             MegaCrit.Sts2.Core.Nodes.Screens.Map.NMapScreen.Instance?.IsOpen == true ? "map"
-                : overlay?.GetType().Name, selectionState, p.Character.Id.Entry, r.AscensionLevel, Catalog.Profile?.Build, Choices());
+                : overlay?.GetType().Name, selectionState, p.Character.Id.Entry, r.AscensionLevel, Catalog.Profile?.Build, Choices(),
+            inCombat ? pc?.GetPet<MegaCrit.Sts2.Core.Models.Monsters.Osty>()?.CurrentHp : null);
     }
 
     static JournalChoice[] Choices()

@@ -18,5 +18,16 @@ internal static class RelicGuideRegression
         check(RelicGuide.Match("BRONZE_SCALES", "Bronze Scales", draws) == null && RelicGuide.Get("BRONZE_SCALES")?.Cue.Length > 0, "passive Thorns gets a cue without inventing a block trigger");
         check(RelicGuide.Match("SNECKO_SKULL", "Snecko Skull", poison with { ForeignModel = true }) == null && RelicGuide.Get("UNKNOWN") == null, "unverified IDs cannot inherit matching rules");
         check(RelicGuide.Match("INTIMIDATING_HELMET", "Helmet", C("BASH", true, 2) with { VariableCost = true }) == null, "variable energy spend is not a guaranteed threshold");
+        var fixedZero = C("NEUTRALIZE", true, 0);
+        check(Coach.Rank([C("WELL_LAID_PLANS")], deck, true)[0].Id == "~skip",
+            "a known role with no scored marginal benefit no longer beats Skip via a blanket card bonus");
+        var fiddleDeck = deck with { Cards = [fixedZero], Relics = ["FIDDLE"] };
+        check(Coach.Relic("INK_BOTTLE", fiddleDeck).score == 0 && RelicGuide.ForRelic("INK_BOTTLE", "Ink Bottle", fiddleDeck) == null
+            && !RelicGuide.ForCard(fixedZero, ["FIDDLE", "INK_BOTTLE"]).Any(x => x.Id == "INK_BOTTLE"), "blocked in-turn draw gives no Ink Bottle shopping or reward synergy");
+        check(Coach.Relic("OLD_COIN", deck with { Relics = ["ECTOPLASM"] }).score == 0, "blocked gold has no marginal purchase value");
+        var mixed = Coach.Shop(Coach.Assess(draws, deck), 50, RelicGuide.ForRelic("SNECKO_SKULL", "Skull", deck), 170, 75, true, 190);
+        check(new[] { "SHRUG_IT_OFF", "Skull", "170g", "Removal (75g)", "potion", "save your 190 gold" }.All(mixed.Contains),
+            "shop can present affordable choices and keeping gold together without assigning a cross-category winner");
+        check(Coach.Shop(null, 0, null, 0, null, false, 9) == "You can save your 9 gold.", "empty shop summary invents no legal purchase");
     }
 }

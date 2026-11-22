@@ -52,7 +52,11 @@ internal static class RelicGuide
     }
     internal static Interaction? Best(IEnumerable<Interaction?> candidates) => candidates.OfType<Interaction>()
         .OrderByDescending(x => x.Specificity).ThenByDescending(x => x.Tradeoff).FirstOrDefault();
-    internal static Interaction? ForRelic(string id, string name, Deck deck) => Best(deck.Cards.Select(c => Match(id, name, c)));
-    internal static IEnumerable<Interaction> ForCard(Card c, string[] ids, IReadOnlyDictionary<string, string>? names = null, bool immediate = false) => ids.Distinct()
+    // Only selector payoffs whose advertised draw is on card play.
+    internal static bool BlockedDraw(string id, string[] owned) =>
+        (id is "GAME_PIECE" or "INK_BOTTLE" or "IRON_CLUB") && owned.Contains("FIDDLE");
+    internal static Interaction? ForRelic(string id, string name, Deck deck) =>
+        BlockedDraw(id, deck.Relics) ? null : Best(deck.Cards.Select(c => Match(id, name, c)));
+    internal static IEnumerable<Interaction> ForCard(Card c, string[] ids, IReadOnlyDictionary<string, string>? names = null, bool immediate = false) => ids.Distinct().Where(id => !BlockedDraw(id, ids))
         .Select(id => Match(id, names?.GetValueOrDefault(id) ?? Name(id), c, immediate)).OfType<Interaction>();
 }

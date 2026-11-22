@@ -55,14 +55,23 @@ internal static class AncientGiftCatalog
     {
         if (options.Length == 0 || !HasPool(owner)) return null;
         var known = options.Select(o => (o, g: Gifts.Value.GetValueOrDefault((owner, o.Id))))
-            .Where(x => x.g != null).Select(x => (x.o, g: x.g!, fits: Fits(x.g!.Fit, deck, upgrades, gold, slots, empty)))
+            .Where(x => x.g != null).Select(x => (x.o, g: x.g!, fits: Blocked(x.o.Id) == null && Fits(x.g!.Fit, deck, upgrades, gold, slots, empty)))
             .OrderByDescending(x => x.fits).ToArray();
         if (known.Length == 0) return null;
         bool partial = known.Length != options.Length;
         bool lean = pick && !partial && known.Count(x => x.fits) == 1;
-        string Cue(Offer o, Gift g) => o.Id == "DUSTY_TOME" && tomeTitle != null
+        string? Blocked(string id) => id switch
+        {
+            "GOLDEN_PEARL" or "SIGNET_RING" when deck.Relics.Contains("ECTOPLASM") => "Ectoplasm prevents the gold gain.",
+            "BEAUTIFUL_BRACELET" when deck.Relics.Contains("FIDDLE") => "Fiddle blocks the first-play draw.",
+            "DELICATE_FROND" when deck.Relics.Contains("SOZU") => "Sozu prevents the potion refill.",
+            "ALCHEMICAL_COFFER" or "PHIAL_HOLSTER" when deck.Relics.Contains("SOZU") => "More potion space, but Sozu prevents filling it.",
+            "LOST_COFFER" when deck.Relics.Contains("SOZU") => "You still get a card choice, but Sozu prevents acquiring the potion.",
+            _ => null
+        };
+        string Cue(Offer o, Gift g) => Blocked(o.Id) ?? (o.Id == "DUSTY_TOME" && tomeTitle != null
             ? $"Adds {tomeTitle.TrimEnd('+')}+; weigh it against your current deck."
-            : g.Cue;
+            : g.Cue);
         var lines = known.Select((x, i) => $"{(i == 0 && lean ? "Consider " : "")}{x.o.Title}: {Cue(x.o, x.g)}");
         return string.Join("\n", partial ? lines.Append("One or more other gifts aren’t assessed.") : lines);
     }

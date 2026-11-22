@@ -13,6 +13,7 @@ internal static class RouteRegression
         var a = new RouteStop("Unknown", [], 1, 0);
         var b = new RouteStop("Unknown", [], 1, 2);
         check(RouteCoach.Choose([b, a], state)!.Path[0] == a, "route ties use stable coordinates");
+        check(RouteCoach.Choose([b, a], state) is { Index: 1, Text: var label } && label.StartsWith("Left:"), "anchor uses input index; route label follows the coordinate");
         check(RouteCoach.Choose([a, b], state)!.Identity == RouteCoach.Choose([b, a], state)!.Identity, "route identity survives input order");
         var announcements = new RouteAnnouncements();
         check(announcements.Update([a], state) != null, "first full route announced even forced");

@@ -21,6 +21,12 @@ internal static class AncientGiftCatalogRegression
             }), group.Key + " covers every ID inside a mixed roll with a short cue per gift");
         }
         check(Compare("NEOW", ["GOLDEN_PEARL", "SMALL_CAPSULE"], true)!.StartsWith("Consider GOLDEN_PEARL:"), "low gold identifies a relevant gift");
+        var blocked = AncientGiftCatalog.Compare("NONUPEIPE", [new("SIGNET_RING", "Ring"), new("GLITTER", "Glitter")],
+            deck with { Relics = ["ECTOPLASM"] }, 0, 0, 2, 1, true)!;
+        check(blocked.Contains("Ectoplasm prevents") && !blocked.Contains("Consider Ring"), "poverty does not turn blocked gold into a good gift");
+        var belt = AncientGiftCatalog.Compare("NEOW", [new("LOST_COFFER", "Coffer"), new("SMALL_CAPSULE", "Capsule")],
+            deck with { Relics = ["SOZU"] }, 0, 0, 2, 2, true)!;
+        check(belt.Contains("card choice") && belt.Contains("Sozu prevents") && !belt.Contains("Consider Coffer"), "Sozu blocks only the potion part of a mixed Ancient gift");
         check(!Compare("NEOW", ["GOLDEN_PEARL", "UNKNOWN"], true)!.Contains("Consider") && Compare("NEOW", ["UNKNOWN"]) == null,
             "partial and unknown pools do not claim a best pick");
         check(Compare("THE_ARCHITECT", ["GOLDEN_PEARL"]) == null && Compare("PAEL", ["GOLDEN_PEARL"]) == null, "no cross-Ancient or dialogue-only match");

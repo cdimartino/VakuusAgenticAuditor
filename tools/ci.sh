@@ -15,6 +15,7 @@ for s in tools/*.sh tools/Install.command; do sh -n "$s"; done
 python3 -m compileall -q tools
 python3 tools/audit_card_coverage.py
 python3 tools/audit_relic_guide.py
+python3 -m unittest discover -s tools/playtest -p "test_*.py" -q
 sh tools/package.sh -warnaserror -t:Rebuild
 python3 tools/release_check.py
 mkdir -p "$tmp/library/SlayTheSpire2.app/Contents/MacOS"

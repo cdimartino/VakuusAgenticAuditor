@@ -69,7 +69,9 @@ internal static class RouteCoach
         if (path.Any(n => n.Kind == "Monster")) reasons.Add("fight rewards at combat risk");
         if (path.Any(n => n.Kind == "Unknown")) reasons.Add("? outcomes remain unknown");
         var tied = ranked.Length > 1 && Math.Abs(winner.Plan.Value - ranked[1].Plan.Value) < .000001;
-        var text = $"{Label(winner.Index)}: {string.Join(" → ", path.Select(Room))}. "
+        int position = starts.Select((n, i) => (n, i)).OrderBy(x => x.n.Col).ThenBy(x => x.n.Row)
+            .Select(x => x.i).ToList().IndexOf(winner.Index);
+        var text = $"{Label(position)}: {string.Join(" → ", path.Select(Room))}. "
             + (tied ? "Visible routes tie on preference; coordinate order breaks the tie. " : "")
             + string.Join("; ", reasons) + (reasons.Count > 0 ? ". " : "")
             + "Whole visible route; reassess as health, gold and readiness change.";

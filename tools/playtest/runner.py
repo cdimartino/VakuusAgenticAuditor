@@ -63,7 +63,7 @@ def preflight(state, approved_profile, evidence):
         "optIn": state.get("enabled") is True and state.get("schemaVersion") == 1,
         "profile": bool(approved_profile)
         and evidence.get("profileId") == approved_profile
-        and state.get("profileId") in (None, approved_profile),
+        and state.get("profileId") == approved_profile,
         "noActiveRunBeforeSelection": evidence.get("noActiveRun") is True,
         "setup": setup.get("guidance") == "Detailed"
         and setup.get("mute") is False
@@ -126,10 +126,7 @@ class Runner:
             raise Stop("explicit approved profile and run required")
         if state.get("schemaVersion") != 1 or state.get("enabled") is not True:
             raise Stop("snapshot disabled or unsupported")
-        if (
-            state.get("profileId") not in (None, self.profile)
-            or state.get("runId") != self.run
-        ):
+        if state.get("profileId") != self.profile or state.get("runId") != self.run:
             raise Stop("profile/run changed")
         if any(state.get(k) != origin.get(k) for k in ("roomId", "turn")):
             raise Stop("room/turn boundary")

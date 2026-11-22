@@ -9,7 +9,7 @@ internal record JournalPower(string Id, int Amount);
 internal record JournalEnemy(string Id, string Name, string? Reference, int Hp, int Block, JournalPower[] Powers, string[] Intents);
 internal record JournalState(int Act, int Floor, string Room, string? Encounter, string? Combat, int Turn,
     string Phase, int Hp, int MaxHp, int Block, int Energy, int Gold, JournalCard[] Hand,
-    JournalCard[] Deck, string[] Relics, string[] Potions, JournalPower[] Powers, JournalEnemy[] Enemies, int Stars = 0, int Arrows = 0, int DrawCount = 0, int DiscardCount = 0, int ExhaustCount = 0, string? Overlay = null, string? Selection = null, string? Character = null, int Ascension = 0, string? CatalogBuild = null, JournalChoice[]? Choices = null);
+    JournalCard[] Deck, string[] Relics, string[] Potions, JournalPower[] Powers, JournalEnemy[] Enemies, int Stars = 0, int Arrows = 0, int DrawCount = 0, int DiscardCount = 0, int ExhaustCount = 0, string? Overlay = null, string? Selection = null, string? Character = null, int Ascension = 0, string? CatalogBuild = null, JournalChoice[]? Choices = null, int? OstyHp = null);
 internal record JournalAdvice(string DecisionId, long StateSequence, string DeliveredText, bool Cursed,
     string[] ActionReferences, string? RecheckBoundary, int? ExpectedHpLoss = null);
 internal record JournalAction(string Kind, string? CardReference, string? TargetReference, string Evidence);

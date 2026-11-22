@@ -16,7 +16,7 @@ internal static class PotionCoach
         foreach (var step in line.Steps)
         {
             var c = hand[step.Card];
-            if (c.Damage.Any(n => n > 0)) attacks++;
+            if (!c.OstyAttack && c.Damage.Any(n => n > 0)) attacks++;
             for (int j = 0; j < remaining.Length; j++)
                 if (c.Area || step.Target == j) remaining[j] = Math.Max(0, remaining[j] - TurnCoach.TargetDamage(foes[j], c.Damage[j], c.Hits));
         }

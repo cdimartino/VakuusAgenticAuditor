@@ -15,5 +15,5 @@
     <EmbeddedResource Include="../mod/catalogs/index.json" LogicalName="auditor/catalogs/index.json" />
     <EmbeddedResource Include="../mod/catalogs/**/*.tsv" LogicalName="auditor/catalogs/%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
-  <ItemGroup><Compile Include="../mod/RouteCoach.cs;../mod/CurseValuation.cs" /><Compile Include="../mod/Coach.cs;../mod/RelicGuide.cs" /><Compile Include="../mod/BookCoach.cs;../mod/EventCoach.cs;../mod/EventEffects.cs;../mod/EnemyKnowledge.cs;../mod/NonupeipeBlessing.cs;../mod/AncientOffer.cs;../mod/AncientGiftCatalog.cs" /><Compile Include="../mod/PotionCoach.cs" /><Compile Include="../mod/TurnCoach.cs" /></ItemGroup>
+  <ItemGroup><Compile Include="../mod/RouteCoach.cs;../mod/CurseValuation.cs" /><Compile Include="../mod/Coach.cs;../mod/RelicGuide.cs" /><Compile Include="../mod/CardPlayEffects.cs;../mod/WellspringCoach.cs;../mod/BookCoach.cs;../mod/EventCoach.cs;../mod/EventEffects.cs;../mod/EnemyKnowledge.cs;../mod/NonupeipeBlessing.cs;../mod/AncientOffer.cs;../mod/AncientGiftCatalog.cs" /><Compile Include="../mod/PotionCoach.cs" /><Compile Include="../mod/TurnCoach.cs" /></ItemGroup>
 </Project>

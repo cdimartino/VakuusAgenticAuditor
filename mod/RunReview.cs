@@ -19,7 +19,7 @@ internal static class RunReview
                 + "; payoffs: " + string.Join(", ", l.Payoffs.Select(x => x.Name).Distinct().Take(3));
             s.AppendLine($"{l.Line.Name} — {(l.Online ? "supported" : l.Payoffs.Length == 0 ? "possible direction; no tagged payoff" : "payoff without a tagged enabler")}: {names}.");
         }
-        s.AppendLine($"{deck.Cards.Count(c => c.Has("guard"))} direct block cards · {deck.Cards.Count(c => c.Has("draw"))} draw cards · {deck.Cards.Count(c => c.Up)} upgraded.");
+        s.AppendLine($"{deck.Cards.Count(c => c.CombatHas("guard"))} direct block cards · {deck.Cards.Count(c => c.Has("draw"))} draw cards · {deck.Cards.Count(c => c.Up)} upgraded.");
         s.AppendLine("\nHOW THE RUN UNFOLDED");
         foreach (var act in path.GroupBy(f => f.Act))
             s.AppendLine($"Act {act.Key}: {act.Count()} floors; {act.Sum(f => f.Damage)} damage taken, {act.Sum(f => f.Healed)} healed, {act.Sum(f => f.Used)} potions used.");
@@ -44,9 +44,9 @@ internal static class RunReview
             s.AppendLine($"• Keep the {paired.Line.Name} pairing in mind: {paired.Sources[0].Name} plus {paired.Payoffs.FirstOrDefault(p => p.Id != paired.Sources[0].Id)?.Name ?? paired.Payoffs[0].Name}. Add reliability before another payoff.");
         else if (lines.FirstOrDefault(x => x.Payoffs.Length > 0 && x.Sources.Length == 0) is { } unsupported)
             s.AppendLine($"• Before another {unsupported.Line.Name} payoff, look for a reliable source of {unsupported.Line.Role}.");
-        if (deck.Cards.Count(c => c.Has("guard")) * 4 < deck.Cards.Length && !won)
+        if (deck.Cards.Count(c => c.CombatHas("guard")) * 4 < deck.Cards.Length && !won)
             s.AppendLine("• Direct block was a small part of the final deck. Before the next elite, check how an ordinary hand handles its first attack; Weak, summons and orbs can also cover damage.");
-        else if (worst is { Damage: > 0 })
+        else if (worst is { Damage: > 0, Turns: > 0 })
             s.AppendLine($"• Use {worst.Room} as a practice fight: plan for its first dangerous turn before spending energy on setup.");
         else s.AppendLine("• At each reward, name one immediate problem the card solves before taking it over Skip.");
         if (!string.IsNullOrWhiteSpace(journalAssessment)) s.AppendLine("\n" + journalAssessment);

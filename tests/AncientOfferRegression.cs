@@ -25,6 +25,10 @@ internal static class AncientOfferRegression
         check(AncientOffer.Assess("ASTROLABE", deck, context)!.Limited, "random transforms never deterministic");
         check(double.IsNaN(AncientOffer.Assess("DUSTY_TOME", deck, context)!.Score), "known Lost Lute identity does not imply modeled value");
         check(double.IsNaN(AncientOffer.Assess("DUSTY_TOME", deck)!.Score), "missing actual Tome card is not guessed");
+        check(double.IsNaN(AncientOffer.Assess("EMPTY_CAGE", deck)!.Score)
+            && double.IsNaN(AncientOffer.Assess("ASTROLABE", deck)!.Score)
+            && !AncientOffer.Compare(trio, deck, true)!.Contains("Lean Cage"), "unknown targets or Tome cannot support an overall Cage pick");
+        check(!AncientOffer.Compare(trio, deck, true, context with { TomeCard = null })!.Contains("Lean Cage"), "known cuts do not outrank an unread Tome");
         check(AncientOffer.Compare(["UNKNOWN"], deck, true) == null, "unknown offer falls through");
         var partial = AncientOffer.Compare(["UNKNOWN", "EMPTY_CAGE"], deck, true, context)!;
         check(!partial.Contains("Prefer") && !partial.Contains("Take"), "partial coverage never claims a complete winner");

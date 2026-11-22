@@ -243,7 +243,7 @@ public static class Entry
                 if (!Solo() || RunManager.Instance.DebugOnlyGetState() is not { } r || r.Players.Count != 1) return;
                 session = r;
                 alternatives = __1.Select(a => a.OptionId).ToArray();
-                ranking = Coach.Rank(__0.Select(x => Read(x.Card)), DeckOf(r, r.Players[0]), alternatives.Any(IsSkip));
+                ranking = Coach.Rank(__0.Select(x => Read(x.Card)), DeckOf(r, r.Players[0]), alternatives);
                 offer = __instance; cardRow = ____cardRow; last = "";
             });
         }
@@ -357,8 +357,8 @@ public static class Entry
                 var visible = Visible<NCardHolder>(cardScreen).Where(h => h.CardModel != null).Select(h => Read(h.CardModel!)).ToArray();
                 if (visible.Length > 0)
                 {
-                    bool skip = ReferenceEquals(offer, cardScreen) && alternatives.Any(IsSkip);
-                    ranking = Coach.Rank(visible, DeckOf(r, p), skip);
+                    if (!ReferenceEquals(offer, cardScreen)) alternatives = ["unknown"];
+                    ranking = Coach.Rank(visible, DeckOf(r, p), alternatives);
                     offer = cardScreen;
                 }
             }
@@ -405,6 +405,10 @@ public static class Entry
                         && r.CurrentRoom is EventRoom giftRoom)
                     {
                         var owner = giftRoom.CanonicalEvent.Id.Entry;
+                        if (giftRoom.CanonicalEvent is MegaCrit.Sts2.Core.Models.Events.Wellspring well)
+                            text = WellspringCoach.Compare(options.Select(b => b.Option.TextKey).ToArray(), p.PotionSlots.Count - p.Potions.Count(),
+                                p.Relics.Any(v => NativeRelic(v) && v.Id.Entry == "SOZU"), p.Deck.Cards.Where(c => c.IsRemovable).Select(Read).ToArray(),
+                                well.DynamicVars["BatheCurses"].IntValue, P.ExplicitPick);
                         if (owner == "SELF_HELP_BOOK")
                         {
                             var book = new List<BookCoach.Offer>();
@@ -432,12 +436,12 @@ public static class Entry
                         var ids = gifts.Select(g => g.Id).ToArray();
                         if (owner == "NEOW" && options.Length == 1 && options[0].Option.Relic == null)
                             text = AncientGiftCatalog.Opening(owner, ids[0]);
-                        if (owner == "NONUPEIPE") text = NonupeipeBlessing.Compare(ids, P.ExplicitPick);
+                        if (owner == "NONUPEIPE") text = NonupeipeBlessing.Compare(ids, P.ExplicitPick, p.Relics.Any(v => NativeRelic(v) && v.Id.Entry == "FIDDLE"));
                         if (owner == "TEZCATARA" && ids.All(id => id is "YUMMY_COOKIE" or "BIIIG_HUG" or "PUMPKIN_CANDLE"))
                             text = EventCoach.Ancient(gifts.Select(g => (g.Id, g.Title)).ToArray(),
                                 deck.Count(c => c.IsUpgradable && !c.Id.Entry.StartsWith("STRIKE_") && !c.Id.Entry.StartsWith("DEFEND_")),
-                                deck.Count(c => !c.IsUpgraded && (c.Id.Entry.StartsWith("STRIKE_") || c.Id.Entry.StartsWith("DEFEND_"))),
-                                deck.Count(c => Read(c).Cost >= 2), P.ExplicitPick, deck.Count(c => c.IsUpgradable));
+                                deck.Count(c => c.IsRemovable && !c.IsUpgraded && c.IsBasicStrikeOrDefend),
+                                deck.Count(c => Read(c).Cost >= 2), P.ExplicitPick, deck.Count(c => c.IsUpgradable), deck.Count(c => c.IsRemovable));
                         if (owner == "DARV" && ids.Length == 3 && ids.Contains("ASTROLABE") && ids.Contains("EMPTY_CAGE") && ids.Contains("DUSTY_TOME"))
                         {
                             var removable = deck.Where(c => c.IsRemovable).ToArray();
@@ -459,7 +463,7 @@ public static class Entry
                     if (r.CurrentRoom is EventRoom currentEvent && currentEvent.CanonicalEvent.Id.Entry == "POTION_COURIER")
                         text = EventCoach.Courier(options.Select(b => (new EventPick(b.Option.Title.GetFormattedText(),
                             b.Option.Description?.GetFormattedText() ?? ""), b.IsEnabled)).ToArray(),
-                            p.PotionSlots.Count - p.Potions.Count(), eventManual);
+                            p.PotionSlots.Count - p.Potions.Count(), eventManual, p.Relics.Any(v => NativeRelic(v) && v.Id.Entry == "SOZU"));
                     if (text == null)
                     {
                         var picks = options.Select(b => new EventPick(b.Option.Title.GetFormattedText(),
@@ -589,7 +593,7 @@ public static class Entry
             if (screen is NChooseACardSelectionScreen)
             {
                 var ranked = Coach.Rank(cards, deck, false);
-                if (ranked.Any(x => !double.IsFinite(x.Score))) return (UncomparedCards, Above(holders.Select(h => h.Hitbox)));
+                if (ranked.Any(x => !double.IsFinite(x.Score))) return (Coach.PartialReward(ranked) ?? UncomparedCards, Above(holders.Select(h => h.Hitbox)));
                 var best = ranked[0];
                 return ((P.ExplicitPick ? $"Take {best.Name}. " : "") + best.Reason, Above(holders.Select(h => h.Hitbox)));
             }
@@ -695,7 +699,7 @@ public static class Entry
     static string? RewardText(bool details, bool requested)
     {
         var top = ranking[0];
-        if (ranking.Any(x => !double.IsFinite(x.Score))) return UncomparedCards;
+        if (Coach.PartialReward(ranking) is { } partial) return partial;
         var close = ranking.Length > 1 && top.Score - ranking[1].Score <= .55;
         if (P.ClearLeadOnly && close && !requested) return null;
         string text = (P.ExplicitPick ? (close ? "Close call: " : P.Voice == "Vakuu" ? "I’d take " : "Consider ") + top.Name + ". " : "") + top.Reason;
@@ -756,11 +760,9 @@ public static class Entry
         var relic = inv.RelicEntries.Where(e => e.IsStocked && e.EnoughGold && e.Model != null && NativeRelic(e.Model))
             .Select(e => (pair: RelicGuide.ForRelic(e.Model!.Id.Entry, e.Model.Title.GetFormattedText(), deck), cost: e.Cost))
             .Where(x => x.pair is { Tradeoff: false }).OrderByDescending(x => x.pair!.Specificity).ThenBy(x => x.cost).FirstOrDefault();
-        if (relic.pair != null) return $"{relic.pair.Title} ({relic.cost} gold) + {relic.pair.Card.Name}: {relic.pair.Rule.Cue}";
-        if (best.v != null) return $"Among the affordable cards: {best.v.Name} ({best.cost} gold). {best.v.Reason}";
-        if (inv.CardRemovalEntry is { IsStocked: true, EnoughGold: true } rem && deck.Cards.Any(x => x.Id.StartsWith("STRIKE_")))
-            return $"Removal costs {rem.Cost} of your {p.Gold} gold. If damage is covered, thinning a basic Strike makes your other cards come up sooner.";
-        return null;
+        return Coach.Shop(best.v, best.cost, relic.pair, relic.cost,
+            inv.CardRemovalEntry is { IsStocked: true, EnoughGold: true } rem && p.Deck.Cards.Any(c => c.IsRemovable) ? rem.Cost : null,
+            !deck.Relics.Contains("SOZU") && p.PotionSlots.Count > p.Potions.Count() && inv.PotionEntries.Any(e => e.IsStocked && e.EnoughGold), p.Gold);
     }
     static (string?, string?) Battle(Player p, bool details)
     {
@@ -770,16 +772,25 @@ public static class Entry
         var enemies = state.Enemies.Where(e => e.IsAlive).ToArray();
         if (p.Relics.Any(x => x.Id.Entry == "RUNIC_DOME") || enemies.Any(e => e.Monster?.NextMove == null)) return (null, null);
         if (enemies.Length == 0) return (null, null);
+        // These observations do not support a reliable numerical threat/lethal
+        // claim. Do not turn hidden intent or unmodelled damage prevention into 0.
+        if (enemies.Any(e => e.Monster!.NextMove!.Intents.Any(i => i is HiddenIntent)
+            || e.Powers.Any(v => v.Id.Entry is "BUFFER_POWER" or "SLIPPERY_POWER" or "INTANGIBLE_POWER"
+                || v.Id.Entry.Contains("ILLUSION"))))
+        {
+            plannedActions = []; legalActions = []; expectedHpLoss = null;
+            return ("Reassess manually: hidden intent or enemy damage prevention is not modeled.", null);
+        }
         var foes = enemies.Select(e => new Foe(e.Monster!.Title.GetFormattedText(), e.CurrentHp + e.Block,
             e.Monster.NextMove!.Intents.OfType<AttackIntent>().Sum(a => a.GetTotalDamage(state.PlayerCreatures, e)),
             new Status(Power(e, "WEAK_POWER"), Power(e, "VULNERABLE_POWER"), Power(e, "ARTIFACT_POWER")), Power(e, "STRENGTH_POWER"), e.Powers.Any(x => x.Id.Entry.Contains("ILLUSION")),
-            DamageCap: e.Powers.FirstOrDefault(x => x.Id.Entry == "HARD_TO_KILL_POWER")?.Amount)).ToArray();
+             DamageCap: e.Powers.FirstOrDefault(x => x.Id.Entry == "HARD_TO_KILL_POWER")?.Amount, Block: e.Block)).ToArray();
         static int Power(MegaCrit.Sts2.Core.Entities.Creatures.Creature creature, string id) =>
             creature.Powers.FirstOrDefault(z => z.Id.Entry == id)?.Amount ?? 0;
         var hand = pc.Hand.Cards.Where(c => c.CanPlay()).ToArray();
         var plays = new List<Play>();
         var deckCards = p.Deck.Cards.Select(Read).ToArray();
-        bool canDraw = pc.DrawPile.Cards.Count + pc.DiscardPile.Cards.Count > 0 && !p.Relics.Any(v => NativeRelic(v) && v.Id.Entry == "FIDDLE");
+        bool canDraw = pc.DrawPile.Cards.Count + pc.DiscardPile.Cards.Count > 0 && !p.Creature.Powers.Any(power => power.Id.Entry == "NO_DRAW_POWER") && !p.Relics.Any(v => NativeRelic(v) && v.Id.Entry == "FIDDLE");
         bool hasUnassessedCard = false;
         foreach (var c in hand)
         {
@@ -805,7 +816,15 @@ public static class Entry
                 }
             }
             if (single && hits.All(n => n < 0)) continue;
-            bool pivot = card.CombatHas("draw") || card.CombatHas("energy") || card.CombatHas("discard") || card.CombatHas("exhaust") || c.Type == CardType.Power || CombatGuidance.Boundary(effect ?? "");
+            var profile = CardPlayEffects.Resolve(effect, name => vars.TryGetValue(name, out var v) ? Math.Max(0, (int)v.PreviewValue) : 0,
+                canDraw ? pc.DrawPile.Cards.Count + pc.DiscardPile.Cards.Count : 0, pc.DiscardPile.Cards.Count,
+                Math.Max(0, 11 - pc.Hand.Cards.Count), pc.OrbQueue?.Orbs.Count ?? 0, debuffUnblocked: foes.All(f => f.Status.Artifact == 0));
+            guard = Math.Max(guard, profile.Guard);
+            bool genericDraw = canDraw && card.CombatHas("draw") && !CardPlayEffects.OwnsDraw(effect);
+            bool pivot = profile.Boundary || genericDraw || card.CombatHas("energy")
+                || (effect != "draw-discard" && card.CombatHas("discard"))
+                || (effect != "exhaust-up-to" && card.CombatHas("exhaust"))
+                || c.Type == CardType.Power || CombatGuidance.Boundary(effect ?? "");
             int Base(string name) => vars.TryGetValue(name, out var v) ? Math.Max(0, (int)v.BaseValue) : 0;
             int weak = card.CombatHas("weak") ? Math.Max(Base("WeakPower"), Base("Power")) : 0;
             int vuln = card.CombatHas("vulnerable") ? Math.Max(Base("VulnerablePower"), Base("Power")) : 0;
@@ -820,9 +839,15 @@ public static class Entry
                 _ => 0
             };
             var setup = CombatGuidance.Setup(card, amount, deckCards, foes);
+            int enemyHpLoss = card.Id == "CAPTURE_SPIRIT" ? Base("Damage") : 0;
+            var economy = CombatGuidance.Economy(card.Id,
+                card.CombatHas("summon") ? Base("Summon") : 0,
+                card.Id is "CAPTURE_SPIRIT" or "GRAVE_WARDEN" ? Base("Cards") : 0,
+                p.Osty?.CurrentHp ?? 0, deckCards.Any(k => k.CombatHas("Osty attacks") || k.Id == "CALCIFY"),
+                deckCards.Any(k => k.Id == "HAUNT"), Power(p.Creature, "HAUNT_POWER"));
             bool recall = card.Id == "RECALL";
             pivot |= setup.fit > 0 || recall;
-            if (guard == 0 && hits.All(n => n <= 0) && !pivot && weak + vuln + sad == 0) { hasUnassessedCard = true; continue; }
+            if (guard == 0 && hits.All(n => n <= 0) && !pivot && weak + vuln + sad + enemyHpLoss == 0 && economy.fit == 0) { hasUnassessedCard = true; continue; }
             plays.Add(new(c.Title, c.EnergyCost.CostsX ? 0 : Math.Max(0, c.EnergyCost.GetAmountToSpend()),
                 c.HasStarCostX ? 0 : Math.Max(0, c.GetStarCostWithModifiers()), card.CombatHas("shots") ? 1 : 0, guard, hits, area, pivot,
                 c.Type == CardType.Power, c.EnergyCost.CostsX, c.HasStarCostX, weak, vuln, sad, effect == "convert-sadness",
@@ -831,9 +856,10 @@ public static class Entry
                 BlockMultipliers: effect == "block-damage" ? enemies.Select(enemy =>
                     (Power(p.Creature, "WEAK_POWER") > 0 ? .75 : 1.0) *
                     (Power(enemy, "VULNERABLE_POWER") > 0 ? 1.5 : 1.0)).ToArray() : null,
-                Instance: RuntimeRecording.Ref(c), Hits: repeats, FutureFit: setup.fit,
-                FutureReason: recall ? "Dislodge first; recheck after choosing a card from the discard pile." : setup.reason,
-                DrawBoundary: canDraw && card.CombatHas("draw")));
+                 Instance: RuntimeRecording.Ref(c), Hits: repeats, FutureFit: setup.fit + economy.fit + profile.Fit,
+                 FutureReason: recall ? "Dislodge first; recheck after choosing a card from the discard pile." : setup.reason ?? economy.reason ?? profile.Reason,
+                 DrawBoundary: genericDraw || profile.DrawBoundary, EnemyHpLoss: enemyHpLoss,
+                 OstyAttack: card.CombatHas("Osty attacks"), FreeAfterOsty: card.Id == "FLATTEN"));
         }
         var key = $"{session?.CurrentActIndex}:{session?.ActFloor}:{state.RoundNumber}";
         var played = CombatManager.Instance.History.CardPlaysFinished.Where(e => e.HappenedThisTurn(state) && e.CardPlay.Card.Owner == p)

@@ -9,7 +9,7 @@ internal record EventEvaluation(int Hp, int MaxHp, int Gold, Deck? Deck = null,
     IReadOnlyDictionary<string, Card>? NamedCards = null,
     int? TransformTargets = null,
     Func<string, bool, Card?>? ResolveNamedCard = null);
-internal record EventEffectResult(string Title, double Score, string[] Known, string[] Unresolved, bool Unsafe);
+internal record EventEffectResult(string Title, double Score, string[] Known, string[] Unresolved, bool Unsafe, bool OnlyDeckFitUncertain);
 
 internal static class EventEffects
 {
@@ -22,6 +22,7 @@ internal static class EventEffects
         var known = new List<string>();
         var unknown = new List<string>();
         int matchedCurses = 0;
+        int uncertainDeckFits = 0;
         foreach (var clause in Plain(option.Description).Split(['.', '\n'], StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries))
         {
             if (clause.Equals("Heal to full HP", StringComparison.OrdinalIgnoreCase))
@@ -48,6 +49,8 @@ internal static class EventEffects
                         hp -= n; score -= n * (hp < maxHp * .4 ? 2.3 : .55);
                         unsafeChoice |= hp <= 0;
                         known.Add(hp <= 0 ? $"{n} HP cost is lethal" : $"leaves {hp}/{maxHp} HP"); break;
+                    case ("gain" or "obtain", "gold") when c.Deck?.Relics.Contains("ECTOPLASM") == true:
+                        known.Add("Ectoplasm prevents the gold gain"); break;
                     case ("gain" or "obtain", "gold"): gold += n; score += n / (c.Gold < 150 ? 7d : 10d); known.Add(clause); break;
                     case ("pay" or "lose", "gold"):
                         gold -= n; unsafeChoice |= gold < 0; score -= n / 8d;
@@ -106,7 +109,7 @@ internal static class EventEffects
                 {
                     unknown.Add($"{option.Relic}: relic value is not resolved"); continue;
                 }
-                if (name == "Metamorphosis") { unknown.Add(CardUnknown(name)); continue; }
+                if (name == "Metamorphosis") { unknown.Add(CardUnknown(name)); uncertainDeckFits++; continue; }
                 bool upgraded = name.EndsWith('+');
                 var ids = option.CurseIds;
                 if (ids is { Length: > 0 } && c.Deck != null && ids.Distinct().Count() == 1
@@ -134,7 +137,10 @@ internal static class EventEffects
             }
             if (Regex.IsMatch(clause, @"^(Obtain|Gain|Procure) .*(Relic|Potion|card)s?$", RegexOptions.IgnoreCase))
             {
-                if (clause.Contains("Potion", StringComparison.OrdinalIgnoreCase) && c.EmptyPotionSlots == 0)
+                if (c.Deck?.Relics.Contains("SOZU") == true && Regex.IsMatch(clause,
+                    @"^(?:Procure|Obtain|Gain) (?:a|an|\d+) (?:random )?(?:(?:Common|Uncommon|Rare) )?Potions?$", RegexOptions.IgnoreCase))
+                    known.Add("Sozu prevents acquiring the potion");
+                else if (clause.Contains("Potion", StringComparison.OrdinalIgnoreCase) && c.EmptyPotionSlots == 0)
                     unknown.Add("potion belt is full; replacement/discard is not assumed");
                 else unknown.Add(clause + ": reward identity/outcome and value are not guaranteed");
                 continue;
@@ -147,7 +153,8 @@ internal static class EventEffects
         }
         if (known.Count == 0 && unknown.Count == 0) unknown.Add("no visible effect text");
         if ((option.CurseIds?.Length ?? 0) != matchedCurses) unknown.Add("runtime curse additions do not match a recognized visible clause");
-        return new(Plain(option.Title), score, known.ToArray(), unknown.Distinct().ToArray(), unsafeChoice);
+        return new(Plain(option.Title), score, known.ToArray(), unknown.Distinct().ToArray(), unsafeChoice,
+            uncertainDeckFits > 0 && uncertainDeckFits == unknown.Count);
     }
 
     // Source: build 26660232 English cards METAMORPHOSIS.description.
@@ -176,7 +183,11 @@ internal static class EventEffects
         bool uncertain = safe.Any(r => r.Unresolved.Length > 0);
         if (details.Count == 0) return "I can't compare these choices.";
         if (uncertain) details.Add("I can't assess every effect.");
-        bool canPick = !uncertain || safe.Length == 1 && results.Length > 1;
+        // Metamorphosis has verified addition semantics; only the card's future deck fit
+        // is uncertain. An opaque event clause, by contrast, may itself be dangerous.
+        bool onlyKnownSafeAddition = safe.Length == 1 && results.Length > 1 && safe[0].OnlyDeckFitUncertain;
+        bool canPick = (!uncertain || onlyKnownSafeAddition)
+            && (safe.Length == 1 || safe[0].Score > safe[1].Score);
         return (pick && canPick ? safe[0].Title + ". " : "") + string.Join(" ", details);
     }
 }

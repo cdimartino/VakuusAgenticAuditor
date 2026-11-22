@@ -14,23 +14,25 @@ internal static class AncientOffer
     {
         context ??= new();
         var cards = deck.Cards;
-        int basics = cards.Count(Basic);
         switch (id)
         {
             case "EMPTY_CAGE":
-                int cuts = Math.Min(2, Math.Max(0, context.Removable ?? 2));
                 var targets = context.RemovalTargets;
-                int weak = targets == null ? basics : targets.Count(c => Basic(c) || c.IsCurse);
-                return new(id, cuts == 0 ? -3 : Math.Min(cuts, weak) * 2.1 + (cards.Length >= 18 ? .5 : 0),
+                if ((context.Removable ?? targets?.Length) is not int count)
+                    return new(id, double.NaN, "Check which cards can be removed before valuing Cage.", true);
+                int cuts = Math.Clamp(count, 0, 2);
+                int weak = targets?.Count(c => Basic(c) || c.IsCurse) ?? 0;
+                return new(id, cuts == 0 ? -3 : targets == null ? double.NaN : Math.Min(cuts, weak) * 2.1,
                     cuts == 0 ? "No legal removals remain."
-                    : cuts < 2 ? $"Can only remove {cuts}; trim a weak draw so useful cards recur sooner."
-                    : weak > 0 ? "Remove 2 weak draws so your useful cards recur sooner."
-                    : "Remove 2 cards, but a lean deck without obvious weak draws gains less.",
+                    : targets == null ? $"Remove {cuts}; the targets' deck fit is unknown."
+                    : weak >= cuts ? $"Remove {cuts} weak draw(s) so useful cards recur sooner."
+                    : $"Remove {cuts}; only {weak} obvious weak draw(s) among legal targets.",
                     context.Removable == null || targets == null);
             case "ASTROLABE":
-                int transforms = Math.Min(3, Math.Max(0, context.Transformable ?? 3));
-                int expendable = context.TransformTargets?.Count(Basic) ?? basics;
-                return new(id, transforms == 0 ? -3 : Math.Min(transforms, expendable) * 1.25,
+                if ((context.Transformable ?? context.TransformTargets?.Length) is not int transformable)
+                    return new(id, double.NaN, "Check which cards can be transformed; replacements are random.", true);
+                int transforms = Math.Clamp(transformable, 0, 3);
+                return new(id, transforms == 0 ? -3 : context.TransformTargets == null ? double.NaN : Math.Min(transforms, context.TransformTargets.Count(Basic)) * 1.25,
                     transforms == 0 ? "No legal transforms remain."
                     : $"{(transforms < 3 ? $"Can only transform {transforms}" : "Transform 3")} and upgrade the results; random replacements can miss your plan.",
                     true);
@@ -47,7 +49,9 @@ internal static class AncientOffer
             case "CALLING_BELL":
                 return new(id, double.NaN, "Gain 3 random relics and Curse of the Bell; permanent deck clutter makes the unknown relic rolls a tradeoff.", true);
             case "PANDORAS_BOX":
-                int replace = context.RemovalTargets?.Count(Basic) ?? basics;
+                if (context.RemovalTargets == null)
+                    return new(id, double.NaN, "Transforms removable basic Strikes and Defends; legal targets are unknown.", true);
+                int replace = context.RemovalTargets.Count(Basic);
                 return new(id, replace * .65, $"Randomly replace removable basic Strikes and Defends ({replace} apparent targets); more basics give more upside, but replacements can leave defense gaps.", true);
             case "RUNIC_PYRAMID":
                 return new(id, cards.Any(c => c.Has("discard")) ? 4 : 2, "Keep your hand between turns to line up key plays; expensive cards and junk can clog it without discard.", true);
@@ -82,16 +86,24 @@ internal static class AncientOffer
         var best = known.Where(x => double.IsFinite(x.Score)).OrderByDescending(x => x.Score).FirstOrDefault();
         if (offered.Length == 3 && offered.Order(StringComparer.Ordinal).SequenceEqual(new[] { "ASTROLABE", "DUSTY_TOME", "EMPTY_CAGE" }))
         {
-            int? cuts = context?.Removable;
-            int weak = (context?.RemovalTargets ?? deck.Cards).Count(c => Basic(c) || c.IsCurse);
-            string cage = cuts == 0 ? "Cage has no legal targets"
+            int? cuts = context?.Removable ?? context?.RemovalTargets?.Length;
+            int weak = context?.RemovalTargets?.Count(c => Basic(c) || c.IsCurse) ?? 0;
+            var melody = deck.Cards.FirstOrDefault(c => !c.ForeignModel && c.Has("melody"));
+            bool lean = explicitPick && context?.TomeCard?.Id == "LOST_LUTE" && melody == null && context.Transformable != null;
+            string cage = cuts == null ? "Cage's legal targets are unknown"
+                : cuts == 0 ? "Cage has no legal targets"
                 : cuts == 1 ? "Cage can only remove 1"
+                : context?.RemovalTargets == null ? "Check Cage's removal targets"
                 : weak >= 2
-                    ? (explicitPick ? "Lean Cage to cut 2 weak draws" : "Cage cuts 2 weak draws")
+                    ? (lean ? "Lean Cage to cut 2 weak draws" : "Cage cuts 2 weak draws")
                 : weak == 1 ? "Cage needs a second expendable card"
                     : "Cage needs 2 expendable cards";
-            string astro = context?.Transformable is int n && n < 3 ? $"Astrolabe can only transform {Math.Max(0, n)}" : "Astrolabe rolls 3 upgraded replacements";
-            var melody = deck.Cards.FirstOrDefault(c => !c.ForeignModel && c.Has("melody"));
+            string astro = (context?.Transformable ?? context?.TransformTargets?.Length) switch
+            {
+                null => "Astrolabe's legal targets are unknown",
+                < 3 and int n => $"Astrolabe can only transform {Math.Max(0, n)}",
+                _ => "Astrolabe rolls 3 upgraded replacements"
+            };
             string tome = context?.TomeCard switch
             {
                 { Id: "LOST_LUTE" } when melody != null => $"{melody.Name} helps build Melody for Lost Lute+ to play your top card",
