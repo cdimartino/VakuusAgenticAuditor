@@ -8,10 +8,10 @@ internal record Play(string Name, int Energy, int Stars, int Arrows, int Guard, 
     bool Area = false, bool Pivot = false, bool Setup = false, bool Ex = false, bool Sx = false,
     int Weak = 0, int Vulnerable = 0, int Sadness = 0, bool Converts = false, bool Skill = false,
     string HitsFrom = "", bool Attack = false, int HpLoss = 0, bool BlockDamage = false,
-    double[]? BlockMultipliers = null, string Instance = "", int Hits = 1);
+    double[]? BlockMultipliers = null, string Instance = "", int Hits = 1, double FutureFit = 0, string? FutureReason = null, bool DrawBoundary = false);
 internal record Step(int Card, int Target);
 internal record TurnLine(List<Step> Steps, int Incoming, int EnemiesLeft, double Score, int Joy = 0, int[]? Remaining = null,
-    int RawIntent = 0, int ExpectedBlock = 0, int RemovedIntent = 0, int WeakReduction = 0, int HpCost = 0, bool Recheck = false);
+    int RawIntent = 0, int ExpectedBlock = 0, int RemovedIntent = 0, int WeakReduction = 0, int HpCost = 0, bool Recheck = false, string? SetupReason = null);
 
 internal static class TurnCoach
 {
@@ -30,6 +30,9 @@ internal static class TurnCoach
         var best = new TurnLine([], incoming, foes.Length, 0, RawIntent: foes.Sum(f => f.Intent), ExpectedBlock: block);
         var front = new List<State> {new(energy,stars,arrows,block,foes.Select(f=>f.Life).ToArray(),0,best,
             foes.Select(f=>f.Status).ToArray(),sadness,0,attacks,skills,0)};
+        var setups = hand.Take(63).Select((play, index) => (play, index))
+            .Where(x => x.play.FutureFit > 0 && !x.play.Ex && !x.play.Sx)
+            .OrderByDescending(x => x.play.FutureFit).ToArray();
         for (int depth = 0; depth < Math.Min(hand.Length, 5); depth++)
         {
             var next = new List<State>();
@@ -38,7 +41,7 @@ internal static class TurnCoach
                 {
                     var c = hand[i]; ulong bit = 1UL << i;
                     int paid = s.PaidHp + c.HpLoss;
-                    if ((s.Used & bit) != 0 || c.Energy > s.Energy || c.Stars > s.Stars || c.Arrows > s.Arrows || paid >= hp) continue;
+                    if ((s.Used & bit) != 0 || c.Energy > s.Energy || c.Stars > s.Stars || c.Arrows > s.Arrows || (c.Ex && c.FutureFit > 0 && s.Energy == 0) || paid >= hp) continue;
                     bool targeted = !c.Area && c.Damage.Any(n => n >= 0);
                     for (int t = 0; t < (targeted ? foes.Length : 1); t++)
                     {
@@ -85,6 +88,32 @@ internal static class TurnCoach
                             + (c.Pivot && alive > 0 ? (c.Setup ? 4 : 2) + Math.Max(0, s.Energy - c.Energy) * .65 : 0)
                             + (alive > 0 ? future + joy * 4 - (sad - sadness) * .7 : 0) - .04 * (depth + 1)
                             - paid * 1.65 - (alive > 0 && gap < hp && gap + paid >= hp ? 110 : 0);
+                        string? setupReason = null;
+                        if (alive > 0 && gap + paid < hp)
+                        {
+                            // Option value only: never add future buffs to current block, kills or damage.
+                            double horizon = Math.Clamp(life.Sum() / 32d, .15, 1);
+                            double futureWeight = horizon / (1 + gap / 10d);
+                            if (c.FutureReason != null)
+                            {
+                                double units = c.Ex ? s.Energy : 1;
+                                score += c.FutureFit * units * futureWeight;
+                                setupReason = c.FutureReason;
+                            }
+                            else if (c.DrawBoundary && !c.Ex && !c.Sx)
+                            {
+                                // Keep a known setup available, but stop before actually prescribing it after a draw.
+                                int left = s.Energy - c.Energy;
+                                var reserve = setups.FirstOrDefault(x => x.index != i && (s.Used & (1UL << x.index)) == 0
+                                    && x.play.Energy <= left && x.play.Stars <= s.Stars - c.Stars && x.play.Arrows <= s.Arrows - c.Arrows
+                                    && x.play.HpLoss + gap + paid < hp).play;
+                                if (reserve != null)
+                                {
+                                    score += reserve.FutureFit * .8 * futureWeight;
+                                    setupReason = $"Recheck the draw; {left} energy remains for {reserve.Name}.";
+                                }
+                            }
+                        }
                         // Prefer unlocking a draw earlier when the projected outcome
                         // ties: seeing another card before committing energy has value.
                         if (joy > 0 && alive > 0) score += .01 * (hand.Length - (s.Line.Joy == 0 ? depth :
@@ -92,8 +121,10 @@ internal static class TurnCoach
                         int removed = Enumerable.Range(0, life.Length).Where(j => life[j] == 0).Sum(j => foes[j].Intent);
                         var line = new TurnLine([.. s.Line.Steps, new(i, targeted ? t : -1)], gap, alive, score, joy, life,
                             foes.Sum(f => f.Intent), b, removed, foes.Sum(f => f.Intent) - removed - threat, paid,
-                            c.Pivot || convert);
-                        if (score > best.Score) best = line;
+                            c.Pivot || convert, setupReason);
+                        bool survives = alive == 0 || gap + paid < hp;
+                        bool bestSurvives = best.EnemiesLeft == 0 || best.Incoming + best.HpCost < hp;
+                        if (survives && !bestSurvives || survives == bestSurvives && score > best.Score) best = line;
                         if (alive > 0 && !c.Pivot && !convert) next.Add(new(c.Ex ? 0 : s.Energy - c.Energy, c.Sx ? 0 : s.Stars - c.Stars, s.Arrows - c.Arrows, b, life, s.Used | bit, line,
                             status, sad, s.Created + added, s.Attacks + (c.Attack ? 1 : 0), s.Skills + (c.Skill ? 1 : 0), paid));
                     }

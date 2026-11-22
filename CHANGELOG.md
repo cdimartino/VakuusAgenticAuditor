@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.25
+
+- Combat advice now weighs future benefits from Honing, Brace, Inflame, Demon Form, Footwork and Noxious Fumes against spending energy now. Draw-first advice can point out a known buff still affordable after the draw; forecasts do not count that buff as damage already dealt.
+
+- Self-Help Book now compares Sharp, Nimble and Swift against cards that can actually take each enchantment. See the benefit and a target for each available choice, including multi-hit attacks and the interaction between Swift and Fiddle.
+
 ## v0.1.24
 
 - Recognize all 324 relic catalog IDs. Name relevant cards when relics help or conflict with them in rewards, shops, treasure and detailed combat hints. Darv’s Lost Lute comparison now names an actual Melody source if your deck has one.

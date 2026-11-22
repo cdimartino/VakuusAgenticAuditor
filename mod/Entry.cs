@@ -405,6 +405,27 @@ public static class Entry
                         && r.CurrentRoom is EventRoom giftRoom)
                     {
                         var owner = giftRoom.CanonicalEvent.Id.Entry;
+                        if (owner == "SELF_HELP_BOOK")
+                        {
+                            var book = new List<BookCoach.Offer>();
+                            foreach (var button in options)
+                            {
+                                if (BookCoach.Parse(button.Option.TextKey) is not { } effect) continue;
+                                (CardType type, EnchantmentModel enchant) target = effect switch
+                                {
+                                    BookCoach.Effect.Sharp => (CardType.Attack, ModelDb.Enchantment<MegaCrit.Sts2.Core.Models.Enchantments.Sharp>()),
+                                    BookCoach.Effect.Nimble => (CardType.Skill, ModelDb.Enchantment<MegaCrit.Sts2.Core.Models.Enchantments.Nimble>()),
+                                    _ => (CardType.Power, ModelDb.Enchantment<MegaCrit.Sts2.Core.Models.Enchantments.Swift>())
+                                };
+                                var targets = p.Deck.Cards.Where(c => c.Type == target.type && target.enchant.CanEnchant(c)).Select(Read).ToArray();
+                                book.Add(new(effect, button.Option.Title.GetFormattedText(), targets));
+                            }
+                            if (options.All(b => b.Option.TextKey == "SELF_HELP_BOOK.pages.INITIAL.options.NO_OPTIONS"))
+                                text = "No cards in your deck can take these enchantments.";
+                            else if (book.Count == options.Length)
+                                text = BookCoach.Compare(book.ToArray(), p.Creature.CurrentHp, p.Creature.MaxHp,
+                                    p.Relics.Any(v => NativeRelic(v) && v.Id.Entry == "FIDDLE"), P.ExplicitPick);
+                        }
                         var deck = p.Deck.Cards;
                         var gifts = options.Select(b => new AncientGiftCatalog.Offer(b.Option.Relic?.Id.Entry ?? b.Option.TextKey,
                             b.Option.Title.GetFormattedText())).ToArray();
@@ -757,11 +778,14 @@ public static class Entry
             creature.Powers.FirstOrDefault(z => z.Id.Entry == id)?.Amount ?? 0;
         var hand = pc.Hand.Cards.Where(c => c.CanPlay()).ToArray();
         var plays = new List<Play>();
+        var deckCards = p.Deck.Cards.Select(Read).ToArray();
+        bool canDraw = pc.DrawPile.Cards.Count + pc.DiscardPile.Cards.Count > 0 && !p.Relics.Any(v => NativeRelic(v) && v.Id.Entry == "FIDDLE");
         bool hasUnassessedCard = false;
         foreach (var c in hand)
         {
             var card = Read(c);
-            if (!card.CombatKnown) { hasUnassessedCard = true; continue; }
+
+            if (card.ForeignModel || !card.CombatKnown) { hasUnassessedCard = true; continue; }
             var effect = Catalog.Effect(card.Id);
             bool area = c.TargetType == TargetType.AllEnemies, single = c.TargetType == TargetType.AnyEnemy;
             var hits = Enumerable.Repeat(-1, enemies.Length).ToArray();
@@ -770,7 +794,7 @@ public static class Entry
             for (int j = 0; j < (single || area ? enemies.Length : 1); j++)
             {
                 var enemy = enemies[j];
-                if (single && (!c.CanPlayTargeting(enemy) || effect == "requires-impale" && Power(enemy, "IMPALED_POWER") == 0)) continue;
+                if (single && (!c.CanPlayTargeting(enemy) || (effect == "requires-impale" || card.Id == "RECALL") && Power(enemy, "IMPALED_POWER") == 0)) continue;
                 c.UpdateDynamicVarPreview(CardPreviewMode.Normal, single || area ? enemy : null, vars);
                 int Value(string name) => vars.TryGetValue(name, out var v) ? Math.Max(0, (int)v.PreviewValue) : 0;
                 if (card.CombatHas("guard")) guard = Math.Max(Value("Block"), Value("CalculatedBlock"));
@@ -786,7 +810,19 @@ public static class Entry
             int weak = card.CombatHas("weak") ? Math.Max(Base("WeakPower"), Base("Power")) : 0;
             int vuln = card.CombatHas("vulnerable") ? Math.Max(Base("VulnerablePower"), Base("Power")) : 0;
             int sad = effect switch { "sadness-one" => 1, "sadness-cards" => Base("Cards"), _ => 0 };
-            if (guard == 0 && hits.All(n => n <= 0) && !pivot && weak + vuln + sad == 0) continue;
+            int amount = card.Id switch
+            {
+                "HONING" => Base("HoningPower"),
+                "BRACE" => Base("AimPower"),
+                "INFLAME" or "DEMON_FORM" => Base("StrengthPower"),
+                "FOOTWORK" => Base("DexterityPower"),
+                "NOXIOUS_FUMES" => Base("PoisonPerTurn"),
+                _ => 0
+            };
+            var setup = CombatGuidance.Setup(card, amount, deckCards, foes);
+            bool recall = card.Id == "RECALL";
+            pivot |= setup.fit > 0 || recall;
+            if (guard == 0 && hits.All(n => n <= 0) && !pivot && weak + vuln + sad == 0) { hasUnassessedCard = true; continue; }
             plays.Add(new(c.Title, c.EnergyCost.CostsX ? 0 : Math.Max(0, c.EnergyCost.GetAmountToSpend()),
                 c.HasStarCostX ? 0 : Math.Max(0, c.GetStarCostWithModifiers()), card.CombatHas("shots") ? 1 : 0, guard, hits, area, pivot,
                 c.Type == CardType.Power, c.EnergyCost.CostsX, c.HasStarCostX, weak, vuln, sad, effect == "convert-sadness",
@@ -795,7 +831,9 @@ public static class Entry
                 BlockMultipliers: effect == "block-damage" ? enemies.Select(enemy =>
                     (Power(p.Creature, "WEAK_POWER") > 0 ? .75 : 1.0) *
                     (Power(enemy, "VULNERABLE_POWER") > 0 ? 1.5 : 1.0)).ToArray() : null,
-                Instance: RuntimeRecording.Ref(c), Hits: repeats));
+                Instance: RuntimeRecording.Ref(c), Hits: repeats, FutureFit: setup.fit,
+                FutureReason: recall ? "Dislodge first; recheck after choosing a card from the discard pile." : setup.reason,
+                DrawBoundary: canDraw && card.CombatHas("draw")));
         }
         var key = $"{session?.CurrentActIndex}:{session?.ActFloor}:{state.RoundNumber}";
         var played = CombatManager.Instance.History.CardPlaysFinished.Where(e => e.HappenedThisTurn(state) && e.CardPlay.Card.Owner == p)
@@ -875,7 +913,7 @@ public static class Entry
         }
         string? text = line.Steps.Count == 0 ? (hand.Length > 0 ? (hasUnassessedCard ? UncomparedCards : "No clear line from damage and block alone.") : null)
             : $"{string.Join(" → ", line.Steps.Select(Describe))}.\n" +
-            (line.EnemiesLeft == 0 ? "Projected lethal from current previews." : line.Joy > 0 ? "Turn Sadness into Joy. Play Joy and reassess the draw." : plays[line.Steps[^1].Card].Pivot ? "Reassess after that effect resolves." :
+            (line.EnemiesLeft == 0 ? "Projected lethal from current previews." : line.Joy > 0 ? "Turn Sadness into Joy. Play Joy and reassess the draw." : line.SetupReason != null ? line.SetupReason : plays[line.Steps[^1].Card].Pivot ? "Reassess after that effect resolves." :
             "");
         if (P.CombatPotions && (!hasUnassessedCard || line.Steps.Count > 0) && !CombatManager.Instance.PlayerActionsDisabled)
         {
