@@ -170,6 +170,9 @@ string[] well = ["WELLSPRING.pages.INITIAL.options.BOTTLE", "WELLSPRING.pages.IN
 Check(WellspringCoach.Compare(well, 3, false, deck.Cards, 1, true) is { } wellAdvice && wellAdvice.StartsWith("Consider Bottle") && wellAdvice.Contains("Guilty"), "pictured Wellspring compares empty belt with temporary curse cost");
 Check(WellspringCoach.Compare(well, 0, false, [C("REGRET") with { IsCurse = true }], 1, true) is { } swap && swap.StartsWith("Consider Bathe") && swap.Contains("REGRET"), "a removable permanent curse changes the Wellspring tradeoff");
 Check(WellspringCoach.Compare(well, 2, true, [], 1, false) is { } blocked && blocked.Contains("Sozu prevents") && blocked.Contains("No legal"), "Sozu and no legal removal do not invent a benefit");
+Check(WuppyCoach.Protection(1, true, 1) == WuppyCoach.Cover.SingleHit && WuppyCoach.Protection(1, true, 3) == WuppyCoach.Cover.FirstHitOnly, "one-HP Wuppy redirects the whole hit, not all subsequent hits");
+Check(WuppyCoach.Protection(0, true, 1) == WuppyCoach.Cover.None && WuppyCoach.Protection(30, false, 1) == WuppyCoach.Cover.None, "dead Wuppy or missing Loyalty does not mask player threat");
+Check(WuppyCoach.Offer(["WUPPY_IN_TROUBLE.pages.INITIAL.options.IGNORE"], 1, true) == "Ignore: Sozu prevents taking the potion.", "Wuppy event respects enabled choices and potion blockers");
 BookCoachRegression.Run(Check);
 RelicGuideRegression.Run(Check);
 AncientOfferRegression.Run(Check);
