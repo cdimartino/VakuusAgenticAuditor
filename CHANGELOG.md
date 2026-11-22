@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.1.28
+
+- The run-review button now sits in the results summary rather than covering the map, deck and settings controls. It no longer takes focus when the results screen opens.
+- Wuppy advice distinguishes a single intercepted attack from later hits that may reach you. Compare the rescue choices, see how much HP Restore returns at camp, and find Wuppy’s final HP in the run review.
+
 ## v0.1.27
 
 - The local playtest runner also supports UTC timestamps on Python 3.10.

@@ -189,6 +189,8 @@ public static class Entry
                 var cause = ____history.KilledByEncounter?.Entry ?? ____history.KilledByEvent?.Entry;
                 var report = RunReview.Write(deck, path.ToArray(), ____history.Win, ____history.WasAbandoned, cause == null ? null : Label(cause),
                     ____runState.AscensionLevel, p.Gold, p.Potions.Select(x => x.Title.GetFormattedText()).ToArray(), recording.Assessment());
+                if (p.Relics.OfType<MegaCrit.Sts2.Core.Models.Relics.Wuppy>().FirstOrDefault() is { } companion)
+                    report += $"\nWuppy finished at {companion.CurrentHp}/{companion.MaxHp} HP. While alive, Wuppy intercepts attacks before your Block, not direct HP loss.\n";
                 ui.AttachReview(__instance, report);
             });
     }
@@ -409,6 +411,9 @@ public static class Entry
                             text = WellspringCoach.Compare(options.Select(b => b.Option.TextKey).ToArray(), p.PotionSlots.Count - p.Potions.Count(),
                                 p.Relics.Any(v => NativeRelic(v) && v.Id.Entry == "SOZU"), p.Deck.Cards.Where(c => c.IsRemovable).Select(Read).ToArray(),
                                 well.DynamicVars["BatheCurses"].IntValue, P.ExplicitPick);
+                        if (owner == "WUPPY_IN_TROUBLE")
+                            text = WuppyCoach.Offer(options.Select(b => b.Option.TextKey).ToArray(), p.PotionSlots.Count - p.Potions.Count(),
+                                p.Relics.Any(v => NativeRelic(v) && v.Id.Entry == "SOZU"));
                         if (owner == "SELF_HELP_BOOK")
                         {
                             var book = new List<BookCoach.Offer>();
@@ -733,6 +738,8 @@ public static class Entry
     static string? Camp(RestSiteRoom room, Player p)
     {
         var options = room.Options.Where(x => x.IsEnabled).Select(x => x.OptionId.ToUpperInvariant()).ToArray();
+        if (options.Contains("RESTORE") && p.Relics.OfType<MegaCrit.Sts2.Core.Models.Relics.Wuppy>().FirstOrDefault() is { } pet)
+            return $"Restore brings Wuppy from {pet.CurrentHp} to {pet.MaxHp} HP to intercept attacks again. Your own HP stays at {p.Creature.CurrentHp}/{p.Creature.MaxHp}.";
         if (!options.Contains("HEAL") || !options.Contains("SMITH")) return null;
         if (p.Creature.CurrentHp * 2 <= p.Creature.MaxHp) return $"Rest is worth considering at {p.Creature.CurrentHp}/{p.Creature.MaxHp} HP. An upgrade only helps once you draw it.";
         var deck = DeckOf(session!, p);
@@ -781,8 +788,17 @@ public static class Entry
             plannedActions = []; legalActions = []; expectedHpLoss = null;
             return ("Reassess manually: hidden intent or enemy damage prevention is not modeled.", null);
         }
+        var wuppy = p.Relics.OfType<MegaCrit.Sts2.Core.Models.Relics.Wuppy>().FirstOrDefault()?.CombatWuppy;
+        var hitsShown = enemies.SelectMany(e => e.Monster!.NextMove!.Intents.OfType<AttackIntent>()).Sum(a => Math.Max(1, a.Repeats));
+        var protection = WuppyCoach.Protection(wuppy?.CurrentHp ?? 0, wuppy?.Powers.Any(v => v.Id.Entry == "WUPPYS_LOYALTY_POWER") == true, hitsShown);
+        if (protection == WuppyCoach.Cover.FirstHitOnly)
+        {
+            plannedActions = []; legalActions = []; expectedHpLoss = null;
+            return ($"Wuppy ({wuppy!.CurrentHp} HP) takes the first attack hit before your Block. If it falls, later hits can reach you; keep Block for those.", null);
+        }
+        bool intercepts = protection == WuppyCoach.Cover.SingleHit;
         var foes = enemies.Select(e => new Foe(e.Monster!.Title.GetFormattedText(), e.CurrentHp + e.Block,
-            e.Monster.NextMove!.Intents.OfType<AttackIntent>().Sum(a => a.GetTotalDamage(state.PlayerCreatures, e)),
+            intercepts ? 0 : e.Monster.NextMove!.Intents.OfType<AttackIntent>().Sum(a => a.GetTotalDamage(state.PlayerCreatures, e)),
             new Status(Power(e, "WEAK_POWER"), Power(e, "VULNERABLE_POWER"), Power(e, "ARTIFACT_POWER")), Power(e, "STRENGTH_POWER"), e.Powers.Any(x => x.Id.Entry.Contains("ILLUSION")),
              DamageCap: e.Powers.FirstOrDefault(x => x.Id.Entry == "HARD_TO_KILL_POWER")?.Amount, Block: e.Block)).ToArray();
         static int Power(MegaCrit.Sts2.Core.Entities.Creatures.Creature creature, string id) =>
@@ -903,6 +919,7 @@ public static class Entry
         {
             var parts = value.Split('\n', 2);
             var risk = CombatGuidance.Risk(line, foes, p.Creature.CurrentHp, details);
+            if (intercepts) risk = ($"Wuppy ({wuppy!.CurrentHp} HP) intercepts the shown attack before your Block. " + risk).TrimEnd();
             int target = line.Steps.Select(s => s.Target).FirstOrDefault(i => i >= 0, 0);
             var enemy = enemies[target];
             var monster = enemy.Monster!;
@@ -982,6 +999,7 @@ public static class Entry
                 sadness += play.Sadness;
             }
         }
+        if (text == null && intercepts) return ($"Wuppy ({wuppy!.CurrentHp} HP) intercepts the shown attack before your Block.", key);
         if (text != null && session?.CurrentRoom is CombatRoom room && Catalog.Bosses.TryGetValue(room.Encounter.Id.Entry, out var tactic)
             && (state.RoundNumber == 1 || details || line.EnemiesLeft == 0))
         {

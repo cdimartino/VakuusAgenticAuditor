@@ -121,22 +121,19 @@ internal sealed class Display
         latest = report;
         try { Directory.CreateDirectory(Path.GetDirectoryName(ReviewPath)!); File.WriteAllText(ReviewPath + ".tmp", report); File.Move(ReviewPath + ".tmp", ReviewPath, true); }
         catch (IOException ex) { GD.PushWarning(ex.Message); }
-        var button = new Button
+        // Use the game's results layout so the button follows its visibility
+        // and scaling instead of taking input over the top-bar controls.
+        if (screen.GetNodeOrNull<VBoxContainer>("ScreenshakeContainer/CenterContainer/RunSummaryContainer/Container") is { } summary)
         {
-            Text = "Vakuu’s run review",
-            FocusMode = Control.FocusModeEnum.All,
-            AnchorLeft = 1,
-            AnchorRight = 1,
-            AnchorTop = 0,
-            AnchorBottom = 0,
-            OffsetLeft = -224,
-            OffsetRight = -20,
-            OffsetTop = 20,
-            OffsetBottom = 64
-        };
-        screen.AddChild(button); button.Pressed += ShowReview;
-        button.ZIndex = 100;
-        button.GrabFocus();
+            var button = new Button
+            {
+                Text = "Vakuu’s run review",
+                FocusMode = Control.FocusModeEnum.All,
+                SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter
+            };
+            summary.AddChild(button);
+            button.Pressed += ShowReview;
+        }
         if (P.OpenRunReview && !P.Muted && P.Mode != "Off") Callable.From(ShowReview).CallDeferred();
     }
     void ShowReview()

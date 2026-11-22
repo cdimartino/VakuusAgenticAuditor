@@ -35,7 +35,7 @@ for availability, disposition, labels in (
         "enabled_only",
         "conditional_live",
         """
-        wellspring_offer book_enchantment upgrade card_fit resource_curse courier metamorphosis repeat_hp repeat_resource
+        wuppy_offer wellspring_offer book_enchantment upgrade card_fit resource_curse courier metamorphosis repeat_hp repeat_resource
         hp_relic hp_random_reward gold_random_reward gold_transform gold_random_upgrade
         gold_card_repeat hp_random_upgrade hp_enchant combat_hp resource_item
         curse_remove curse_enchant curse_relic curse_upgrade curse_random_reward
@@ -103,6 +103,7 @@ MODES = {
 }
 CAMP = {
     "OPTION_HEAL": ("enabled_only", "conditional_live", "camp_compare_heal_smith"),
+    "OPTION_RESTORE": ("enabled_only", "conditional_live", "camp_wuppy_restore"),
     "OPTION_SMITH": ("enabled_only", "conditional_live", "camp_and_upgrade_overlay"),
     **{
         f"OPTION_{k}": ("run_dependent", "deferred", reason)
@@ -115,7 +116,6 @@ CAMP = {
             "KINDLE": "camp_kindling_unranked",
             "LIFT": "camp_lift_unranked",
             "MEND": "camp_coop_unverified",
-            "RESTORE": "camp_restore_unranked",
         }.items()
     },
 }
