@@ -6,6 +6,23 @@ internal static class CombatRegression
     {
         check(Catalog.Get("PILLAGE", "Pillage+", 1, true, false).Has("draw"), "Pillage+ audited draw classification");
         Play guard = new("Guard", 1, 0, 0, 14, [-1]);
+        var shots = Enumerable.Repeat(Catalog.Get("QUICK_SHOT", "Quick Shot", 1, false, true), 3).ToArray();
+        Foe[] shells = [new("Exoskeleton", 28, 3, DamageCap: 9), new("Exoskeleton", 24, 8, DamageCap: 9), new("Exoskeleton", 27, 0, DamageCap: 9)];
+        var honing = Catalog.Get("HONING", "Honing", 3, false, false);
+        var scaling = CombatGuidance.Setup(honing, 50, shots, shells);
+        Play buff = new("Honing", 3, 0, 0, 0, [-1, -1, -1], Pivot: true, Setup: true, FutureFit: scaling.fit, FutureReason: scaling.reason);
+        Play draw = new("Wah Cho Ki+", 1, 0, 0, 11, [8, 8, 8], Pivot: true, DrawBoundary: true);
+        Play hit = new("Strike", 1, 0, 0, 0, [6, 6, 6]);
+        var opener = TurnCoach.Plan([hit, buff, draw], shells, 4, 0, 0, 0, 49);
+        check(opener.Steps.Count == 1 && opener.Steps[0].Card == 2 && opener.SetupReason!.Contains("3 energy remains for Honing")
+            && opener.Remaining!.Sum() == 71 && opener.Incoming == 0, "draw and block while preserving Honing; never export a speculative post-draw play");
+        check(scaling.fit > 0 && CombatGuidance.Setup(honing, 50, [], shells).fit == 0 && scaling.fit < CombatGuidance.Setup(honing, 50, shots, [new("Other", 60, 0)]).fit,
+            "Honing depends on actual Arrow support and discounts per-hit caps");
+        check(TurnCoach.Plan([buff, guard], [new("Danger", 80, 14)], 3, 0, 0, 0, 10).Steps[0].Card == 1,
+            "future scaling never displaces a surviving line with a lethal one");
+        Play aim = buff with { Name = "Brace", Energy = 0, Ex = true, Setup = false, FutureFit = 2, FutureReason = "Aim for next Arrow" };
+        check(TurnCoach.Plan([aim], shells, 0, 0, 0, 0, 49).Steps.Count == 0 && TurnCoach.Plan([aim], shells, 2, 0, 0, 0, 49).SetupReason != null,
+            "X-cost Aim uses actual remaining energy, not free setup at zero");
         Play slam = new("Body Slam", 0, 0, 0, 0, [0], BlockDamage: true);
         Foe[] foe = [new("Target", 14, 50)];
         var line = TurnCoach.Plan([slam, guard], foe, 1, 0, 0, 0, 30);

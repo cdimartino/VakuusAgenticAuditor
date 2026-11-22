@@ -35,7 +35,7 @@ for availability, disposition, labels in (
         "enabled_only",
         "conditional_live",
         """
-        upgrade card_fit resource_curse courier metamorphosis repeat_hp repeat_resource
+        book_enchantment upgrade card_fit resource_curse courier metamorphosis repeat_hp repeat_resource
         hp_relic hp_random_reward gold_random_reward gold_transform gold_random_upgrade
         gold_card_repeat hp_random_upgrade hp_enchant combat_hp resource_item
         curse_remove curse_enchant curse_relic curse_upgrade curse_random_reward
