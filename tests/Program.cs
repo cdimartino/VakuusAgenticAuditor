@@ -158,6 +158,13 @@ FloorResult[] crabRun = [new(1, 9, "Bygone Effigy", 33, 1, 2, 0, 1, 0, 0, 5),
     new(2, 33, "Kaiser Crab Boss", 58, 0, 0, 0, 0, 0, 0, 6)];
 var crabLoss = RunReview.Write(deck, crabRun, false, false, "Kaiser Crab Boss", 5, 147, []);
 Check(crabLoss.IndexOf("A1/F9") < crabLoss.IndexOf("Keep The Key → Fight") && crabLoss.Contains("used Heart Of Iron, finishing at 31 HP") && crabLoss.Contains("healed 27 HP and left at 58/91") && crabLoss.IndexOf("LOSS ANALYSIS") < crabLoss.IndexOf("PER-FLOOR HISTORY"), "loss leads with costly choices across acts and links the last rest to the boss without a journal");
+FloorResult[] giantRun = [new(1, 7, "Restsite", 0, 0, 0, 0, 0, 0, 1, 0, EndHp: 42, MaxHp: 77, CampPicks: ["SMITH"]),
+    new(1, 8, "Cultists", 11, 0, 0, 0, 1, 0, 0, 4, EndHp: 31, MaxHp: 77),
+    new(1, 9, "Restsite", 0, 23, 0, 0, 0, 0, 0, 0, EndHp: 54, MaxHp: 77, CampPicks: ["HEAL"])];
+var campReview = RunReview.Write(deck, giantRun, false, false, null, 5, 58, []);
+Check(campReview.Contains("F8 Cultists → F9 Restsite") && campReview.Contains("There you healed 23 to 54 HP") && campReview.Contains("upgrading was defensible"), "loss review follows the actual next camp, not a blanket HP cutoff");
+var blitzReview = RunReview.Write(deck, [new(1, 4, "Shop", 0, 0, 0, 0, 0, 0, 0, 0, BlitzTaken: ["Relic", "Random Upgrades", "Two Relics"], BlitzPassed: ["Transform"])], true, false, null, 0, 0, [], blitz: true);
+Check(blitzReview.Contains("Merchant picks: Relic, Random Upgrades, Two Relics. Passed: Transform") && !blitzReview.Contains("gold spent"), "Blitz reviews report actual picks rather than spending gold");
 var eventReview = RunReview.Write(deck with { Cards = [C("AFTERIMAGE")] }, [new(1, 3, "Event", 8, 0, 0, 0, 0, 0, 0, 0)], true, false, null, 0, 0, []);
 Check(eventReview.Contains("0 direct block cards") && !eventReview.Contains("practice fight"), "review separates triggered block and event HP costs from direct combat evidence");
 Check(!RunReview.Write(deck, [], false, true, null, 0, 0, []).Contains("LOSS ANALYSIS"), "abandoned run is not misclassified as a death");
@@ -189,6 +196,10 @@ EnemyKnowledgeRegression.Run(Check);
 EventEffectsRegression.Run(Check);
 EnemyDefenseRegression.Run(Check);
 CurseRegression.Run(Check);
+BlitzDraftRegression.Run(Check);
+BlitzMerchantRegression.Run(Check);
+BlitzModeRegression.Run(Check);
+StatusCardRegression.Run(Check);
 RouteRegression.Run(Check);
 RoomRegression.Run(Check);
 JournalRegression.Run(Check);

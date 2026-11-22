@@ -44,6 +44,12 @@ On some Mac keyboards, hold **Fn** for F6 or F8. Changes save immediately.
 
 *The first fight on the left leads to a campfire upgrade. The right branch keeps an elite relic in reach. Vakuu looks ahead so you can decide whether the trade is worth it.*
 
+The [Status card guide](audit/26660232/status-cards.md) covers every native beta Status, including on-draw, retained, end-of-turn and encounter-choice effects.
+
+In the beta’s solo **Blitz** mode, the opening draft evaluates sets of three cards together. Merchant advice uses remaining picks rather than gold and updates after a pick. The top bar shows a fixed route; there is no route fork to choose. See [Blitz coverage](docs/BLITZ.md) for mode-specific rules.
+
+When enemies share a name or type, target numbers follow their left-to-right positions among living enemies. At a campfire, the coach compares available healing with the route to the next camp or boss.
+
 Vakuu scores the entire reachable act from the first map. The result is a preference for your current resources, not a prediction of hidden encounters. Press **F7** on the map to show or hide the dashed route. The choice is saved and works with Curse Mode on. Rebind **Show / hide map route** in Auditor settings, or use the **Route overlay** toggle there. The overlay is off by default.
 
 On the audited beta, combat advice can distinguish a known fixed follow-up from a conditional or random move. Exoskeleton’s observed Hard to Kill amount is applied separately to each hit. Unknown powers and effects are not assumed to be fully simulated.

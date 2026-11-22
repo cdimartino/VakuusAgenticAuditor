@@ -13,21 +13,22 @@
 
 [card-coverage.tsv](card-coverage.tsv) is the build-scoped embedded lookup. Its indexed columns preserve the original `roles.tsv` attribution. `base_immediate` and `upgraded_immediate` are effective role evidence from the respective template branches plus reviewed overrides. `deferred_gives` is available to deck-fit analysis, never to current-play preview extraction. `needs` records payoffs, not guaranteed results. `effect` names the existing `effects.tsv` combat hook, if any. The two reward columns are policies:
 
-- **541 role-fit, partial** (both base and upgraded; previously 496): rank marginal deck fit using the recorded evidence. For example, 16 verified hand-generation profiles can support Pillar of Creation; returning an existing card from discard does not qualify. Neither a role nor a finite score means every condition, side effect, numeric change or alternative is modeled.
+- **539 role-fit, partial** (both base and upgraded): rank marginal deck fit using the recorded evidence. For example, 16 verified hand-generation profiles can support Pillar of Creation; returning an existing card from discard does not qualify. Neither a role nor a finite score means every condition, side effect, numeric change or alternative is modeled.
 - **3 bespoke-reward, partial:** Undeath, Transfigure and Oblivion use explicit choice valuation. This classification grants no combat roles.
 - **18 typed-curse, partial:** the runtime must confirm the native model is a Curse. Use marginal dilution, plus a specific liability only where `CurseValuation` implements one. Merely matching an ID is insufficient.
-- **184 abstain** (previously 232): 161 model+text, 22 text-only and one model-only. Cost, deck size, upgrades, duplicates and Skip do not turn an unknown effect into a score. Foreign models cannot inherit native roles or liabilities.
+- **12 typed-status, partial:** native Status identity and exact release required; [the 20-model audit](status-cards.md) distinguishes actual deck liabilities from encounter choices, legacy and mock models.
+- **174 abstain:** 151 model+text, 22 text-only and one model-only. Cost, deck size, upgrades, duplicates and Skip do not turn an unknown effect into a score. Foreign models cannot inherit native roles or liabilities.
 
-Combat eligibility is separate. **551 IDs** pass the catalog's base identity gate (previously 498); **195** do not. The following disjoint counts describe *why an ID can enter*, not a count of fully simulated cards:
+Combat eligibility is separate. **550 IDs** pass the catalog's base play identity gate; **196** do not. Observing a status in hand is separate from proposing to play it. The following disjoint counts describe *why an ID can enter*, not a count of fully simulated cards:
 
 | Base combat evidence | IDs | Meaning |
 |---|---:|---|
 | New exact action profile | 76 | Explicit input, action or boundary in `CardPlayEffects`; seven of these still abstain on rewards. |
 | Pre-existing bespoke hook | 11 | Includes targeting requirements, variable hit counts and choice boundaries. |
 | Setup-only exception | 2 | Buffer and Barricade can prompt a recheck; future prevention or retained block is not projected. |
-| Immediate role candidate, no catalog hook | 398 | Requires native target legality and usable previews or other adapter evidence. |
+| Immediate role candidate, no catalog hook | 397 | Requires native target legality and usable previews or other adapter evidence. |
 | Deferred/payoff candidate only, no catalog hook | 64 | No direct amount follows from these roles; an independent adapter rule or setup boundary is needed. |
-| Ineligible | 195 | No combat route by catalog identity. Includes non-playable records as well as unresolved playable effects. |
+| Ineligible | 196 | No play route by catalog identity. Includes non-playable records as well as unresolved playable effects. |
 
 The **76 new profiles** break down into 21 draw/draw-discard, 19 hand creation/recovery/optional exhaust, 14 orb channel/evoke, 12 status, 8 resource, and 2 block previews. Before this change some already supplied attack, block or a generic pivot; the new capability is the specific effect or its board-sensitive valuation. Of the 76, only the two block hooks return current mitigation directly. Others express *bounded option value* and stop for a fresh observation. For example, Mirage reads `CalculatedBlock`, not `Block`; Quadcast requires an occupied orb and reads `Repeat`; Scrawl requires drawable cards and hand space; later Poison ticks contribute no current damage. A random card's arrival can be known while its identity, cost and eventual play remain unknown. Generic ally-only, delayed, on-kill and X-cost effects do not inherit these profiles. Reward-only evidence includes Outmaneuver’s next-turn energy and Envenom’s later conditional Poison; neither enters the immediate role column.
 

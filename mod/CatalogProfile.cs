@@ -4,6 +4,7 @@ namespace Auditor;
 
 internal sealed record CatalogProfile(string Build, string Version, string Commit, int AssemblyHash, string Rules)
 {
+    internal bool Exact { get; init; } = true;
     internal static Stream Open(string path) => typeof(CatalogProfile).Assembly
         .GetManifestResourceStream("auditor/catalogs/" + path) ?? throw new InvalidDataException($"Missing catalog: {path}");
 
@@ -26,6 +27,6 @@ internal sealed record CatalogProfile(string Build, string Version, string Commi
             .ThenBy(x => Math.Abs((long)x.v!.Build - game.Build))
             .ThenBy(x => Math.Abs((long)x.v!.Revision - game.Revision))
             .ThenBy(x => x.v).ThenByDescending(x => long.Parse(x.profile.Build))
-            .Select(x => x.profile).FirstOrDefault();
+            .Select(x => x.profile with { Exact = false }).FirstOrDefault();
     }
 }
