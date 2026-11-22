@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.1.31
+
+- Blitz uses merchant picks, not gold. Compare the visible perks and remaining picks, and evaluate multi-card draft choices together. Run reviews list the perks taken and passed.
+- Campfires weigh the path to the next camp or boss alongside the actual healing available. Loss reviews show the route taken and the HP you had before the next camp.
+- The exact-build Status card guide separates hand clutter, playable cleanup, on-draw penalties and end-turn effects. Fool drafts explain the tradeoff of creating Sadness.
+- Same-type combat targets are labeled by left-to-right position (for example, Cultist #1 and Cultist #3), including potion advice.
+
 ## v0.1.30
 
 - Loss reviews now lead with decisions to revisit across acts. See costly event choices, fights and potion use, low-health upgrades, the final rest before the loss, and repeated reward picks even when turn recording is off.

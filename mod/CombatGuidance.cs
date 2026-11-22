@@ -3,6 +3,22 @@ namespace Auditor;
 // Pure formatting and precondition helpers; callers supply observed facts only.
 internal static class CombatGuidance
 {
+    // Number by position in the formation, not by HP or by rank among duplicates.
+    // Return labels in input order so action indices and combat references stay intact.
+    internal static string[] TargetLabels((string Id, string Name, float? X)[] formation)
+    {
+        var indices = Enumerable.Range(0, formation.Length);
+        var order = formation.All(f => f.X.HasValue) ? indices.OrderBy(i => formation[i].X).ToArray() : indices.ToArray();
+        var labels = formation.Select(f => f.Name).ToArray();
+        for (int slot = 0; slot < order.Length; slot++)
+        {
+            int i = order[slot];
+            if (formation.Count(f => f.Id == formation[i].Id || f.Name == formation[i].Name) > 1)
+                labels[i] += $" #{slot + 1}";
+        }
+        return labels;
+    }
+
     internal static bool Boundary(string effect) => effect is "hand-upgrade" or "exhaust-choice" or "uncertain-draw";
 
     // Option value, never damage/block/draw. Deck payoffs are possible future

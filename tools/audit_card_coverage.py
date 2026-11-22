@@ -25,6 +25,13 @@ IMPALE OFF_BY_ONE PAELS_STRIKE PITY QUICK_SLASH RESERVES SHARP_EDGE SPIKED STAR_
 SWIFT_STRIKE TEZCATARAS_MIGHT TRAINING_STRIKE VETERAN VISIONS_OF_GRANDEUR WARP_SPACE""".split()
 )
 MODEL_ONLY = {"MOCK_TURN_END_IN_HAND_RECORDER_CARD"}
+STATUS_GUIDE = CAT / "status-cards.tsv"
+with STATUS_GUIDE.open() as stream:
+    STATUS_ROWS = list(csv.DictReader(stream, delimiter="\t"))
+STATUSES = {r["id"] for r in STATUS_ROWS}
+STATUS_REWARDS = {r["id"] for r in STATUS_ROWS if r["reward"] != "-"}
+if len(STATUS_ROWS) != len(STATUSES) or len(STATUSES) != 20:
+    raise ValueError("expected 20 distinct native Status model IDs")
 FIELDS = (
     "id source indexed_gives indexed_needs base_immediate upgraded_immediate needs effect "
     "base_reward upgraded_reward evidence deferred_gives setup_only"
@@ -192,6 +199,8 @@ def upgraded_text(text, up):
 
 
 def direct_roles(card, text, up):
+    if card == "MIND_ROT":
+        return set()  # Draw reduction is a chosen debuff, never a draw play.
     if card == "MAD_SCIENCE":
         return set()  # Randomized card type and riders cannot be selected by stable ID.
     text = upgraded_text(re.sub(r"\[/?\w+\]", "", text.lower()), up)
@@ -218,6 +227,8 @@ def direct_roles(card, text, up):
 
 
 def policy(card, gives, needs):
+    if card in STATUSES:
+        return "typed-status" if card in STATUS_REWARDS else "abstain"
     if card in {"UNDEATH", "TRANSFIGURE", "OBLIVION"}:
         return "bespoke-reward"
     if card in CURSES:
@@ -355,7 +366,10 @@ def main():
     if args.write and not args.pack:
         parser.error("--write requires --pack")
     if args.pack:
-        rows = generate(ids, roles, effects, native_data(args.pack))
+        records = native_data(args.pack)
+        if any(records[r["id"]]["title"] != r["title"] for r in STATUS_ROWS):
+            raise ValueError("status guide title differs from installed pack")
+        rows = generate(ids, roles, effects, records)
         expected = "\n".join("\t".join(row) for row in [FIELDS, *rows]) + "\n"
         if args.write:
             LEDGER.write_text(expected)

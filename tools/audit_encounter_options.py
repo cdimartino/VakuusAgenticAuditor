@@ -99,7 +99,11 @@ MODES = {
     "Standard": ("mode_only", "conditional_live", "standard_runtime_paths"),
     "Daily": ("mode_only", "deferred", "daily_modifier_callbacks"),
     "Dread": ("mode_only", "deferred", "mode_not_verified"),
-    "Blitz": ("mode_only", "deferred", "blitz_reward_picker_unmodeled"),
+    "Blitz": (
+        "mode_only",
+        "conditional_live",
+        "exact_solo_blitz_room_and_picker_paths",
+    ),
 }
 CAMP = {
     "OPTION_HEAL": ("enabled_only", "conditional_live", "camp_compare_heal_smith"),
@@ -314,6 +318,7 @@ def audit(pack, assembly):
             "card_reward_ui",
             "ascension",
             "modifiers",
+            "main_menu_ui",
         )
     }
     source = assembly_inventory(assembly)
@@ -538,15 +543,20 @@ def audit(pack, assembly):
         merchant,
     )
     for key, fields in merchant.items():
-        claim = (
-            ("mode_only", "deferred", "blitz_merchant_perk_not_ranked")
-            if ".blitz." in key
-            else (
+        if key == "MERCHANT.blitz.card_packs_entry":
+            claim = "catalog_only", "not_ranked", "no_matching_blitz_entry_type"
+        elif ".blitz." in key:
+            claim = (
+                "mode_only",
+                "conditional_live",
+                "blitz_enabled_entry_live_budget_and_effect",
+            )
+        else:
+            claim = (
                 "enabled_only",
                 "conditional_live",
                 "removal_if_stocked_and_affordable",
             )
-        )
         row("merchant_action", key, *claim, fields, show_fields=True)
     alternates = group(tables["card_reward_ui"], r"(OPTION_\w+)\.(\w+)", "card_reward")
     exact("Card reward alternates", CARD_ALTERNATES, alternates)
@@ -671,10 +681,79 @@ def audit(pack, assembly):
 
     for key, claim in DYNAMIC.items():
         row("runtime_family", key, *claim)
+    for key in ("BLITZ.LOCKED", "BLITZ_DISCLAIMER", "BLITZ_MP"):
+        fields = scoped_keys(tables["main_menu_ui"], key)
+        if not fields:
+            raise ValueError(f"Absent Blitz lobby evidence: {key}")
+        row(
+            "blitz_lobby",
+            key,
+            "mode_only",
+            "not_ranked",
+            "native_lobby_control",
+            fields,
+        )
     return output
 
 
 DYNAMIC = {
+    "BLITZ.FIXED_ROUTE": (
+        "mode_only",
+        "conditional_live",
+        "actual_saved_links_and_optional_second_boss",
+    ),
+    "BLITZ.ASCENSION": (
+        "mode_only",
+        "conditional_live",
+        "cumulative_mode_levels_zero_to_five",
+    ),
+    "BLITZ.POOL_FILTERS": (
+        "mode_only",
+        "not_ranked",
+        "native_creation_filters_observe_materialized_offers",
+    ),
+    "BLITZ.GREMLIN_MERC": (
+        "mode_only",
+        "conditional_live",
+        "visible_attack_no_gold_theft",
+    ),
+    "BLITZ.NEOW_GRID": ("mode_only", "conditional_live", "three_of_ten_visible_grid"),
+    "BLITZ.WEAK_ENCOUNTER": (
+        "mode_only",
+        "conditional_live",
+        "one_weak_slot_then_visible_intents",
+    ),
+    "BLITZ.MONSTER_REWARD": (
+        "mode_only",
+        "conditional_live",
+        "common_card_nonweak_potion",
+    ),
+    "BLITZ.ELITE_REWARD": (
+        "mode_only",
+        "conditional_live",
+        "uncommon_card_separate_relic_buttons",
+    ),
+    "BLITZ.BOSS_REWARD": (
+        "mode_only",
+        "conditional_live",
+        "rare_and_potion_before_final_act",
+    ),
+    "BLITZ.LATE_CARD_UPGRADES": (
+        "mode_only",
+        "conditional_live",
+        "later_nonboss_combat_only_live_upgrades",
+    ),
+    "BLITZ.TREASURE_ROUNDS": (
+        "mode_only",
+        "conditional_live",
+        "solo_two_rounds_actual_enabled_holders",
+    ),
+    "BLITZ.BOSS_CAMP": (
+        "mode_only",
+        "conditional_live",
+        "enabled_heal_smith_before_actual_boss_chain",
+    ),
+    "BLITZ.MULTIPLAYER": ("mode_only", "not_ranked", "networked_runs_excluded"),
     "ANCIENT.RELIC_VARIANT": (
         "run_dependent",
         "deferred",

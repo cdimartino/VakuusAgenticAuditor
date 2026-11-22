@@ -19,6 +19,23 @@ internal static class RouteCoach
     record Context(int Fights = 0, int Elites = 0, int Camps = 0, int Shops = 0);
     record Plan(double Value, RouteStop[] Stops);
 
+    internal static string Camp(RouteStop[] path, int hp, int max, int heal, string? upgrade)
+    {
+        var stop = Array.FindIndex(path, n => n.Kind is "RestSite" or "Boss");
+        var stretch = stop < 0 ? path : path[..(stop + 1)];
+        string label(RouteStop n) => n.Kind switch { "RestSite" => "camp", "Monster" => "fight", "Unknown" => "?", _ => n.Kind.ToLowerInvariant() };
+        string preview = stretch.Length == 0 ? "Next rooms unavailable." : "Suggested path: " + string.Join(" → ", stretch.Select(label)) + ".";
+        int gain = Math.Clamp(heal, 0, Math.Max(0, max - hp));
+        bool hard = stretch.Any(n => n.Kind is "Elite" or "Boss") || stretch.Count(n => n.Kind == "Monster") >= 2;
+        bool shortCamp = stop >= 0 && path[stop].Kind == "RestSite" && stretch.All(n => n.Kind is "RestSite" or "Monster" or "Treasure" or "Shop") && !hard;
+        var smith = upgrade == null ? "an upgrade" : "upgrading " + upgrade;
+        string choice = gain == 0 ? $"Rest adds no HP; inspect {smith}." : hp * 3 <= max || hard && hp * 4 < max * 3
+            ? $"Favor Rest: about +{gain} HP ({hp} → {hp + gain}) before the next stretch."
+            : shortCamp && hp * 2 >= max ? $"Consider {smith}: another camp is close. Rest now would add about {gain} HP."
+            : $"Compare Rest (about {hp} → {hp + gain} HP) with {smith}.";
+        return choice + " " + preview;
+    }
+
     internal static RouteHint? Choose(RouteStop[] starts, RouteState state, bool manual = false)
     {
         if (starts.Length == 0) return null;

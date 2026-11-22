@@ -2,16 +2,16 @@ using System.Text;
 namespace Auditor;
 
 internal record FloorResult(int Act, int Floor, string Room, int Damage, int Healed, int Used, int Spent, int Gained, int Removed, int Upgraded, int Turns, int? StartupHpGrant = null,
-    int? EndHp = null, int? MaxHp = null, string[]? EventPicks = null, string[]? CampPicks = null, string[]? BeltUsed = null, string[]? PickedCards = null);
+    int? EndHp = null, int? MaxHp = null, string[]? EventPicks = null, string[]? CampPicks = null, string[]? BeltUsed = null, string[]? PickedCards = null, string[]? BlitzTaken = null, string[]? BlitzPassed = null);
 internal static class RunReview
 {
-    internal static string Write(Deck deck, FloorResult[] path, bool won, bool abandoned, string? killer, int ascension, int gold, string[] potions, string? journalAssessment = null)
+    internal static string Write(Deck deck, FloorResult[] path, bool won, bool abandoned, string? killer, int ascension, int gold, string[] potions, string? journalAssessment = null, bool blitz = false)
     {
         var s = new StringBuilder();
         var lines = Archetypes.Analyze(deck);
         var worst = path.OrderByDescending(f => f.Damage).FirstOrDefault();
-        s.AppendLine($"{deck.Character} · Ascension {ascension} · {(abandoned ? "Abandoned" : won ? "Victory" : "Defeat")}");
-        s.AppendLine($"{path.Length} recorded floors · {deck.Cards.Length} cards · {deck.Relics.Length} relics · {gold} gold at finish");
+        s.AppendLine($"{deck.Character}{(blitz ? " · Blitz" : "")} · Ascension {ascension} · {(abandoned ? "Abandoned" : won ? "Victory" : "Defeat")}");
+        s.AppendLine($"{path.Length} recorded floors · {deck.Cards.Length} cards · {deck.Relics.Length} relics · {(blitz ? "merchant picks instead of gold" : $"{gold} gold at finish")}");
         s.AppendLine(abandoned ? "\nWHAT TO PRACTICE" : won ? "\nWHAT TO REPEAT" : "\nLOSS ANALYSIS");
         if (!won && !abandoned) s.AppendLine(killer == null ? "The game did not record a killing encounter or event." : $"Recorded cause: {killer}.");
         if (path.LastOrDefault() is { } end) s.AppendLine($"Last floor: {end.Room}; {end.Damage} damage taken, {end.Used} potions used" + (end.Turns > 0 ? $", {end.Turns} turns." : "."));
@@ -29,11 +29,13 @@ internal static class RunReview
         s.AppendLine("\nHOW THE RUN UNFOLDED");
         foreach (var act in path.GroupBy(f => f.Act))
             s.AppendLine($"Act {act.Key}: {act.Count()} floors; {act.Sum(f => f.Damage)} damage taken, {act.Sum(f => f.Healed)} healed, {act.Sum(f => f.Used)} potions used.");
-        s.AppendLine($"{path.Sum(f => f.Gained)} cards gained, {path.Sum(f => f.Removed)} removed, {path.Sum(f => f.Upgraded)} upgrades recorded; {path.Sum(f => f.Spent)} gold spent.");
+        s.AppendLine($"{path.Sum(f => f.Gained)} cards gained, {path.Sum(f => f.Removed)} removed, {path.Sum(f => f.Upgraded)} upgrades recorded{(blitz ? "." : $"; {path.Sum(f => f.Spent)} gold spent.")}");
         s.AppendLine("\nPER-FLOOR HISTORY");
         foreach (var f in path)
         {
-            s.AppendLine($"A{f.Act}/F{f.Floor} {RoomLabel(f.Room)}: {f.Damage} damage, {f.Healed} game-recorded healing, {f.Used} potions, {f.Spent} gold spent; +{f.Gained}/−{f.Removed} cards, {f.Upgraded} upgrades, {f.Turns} turns.");
+            s.AppendLine($"A{f.Act}/F{f.Floor} {RoomLabel(f.Room)}: {f.Damage} damage, {f.Healed} game-recorded healing, {f.Used} potions{(blitz ? "" : $", {f.Spent} gold spent")}; +{f.Gained}/−{f.Removed} cards, {f.Upgraded} upgrades, {f.Turns} turns.");
+            if (blitz && f.BlitzTaken is { Length: > 0 } perks)
+                s.AppendLine($"  Merchant picks: {string.Join(", ", perks)}." + (f.BlitzPassed is { Length: > 0 } others ? $" Passed: {string.Join(", ", others)}." : ""));
             if (f.StartupHpGrant is { } grant) s.AppendLine($"  Identified startup HP grant: {grant}; separate from tactical recovery (included in history healing only if the game records it there).");
         }
         if (path.Any(f => f.Floor == 1 && f.Healed > 0 && f.StartupHpGrant == null))
@@ -73,11 +75,24 @@ internal static class RunReview
             string advice = f.EventPicks?.Contains("Fight") == true ? "Before choosing an event fight, weigh its reward against the HP and belt you need for the boss." : f.Turns == 0 ? "Compare the event reward with the HP it leaves for the next fight." : "Before committing to a similar fight, budget for both damage and potion use.";
             points.Add((f, $"{choice}You took {f.Damage} damage{potion}" + (f.EndHp is int hp ? $", finishing at {hp} HP. " : ". ") + advice));
         }
-        var smith = earlier.LastOrDefault(f => f.CampPicks?.Contains("SMITH") == true && f.EndHp is > 0 && f.MaxHp > 0 && f.EndHp * 5 <= f.MaxHp * 3);
-        if (smith != null) points.Add((smith, $"You upgraded at {smith.EndHp}/{smith.MaxHp} HP. The upgrade may have paid off; at that health, compare it with recovery before the next hard fight."));
-        var camp = earlier.LastOrDefault();
-        if (camp?.CampPicks?.Contains("HEAL") == true && camp.Healed > 0 && camp.EndHp is int entryHp)
-            points.Add((camp, $"You healed {camp.Healed} HP and left at {entryHp}/{camp.MaxHp}. The next floor, {end.Room}, recorded {end.Damage} damage. The rest helped; look upstream for where you lost that buffer."));
+        for (int i = 0; i < path.Length - 1; i++)
+        {
+            var camp = path[i];
+            bool smith = camp.CampPicks?.Contains("SMITH") == true;
+            if ((!smith && camp.CampPicks?.Contains("HEAL") != true) || camp.EndHp is not int hp) continue;
+            var after = path.Skip(i + 1).TakeWhile(f => f.Act == camp.Act).ToArray();
+            if (after.Length == 0) continue;
+            int until = Array.FindIndex(after, f => f.CampPicks is { Length: > 0 } || f.Room.Replace(" ", "").Equals("Restsite", StringComparison.OrdinalIgnoreCase));
+            var rooms = until < 0 ? after : after[..until];
+            string trail = string.Join(" → ", after.Take(until < 0 ? after.Length : until + 1).Select(f => $"F{f.Floor} {RoomLabel(f.Room)}"));
+            var next = until < 0 ? null : after[until];
+            string result = next == null ? "" : rooms.LastOrDefault()?.EndHp is int arrival ? $" Last recorded HP before that camp: {arrival}." : "";
+            if (next?.CampPicks?.Contains("HEAL") == true) result += $" There you healed {next.Healed} to {next.EndHp} HP.";
+            string action = smith ? $"You upgraded at {hp}/{camp.MaxHp}." : $"You healed {camp.Healed} HP and left at {hp}/{camp.MaxHp}.";
+            string lesson = smith && next != null && rooms.Length <= 1 && rooms.All(f => f.EndHp > camp.MaxHp / 3)
+                ? " With another camp this close, upgrading was defensible." : "";
+            points.Add((camp, $"{action} Path taken: {trail}. {rooms.Sum(f => f.Damage)} damage recorded on that stretch.{result}{lesson}"));
+        }
         foreach (var p in points.OrderBy(x => x.floor.Floor)) s.AppendLine($"• A{p.floor.Act}/F{p.floor.Floor} {RoomLabel(p.floor.Room)}: {p.text}");
         var picksTaken = path.SelectMany(f => f.PickedCards ?? []).ToArray();
         var draws = deck.Cards.Count(c => c.Has("draw"));
@@ -86,7 +101,7 @@ internal static class RunReview
             var repeat = picksTaken.GroupBy(x => x).Where(g => g.Count() > 1).OrderByDescending(g => g.Count()).Select(g => g.Key).Take(2).ToArray();
             s.AppendLine($"• Reward decisions: you picked {picksTaken.Length} cards" + (repeat.Length > 0 ? $", including repeat picks of {string.Join(" and ", repeat)}" : "") + $". You finished with {deck.Cards.Length} cards and {draws} tagged for draw. Consider skipping a duplicate to see your key cards more often; history doesn’t show that a particular draw killed you.");
         }
-        if (points.Count == 0) s.AppendLine("No earlier costly fight, event choice or low-health upgrade can be identified from these floors.");
+        if (points.Count == 0) s.AppendLine("No earlier costly fight or camp decision stands out in the recorded floors.");
     }
     static string RoomLabel(string room)
     {

@@ -15,6 +15,8 @@ internal static class RouteRegression
         check(RouteCoach.Choose([b, a], state)!.Path[0] == a, "route ties use stable coordinates");
         check(RouteCoach.Choose([b, a], state) is { Index: 1, Text: var label } && label.StartsWith("Left:"), "anchor uses input index; route label follows the coordinate");
         check(RouteCoach.Choose([a, b], state)!.Identity == RouteCoach.Choose([b, a], state)!.Identity, "route identity survives input order");
+        check(RouteCoach.Camp([new("Monster", []), camp], 42, 77, 23, "Wah Hammer").Contains("another camp is close") && RouteCoach.Camp([new("Boss", [])], 42, 77, 23, "Wah Hammer").StartsWith("Favor Rest"), "same HP but a fight then camp versus a boss changes camp advice");
+        check(!RouteCoach.Camp([new("Unknown", []), camp], 42, 77, 23, "Wah Hammer").Contains("another camp is close"), "unknown room cannot promise cheap access to healing");
         var announcements = new RouteAnnouncements();
         check(announcements.Update([a], state) != null, "first full route announced even forced");
         check(announcements.Update([a], state) == null, "unchanged route stays quiet");

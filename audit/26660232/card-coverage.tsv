@@ -42,7 +42,7 @@ BEACON_OF_HOPE	model+text							abstain	abstain	conditional-text		no
 BEAM_CELL	model+text	hit,vulnerable		hit,vulnerable	hit,vulnerable			role-fit	role-fit	-		no
 BEAT_DOWN	model+text							abstain	abstain	-		no
 BEAT_INTO_SHAPE	model+text	hit,forge		forge,hit	forge,hit			role-fit	role-fit	-		no
-BECKON	model+text							abstain	abstain	conditional-text		no
+BECKON	model+text							typed-status	typed-status	conditional-text		no
 BEGONE	model+text							abstain	abstain	upgrade-branch		no
 BELIEVE_IN_YOU	model+text							abstain	abstain	-		no
 BIASED_COGNITION	model+text	focus		focus	focus			role-fit	role-fit	conditional-text		no
@@ -83,7 +83,7 @@ BULLET_TIME	model+text							abstain	abstain	-		no
 BULLY	model+text	hit	vulnerable	hit	hit	vulnerable		role-fit	role-fit	conditional-text		no
 BULWARK	model+text	guard,forge		forge,guard	forge,guard			role-fit	role-fit	-		no
 BUNDLE_OF_JOY	model+text			card creation	card creation		create-cards	role-fit	role-fit	-		no
-BURN	model+text							abstain	abstain	conditional-text		no
+BURN	model+text							typed-status	typed-status	conditional-text		no
 BURNING_PACT	model+text	draw,exhaust		draw,exhaust	draw,exhaust			role-fit	role-fit	-		no
 BURST	model+text							abstain	abstain	-		no
 BURY	model+text	hit		hit	hit			role-fit	role-fit	-		no
@@ -155,14 +155,14 @@ DARKNESS	model+text	orbs		orbs	orbs			role-fit	role-fit	upgrade-branch		no
 DARK_EMBRACE	model+text	draw	exhaust			exhaust		role-fit	role-fit	conditional-text	draw	no
 DARK_SHACKLES	model+text							abstain	abstain	-		no
 DASH	model+text	guard,hit		guard,hit	guard,hit			role-fit	role-fit	-		no
-DAZED	model+text							abstain	abstain	-		no
+DAZED	model+text							typed-status	typed-status	-		no
 DEADLY_POISON	model+text	poison		poison	poison		poison	role-fit	role-fit	-		no
 DEATH	model+text	doom		doom	doom			role-fit	role-fit	-		no
 DEATHBRINGER	model+text	doom		doom	doom			role-fit	role-fit	-		no
 DEATHS_DOOR	model+text	guard	doom	guard	guard	doom		role-fit	role-fit	conditional-text		no
 DEATH_MARCH	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
 DEBILITATE	model+text	hit		hit	hit			role-fit	role-fit	-		no
-DEBRIS	model+text							abstain	abstain	-		no
+DEBRIS	model+text							typed-status	typed-status	-		no
 DEBT	model+text							typed-curse	typed-curse	conditional-text		no
 DECAY	model+text							typed-curse	typed-curse	conditional-text		no
 DECISIONS_DECISIONS	model+text	draw		draw	draw			role-fit	role-fit	-		no
@@ -334,7 +334,7 @@ IMMORTALITY	text-only	hp loss						abstain	abstain	-		no
 IMPALE	text-only	hit,poison						abstain	abstain	-		no
 IMPATIENCE	model+text							abstain	abstain	conditional-text		no
 IMPERVIOUS	model+text	guard		guard	guard			role-fit	role-fit	-		no
-INFECTION	model+text							abstain	abstain	conditional-text		no
+INFECTION	model+text							typed-status	typed-status	conditional-text		no
 INFERNAL_BLADE	model+text			card creation	card creation		create-one	role-fit	role-fit	-		no
 INFERNO	model+text							abstain	abstain	conditional-text		no
 INFINITE_BLADES	model+text	shivs						role-fit	role-fit	conditional-text	shivs	no
@@ -400,7 +400,7 @@ MIGHTY_SHIELD	model+text	guard		guard	guard			role-fit	role-fit	-		no
 MIGHTY_WEAPON	model+text	hit,area damage		area damage,hit	area damage,hit			role-fit	role-fit	-		no
 MIMIC	model+text	guard		guard	guard			role-fit	role-fit	-		no
 MIND_BLAST	model+text	hit		hit	hit			role-fit	role-fit	-		no
-MIND_ROT	model+text	draw		draw	draw			role-fit	role-fit	-		no
+MIND_ROT	model+text	draw						abstain	abstain	-		no
 MINION_DIVE_BOMB	model+text	hit		hit	hit			role-fit	role-fit	-		no
 MINION_SACRIFICE	model+text	guard		guard	guard			role-fit	role-fit	-		no
 MINION_STRIKE	model+text	hit,draw		draw,hit	draw,hit		draw-cards	role-fit	role-fit	-		no
@@ -534,7 +534,7 @@ ROYAL_GAMBLE	model+text			stars	stars		gain-stars	role-fit	role-fit	-		no
 RUMMAGE	model+text	draw,sadness		draw,sadness	draw,sadness			role-fit	role-fit	-		no
 RUPTURE	model+text	strength	hp loss			hp loss		role-fit	role-fit	conditional-text	strength	no
 SACRIFICE	model+text							abstain	abstain	conditional-text		no
-SADNESS	model+text							abstain	abstain	-		no
+SADNESS	model+text							typed-status	typed-status	-		no
 SALVO	model+text	hit,retain hand		hit,retain hand	hit,retain hand			role-fit	role-fit	-		no
 SCAVENGE	model+text	exhaust		exhaust	exhaust			role-fit	role-fit	conditional-text		no
 SCOURGE	model+text	draw,doom		doom,draw	doom,draw			role-fit	role-fit	-		no
@@ -576,7 +576,7 @@ SKIM	model+text	draw		draw	draw		draw-cards	role-fit	role-fit	-		no
 SKY_SHOT	model+text	hit,shots,impale		hit,impale,shots	hit,impale,shots			role-fit	role-fit	-		no
 SLEIGHT_OF_FLESH	model+text							abstain	abstain	conditional-text		no
 SLICE	model+text	hit		hit	hit			role-fit	role-fit	-		no
-SLIMED	model+text	draw		draw	draw		draw-cards	role-fit	role-fit	-		no
+SLIMED	model+text	draw		draw	draw		draw-cards	typed-status	typed-status	-		no
 SLOTH	model+text							abstain	abstain	-		no
 SMOKESTACK	model+text							abstain	abstain	conditional-text		no
 SNAKEBITE	model+text	poison		poison	poison		poison	role-fit	role-fit	-		no
@@ -584,7 +584,7 @@ SNAP	model+text	hit,Osty attacks		Osty attacks,hit	Osty attacks,hit			role-fit	r
 SNEAKY	model+text							abstain	abstain	conditional-text		no
 SOLAR_STRIKE	model+text	hit,stars		hit,stars	hit,stars		gain-stars	role-fit	role-fit	-		no
 SONG_PATH	model+text							role-fit	role-fit	conditional-text	guard	no
-SOOT	model+text							abstain	abstain	-		no
+SOOT	model+text							typed-status	typed-status	-		no
 SORROWFUL_STRIKE	model+text	hit,sadness		hit,sadness	hit,sadness		sadness-cards	role-fit	role-fit	-		no
 SOUL	model+text	draw		draw	draw			role-fit	role-fit	-		no
 SOULBOUND	model+text	souls						abstain	abstain	conditional-text		no
@@ -682,7 +682,7 @@ TIMBER	model+text	hit		hit	hit			role-fit	role-fit	conditional-text		no
 TIMES_UP	model+text	hit		hit	hit			role-fit	role-fit	-		no
 TOOLS_OF_THE_TRADE	model+text	discard						role-fit	role-fit	conditional-text	discard,draw	no
 TORIC_TOUGHNESS	model+text	guard		guard	guard			role-fit	role-fit	conditional-text		no
-TOXIC	model+text							abstain	abstain	conditional-text		no
+TOXIC	model+text							typed-status	typed-status	conditional-text		no
 TRACKING	model+text		weak			weak		role-fit	role-fit	-		no
 TRAINING_STRIKE	text-only	hit						abstain	abstain	conditional-text		no
 TRANSFIGURE	model+text							bespoke-reward	bespoke-reward	-		no
@@ -714,7 +714,7 @@ VICIOUS	model+text		vulnerable			vulnerable		role-fit	role-fit	conditional-text	
 VIOLENT_CHORD	model+text							abstain	abstain	conditional-text		no
 VISIONS_OF_GRANDEUR	text-only							abstain	abstain	conditional-text		no
 VITRIOL	model+text	sadness,weak		sadness,weak	sadness,weak		sadness-one	role-fit	role-fit	-		no
-VOID	model+text							abstain	abstain	conditional-text		no
+VOID	model+text							typed-status	typed-status	conditional-text		no
 VOID_FORM	model+text							abstain	abstain	-		no
 VOLLEY	model+text	hit		hit	hit			role-fit	role-fit	-		no
 VOLTAIC	model+text	orbs,lightning	lightning	lightning,orbs	lightning,orbs	lightning		role-fit	role-fit	-		no
@@ -736,8 +736,8 @@ WHISTLING_ARROWS	model+text	guard,shots,impale	shots	guard	guard	shots		role-fit
 WHITE_NOISE	model+text			card creation	card creation		create-one	role-fit	role-fit	-		no
 WISH	model+text							abstain	abstain	-		no
 WISP	model+text	energy		energy	energy			role-fit	role-fit	-		no
-WITHER	model+text							abstain	abstain	conditional-text		no
-WOUND	model+text							abstain	abstain	-		no
+WITHER	model+text							typed-status	typed-status	conditional-text		no
+WOUND	model+text							typed-status	typed-status	-		no
 WRAITH_FORM	model+text							abstain	abstain	conditional-text		no
 WREST	model+text					impale		role-fit	role-fit	conditional-text		no
 WRITHE	model+text							typed-curse	typed-curse	-		no

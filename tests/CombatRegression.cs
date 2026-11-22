@@ -4,6 +4,8 @@ internal static class CombatRegression
 {
     public static void Run(Action<bool, string> check)
     {
+        check(CombatGuidance.TargetLabels([("A", "Cultist", 200), ("B", "Beetle", 100), ("A", "Cultist", 0)])
+            .SequenceEqual(["Cultist #3", "Beetle", "Cultist #1"]), "same-type targets use their absolute left-to-right positions without changing action indices");
         Foe[] beetle = [new("Shrinker Beetle", 38, 0)];
         Play flatten = new("Flatten", 2, 0, 0, 0, [12], Attack: true);
         Play defy = new("Defy", 1, 0, 0, 6, [0], Weak: 1, Skill: true);

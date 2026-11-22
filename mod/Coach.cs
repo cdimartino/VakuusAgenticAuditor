@@ -4,6 +4,7 @@ internal record Card(string Id, string Name, int Cost, bool Up, bool Attack, boo
 {
     // Supplied from runtime CardType.Curse, never inferred from a name/tag.
     internal bool IsCurse { get; init; }
+    internal bool IsStatus { get; init; }
     internal bool Skill { get; init; }
     internal bool Power { get; init; }
     internal bool VariableCost { get; init; }
@@ -11,6 +12,7 @@ internal record Card(string Id, string Name, int Cost, bool Up, bool Attack, boo
     internal bool ForeignModel { get; init; }
     internal bool CombatKnown { get; init; }
     internal bool AuditedCurse { get; init; }
+    internal bool? NativeShoot { get; init; }
     internal string[]? Immediate { get; init; }
     internal bool Has(string role) => Gives.Contains(role);
     internal bool CombatHas(string role) => (Immediate ?? Gives).Contains(role);
@@ -89,6 +91,12 @@ internal static class Coach
     // A score is marginal fit for this deck, not predicted win rate.
     internal static Verdict Assess(Card c, Deck d)
     {
+        if (c.IsStatus)
+        {
+            var rule = StatusCardGuide.Lookup(c);
+            return new(c.Id, c.Name, rule?.Reward is int value ? value : double.NaN,
+                rule?.Cue ?? "I don’t know this status well enough to rank it.", null);
+        }
         if (c.IsCurse && !c.ForeignModel && (c.AuditedCurse || CurseValuation.Names.ContainsKey(c.Id)))
         {
             var cost = CurseValuation.Addition([c.Id], d);
@@ -102,7 +110,11 @@ internal static class Coach
         var opportunity = Archetypes.Opportunity(d, c);
         var guards = cards.Count(x => x.Has("guard"));
         var nonBasicHits = cards.Count(x => x.Attack && !x.Id.StartsWith("STRIKE_"));
-        string? specific = null;
+        string? specific = StatusCardGuide.GeneratorCue(c, d);
+        // Existing role and archetype weights already reward Sadness payoffs.
+        if (specific != null && !d.Cards.Any(x => !x.ForeignModel && (x.Needs.Contains("sadness")
+            || x.Id is "PUNCH_OF_JOY" or "COMPACT" or "FLAK_CANNON")))
+            cons.Add((c.Id == "SORROWFUL_STRIKE" ? 1.2 : .6, "Retained Sadness crowds later hands."));
         if (auditedRare)
         {
             if (c.Id == "UNDEATH")

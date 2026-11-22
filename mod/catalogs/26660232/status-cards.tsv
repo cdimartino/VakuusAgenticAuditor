@@ -1,0 +1,21 @@
+id	title	trigger	reward	cue
+AMNESIA	Amnesia	chosen	-	Draw 2 fewer and lose 1 energy this turn.
+BECKON	Beckon	end-hp	-3	Clear it before turn end to avoid losing HP through Block.
+BURN	Burn	end-damage	-2	Left in hand at turn end, it deals blockable damage.
+DAZED	Dazed	ethereal	-1	It exhausts if left in hand at turn end.
+DEBRIS	Debris	play	-1	Playing it spends energy to exhaust it.
+DEPRECATED_CARD	Deprecated Card	legacy	-	Playing this legacy card draws one and removes its deck copy if present.
+DISINTEGRATION	Disintegration	chosen	-	Take 6 blockable damage at turn end.
+FRANTIC_ESCAPE	Frantic Escape	play	-	Playing it increases your Sandpit distance if targeted; its cost rises this combat.
+INFECTION	Infection	end-damage	-2	Left in hand at turn end, it deals blockable damage.
+MIND_ROT	Mind Rot	chosen	-	Draw 1 fewer card each turn.
+MOCK_STATUS_CARD	Mock Status Card	mock	-	Test fixture; no decision policy.
+SADNESS	Sadness	retain	-2	It stays in hand across turns. Convert or exhaust it to free the slot.
+SLIMED	Slimed	play	-1	Playing it draws one, then exhausts it.
+SLOTH	Sloth	chosen	-	Play at most 3 cards per turn.
+SOOT	Soot	clog	-1	It takes a hand slot without a native play effect.
+TOXIC	Toxic	end-damage	-2	Playing it exhausts it; left in hand at turn end, it deals blockable damage.
+VOID	Void	draw	-2	Drawing it costs energy. Holding it does not charge you again; it is Ethereal.
+WASTE_AWAY	Waste Away	chosen	-	Have 1 less maximum energy per turn.
+WITHER	Wither	end-damage	-2	Left in hand at turn end, it deals blockable damage. Check this copy’s value.
+WOUND	Wound	clog	-1	It takes a hand slot without a native play effect.
