@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.32
+
+- Blitz merchants compare only visible, enabled shop slots. Upgrade services use actual deck targets; future upgraded card rewards do not require a target in your deck.
+
 ## v0.1.31
 
 - Blitz uses merchant picks, not gold. Compare the visible perks and remaining picks, and evaluate multi-card draft choices together. Run reviews list the perks taken and passed.
