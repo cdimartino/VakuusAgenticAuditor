@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Nodes.Screens.Shops;
 
 namespace Auditor;
 
@@ -16,7 +17,12 @@ internal static class BlitzMerchantRuntime
         if (screen?.IsOpen != true) return null;
         var inventory = screen.Inventory;
         if (inventory is not { IsBlitzShop: true }) return null;
-        var entries = inventory.BlitzEntries;
+        var entries = VisibleSlots(screen)
+            .Where(slot => slot.IsVisibleInTree() && slot.Hitbox.IsEnabled &&
+                slot.Entry is BlitzMerchantEntry entry && entry.IsStocked)
+            .Select(slot => (BlitzMerchantEntry)slot.Entry)
+            .ToArray();
+        if (entries.Length == 0) return null;
         var deck = player.Deck.Cards;
         var offers = entries.Select(entry =>
         {
@@ -24,9 +30,7 @@ internal static class BlitzMerchantRuntime
                 "(?<=[a-z0-9])(?=[A-Z])", "_").ToLowerInvariant();
             IEnumerable<CardModel> legal = entry.MerchantEntryType switch
             {
-                BlitzMerchantEntryType.RandomUpgrades or BlitzMerchantEntryType.CardUpgrade or
-                    BlitzMerchantEntryType.UpgradedCardReward or BlitzMerchantEntryType.UpgradedRareCard or
-                    BlitzMerchantEntryType.UpgradedRareCardReward =>
+                BlitzMerchantEntryType.RandomUpgrades or BlitzMerchantEntryType.CardUpgrade =>
                     deck.Where(c => c.IsUpgradable),
                 BlitzMerchantEntryType.CardTransform =>
                     deck.Where(c => c.Type != CardType.Quest && c.IsTransformable),
@@ -58,7 +62,7 @@ internal static class BlitzMerchantRuntime
 
         return BlitzMerchant.Compare(offers, new(
             inventory.BlitzChoicesRemaining,
-            offers.Count(o => o.Enabled),
+            entries.Length,
             player.Creature.CurrentHp,
             player.Creature.MaxHp,
             player.Potions.Count(),
@@ -69,6 +73,16 @@ internal static class BlitzMerchantRuntime
             deck.Count,
             meanCurseCost,
             curseRisk));
+    }
+
+    static IEnumerable<NBlitzMerchantSlot> VisibleSlots(Godot.Node root)
+    {
+        foreach (var child in root.GetChildren())
+        {
+            if (child is Godot.CanvasItem item && !item.IsVisibleInTree()) continue;
+            if (child is NBlitzMerchantSlot slot) yield return slot;
+            foreach (var nested in VisibleSlots(child)) yield return nested;
+        }
     }
 
     static IEnumerable<CardModel> EnchantTargets(BlitzMerchantEntry entry, IEnumerable<CardModel> deck)

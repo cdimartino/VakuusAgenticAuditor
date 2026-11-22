@@ -29,6 +29,7 @@ internal static class BlitzMerchantRegression
             && advice.Contains("Gives two randomly generated relics")
             && advice.Contains("random run-allowed curse")
             && advice.Contains("actual curse is randomly selected")
+            && advice.Contains("One random relic, with no curse")
             && !advice.Contains("Cloak Clasp") && !advice.Contains("gold")
             && !advice.Contains("when they appear"),
             "Blitz compares native effects, two random upgrades, and random curse/relic outcomes without treating outcomes as promises");
@@ -61,5 +62,20 @@ internal static class BlitzMerchantRegression
             && !rewards.Contains("Legal target")
             && rewards.StartsWith("First recommendation: Colorless Card Reward."),
             "future card rewards are compared without inventing a current deck target");
+
+        var removal = new BlitzMerchant.Offer("card_removal", "Removal", "Remove a card.", true,
+            ["Normality", "Strike"], 2, false);
+        var noRemovableCurse = BlitzMerchant.Compare([removal],
+            new(1, 1, 50, 80, 0, 3, false, 1, 0, 12, 0, ""))!;
+        var removableCurse = BlitzMerchant.Compare([removal],
+            new(1, 1, 50, 80, 0, 3, false, 1, 1, 12, 0, ""))!;
+        check(!noRemovableCurse.Contains("curse is among") && removableCurse.Contains("curse is among"),
+            "removal advice distinguishes existing curses from legal removable curses");
+
+        var sozu = BlitzMerchant.Compare(
+            [new("potions", "Potions", "Gain two potions.", true, [], 0, false)],
+            new(1, 1, 50, 80, 0, 0, true, 0, 0, 12, 0, ""))!;
+        check(sozu.Contains("Sozu prevents receiving potions") && sozu.Contains("+1 potion slot"),
+            "Sozu blocks the potion gain without hiding the slot increase");
     }
 }
