@@ -6,7 +6,9 @@ Use .NET SDK 9 and the target game beta (v0.113.1). Run `sh tools/package.sh` on
 
 `dotnet run --project tests` runs the offline coaching, transition and placement scenarios. `sh tools/ci.sh` is the portable Linux/macOS pre-release check: it fetches checksum-pinned [compile-only game references](https://www.nuget.org/packages/Book.StS2.RefLib/0.113.1-beta), checks C# formatting against `.editorconfig`, treats build warnings as errors, runs scenarios, validates the ZIPs, and smoke-tests a fresh install and update in a temporary library. Requirements: .NET 9, Python 3, `curl`, `shasum`, `unzip`, `zip`. No game files are released.
 
-Public pull requests use GitHub-hosted CI. Trusted main/tag pushes and manual runs use the disposable Linux homelab lane when `AUDITOR_CI_POOL=homelab`; unset the variable to fall back to hosted. A `v*` tag matching `mod/VakuusAgenticAuditor.json` publishes the verified ZIPs and checksums as a GitHub Release. Publishing to Steam is a separate manual step.
+With `AUDITOR_CI_POOL=homelab`, the read-only `verify` job uses a disposable Linux runner for main/tag pushes, manual runs, and same-repository pull requests opened and triggered by the repository owner. A PR rerun also requires the owner to trigger the rerun. Forks and other PRs use GitHub-hosted CI; unset the variable to use hosted verification for all runs.
+
+Release publishing and the Steam build watcher run on GitHub-hosted runners. A `v*` tag matching `mod/VakuusAgenticAuditor.json` publishes the verified ZIPs and checksums as a GitHub Release. Publishing to Steam is a separate manual step.
 
 Before tagging, test a real run: drag a bubble on the map, use a different spot in combat, click to dismiss, press V to recall, change resolution and restart. Confirm the two spots survive, reward choices still receive their clicks, and **Reset bubble positions** restores defaults.
 
